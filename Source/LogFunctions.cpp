@@ -1,3 +1,5 @@
+// DEV
+
 #include "stdafx.h"
 
 void Cheat::LogFunctions::Init()

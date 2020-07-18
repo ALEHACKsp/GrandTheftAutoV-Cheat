@@ -9,7 +9,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{618A4253-6C78-433C-93B5-8C71F873FAD3}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>SudoMod</RootNamespace>
+    <RootNamespace>GTAV</RootNamespace>
     <ProjectName>GTAV</ProjectName>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>

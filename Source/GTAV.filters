@@ -21,18 +21,6 @@
     <Filter Include="Source Files\GUI">
       <UniqueIdentifier>{7c62aea9-1af2-44b0-a438-9afb19cff4c5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Network">
-      <UniqueIdentifier>{5af49634-6627-45ed-acc5-35c6d1202280}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Network\json">
-      <UniqueIdentifier>{31de8286-b683-400f-82d9-2714b73a2bfe}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Discord">
-      <UniqueIdentifier>{144daffa-2ff1-4cbd-85d8-28f6089bafa6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Discord\SDK">
-      <UniqueIdentifier>{799a252d-8cb5-48d0-946d-b5d804eb1e5c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Main">
       <UniqueIdentifier>{2a12d025-c2ec-49af-84af-2c26d0618e38}</UniqueIdentifier>
     </Filter>
@@ -49,18 +37,6 @@
     </ClInclude>
     <ClInclude Include="enums.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Discord.h">
-      <Filter>Source Files\Discord</Filter>
-    </ClInclude>
-    <ClInclude Include="Discord\backoff.h">
-      <Filter>Source Files\Discord\SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="Discord\rpc_connection.h">
-      <Filter>Source Files\Discord\SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="Discord\serialization.h">
-      <Filter>Source Files\Discord\SDK</Filter>
     </ClInclude>
     <ClInclude Include="GameFunctions.h">
       <Filter>Header Files</Filter>
@@ -91,24 +67,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Discord.cpp">
-      <Filter>Source Files\Discord</Filter>
-    </ClCompile>
-    <ClCompile Include="Discord\connection_win.cpp">
-      <Filter>Source Files\Discord\SDK</Filter>
-    </ClCompile>
-    <ClCompile Include="Discord\discord_rpc.cpp">
-      <Filter>Source Files\Discord\SDK</Filter>
-    </ClCompile>
-    <ClCompile Include="Discord\rpc_connection.cpp">
-      <Filter>Source Files\Discord\SDK</Filter>
-    </ClCompile>
-    <ClCompile Include="Discord\serialization.cpp">
-      <Filter>Source Files\Discord\SDK</Filter>
-    </ClCompile>
-    <ClCompile Include="Discord\discord_register_win.cpp">
-      <Filter>Source Files\Discord\SDK</Filter>
-    </ClCompile>
     <ClCompile Include="LogFunctions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -141,9 +99,6 @@
     </ClCompile>
     <ClCompile Include="GUI.cpp">
       <Filter>Source Files\GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="NetworkingFunctions.cpp">
-      <Filter>Source Files\Network</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

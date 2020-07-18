@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="CrossMapping.cpp">
+      <Filter>Source Files\Game Hooking</Filter>
+    </ClCompile>
+    <ClCompile Include="Memory.cpp">
+      <Filter>Source Files\Game Hooking</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFunctions.cpp">
+      <Filter>Source Files\Game Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="CheatFunctions.cpp">
+      <Filter>Source Files\Cheat Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="Hooking.cpp">
+      <Filter>Source Files\Game Hooking</Filter>
+    </ClCompile>
+    <ClCompile Include="LogFunctions.cpp">
+      <Filter>Source Files\Cheat Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="NativeInvoker.cpp">
+      <Filter>Source Files\Game Hooking</Filter>
+    </ClCompile>
+    <ClCompile Include="Features.cpp">
+      <Filter>Source Files\Game Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="GameArrays.cpp">
+      <Filter>Source Files\Game Functions</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GameFunctions.h">
+      <Filter>Header Files\Game Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI.h">
+      <Filter>Header Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Hooking.h">
+      <Filter>Header Files\Game Hooking</Filter>
+    </ClInclude>
+    <ClInclude Include="CrossMapping.h">
+      <Filter>Header Files\Game Hooking</Filter>
+    </ClInclude>
+    <ClInclude Include="enums.h">
+      <Filter>Header Files\Game Hooking</Filter>
+    </ClInclude>
+    <ClInclude Include="NativeInvoker.h">
+      <Filter>Header Files\Game Hooking</Filter>
+    </ClInclude>
+    <ClInclude Include="natives.h">
+      <Filter>Header Files\Game Hooking</Filter>
+    </ClInclude>
+    <ClInclude Include="Main.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Memory.h">
+      <Filter>Header Files\Game Hooking</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="nativeCaller.h">
+      <Filter>Header Files\Game Hooking</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="types.h">
+      <Filter>Header Files\Game Hooking</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{71d4327f-1117-4e50-ba45-90d2264c2234}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game Hooking">
+      <UniqueIdentifier>{8b60f633-ad6c-4473-884e-1eb717078592}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game Functions">
+      <UniqueIdentifier>{038ff4a2-4baf-489d-bfae-19618392c6f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GUI">
+      <UniqueIdentifier>{be0aa322-2c35-476f-b55d-8fdd6dc74f26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{55f18c92-5ce2-4e86-8240-174ddd6ccdce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game Hooking">
+      <UniqueIdentifier>{4d038309-95bb-47b8-8d3a-f21a846ed6ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game Functions">
+      <UniqueIdentifier>{42e37770-c2e3-4238-9169-1581fc135c4b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GUI">
+      <UniqueIdentifier>{65f6b538-1687-484b-be62-9110b59f13e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Cheat Functions">
+      <UniqueIdentifier>{f7bf8f26-8357-44d6-9d53-ae30952450c2}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="GTAVCheat.rc" />
+  </ItemGroup>
+</Project>

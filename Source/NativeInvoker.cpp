@@ -1,4 +1,3 @@
-//NativeInvoker.cpp
 #include "stdafx.h"
 
 static NativeManagerContext g_context;

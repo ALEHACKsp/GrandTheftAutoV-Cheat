@@ -1,4 +1,3 @@
-//Memory.cpp
 #include "stdafx.h"
 
 static std::multimap<uint64_t, uintptr_t> g_hints;

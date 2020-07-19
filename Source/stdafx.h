@@ -40,7 +40,7 @@
 // XORSTR
 #include "ThirdParty\XORSTR\xorstr.hpp"
 // MinHook
-#pragma comment(lib,"ThirdParty/MinHook/libMinHook-x64-v140-mdd.lib")
+#pragma comment(lib,"ThirdParty/MinHook/libMinHook-x64-v141-md.lib")
 #include "ThirdParty/MinHook/MinHook.h"
 
 // Additional Header Files
@@ -372,7 +372,6 @@ namespace Cheat {
 		void SaveSettings();
 		char* CombineTwoStrings(char* string1, char* string2);
 		bool DoesFileExists(const std::string& fileName);
-		int MessageBoxWithAutoClose(HWND hWnd, const WCHAR* sText, const WCHAR* sCaption, UINT uType, DWORD dwMilliseconds);
 		bool DoesDirectoryExists(const std::string& dirName_in);
 		void CreateNewDirectory(std::string Path);
 		std::string ReturnCheatCompileDateTime();

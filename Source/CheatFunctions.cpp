@@ -26,29 +26,6 @@ bool Cheat::CheatFunctions::DoesDirectoryExists(const std::string& dirName_in)
 }
 
  
-int Cheat::CheatFunctions::MessageBoxWithAutoClose(HWND hWnd, const WCHAR* sText, const WCHAR* sCaption, UINT uType, DWORD dwMilliseconds)
-{
-	typedef int(__stdcall * MSGBOXWAPI)(IN HWND hWnd, IN LPCWSTR lpText, IN LPCWSTR lpCaption, IN UINT uType, IN WORD wLanguageId, IN DWORD dwMilliseconds);
-
-	int iResult;
-
-	HMODULE hUser32 = LoadLibraryA(xorstr_("user32.dll"));
-	if (hUser32)
-	{
-		auto MessageBoxTimeoutW = (MSGBOXWAPI)GetProcAddress(hUser32, xorstr_("MessageBoxTimeoutW"));
-		iResult = MessageBoxTimeoutW(hWnd, sText, sCaption, uType, 0, dwMilliseconds);
-		FreeLibrary(hUser32);
-	}
-	else
-	{
-		FreeLibrary(hUser32);
-		return 0;
-	}
-
-	return iResult;
-}
-
-
 std::string Cheat::CheatFunctions::ReturnCheatCompileDateTime()
 {
 	return xorstr_("Compile Date/Time: ") + (std::string) __DATE__ + xorstr_(" ") + (std::string)__TIME__;

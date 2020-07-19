@@ -7,22 +7,7 @@
 #pragma warning(disable : 4091)	
 #pragma warning(disable: 6262)
 
-
-//Windows Library Files
-#pragma comment(lib, "ws2_32.lib")
-#pragma comment(lib, "Winmm.lib")
-#pragma comment(lib, "Version.lib")
-
-//XORSTR
-#include "ThirdParty\XORSTR\xorstr.hpp"
-
-
-//MinHook
-#pragma comment(lib,"ThirdParty/MinHook/libMinHook-x64-v140-mdd.lib")
-#include "ThirdParty/MinHook/MinHook.h"
-
-
-//Windows Header Files:
+// Windows Header Files
 #include <windows.h>
 #include <Mmsystem.h>
 #include <string>
@@ -50,8 +35,15 @@
 #include <io.h>
 #include <tlhelp32.h>
 #include <array>
+#pragma comment(lib, "Winmm.lib")
 
-//Additional Header Files:
+// XORSTR
+#include "ThirdParty\XORSTR\xorstr.hpp"
+// MinHook
+#pragma comment(lib,"ThirdParty/MinHook/libMinHook-x64-v141-md.lib")
+#include "ThirdParty/MinHook/MinHook.h"
+
+// Additional Header Files
 #include "Memory.h"
 #include "types.h"
 #include "enums.h"
@@ -61,9 +53,8 @@
 #include "natives.h"
 #include "Hooking.h"
 
-//Cheat Files:
+// Cheat Files
 #include "GUI.h"
-#include "Main.h"
 #include "types.h"
 #include "GameFunctions.h"
 
@@ -115,6 +106,7 @@ public:
 
 
 namespace Cheat {
+	void ScriptMain();
 	namespace Drawing {
 		void Text(const char* text, RGBAF rgbaf, VECTOR2 position, VECTOR2_2 size, bool center);
 		void Rect(RGBA rgba, VECTOR2 position, VECTOR2_2 size);
@@ -194,9 +186,6 @@ namespace Cheat {
 	}
 	namespace Checks {
 		void Controls();
-	}
-	namespace Tools {
-		char* StringToChar(std::string string);
 	}
 	namespace Files {
 		void WriteStringToIni(std::string string, std::string file, std::string app, std::string key);
@@ -383,28 +372,21 @@ namespace Cheat {
 		void SaveSettings();
 		char* CombineTwoStrings(char* string1, char* string2);
 		bool DoesFileExists(const std::string& fileName);
-		int MessageBoxWithAutoClose(HWND hWnd, const WCHAR* sText, const WCHAR* sCaption, UINT uType, DWORD dwMilliseconds);
 		bool DoesDirectoryExists(const std::string& dirName_in);
 		void CreateNewDirectory(std::string Path);
-		int getProcessID(const std::string& p_name);
-		int ReturnCurrentDay();
-		int ReturnCurrentMonth();
-		int ReturnCurrentYear();
-		char* ReturnCheatCompileDateTime();
+		std::string ReturnCheatCompileDateTime();
 		std::string ReturnDateAndTimeAsString();
 		std::string GetLastErrorAsString();
-		void MenuThreadLoopFunctions();
+		void CheatThreadLoopFunctions();
 		bool IsGameWindowFocussed();
-		std::string ReturnFirstDriveSerialNumber();
-		CString GetStringFromRegistry(HKEY keyParent, CString keyName, CString keyValName);
 		bool StringIsInteger(const std::string& s);
 		bool IsIntegerInRange(unsigned low, unsigned high, unsigned x);
-		std::string base64_encode(unsigned char const* bytes_to_encode, unsigned int in_len);
 		_int64 FileSize(const wchar_t* name);
 		bool extractResource(const HINSTANCE hInstance, WORD resourceID, LPCSTR szFilename);
 		std::string TextureFilePath();
 		bool ReturnPressedKey(int &PressedKey);
 		void PostInitCheat();
+		char* StringToChar(std::string string);
 	}
 	namespace GameFunctions {
 		float GetGameFramesPerSecond();

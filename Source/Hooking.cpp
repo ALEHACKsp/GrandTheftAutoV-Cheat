@@ -213,14 +213,14 @@ void __stdcall ScriptFunction(LPVOID lpParameter)
 {
 	try
 	{
-		ScriptMain();
+		Cheat::ScriptMain();
 	}
 	catch (...)
 	{
 		char Message[100];
 		snprintf(Message, sizeof(Message), xorstr_("Unhandled Exception. WinAPI error code (if any) %s"), (char*)Cheat::CheatFunctions::GetLastErrorAsString().c_str());
 		Cheat::LogFunctions::Error(Message);
-		::exit(0);
+		std::exit(EXIT_SUCCESS);
 	}
 }
 
@@ -391,7 +391,7 @@ void failPat(const char* name)
 	char Message[100];
 	snprintf(Message, sizeof(Message), xorstr_("Failed to find game pattern\n\nPattern: %s"), name);
 	Cheat::LogFunctions::Error(Message);
-	::exit(0);
+	std::exit(EXIT_SUCCESS);
 }
 
 template <typename T>
@@ -459,8 +459,6 @@ void Hooking::MenuInitialization()
 	Cheat::LogFunctions::Message(xorstr_("Allocating Console"));
 	CreateConsole();
 	Cheat::LogFunctions::Init();
-	HANDLE GTAV = GetModuleHandleA(xorstr_("GTA5.exe"));
-	if (!GTAV) { Cheat::LogFunctions::Error(xorstr_("Invalid module")); ::exit(0); }
 	Cheat::LogFunctions::Message(xorstr_("Creating Cheat Main Fiber"));
 	DoGameHooking();
 }
@@ -589,7 +587,7 @@ void Hooking::DoGameHooking()
 	Cheat::LogFunctions::Message(xorstr_("Grand Theft Auto V Completed Loading"));
 
 
-	if (!InitializeHooks()) ::exit(0);
+	if (!InitializeHooks()) { std::exit(EXIT_SUCCESS); }
 }
 
 static Hooking::NativeHandler _Handler(uint64_t origHash)
@@ -671,7 +669,14 @@ void Hooking::CreateConsole()
 	AllocConsole();
 	SetConsoleTitleA(xorstr_("GTAV Cheat Console"));
 
-	//Disable Close Button Off Console Window And Set Max Window Size
+	// Set Console Dimensions so all text is properly visible
+	HWND ConsoleWindowHandle = GetConsoleWindow();
+	RECT CurrentRect;
+	GetWindowRect(ConsoleWindowHandle, &CurrentRect);
+	MoveWindow(ConsoleWindowHandle, CurrentRect.left, CurrentRect.top, 1100, 500, TRUE);
+	CloseHandle(ConsoleWindowHandle);
+
+	//Disable Close Button Console Window And Set Max Window Size
 	HWND hwnd = ::GetConsoleWindow();
 	if (hwnd != NULL)
 	{
@@ -693,15 +698,15 @@ void Hooking::CreateConsole()
 	}
 
 	//Redirect Std Outputs to Console
-	HANDLE ConsoleOutput = GetStdHandle(STD_OUTPUT_HANDLE);
-	int SystemOutput = _open_osfhandle(intptr_t(ConsoleOutput), _O_TEXT);
-	FILE* COutputHandle = _fdopen(SystemOutput, xorstr_("w"));
-	HANDLE ConsoleError = GetStdHandle(STD_ERROR_HANDLE);
-	int SystemError = _open_osfhandle(intptr_t(ConsoleError), _O_TEXT);
-	FILE* CErrorHandle = _fdopen(SystemError, xorstr_("w"));
-	HANDLE ConsoleInput = GetStdHandle(STD_INPUT_HANDLE);
-	int SystemInput = _open_osfhandle(intptr_t(ConsoleInput), _O_TEXT);
-	FILE* CInputHandle = _fdopen(SystemInput, xorstr_("r"));
+	HANDLE ConsoleOutput	= GetStdHandle(STD_OUTPUT_HANDLE);
+	int SystemOutput		= _open_osfhandle(intptr_t(ConsoleOutput), _O_TEXT);
+	FILE* COutputHandle		= _fdopen(SystemOutput, xorstr_("w"));
+	HANDLE ConsoleError		= GetStdHandle(STD_ERROR_HANDLE);
+	int SystemError			= _open_osfhandle(intptr_t(ConsoleError), _O_TEXT);
+	FILE* CErrorHandle		= _fdopen(SystemError, xorstr_("w"));
+	HANDLE ConsoleInput		= GetStdHandle(STD_INPUT_HANDLE);
+	int SystemInput			= _open_osfhandle(intptr_t(ConsoleInput), _O_TEXT);
+	FILE* CInputHandle		= _fdopen(SystemInput, xorstr_("r"));
 	std::ios::sync_with_stdio(true);
 	freopen_s(&CInputHandle, xorstr_("CONIN$"), xorstr_("r"), stdin);
 	freopen_s(&COutputHandle, xorstr_("CONOUT$"), xorstr_("w"), stdout);
@@ -713,5 +718,7 @@ void Hooking::CreateConsole()
 	std::wcin.clear();
 	std::cin.clear();
 
+
+	// Print current build
 	std::cout << xorstr_("Build: ") << Cheat::CheatFunctions::ReturnCheatBuildAsString() << std::endl;
 }

@@ -47,7 +47,7 @@ void main() {
 	double AutoSaveSettings_startTime = GetTickCount64();
 	while (true) {
 		Cheat::Checks::Controls();
-		Cheat::CheatFunctions::MenuThreadLoopFunctions();
+		Cheat::CheatFunctions::CheatThreadLoopFunctions();
 
 		double AutoSaveSettings_currentTime = GetTickCount64() - AutoSaveSettings_startTime;
 		if (AutoSaveSettings_currentTime >= 600000) { if (Cheat::CheatFeatures::AutoSaveSettings) { Cheat::CheatFunctions::SaveSettings(); } AutoSaveSettings_startTime = GetTickCount64(); }
@@ -5851,7 +5851,7 @@ void main() {
 }
 
 
-void ScriptMain() {
+void Cheat::ScriptMain() {
 	srand(GetTickCount64());
 	main();
 }

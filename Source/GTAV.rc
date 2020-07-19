@@ -13,9 +13,9 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// Engels (Verenigde Staten) resources
+// English (United States) resources
 
-IDR_GTAV_TEXTURE CHEAT_DATA            "D:\\Data\\Programming\\Game Hack Projects\\GTAV Cheat\\Source\\Textures.ytd"
+IDR_GTAV_TEXTURE CHEAT_DATA            "..\\Textures.ytd"
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_NLD)
 LANGUAGE 19, 1
@@ -47,7 +47,7 @@ END
 #endif    // APSTUDIO_INVOKED
 
 
-#endif    // Engels (Verenigde Staten) resources
+#endif    // English (United States) resources
 /////////////////////////////////////////////////////////////////////////////
 
 

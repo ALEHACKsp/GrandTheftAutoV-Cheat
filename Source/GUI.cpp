@@ -54,7 +54,7 @@ float conv360(float base, float min, float max)
 }
 
 
-float Cheat::Settings::menuX = 0.17f;
+float Cheat::Settings::menuX = 0.11f;
 const char* OptionInformationText;
 bool ShowVehiclePreviews = true;
 bool Cheat::Settings::selectPressed = false;
@@ -3115,9 +3115,9 @@ bool Cheat::IntNoControl(const char * option, int & _int, int min, int max, cons
 	Option(option, "");
 
 	if (Settings::currentOption <= Settings::maxVisOptions && Settings::optionCount <= Settings::maxVisOptions)
-		Drawing::Text(Tools::StringToChar(" " + std::to_string(_int) + " "), Settings::optionText, { Settings::menuX + 0.080f, Settings::optionCount * 0.035f + 0.125f }, { 0.35f, 0.35f }, true);
+		Drawing::Text(Cheat::CheatFunctions::StringToChar(" " + std::to_string(_int) + " "), Settings::optionText, { Settings::menuX + 0.080f, Settings::optionCount * 0.035f + 0.125f }, { 0.35f, 0.35f }, true);
 	else if (Settings::optionCount > Settings::currentOption - Settings::maxVisOptions && Settings::optionCount <= Settings::currentOption)
-		Drawing::Text(Tools::StringToChar(" " + std::to_string(_int) + " "), Settings::optionText, { Settings::menuX + 0.080f, (Settings::optionCount - (Settings::currentOption - Settings::maxVisOptions))*0.035f + 0.125f }, { 0.35f, 0.35f }, true);
+		Drawing::Text(Cheat::CheatFunctions::StringToChar(" " + std::to_string(_int) + " "), Settings::optionText, { Settings::menuX + 0.080f, (Settings::optionCount - (Settings::currentOption - Settings::maxVisOptions))*0.035f + 0.125f }, { 0.35f, 0.35f }, true);
 
 	if (Settings::optionCount == Settings::currentOption)
 	{
@@ -3166,30 +3166,30 @@ bool Cheat::Int(const char * option, int & _int, int min, int max, int step, con
 	{
 		if (_int < 100)
 		{
-			Drawing::Text(Tools::StringToChar("< " + std::to_string(_int) + " >"), Settings::optionText, { Settings::menuX + 0.075f, Settings::optionCount * 0.035f + 0.125f }, { 0.32f, 0.32f }, false);
+			Drawing::Text(Cheat::CheatFunctions::StringToChar("< " + std::to_string(_int) + " >"), Settings::optionText, { Settings::menuX + 0.075f, Settings::optionCount * 0.035f + 0.125f }, { 0.32f, 0.32f }, false);
 		}
 		else if (_int < 999)
 		{
-			Drawing::Text(Tools::StringToChar("< " + std::to_string(_int) + " >"), Settings::optionText, { Settings::menuX + 0.07f, Settings::optionCount * 0.035f + 0.125f }, { 0.32f, 0.32f }, false);
+			Drawing::Text(Cheat::CheatFunctions::StringToChar("< " + std::to_string(_int) + " >"), Settings::optionText, { Settings::menuX + 0.07f, Settings::optionCount * 0.035f + 0.125f }, { 0.32f, 0.32f }, false);
 		}
 		else
 		{
-			Drawing::Text(Tools::StringToChar("< " + std::to_string(_int) + " >"), Settings::optionText, { Settings::menuX + 0.06f, Settings::optionCount * 0.035f + 0.125f }, { 0.32f, 0.32f }, false);
+			Drawing::Text(Cheat::CheatFunctions::StringToChar("< " + std::to_string(_int) + " >"), Settings::optionText, { Settings::menuX + 0.06f, Settings::optionCount * 0.035f + 0.125f }, { 0.32f, 0.32f }, false);
 		}
 	}
 	else if ((Settings::optionCount > (Settings::currentOption - Settings::maxVisOptions)) && Settings::optionCount <= Settings::currentOption)
 	{
 		if (_int < 100)
 		{
-			Drawing::Text(Tools::StringToChar("< " + std::to_string(_int) + " >"), Settings::optionText, { Settings::menuX + 0.075f, (Settings::optionCount - (Settings::currentOption - Settings::maxVisOptions)) * 0.035f + 0.125f }, { 0.32f, 0.32f }, false);
+			Drawing::Text(Cheat::CheatFunctions::StringToChar("< " + std::to_string(_int) + " >"), Settings::optionText, { Settings::menuX + 0.075f, (Settings::optionCount - (Settings::currentOption - Settings::maxVisOptions)) * 0.035f + 0.125f }, { 0.32f, 0.32f }, false);
 		}
 		else if (_int < 999)
 		{
-			Drawing::Text(Tools::StringToChar("< " + std::to_string(_int) + " >"), Settings::optionText, { Settings::menuX + 0.07f, (Settings::optionCount - (Settings::currentOption - Settings::maxVisOptions)) * 0.035f + 0.125f }, { 0.32f, 0.32f }, false);
+			Drawing::Text(Cheat::CheatFunctions::StringToChar("< " + std::to_string(_int) + " >"), Settings::optionText, { Settings::menuX + 0.07f, (Settings::optionCount - (Settings::currentOption - Settings::maxVisOptions)) * 0.035f + 0.125f }, { 0.32f, 0.32f }, false);
 		}
 		else
 		{
-			Drawing::Text(Tools::StringToChar("< " + std::to_string(_int) + " >"), Settings::optionText, { Settings::menuX + 0.06f, (Settings::optionCount - (Settings::currentOption - Settings::maxVisOptions)) * 0.035f + 0.125f }, { 0.32f, 0.32f }, false);
+			Drawing::Text(Cheat::CheatFunctions::StringToChar("< " + std::to_string(_int) + " >"), Settings::optionText, { Settings::menuX + 0.06f, (Settings::optionCount - (Settings::currentOption - Settings::maxVisOptions)) * 0.035f + 0.125f }, { 0.32f, 0.32f }, false);
 		}
 	}
 	if (Settings::optionCount == Settings::currentOption && Settings::selectPressed) return true;
@@ -3222,9 +3222,9 @@ bool Cheat::Float(const char * option, float & _float, float min, float max, flo
 	}
 
 	if (Settings::currentOption <= Settings::maxVisOptions && Settings::optionCount <= Settings::maxVisOptions)
-		Drawing::Text(Tools::StringToChar(std::to_string(_float)), Settings::optionText, { Settings::menuX + 0.08f, Settings::optionCount * 0.035f + 0.128f }, { 0.32f, 0.32f }, true);
+		Drawing::Text(Cheat::CheatFunctions::StringToChar(std::to_string(_float)), Settings::optionText, { Settings::menuX + 0.08f, Settings::optionCount * 0.035f + 0.128f }, { 0.32f, 0.32f }, true);
 	else if (Settings::optionCount > Settings::currentOption - Settings::maxVisOptions && Settings::optionCount <= Settings::currentOption)
-		Drawing::Text(Tools::StringToChar(std::to_string(_float)), Settings::optionText, { Settings::menuX + 0.08f, (Settings::optionCount - (Settings::currentOption - Settings::maxVisOptions))*0.035f + 0.12f }, { 0.32f, 0.32f }, true);
+		Drawing::Text(Cheat::CheatFunctions::StringToChar(std::to_string(_float)), Settings::optionText, { Settings::menuX + 0.08f, (Settings::optionCount - (Settings::currentOption - Settings::maxVisOptions))*0.035f + 0.12f }, { 0.32f, 0.32f }, true);
 
 	if (Settings::optionCount == Settings::currentOption && Settings::selectPressed) return true;
 	else if (Settings::optionCount == Settings::currentOption && Settings::leftPressed && ReturnTrueWithValueChange) return true;
@@ -3249,9 +3249,9 @@ bool Cheat::IntVector(const char * option, std::vector<int> Vector, int & positi
 	}
 
 	if (Settings::currentOption <= Settings::maxVisOptions && Settings::optionCount <= Settings::maxVisOptions)
-		Drawing::Text(Tools::StringToChar(std::to_string(Vector[position])), Settings::optionText, { Settings::menuX + 0.068f, Settings::optionCount * 0.035f + 0.125f }, { 0.5f, 0.5f }, true);
+		Drawing::Text(Cheat::CheatFunctions::StringToChar(std::to_string(Vector[position])), Settings::optionText, { Settings::menuX + 0.068f, Settings::optionCount * 0.035f + 0.125f }, { 0.5f, 0.5f }, true);
 	else if (Settings::optionCount > Settings::currentOption - Settings::maxVisOptions && Settings::optionCount <= Settings::currentOption)
-		Drawing::Text(Tools::StringToChar(std::to_string(Vector[position])), Settings::optionText, { Settings::menuX + 0.068f, (Settings::optionCount - (Settings::currentOption - Settings::maxVisOptions))*0.035f + 0.12f }, { 0.5f, 0.5f }, true);
+		Drawing::Text(Cheat::CheatFunctions::StringToChar(std::to_string(Vector[position])), Settings::optionText, { Settings::menuX + 0.068f, (Settings::optionCount - (Settings::currentOption - Settings::maxVisOptions))*0.035f + 0.12f }, { 0.5f, 0.5f }, true);
 
 	if (Settings::optionCount == Settings::currentOption && Settings::selectPressed) return true;
 	else if (Settings::optionCount == Settings::currentOption && Settings::leftPressed) return true;
@@ -3274,9 +3274,9 @@ bool Cheat::FloatVector(const char * option, std::vector<float> Vector, int & po
 	}
 
 	if (Settings::currentOption <= Settings::maxVisOptions && Settings::optionCount <= Settings::maxVisOptions)
-		Drawing::Text(Tools::StringToChar(std::to_string(Vector[position])), Settings::optionText, { Settings::menuX + 0.068f, Settings::optionCount * 0.035f + 0.125f }, { 0.5f, 0.5f }, true);
+		Drawing::Text(Cheat::CheatFunctions::StringToChar(std::to_string(Vector[position])), Settings::optionText, { Settings::menuX + 0.068f, Settings::optionCount * 0.035f + 0.125f }, { 0.5f, 0.5f }, true);
 	else if (Settings::optionCount > Settings::currentOption - Settings::maxVisOptions && Settings::optionCount <= Settings::currentOption)
-		Drawing::Text(Tools::StringToChar(std::to_string(Vector[position])), Settings::optionText, { Settings::menuX + 0.068f, (Settings::optionCount - (Settings::currentOption - Settings::maxVisOptions))*0.035f + 0.12f }, { 0.5f, 0.5f }, true);
+		Drawing::Text(Cheat::CheatFunctions::StringToChar(std::to_string(Vector[position])), Settings::optionText, { Settings::menuX + 0.068f, (Settings::optionCount - (Settings::currentOption - Settings::maxVisOptions))*0.035f + 0.12f }, { 0.5f, 0.5f }, true);
 
 	if (Settings::optionCount == Settings::currentOption && Settings::selectPressed) return true;
 	else if (Settings::optionCount == Settings::currentOption && Settings::leftPressed) return true;
@@ -3304,10 +3304,10 @@ bool Cheat::StringVector(const char * option, std::vector<std::string> Vector, i
 	}
 
 	if (Settings::currentOption <= Settings::maxVisOptions && Settings::optionCount <= Settings::maxVisOptions) {
-		Drawing::Text(Tools::StringToChar("< " + (Vector[position]) + " >"), Settings::optionText, { Settings::menuX + 0.055f, Settings::optionCount * 0.035f + 0.125f }, { 0.35f, 0.35f }, true);
+		Drawing::Text(Cheat::CheatFunctions::StringToChar("< " + (Vector[position]) + " >"), Settings::optionText, { Settings::menuX + 0.055f, Settings::optionCount * 0.035f + 0.125f }, { 0.35f, 0.35f }, true);
 	}
 	else if (Settings::optionCount > Settings::currentOption - Settings::maxVisOptions && Settings::optionCount <= Settings::currentOption) {
-		Drawing::Text(Tools::StringToChar("< " + (Vector[position]) + " >"), Settings::optionText, { Settings::menuX + 0.055f, (Settings::optionCount - (Settings::currentOption - Settings::maxVisOptions)) * 0.035f + 0.125f }, { 0.35f, 0.35f }, true);
+		Drawing::Text(Cheat::CheatFunctions::StringToChar("< " + (Vector[position]) + " >"), Settings::optionText, { Settings::menuX + 0.055f, (Settings::optionCount - (Settings::currentOption - Settings::maxVisOptions)) * 0.035f + 0.125f }, { 0.35f, 0.35f }, true);
 	}
 	if (Settings::optionCount == Settings::currentOption && Settings::selectPressed) return true;
 	else if (Settings::optionCount == Settings::currentOption && Settings::leftPressed) return true;
@@ -3322,7 +3322,7 @@ void Cheat::End()
 	int currop = Settings::currentOption;
 	if (opcount >= Settings::maxVisOptions)
 	{
-		Drawing::Text(Tools::StringToChar(std::to_string(Settings::currentOptionMenuBottom) + " / " + std::to_string(Settings::optionCountMenuBottom)), Settings::count, { Settings::menuX - 0.085f, ((Settings::maxVisOptions + 1) * 0.035f + 0.128f) }, { 0.30f, 0.30f }, true);
+		Drawing::Text(Cheat::CheatFunctions::StringToChar(std::to_string(Settings::currentOptionMenuBottom) + " / " + std::to_string(Settings::optionCountMenuBottom)), Settings::count, { Settings::menuX - 0.085f, ((Settings::maxVisOptions + 1) * 0.035f + 0.128f) }, { 0.30f, 0.30f }, true);
 		Drawing::Text(Cheat::CheatFunctions::ReturnCheatBuildAsString().c_str(), Settings::count, { Settings::menuX + 0.085f, ((Settings::maxVisOptions + 1) * 0.035f + 0.128f) }, { 0.30f, 0.30f }, true);
 		Drawing::Rect(Settings::MenuBottomRect, { Settings::menuX, ((Settings::maxVisOptions + 1) * 0.035f + 0.1415f) }, { 0.21f, 0.035f });
 		Drawing::Rect(Settings::line, { Settings::menuX, ((Settings::maxVisOptions + 1) * 0.035f + 0.1235f) }, { 0.21f, 0.002f });
@@ -3336,7 +3336,7 @@ void Cheat::End()
 	}
 	else if (opcount > 0)
 	{
-		Drawing::Text(Tools::StringToChar(std::to_string(Settings::currentOptionMenuBottom) + " / " + std::to_string(Settings::optionCountMenuBottom)), Settings::count, { Settings::menuX - 0.085f, (Settings::optionCount + 1) * 0.035f + 0.128f }, { 0.30f, 0.30f }, true);
+		Drawing::Text(Cheat::CheatFunctions::StringToChar(std::to_string(Settings::currentOptionMenuBottom) + " / " + std::to_string(Settings::optionCountMenuBottom)), Settings::count, { Settings::menuX - 0.085f, (Settings::optionCount + 1) * 0.035f + 0.128f }, { 0.30f, 0.30f }, true);
 		Drawing::Text(Cheat::CheatFunctions::ReturnCheatBuildAsString().c_str(), Settings::count, { Settings::menuX + 0.085f, (Settings::optionCount + 1) * 0.035f + 0.128f }, { 0.30f, 0.30f }, true);
 		Drawing::Rect(Settings::MenuBottomRect, { Settings::menuX, (Settings::optionCount + 1) * 0.035f + 0.1415f }, { 0.21f, 0.035f });
 		Drawing::Rect(Settings::line, { Settings::menuX, (Settings::optionCount + 1) * 0.035f + 0.1235f }, { 0.21f, 0.002f });
@@ -3483,10 +3483,6 @@ void Cheat::MenuLevelHandler::BackMenu()
 	Settings::currentOption = Settings::optionsArray[Settings::menuLevel];
 }
 
-char * Cheat::Tools::StringToChar(std::string string)
-{
-	return _strdup(string.c_str());
-}
 
 void Cheat::Files::WriteStringToIni(std::string string, std::string file, std::string app, std::string key)
 {

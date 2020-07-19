@@ -52,12 +52,9 @@
 #include "nativeCaller.h"
 #include "natives.h"
 #include "Hooking.h"
-
-// Cheat Files
 #include "GUI.h"
 #include "types.h"
 #include "GameFunctions.h"
-
 
 
 
@@ -86,7 +83,6 @@ public:
 
 	globalHandle At(int index, int size)
 	{
-		// Position 0 = Array Size
 		return this->At(1 + (index * size));
 	}
 
@@ -402,7 +398,7 @@ namespace Cheat {
 		Vector3 MultiplyVector(Vector3 vector, float inc);
 		Vector3 AddVector(Vector3 vector, Vector3 vector2);
 		Vector3 RotationToDirection(Vector3 rot);
-		void SetRankRockstarGift(int rpvalue);
+		void SetRankRockstarGift(int RPValue);
 		void DrawVehicleLasers();
 		void RequestControl(Entity input);
 		Vector3 RotToDirection(Vector3* rot);
@@ -432,7 +428,7 @@ namespace Cheat {
 		void NearbyPedsCommitSuicide();
 		void TeleportToWaypoint();
 		void SetPedTexture(Ped Ped, int ComponentID, int DrawableID, int TextureID);
-		void DowngradeVehicle(int VehicleHandle);
+		void MaxDowngradeVehicle(int VehicleHandle);
 		void MaxUpgradeVehicle(int VehicleHandle);
 		void EnableDisableAntiCrashCamera();
 		void CheckNewSessionMembersLoop();
@@ -441,6 +437,11 @@ namespace Cheat {
 		void InstructionsAdd(char* text, int button);
 		void InstructionsEnd();
 		void SetSessionTime(int h, int m, int s);
+		void ClearNearbyPedAnimations();
+		void DoNearbyPedsAnimation(char* AnimationName, char* AnimationID);
+		void DoLocalPedAnimation(char* AnimationName, char* AnimationID);
+		void AttachObjectToPed(Ped Ped, char* ObjectName);
+		void DetachObjectFromPed(Ped Ped, char* ObjectName);
 	}
 	namespace LogFunctions {
 		void Init();

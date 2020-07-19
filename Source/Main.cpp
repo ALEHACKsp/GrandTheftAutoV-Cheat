@@ -73,7 +73,8 @@ void main() {
 			Cheat::MenuOption("ESP >", ESPMenu);
 			Cheat::MenuOption("Weapon Options >", allplayers_weaponoptionsmenu);
 			Cheat::MenuOption("Troll Options >", allplayers_trolloptionsmenu);
-			if (Cheat::Option("Host Kick All Players", "Kick all players from session - Host only")) {
+			if (Cheat::Option("Host Kick All Players", "Kick all players from session - Host only")) 
+			{
 				for (int i = 1; i <= 32; i++) {
 					if (PlayerID != i) { NETWORK::NETWORK_SESSION_KICK_PLAYER(i); }
 				}
@@ -135,14 +136,26 @@ void main() {
 					}
 				}
 			}
-			if (Cheat::Option("Attach Beach Fire", "Burn them all!")) { attachobjects_allplayers("prop_beach_fire"); }
+			if (Cheat::Option("Attach Beach Fire", "Burn them all!")) 
+			{ 
+				for (int i = 1; i <= 32; i++) 
+				{
+					if (PLAYER::PLAYER_ID() != i) 
+					{
+						Cheat::GameFunctions::AttachObjectToPed(PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(i), xorstr_("prop_beach_fire"));
+					}
+				}
+			}
 		}
 		break; 
 		case networkoptions:
 		{
 			Cheat::Title("Network Options");
 			Cheat::MenuOption("Player List >", plist);	
-			if (!NETWORK::NETWORK_IS_SESSION_STARTED()) { Cheat::Break("Join GTA Online to see all options", true); }
+			if (!NETWORK::NETWORK_IS_SESSION_STARTED()) 
+			{
+				Cheat::Break("Join GTA Online to see all options", true); 
+			}
 			else {
 				Cheat::MenuOption("All Players >", allplayers);
 				Cheat::MenuOption("Protections >", protections); 
@@ -1605,7 +1618,7 @@ void main() {
 				}
 
 				Cheat::GameFunctions::SetRankRockstarGift(std::stoi(CustomRankChar0));
-				notifyleft("~g~Leave and join another session for the changes to be applied.");
+				notifyleft("Join a new GTAO session for the new ranked to be applied");
 			}
 			if (Cheat::Option("Rank 1",""))
 			{
@@ -2386,7 +2399,7 @@ void main() {
 			if (Cheat::Option("Max Downgrade", "Max downgrade current vehicle"))
 			{
 				if (PED::IS_PED_IN_ANY_VEHICLE(PlayerPedID, 0)) {
-					Cheat::GameFunctions::DowngradeVehicle(PED::GET_VEHICLE_PED_IS_USING(PlayerPedID));
+					Cheat::GameFunctions::MaxDowngradeVehicle(PED::GET_VEHICLE_PED_IS_USING(PlayerPedID));
 					UI::_SET_NOTIFICATION_TEXT_ENTRY("STRING");
 					UI::ADD_TEXT_COMPONENT_SUBSTRING_PLAYER_NAME("Vehicle Max Downgraded");
 					UI::_SET_NOTIFICATION_MESSAGE_CLAN_TAG("CHAR_LS_CUSTOMS", "CHAR_LS_CUSTOMS", false, 7, "Simple Customs", "", 1.0, "");
@@ -2959,43 +2972,43 @@ void main() {
 			}
 			Cheat::Break("~bold~Animations", true);
 			if (Cheat::Option("Sex Receiver", "")) {
-				doAnimationNearbyPeds("rcmpaparazzo_2", "shag_loop_poppy");
+				Cheat::GameFunctions::DoNearbyPedsAnimation("rcmpaparazzo_2", "shag_loop_poppy");
 			}
 			if (Cheat::Option("Sex Giver", "")) {
-				clearanimnearbypeds();
-				doAnimationNearbyPeds("rcmpaparazzo_2", "shag_loop_a");
+				Cheat::GameFunctions::ClearNearbyPedAnimations();
+				Cheat::GameFunctions::DoNearbyPedsAnimation("rcmpaparazzo_2", "shag_loop_a");
 			}
 			if (Cheat::Option("Stripper Dance", "")) {
-				clearanimnearbypeds();
-				doAnimationNearbyPeds("mini@strip_club@private_dance@part1", "priv_dance_p1");
+				Cheat::GameFunctions::ClearNearbyPedAnimations();
+				Cheat::GameFunctions::DoNearbyPedsAnimation("mini@strip_club@private_dance@part1", "priv_dance_p1");
 			}
 			if (Cheat::Option("Pole Dance", "")) {
-				clearanimnearbypeds();
-				doAnimationNearbyPeds("mini@strip_club@pole_dance@pole_dance1", "pd_dance_01");
+				Cheat::GameFunctions::ClearNearbyPedAnimations();
+				Cheat::GameFunctions::DoNearbyPedsAnimation("mini@strip_club@pole_dance@pole_dance1", "pd_dance_01");
 			}
 			if (Cheat::Option("Push Ups", "")) {
-				clearanimnearbypeds();
-				doAnimationNearbyPeds("amb@world_human_push_ups@male@base", "base");
+				Cheat::GameFunctions::ClearNearbyPedAnimations();
+				Cheat::GameFunctions::DoNearbyPedsAnimation("amb@world_human_push_ups@male@base", "base");
 			}
 			if (Cheat::Option("Sit Ups", "")) {
-				clearanimnearbypeds();
-				doAnimationNearbyPeds("amb@world_human_sit_ups@male@base", "base");
+				Cheat::GameFunctions::ClearNearbyPedAnimations();
+				Cheat::GameFunctions::DoNearbyPedsAnimation("amb@world_human_sit_ups@male@base", "base");
 			}
 			if (Cheat::Option("Celebrate", "")) {
-				clearanimnearbypeds();
-				doAnimationNearbyPeds("rcmfanatic1celebrate", "celebrate");
+				Cheat::GameFunctions::ClearNearbyPedAnimations();
+				Cheat::GameFunctions::DoNearbyPedsAnimation("rcmfanatic1celebrate", "celebrate");
 			}
 			if (Cheat::Option("Electrocution", "")) {
-				clearanimnearbypeds();
-				doAnimationNearbyPeds("ragdoll@human", "electrocute");
+				Cheat::GameFunctions::ClearNearbyPedAnimations();
+				Cheat::GameFunctions::DoNearbyPedsAnimation("ragdoll@human", "electrocute");
 			}
 			if (Cheat::Option("Suicide", "")) {
-				clearanimnearbypeds();
-				doAnimationNearbyPeds("mp_suicide", "pistol");
+				Cheat::GameFunctions::ClearNearbyPedAnimations();
+				Cheat::GameFunctions::DoNearbyPedsAnimation("mp_suicide", "pistol");
 			}
 			if (Cheat::Option("Showering", "")) {
-				clearanimnearbypeds();
-				doAnimationNearbyPeds("mp_safehouseshower@male@", "male_shower_idle_b");
+				Cheat::GameFunctions::ClearNearbyPedAnimations();
+				Cheat::GameFunctions::DoNearbyPedsAnimation("mp_safehouseshower@male@", "male_shower_idle_b");
 			}
 		}
 		break; 
@@ -3021,7 +3034,7 @@ void main() {
 						FIRE::ADD_EXPLOSION(coords.x, coords.y, coords.z, 0, 1000.f, true, false, 0.f);
 					}
 				}
-				delete vehs;
+				delete[] vehs;
 			}
 			if (Cheat::Option("Delete Vehicles", "Delete nearby vehicles"))
 			{
@@ -4934,42 +4947,28 @@ void main() {
 			Cheat::GameFunctions::DrawMarkerAbovePlayer(2, Cheat::CheatFeatures::selectedPlayer, { 0, 0, 255, 255 });
 			Cheat::GameFunctions::LoadPlayerInformation(PLAYER::GET_PLAYER_NAME(Cheat::CheatFeatures::selectedPlayer), Cheat::CheatFeatures::selectedPlayer);
 			Cheat::Title("Attach Options");
-			if (Cheat::Option("Plate", "")) { attachobjects2("p_oil_slick_01"); }
-			if (Cheat::Option("EMP", "")) { attachobjects2("hei_prop_heist_emp"); }
-			if (Cheat::Option("Beach Fire", "")) { attachobjects2("prop_beach_fire"); }
-			if (Cheat::Option("Orange Ball", "")) { attachobjects2("prop_juicestand"); }
-			if (Cheat::Option("Weed", "")) { attachobjects2("prop_weed_01"); }
-			if (Cheat::Option("Safe", "")) { attachobjects2("p_v_43_safe_s"); }
-			if (Cheat::Option("UFO", "")) { attachobjects2("p_spinning_anus_s"); }
-			if (Cheat::Option("Toilet", "")) { attachobjects2("prop_ld_toilet_01"); }
-			if (Cheat::Option("Christmas Tree", "")) { attachobjects2("prop_xmas_tree_int"); }
-			if (Cheat::Option("Windmill", "")) { attachobjects2("prop_windmill_01"); }
-			if (Cheat::Option("Radar", "")) { attachobjects2("prop_air_bigradar"); }
-			char* objects[136] = { "prop_bskball_01", "PROP_MP_RAMP_03", "PROP_MP_RAMP_02", "PROP_MP_RAMP_01", "PROP_JETSKI_RAMP_01", "PROP_WATER_RAMP_03", "PROP_VEND_SNAK_01", "PROP_TRI_START_BANNER", "PROP_TRI_FINISH_BANNER", "PROP_TEMP_BLOCK_BLOCKER", "PROP_SLUICEGATEL", "PROP_SKIP_08A", "PROP_SAM_01", "PROP_RUB_CONT_01B", "PROP_ROADCONE01A", "PROP_MP_ARROW_BARRIER_01", "PROP_HOTEL_CLOCK_01", "PROP_LIFEBLURB_02", "PROP_COFFIN_02B", "PROP_MP_NUM_1", "PROP_MP_NUM_2", "PROP_MP_NUM_3", "PROP_MP_NUM_4", "PROP_MP_NUM_5", "PROP_MP_NUM_6", "PROP_MP_NUM_7", "PROP_MP_NUM_8", "PROP_MP_NUM_9", "prop_xmas_tree_int", "prop_bumper_car_01", "prop_beer_neon_01", "prop_space_rifle", "prop_dummy_01", "prop_rub_trolley01a", "prop_wheelchair_01_s", "PROP_CS_KATANA_01", "PROP_CS_DILDO_01", "prop_armchair_01", "prop_bin_04a", "prop_chair_01a", "prop_dog_cage_01", "prop_dummy_plane", "prop_golf_bag_01", "prop_arcade_01", "hei_prop_heist_emp", "prop_alien_egg_01", "prop_air_towbar_01", "hei_prop_heist_tug", "prop_air_luggtrolley", "PROP_CUP_SAUCER_01", "prop_wheelchair_01", "prop_ld_toilet_01", "prop_acc_guitar_01", "prop_bank_vaultdoor", "p_v_43_safe_s", "p_spinning_anus_s", "prop_can_canoe", "prop_air_woodsteps", "Prop_weed_01", "prop_a_trailer_door_01", "prop_apple_box_01", "prop_air_fueltrail1", "prop_barrel_02a", "prop_barrel_float_1", "prop_barrier_wat_03b", "prop_air_fueltrail2", "prop_air_propeller01", "prop_windmill_01", "prop_Ld_ferris_wheel", "p_tram_crash_s", "p_oil_slick_01", "p_ld_stinger_s", "p_ld_soc_ball_01", "prop_juicestand", "p_oil_pjack_01_s", "prop_barbell_01", "prop_barbell_100kg", "p_parachute1_s", "p_cablecar_s", "prop_beach_fire", "prop_lev_des_barge_02", "prop_lev_des_barge_01", "prop_a_base_bars_01", "prop_beach_bars_01", "prop_air_bigradar", "prop_weed_pallet", "prop_artifact_01", "prop_attache_case_01", "prop_large_gold", "prop_roller_car_01", "prop_water_corpse_01", "prop_water_corpse_02", "prop_dummy_01", "prop_atm_01", "hei_prop_carrier_docklight_01", "hei_prop_carrier_liferafts", "hei_prop_carrier_ord_03", "hei_prop_carrier_defense_02", "hei_prop_carrier_defense_01", "hei_prop_carrier_radar_1", "hei_prop_carrier_radar_2", "hei_prop_hei_bust_01", "hei_prop_wall_alarm_on", "hei_prop_wall_light_10a_cr", "prop_afsign_amun", "prop_afsign_vbike", "prop_aircon_l_01", "prop_aircon_l_02", "prop_aircon_l_03", "prop_aircon_l_04", "prop_airhockey_01", "prop_air_bagloader", "prop_air_blastfence_01", "prop_air_blastfence_02", "prop_air_cargo_01a", "prop_air_chock_01", "prop_air_chock_03", "prop_air_gasbogey_01", "prop_air_generator_03", "prop_air_stair_02", "prop_amb_40oz_02", "prop_amb_40oz_03", "prop_amb_beer_bottle", "prop_amb_donut", "prop_amb_handbag_01", "prop_amp_01", "prop_anim_cash_pile_02", "prop_asteroid_01", "prop_arm_wrestle_01", "prop_ballistic_shield", "prop_bank_shutter", "prop_barier_conc_02b", "prop_barier_conc_05a", "prop_barrel_01a", "prop_bar_stool_01", "prop_basejump_target_01" };
+			if (Cheat::Option("Plate", "")) { Cheat::GameFunctions::AttachObjectToPed(Cheat::CheatFeatures::selectedPlayer, "p_oil_slick_01"); }
+			if (Cheat::Option("EMP", "")) { Cheat::GameFunctions::AttachObjectToPed(Cheat::CheatFeatures::selectedPlayer, "hei_prop_heist_emp"); }
+			if (Cheat::Option("Beach Fire", "")) { Cheat::GameFunctions::AttachObjectToPed(Cheat::CheatFeatures::selectedPlayer, "prop_beach_fire"); }
+			if (Cheat::Option("Orange Ball", "")) { Cheat::GameFunctions::AttachObjectToPed(Cheat::CheatFeatures::selectedPlayer, "prop_juicestand"); }
+			if (Cheat::Option("Weed", "")) { Cheat::GameFunctions::AttachObjectToPed(Cheat::CheatFeatures::selectedPlayer, "prop_weed_01"); }
+			if (Cheat::Option("Safe", "")) { Cheat::GameFunctions::AttachObjectToPed(Cheat::CheatFeatures::selectedPlayer, "p_v_43_safe_s"); }
+			if (Cheat::Option("UFO", "")) { Cheat::GameFunctions::AttachObjectToPed(Cheat::CheatFeatures::selectedPlayer, "p_spinning_anus_s"); }
+			if (Cheat::Option("Toilet", "")) { Cheat::GameFunctions::AttachObjectToPed(Cheat::CheatFeatures::selectedPlayer, "prop_ld_toilet_01"); }
+			if (Cheat::Option("Christmas Tree", "")) { Cheat::GameFunctions::AttachObjectToPed(Cheat::CheatFeatures::selectedPlayer, "prop_xmas_tree_int"); }
+			if (Cheat::Option("Windmill", "")) { Cheat::GameFunctions::AttachObjectToPed(Cheat::CheatFeatures::selectedPlayer, "prop_windmill_01"); }
+			if (Cheat::Option("Radar", "")) { Cheat::GameFunctions::AttachObjectToPed(Cheat::CheatFeatures::selectedPlayer, "prop_air_bigradar"); }
 
-			if (Cheat::Option("Delete All Objects", "")) {
-				for (int i = 0; i < 5; i++) {
-					Vector3 coords = ENTITY::GET_ENTITY_COORDS(PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(Cheat::CheatFeatures::selectedPlayer), 1);
-					GAMEPLAY::CLEAR_AREA_OF_PEDS(coords.x, coords.y, coords.z, 2, 0);
-					GAMEPLAY::CLEAR_AREA_OF_OBJECTS(coords.x, coords.y, coords.z, 2, 0);
-					GAMEPLAY::CLEAR_AREA_OF_VEHICLES(coords.x, coords.y, coords.z, 2, 0, 0, 0, 0, 0);
-					for (int i = 0; i < 136; i++) {
-						Object obj = OBJECT::GET_CLOSEST_OBJECT_OF_TYPE(coords.x, coords.y, coords.z, 4.0, GAMEPLAY::GET_HASH_KEY(objects[i]), 0, 0, 1);
+			if (Cheat::Option("Delete All Objects", "Only removes above attached objects")) 
+			{
+				const std::vector<std::string> ObjectsToRemoveArray = { "p_oil_slick_01", "hei_prop_heist_emp", "prop_beach_fire", "prop_juicestand",
+																		"prop_weed_01", "p_v_43_safe_s", "p_spinning_anus_s", "prop_ld_toilet_01", 
+																		"prop_xmas_tree_int", "prop_windmill_01", "prop_air_bigradar" };
 
-						if (ENTITY::DOES_ENTITY_EXIST(obj) && ENTITY::IS_ENTITY_ATTACHED_TO_ENTITY(obj, PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(Cheat::CheatFeatures::selectedPlayer))) {
-							Cheat::GameFunctions::RequestControlOfEnt(obj);
-							int netID = NETWORK::NETWORK_GET_NETWORK_ID_FROM_ENTITY(obj);
-							NETWORK::SET_NETWORK_ID_CAN_MIGRATE(netID, 1);
-							Cheat::GameFunctions::RequestControlOfId(netID);
-							ENTITY::DETACH_ENTITY(obj, 1, 1);
-							if (NETWORK::NETWORK_HAS_CONTROL_OF_ENTITY(obj)) {
-								ENTITY::SET_ENTITY_AS_MISSION_ENTITY(obj, 1, 1);
-								ENTITY::SET_ENTITY_AS_NO_LONGER_NEEDED(&obj);
-								ENTITY::DELETE_ENTITY(&obj);
-							}
-						}
-					}
-				}
+				for (auto const& i : ObjectsToRemoveArray) 
+				{ 
+					Cheat::GameFunctions::DetachObjectFromPed(PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(Cheat::CheatFeatures::selectedPlayer), (char*)i.c_str());
+				}			
 				notifyleft("All Objects Deleted From Player");
 			}
 		}
@@ -5125,43 +5124,43 @@ void main() {
 			if (Cheat::Option("Stop Animation", "Stop any active animations")) { Cheat::GameFunctions::ClearAllAnimations(); }
 			if (Cheat::Option("Sex Receiver", "")) {
 				Cheat::GameFunctions::ClearAllAnimations();
-				doAnimation("rcmpaparazzo_2", "shag_loop_poppy"); 
+				Cheat::GameFunctions::DoLocalPedAnimation("rcmpaparazzo_2", "shag_loop_poppy"); 
 			}
 			if (Cheat::Option("Sex Giver", "")) {
 				Cheat::GameFunctions::ClearAllAnimations();
-				doAnimation("rcmpaparazzo_2", "shag_loop_a"); 
+				Cheat::GameFunctions::DoLocalPedAnimation("rcmpaparazzo_2", "shag_loop_a"); 
 			}
 			if (Cheat::Option("Stripper Dance", "")) {
 				Cheat::GameFunctions::ClearAllAnimations();
-				doAnimation("mini@strip_club@private_dance@part1", "priv_dance_p1"); 
+				Cheat::GameFunctions::DoLocalPedAnimation("mini@strip_club@private_dance@part1", "priv_dance_p1"); 
 			}
 			if (Cheat::Option("Pole Dance", "")) {
 				Cheat::GameFunctions::ClearAllAnimations();
-				doAnimation("mini@strip_club@pole_dance@pole_dance1", "pd_dance_01"); 
+				Cheat::GameFunctions::DoLocalPedAnimation("mini@strip_club@pole_dance@pole_dance1", "pd_dance_01"); 
 			}
 			if (Cheat::Option("Push Ups", "")) {
 				Cheat::GameFunctions::ClearAllAnimations();
-				doAnimation("amb@world_human_push_ups@male@base", "base"); 
+				Cheat::GameFunctions::DoLocalPedAnimation("amb@world_human_push_ups@male@base", "base"); 
 			}
 			if (Cheat::Option("Sit Ups", "")) {
 				Cheat::GameFunctions::ClearAllAnimations();
-				doAnimation("amb@world_human_sit_ups@male@base", "base"); 
+				Cheat::GameFunctions::DoLocalPedAnimation("amb@world_human_sit_ups@male@base", "base"); 
 			}
 			if (Cheat::Option("Celebrate", "")) { 
 				Cheat::GameFunctions::ClearAllAnimations();
-				doAnimation("rcmfanatic1celebrate", "celebrate"); 
+				Cheat::GameFunctions::DoLocalPedAnimation("rcmfanatic1celebrate", "celebrate"); 
 			}
 			if (Cheat::Option("Electrocution", "")) {
 				Cheat::GameFunctions::ClearAllAnimations();
-				doAnimation("ragdoll@human", "electrocute"); 
+				Cheat::GameFunctions::DoLocalPedAnimation("ragdoll@human", "electrocute"); 
 			}
 			if (Cheat::Option("Suicide", "")) {
 				Cheat::GameFunctions::ClearAllAnimations();
-				doAnimation("mp_suicide", "pistol"); 
+				Cheat::GameFunctions::DoLocalPedAnimation("mp_suicide", "pistol"); 
 			}
 			if (Cheat::Option("Showering", "")) {
 				Cheat::GameFunctions::ClearAllAnimations();
-				doAnimation("mp_safehouseshower@male@", "male_shower_idle_b"); 
+				Cheat::GameFunctions::DoLocalPedAnimation("mp_safehouseshower@male@", "male_shower_idle_b"); 
 			}
 		}
 		break; 

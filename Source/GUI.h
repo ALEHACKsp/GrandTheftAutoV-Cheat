@@ -35,7 +35,6 @@ enum SubMenus {
 	allplayers,
 	modelchanger,
 	vehiclespawnermenu,
-	//Vehicle Spawner Types
 	Super,
 	Sports,
 	smugglersrun,
@@ -70,7 +69,6 @@ enum SubMenus {
 	arenawardlc, 
 	casinodlc,
 	diamondcasinoheist,
-	//Vehicle Spawner Types
 	networkoptions,
 	animations,
 	timemenu,

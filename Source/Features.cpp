@@ -19,6 +19,9 @@ void Cheat::CheatFeatures::Looped()
 		Cheat::GameFunctions::InstructionsEnd();
 	}
 
+	//New Session Member Notification Feature
+	Cheat::GameFunctions::CheckNewSessionMembersLoop();
+
 	//Speedometer
 	if (PED::IS_PED_IN_ANY_VEHICLE(PlayerPedID, 0)) {
 		std::ostringstream Speed;

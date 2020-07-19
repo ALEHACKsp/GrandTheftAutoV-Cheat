@@ -108,9 +108,6 @@ void Cheat::CheatFunctions::CheatThreadLoopFunctions()
 	PlayerID = PLAYER::PLAYER_ID();
 	PlayerPedID = PLAYER::PLAYER_PED_ID();
 
-	//New Session Member Notification Feature
-	Cheat::GameFunctions::CheckNewSessionMembersLoop();
-
 	//Features
 	Cheat::CheatFeatures::Looped();
 }

@@ -3354,10 +3354,6 @@ void PlaySoundFrontend_default(char* sound_name)
 {
 	AUDIO::PLAY_SOUND_FRONTEND(-1, sound_name, "HUD_FRONTEND_DEFAULT_SOUNDSET", 0);
 }
-void PlaySoundFrontend_default2(char* sound_name)
-{
-	AUDIO::PLAY_SOUND_FRONTEND(-1, sound_name, "DLC_HEIST_BIOLAB_PREP_HACKING_SOUNDS", 0);
-}
 
 int Cheat::Settings::keyPressDelay = 200;
 int Cheat::Settings::keyPressPreviousTick = GetTickCount();
@@ -3786,7 +3782,7 @@ void Cheat::SaveTheme(char* ThemeFileName)
 	std::string ThemeFolderPath = Cheat::CheatFunctions::ReturnCheatModuleDirectoryPath() + (std::string)"\\gtav\\Themes";
 	if (!Cheat::CheatFunctions::DoesDirectoryExists(Cheat::CheatFunctions::ReturnCheatModuleDirectoryPath() + (std::string)"\\gtav\\Themes")) { Cheat::CheatFunctions::CreateNewDirectory(ThemeFolderPath); }
 
-	Cheat::Files::WriteStringToIni("1.3", ThemeFilePath, "THEME", "theme_loader_version");
+	Cheat::Files::WriteStringToIni("1.0", ThemeFilePath, "THEME", "theme_loader_version");
 	Cheat::Files::WriteBoolToIni(show_header_background, ThemeFilePath, "THEME", "show_header_background");
 	Cheat::Files::WriteBoolToIni(show_header_gui, ThemeFilePath, "THEME", "show_header_gui");
 	Cheat::Files::WriteBoolToIni(Cheat::Settings::RestorePreviousSubmenu, ThemeFilePath, "THEME", "restore_previous_submenu");

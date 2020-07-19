@@ -1,4 +1,4 @@
-# Grand TheftAuto V Cheat
+# Grand Theft Auto V Cheat
 
 Cheat for Grand Theft Auto V. The "nano42" code base was originally used with this project a few years ago, since than various changes have been made to it; new features and improvements.
 

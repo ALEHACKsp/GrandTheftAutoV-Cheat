@@ -269,6 +269,7 @@ Vector3 Cheat::GameFunctions::RotationToDirection(Vector3 rot) {
 void Cheat::GameFunctions::SetRankRockstarGift(int RPValue)
 {
 	if (RPValue < 0 || RPValue > 8000) { notifyleft(xorstr_("Invalid Rank Inputted")); return; }
+
 	int iVar0;
 	STATS::STAT_GET_INT(GAMEPLAY::GET_HASH_KEY(xorstr_("mpply_last_mp_char")), &iVar0, -1);
 	if (iVar0 == 0) 
@@ -279,6 +280,7 @@ void Cheat::GameFunctions::SetRankRockstarGift(int RPValue)
 	{
 		STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY(xorstr_("MP1_CHAR_SET_RP_GIFT_ADMIN")), Cheat::GameArrays::RankPointsArray[RPValue - 1], 0);
 	}
+	notifyleft("Join a new GTAO session for the new ranked to be applied");
 }
 
 

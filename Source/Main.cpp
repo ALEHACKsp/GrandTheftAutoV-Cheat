@@ -1613,194 +1613,72 @@ void main() {
 				while (GAMEPLAY::UPDATE_ONSCREEN_KEYBOARD() == 0) WAIT(0);
 				char* CustomRankChar0 = GAMEPLAY::GET_ONSCREEN_KEYBOARD_RESULT();
 
-				if (!GAMEPLAY::GET_ONSCREEN_KEYBOARD_RESULT()) {
-					break;
-				}
+				if (!GAMEPLAY::GET_ONSCREEN_KEYBOARD_RESULT()) { break; }
 
-				Cheat::GameFunctions::SetRankRockstarGift(std::stoi(CustomRankChar0));
-				notifyleft("Join a new GTAO session for the new ranked to be applied");
+				try 
+				{
+					Cheat::GameFunctions::SetRankRockstarGift(std::stoi(CustomRankChar0));
+				}
+				catch (...)
+				{
+					notifyleft("That is not a valid Rank. Only digits are supported.");
+				}
 			}
 			if (Cheat::Option("Rank 1",""))
 			{
-				int iVar0 = 0;
-				STATS::STAT_GET_INT(GAMEPLAY::GET_HASH_KEY("mpply_last_mp_char"), &iVar0, -1);
-
-				if (iVar0 == 0) {
-					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP0_CHAR_SET_RP_GIFT_ADMIN"), 0, 0);
-				}
-				if (iVar0 == 1) {
-					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP1_CHAR_SET_RP_GIFT_ADMIN"), 0, 0);
-				}
-				notifyleft("~g~Leave and join another session for the changes to be applied.");
+				Cheat::GameFunctions::SetRankRockstarGift(1);
 			}
 			if (Cheat::Option("Rank 25", ""))
 			{
-				int iVar0 = 0;
-				STATS::STAT_GET_INT(GAMEPLAY::GET_HASH_KEY("mpply_last_mp_char"), &iVar0, -1);
-
-				if (iVar0 == 0) {
-					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP0_CHAR_SET_RP_GIFT_ADMIN"), 127100, 0);
-				}
-				if (iVar0 == 1) {
-					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP1_CHAR_SET_RP_GIFT_ADMIN"), 127100, 0);
-				}
-				notifyleft("~g~Leave and join another session for the changes to be applied.");
+				Cheat::GameFunctions::SetRankRockstarGift(25);
 			}
 			if (Cheat::Option("Rank 50", ""))
 			{
-				int iVar0 = 0;
-				STATS::STAT_GET_INT(GAMEPLAY::GET_HASH_KEY("mpply_last_mp_char"), &iVar0, -1);
-
-				if (iVar0 == 0) {
-					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP0_CHAR_SET_RP_GIFT_ADMIN"), 448800, 0);
-				}
-				if (iVar0 == 1) {
-					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP1_CHAR_SET_RP_GIFT_ADMIN"), 448800, 0);
-				}
-				notifyleft("~g~Leave and join another session for the changes to be applied.");
+				Cheat::GameFunctions::SetRankRockstarGift(50);
 			}
 			if (Cheat::Option("Rank 100", ""))
 			{
-				int iVar0 = 0;
-				STATS::STAT_GET_INT(GAMEPLAY::GET_HASH_KEY("mpply_last_mp_char"), &iVar0, -1);
-
-				if (iVar0 == 0) {
-					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP0_CHAR_SET_RP_GIFT_ADMIN"), 1584350, 0);
-				}
-				if (iVar0 == 1) {
-					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP1_CHAR_SET_RP_GIFT_ADMIN"), 1584350, 0);
-				}
-				notifyleft("~g~Leave and join another session for the changes to be applied.");
+				Cheat::GameFunctions::SetRankRockstarGift(100);
 			}
 			if (Cheat::Option("Rank 120", ""))
 			{
-				int iVar0 = 0;
-				STATS::STAT_GET_INT(GAMEPLAY::GET_HASH_KEY("mpply_last_mp_char"), &iVar0, -1);
-
-				if (iVar0 == 0) {
-					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP0_CHAR_SET_RP_GIFT_ADMIN"), 2165850, 0);
-				}
-				if (iVar0 == 1) {
-					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP1_CHAR_SET_RP_GIFT_ADMIN"), 2165850, 0);
-				}
-				notifyleft("~g~Leave and join another session for the changes to be applied.");
+				Cheat::GameFunctions::SetRankRockstarGift(120);
 			}
 			if (Cheat::Option("Rank 135", ""))
 			{
-				int iVar0 = 0;
-				STATS::STAT_GET_INT(GAMEPLAY::GET_HASH_KEY("mpply_last_mp_char"), &iVar0, -1);
-
-				if (iVar0 == 0) {
-					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP0_CHAR_SET_RP_GIFT_ADMIN"), 2615100, 0);
-				}
-				if (iVar0 == 1) {
-					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP1_CHAR_SET_RP_GIFT_ADMIN"), 2615100, 0);
-				}
-				notifyleft("~g~Leave and join another session for the changes to be applied.");
+				Cheat::GameFunctions::SetRankRockstarGift(135);
 			}
 			if (Cheat::Option("Rank 200", ""))
 			{
-				int iVar0 = 0;
-				STATS::STAT_GET_INT(GAMEPLAY::GET_HASH_KEY("mpply_last_mp_char"), &iVar0, -1);
-
-				if (iVar0 == 0) {
-					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP0_CHAR_SET_RP_GIFT_ADMIN"), 4691850, 0);
-				}
-				if (iVar0 == 1) {
-					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP1_CHAR_SET_RP_GIFT_ADMIN"), 4691850, 0);
-				}
-				notifyleft("~g~Leave and join another session for the changes to be applied.");
+				Cheat::GameFunctions::SetRankRockstarGift(200);
 			}
 			if (Cheat::Option("Rank 300", ""))
 			{
-				int iVar0 = 0;
-				STATS::STAT_GET_INT(GAMEPLAY::GET_HASH_KEY("mpply_last_mp_char"), &iVar0, -1);
-
-				if (iVar0 == 0) {
-					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP0_CHAR_SET_RP_GIFT_ADMIN"), 8299350, 0);
-				}
-				if (iVar0 == 1) {
-					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP1_CHAR_SET_RP_GIFT_ADMIN"), 8299350, 0);
-				}
-				notifyleft("~g~Leave and join another session for the changes to be applied.");
+				Cheat::GameFunctions::SetRankRockstarGift(300);
 			}
 			if (Cheat::Option("Rank 500", ""))
 			{
-				int iVar0 = 0;
-				STATS::STAT_GET_INT(GAMEPLAY::GET_HASH_KEY("mpply_last_mp_char"), &iVar0, -1);
-
-				if (iVar0 == 0) {
-					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP0_CHAR_SET_RP_GIFT_ADMIN"), 17014350, 0);
-				}
-				if (iVar0 == 1) {
-					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP1_CHAR_SET_RP_GIFT_ADMIN"), 17014350, 0);
-				}
-				notifyleft("~g~Leave and join another session for the changes to be applied.");
+				Cheat::GameFunctions::SetRankRockstarGift(500);
 			}
 			if (Cheat::Option("Rank 750", ""))
 			{
-				int iVar0 = 0;
-				STATS::STAT_GET_INT(GAMEPLAY::GET_HASH_KEY("mpply_last_mp_char"), &iVar0, -1);
-
-				if (iVar0 == 0) {
-					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP0_CHAR_SET_RP_GIFT_ADMIN"), 30720600, 0);
-				}
-				if (iVar0 == 1) {
-					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP1_CHAR_SET_RP_GIFT_ADMIN"), 30720600, 0);
-				}
-				notifyleft("~g~Leave and join another session for the changes to be applied.");
+				Cheat::GameFunctions::SetRankRockstarGift(750);
 			}
 			if (Cheat::Option("Rank 1000", ""))
 			{
-				int iVar0 = 0;
-				STATS::STAT_GET_INT(GAMEPLAY::GET_HASH_KEY("mpply_last_mp_char"), &iVar0, -1);
-
-				if (iVar0 == 0) {
-					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP0_CHAR_SET_RP_GIFT_ADMIN"), 47551850, 0);
-				}
-				if (iVar0 == 1) {
-					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP1_CHAR_SET_RP_GIFT_ADMIN"), 47551850, 0);
-				}
-				notifyleft("~g~Leave and join another session for the changes to be applied.");
+				Cheat::GameFunctions::SetRankRockstarGift(1000);
 			}
 			if (Cheat::Option("Rank 2000", ""))
 			{
-				int iVar0 = 0;
-				STATS::STAT_GET_INT(GAMEPLAY::GET_HASH_KEY("mpply_last_mp_char"), &iVar0, -1);
-
-				if (iVar0 == 0) {
-					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP0_CHAR_SET_RP_GIFT_ADMIN"), 146126850, 0);
-				}
-				if (iVar0 == 1) {
-					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP1_CHAR_SET_RP_GIFT_ADMIN"), 146126850, 0);
-				}
-				notifyleft("~g~Leave and join another session for the changes to be applied.");
+				Cheat::GameFunctions::SetRankRockstarGift(2000);
 			}
 			if (Cheat::Option("Rank 5000", ""))
 			{	
-				int iVar0 = 0;
-				STATS::STAT_GET_INT(GAMEPLAY::GET_HASH_KEY("mpply_last_mp_char"), &iVar0, -1);
-
-				if (iVar0 == 0) {
-					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP0_CHAR_SET_RP_GIFT_ADMIN"), 741851850, 0);
-				}
-				if (iVar0 == 1) {
-					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP1_CHAR_SET_RP_GIFT_ADMIN"), 741851850, 0);
-				}
-				notifyleft("~g~Leave and join another session for the changes to be applied.");
+				Cheat::GameFunctions::SetRankRockstarGift(5000);
 			}
 			if (Cheat::Option("Rank 8000", "Seems legit :-)"))
 			{
-				int iVar0 = 0;
-				STATS::STAT_GET_INT(GAMEPLAY::GET_HASH_KEY("mpply_last_mp_char"), &iVar0, -1);
-
-				if (iVar0 == 0) {
-					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP0_CHAR_SET_RP_GIFT_ADMIN"), 1787576850, 0);
-				}
-				if (iVar0 == 1) {
-					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP1_CHAR_SET_RP_GIFT_ADMIN"), 1787576850, 0);
-				}
-				notifyleft("~g~Leave and join another session for the changes to be applied.");
+				Cheat::GameFunctions::SetRankRockstarGift(8000);
 			}
 		}
 		break; 	

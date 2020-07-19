@@ -54,7 +54,7 @@ float conv360(float base, float min, float max)
 }
 
 
-float Cheat::Settings::menuX = 0.17f;
+float Cheat::Settings::menuX = 0.11f;
 const char* OptionInformationText;
 bool ShowVehiclePreviews = true;
 bool Cheat::Settings::selectPressed = false;

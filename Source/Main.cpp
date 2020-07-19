@@ -4947,17 +4947,17 @@ void main() {
 			Cheat::GameFunctions::DrawMarkerAbovePlayer(2, Cheat::CheatFeatures::selectedPlayer, { 0, 0, 255, 255 });
 			Cheat::GameFunctions::LoadPlayerInformation(PLAYER::GET_PLAYER_NAME(Cheat::CheatFeatures::selectedPlayer), Cheat::CheatFeatures::selectedPlayer);
 			Cheat::Title("Attach Options");
-			if (Cheat::Option("Plate", "")) { Cheat::GameFunctions::AttachObjectToPed(Cheat::CheatFeatures::selectedPlayer, "p_oil_slick_01"); }
-			if (Cheat::Option("EMP", "")) { Cheat::GameFunctions::AttachObjectToPed(Cheat::CheatFeatures::selectedPlayer, "hei_prop_heist_emp"); }
-			if (Cheat::Option("Beach Fire", "")) { Cheat::GameFunctions::AttachObjectToPed(Cheat::CheatFeatures::selectedPlayer, "prop_beach_fire"); }
-			if (Cheat::Option("Orange Ball", "")) { Cheat::GameFunctions::AttachObjectToPed(Cheat::CheatFeatures::selectedPlayer, "prop_juicestand"); }
-			if (Cheat::Option("Weed", "")) { Cheat::GameFunctions::AttachObjectToPed(Cheat::CheatFeatures::selectedPlayer, "prop_weed_01"); }
-			if (Cheat::Option("Safe", "")) { Cheat::GameFunctions::AttachObjectToPed(Cheat::CheatFeatures::selectedPlayer, "p_v_43_safe_s"); }
-			if (Cheat::Option("UFO", "")) { Cheat::GameFunctions::AttachObjectToPed(Cheat::CheatFeatures::selectedPlayer, "p_spinning_anus_s"); }
-			if (Cheat::Option("Toilet", "")) { Cheat::GameFunctions::AttachObjectToPed(Cheat::CheatFeatures::selectedPlayer, "prop_ld_toilet_01"); }
-			if (Cheat::Option("Christmas Tree", "")) { Cheat::GameFunctions::AttachObjectToPed(Cheat::CheatFeatures::selectedPlayer, "prop_xmas_tree_int"); }
-			if (Cheat::Option("Windmill", "")) { Cheat::GameFunctions::AttachObjectToPed(Cheat::CheatFeatures::selectedPlayer, "prop_windmill_01"); }
-			if (Cheat::Option("Radar", "")) { Cheat::GameFunctions::AttachObjectToPed(Cheat::CheatFeatures::selectedPlayer, "prop_air_bigradar"); }
+			if (Cheat::Option("Plate", ""))				{ Cheat::GameFunctions::AttachObjectToPed(Cheat::CheatFeatures::selectedPlayer, "p_oil_slick_01"); }
+			if (Cheat::Option("EMP", ""))				{ Cheat::GameFunctions::AttachObjectToPed(Cheat::CheatFeatures::selectedPlayer, "hei_prop_heist_emp"); }
+			if (Cheat::Option("Beach Fire", ""))		{ Cheat::GameFunctions::AttachObjectToPed(Cheat::CheatFeatures::selectedPlayer, "prop_beach_fire"); }
+			if (Cheat::Option("Orange Ball", ""))		{ Cheat::GameFunctions::AttachObjectToPed(Cheat::CheatFeatures::selectedPlayer, "prop_juicestand"); }
+			if (Cheat::Option("Weed", ""))				{ Cheat::GameFunctions::AttachObjectToPed(Cheat::CheatFeatures::selectedPlayer, "prop_weed_01"); }
+			if (Cheat::Option("Safe", ""))				{ Cheat::GameFunctions::AttachObjectToPed(Cheat::CheatFeatures::selectedPlayer, "p_v_43_safe_s"); }
+			if (Cheat::Option("UFO", ""))				{ Cheat::GameFunctions::AttachObjectToPed(Cheat::CheatFeatures::selectedPlayer, "p_spinning_anus_s"); }
+			if (Cheat::Option("Toilet", ""))			{ Cheat::GameFunctions::AttachObjectToPed(Cheat::CheatFeatures::selectedPlayer, "prop_ld_toilet_01"); }
+			if (Cheat::Option("Christmas Tree", ""))	{ Cheat::GameFunctions::AttachObjectToPed(Cheat::CheatFeatures::selectedPlayer, "prop_xmas_tree_int"); }
+			if (Cheat::Option("Windmill", ""))			{ Cheat::GameFunctions::AttachObjectToPed(Cheat::CheatFeatures::selectedPlayer, "prop_windmill_01"); }
+			if (Cheat::Option("Radar", ""))				{ Cheat::GameFunctions::AttachObjectToPed(Cheat::CheatFeatures::selectedPlayer, "prop_air_bigradar"); }
 
 			if (Cheat::Option("Delete All Objects", "Only removes above attached objects")) 
 			{

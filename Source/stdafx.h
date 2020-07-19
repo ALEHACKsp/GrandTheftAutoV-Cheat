@@ -450,6 +450,7 @@ namespace Cheat {
 		void DebugMessage(char* Message);
 	}
 	namespace GameArrays {
+		extern int RankPointsArray[8000];
 		extern const std::vector<std::string> PedModels;
 		extern const std::vector<std::string> BoatModels;
 		extern const std::vector<std::string> SmugglersRunModels;

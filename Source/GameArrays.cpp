@@ -1,5 +1,3 @@
-// DEV
-
 #include "stdafx.h"
 
 

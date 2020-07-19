@@ -1,5 +1,3 @@
-// DEV
-
 #include "stdafx.h"
 
 int Cheat::CheatFeatures::speedometer_vector_position = 0;

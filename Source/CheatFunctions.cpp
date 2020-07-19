@@ -1,5 +1,3 @@
-// DEV
-
 #include "stdafx.h"
 
 
@@ -51,57 +49,9 @@ int Cheat::CheatFunctions::MessageBoxWithAutoClose(HWND hWnd, const WCHAR* sText
 }
 
 
-int Cheat::CheatFunctions::getProcessID(const std::string& p_name)
+std::string Cheat::CheatFunctions::ReturnCheatCompileDateTime()
 {
-	HANDLE snapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
-	PROCESSENTRY32 structprocsnapshot = { 0 };
-
-	std::wstring stemp = std::wstring(p_name.begin(), p_name.end());
-	LPCWSTR sw = stemp.c_str();
-
-	structprocsnapshot.dwSize = sizeof(PROCESSENTRY32);
-
-	if (snapshot == INVALID_HANDLE_VALUE)return 0;
-	if (Process32First(snapshot, &structprocsnapshot) == FALSE)return 0;
-
-	while (Process32Next(snapshot, &structprocsnapshot))
-	{
-		if (!lstrcmpW(structprocsnapshot.szExeFile, sw))
-		{
-			CloseHandle(snapshot);
-			return structprocsnapshot.th32ProcessID;
-		}
-	}
-	CloseHandle(snapshot);
-	return 0;
-}
-
-int Cheat::CheatFunctions::ReturnCurrentDay()
-{
-	time_t t = time(NULL);
-	tm* timePtr = localtime(&t);
-	return timePtr->tm_mday;
-}
-
-int Cheat::CheatFunctions::ReturnCurrentMonth()
-{
-	time_t t = time(NULL);
-	tm* timePtr = localtime(&t);
-	return timePtr->tm_mon;
-}
-
-int Cheat::CheatFunctions::ReturnCurrentYear()
-{
-	time_t t = time(NULL);
-	tm* timePtr = localtime(&t);
-	return timePtr->tm_year + 1900;
-}
-
-
-char* Cheat::CheatFunctions::ReturnCheatCompileDateTime()
-{
-	std::string String = xorstr_("Compile Date/Time: ") + (std::string) __DATE__ + xorstr_(" ") + (std::string)__TIME__;
-	return (char*)String.c_str();
+	return xorstr_("Compile Date/Time: ") + (std::string) __DATE__ + xorstr_(" ") + (std::string)__TIME__;
 }
 
 
@@ -172,7 +122,7 @@ std::string Cheat::CheatFunctions::GetLastErrorAsString()
 
 Player PlayerID;
 Ped PlayerPedID;
-void Cheat::CheatFunctions::MenuThreadLoopFunctions()
+void Cheat::CheatFunctions::CheatThreadLoopFunctions()
 {
 	//Load MP vehicles in SP bypass
 	globalHandle(4268190).As<BOOL>() = true;
@@ -196,52 +146,6 @@ bool Cheat::CheatFunctions::IsGameWindowFocussed()
 	if (GameWindowHandle == HandleProcessWithKeyboardFocus) { return true; } else { return false; }
 }
 
-std::string Cheat::CheatFunctions::ReturnFirstDriveSerialNumber() {
-	//get a handle to the first physical drive
-	HANDLE h = CreateFileW(xorstr_(L"\\\\.\\PhysicalDrive0"), 0, FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_EXISTING, 0, NULL);
-	if (h == INVALID_HANDLE_VALUE) return xorstr_("invalid_drive");
-	//an std::unique_ptr is used to perform cleanup automatically when returning (i.e. to avoid code duplication)
-	std::unique_ptr<std::remove_pointer<HANDLE>::type, void(*)(HANDLE)> hDevice{ h, [](HANDLE handle) {CloseHandle(handle); } };
-	//initialize a STORAGE_PROPERTY_QUERY data structure (to be used as input to DeviceIoControl)
-	STORAGE_PROPERTY_QUERY storagePropertyQuery{};
-	storagePropertyQuery.PropertyId = StorageDeviceProperty;
-	storagePropertyQuery.QueryType = PropertyStandardQuery;
-	//initialize a STORAGE_DESCRIPTOR_HEADER data structure (to be used as output from DeviceIoControl)
-	STORAGE_DESCRIPTOR_HEADER storageDescriptorHeader{};
-	//the next call to DeviceIoControl retrieves necessary size (in order to allocate a suitable buffer)
-	//call DeviceIoControl and return an empty std::string on failure
-	DWORD dwBytesReturned = 0;
-	if (!DeviceIoControl(hDevice.get(), IOCTL_STORAGE_QUERY_PROPERTY, &storagePropertyQuery, sizeof(STORAGE_PROPERTY_QUERY),
-		&storageDescriptorHeader, sizeof(STORAGE_DESCRIPTOR_HEADER), &dwBytesReturned, NULL))
-		return xorstr_("invalid_drive");
-	//allocate a suitable buffer
-	const DWORD dwOutBufferSize = storageDescriptorHeader.Size;
-	std::unique_ptr<BYTE[]> pOutBuffer{ new BYTE[dwOutBufferSize]{} };
-	//call DeviceIoControl with the allocated buffer
-	if (!DeviceIoControl(hDevice.get(), IOCTL_STORAGE_QUERY_PROPERTY, &storagePropertyQuery, sizeof(STORAGE_PROPERTY_QUERY),
-		pOutBuffer.get(), dwOutBufferSize, &dwBytesReturned, NULL))
-		return xorstr_("invalid_drive");
-	//read and return the serial number out of the output buffer
-	STORAGE_DEVICE_DESCRIPTOR* pDeviceDescriptor = reinterpret_cast<STORAGE_DEVICE_DESCRIPTOR*>(pOutBuffer.get());
-	const DWORD dwSerialNumberOffset = pDeviceDescriptor->SerialNumberOffset;
-	if (dwSerialNumberOffset == 0) return xorstr_("invalid_drive");
-	const char* serialNumber = reinterpret_cast<const char*>(pOutBuffer.get() + dwSerialNumberOffset);
-	return serialNumber;
-}
-
-CString Cheat::CheatFunctions::GetStringFromRegistry(HKEY keyParent, CString keyName, CString keyValName)
-{
-	CRegKey key;
-	CString out;
-	if (key.Open(keyParent, keyName, KEY_READ) == ERROR_SUCCESS)
-	{
-		ULONG len = 256;
-		key.QueryStringValue(keyValName, out.GetBuffer(256), &len);
-		out.ReleaseBuffer();
-		key.Close();
-	}
-	return out;
-}
 
 bool Cheat::CheatFunctions::StringIsInteger(const std::string& s)
 {
@@ -253,53 +157,6 @@ bool Cheat::CheatFunctions::IsIntegerInRange(unsigned low, unsigned high, unsign
 	return  ((x - low) <= (high - low));
 }
 
-static const std::string base64_chars =
-xorstr_("ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-"abcdefghijklmnopqrstuvwxyz"
-"0123456789+/");
-
-std::string Cheat::CheatFunctions::base64_encode(unsigned char const* bytes_to_encode, unsigned int in_len) {
-	std::string ret;
-	int i = 0;
-	int j = 0;
-	unsigned char char_array_3[3];
-	unsigned char char_array_4[4];
-
-	while (in_len--) {
-		char_array_3[i++] = *(bytes_to_encode++);
-		if (i == 3) {
-			char_array_4[0] = (char_array_3[0] & 0xfc) >> 2;
-			char_array_4[1] = ((char_array_3[0] & 0x03) << 4) + ((char_array_3[1] & 0xf0) >> 4);
-			char_array_4[2] = ((char_array_3[1] & 0x0f) << 2) + ((char_array_3[2] & 0xc0) >> 6);
-			char_array_4[3] = char_array_3[2] & 0x3f;
-
-			for (i = 0; (i < 4); i++)
-				ret += base64_chars[char_array_4[i]];
-			i = 0;
-		}
-	}
-
-	if (i)
-	{
-		for (j = i; j < 3; j++)
-			char_array_3[j] = '\0';
-
-		char_array_4[0] = (char_array_3[0] & 0xfc) >> 2;
-		char_array_4[1] = ((char_array_3[0] & 0x03) << 4) + ((char_array_3[1] & 0xf0) >> 4);
-		char_array_4[2] = ((char_array_3[1] & 0x0f) << 2) + ((char_array_3[2] & 0xc0) >> 6);
-		char_array_4[3] = char_array_3[2] & 0x3f;
-
-		for (j = 0; (j < i + 1); j++)
-			ret += base64_chars[char_array_4[j]];
-
-		while ((i++ < 3))
-			ret += '=';
-
-	}
-
-	return ret;
-
-}
 
 __int64 Cheat::CheatFunctions::FileSize(const wchar_t* name)
 {
@@ -652,4 +509,9 @@ void Cheat::CheatFunctions::PostInitCheat()
 	Cheat::CheatFunctions::LoadSettings(true); // Load config.ini
 	notifyleft(xorstr_("GTAV Cheat Loaded"));
 	Cheat::LogFunctions::Message(xorstr_("GTAV Cheat Initialization Completed"));
+}
+
+char* Cheat::CheatFunctions::StringToChar(std::string string)
+{
+	return _strdup(string.c_str());
 }

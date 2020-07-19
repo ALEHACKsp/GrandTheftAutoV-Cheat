@@ -1,5 +1,3 @@
-// DEV
-
 #pragma once
 #include "stdafx.h"
 
@@ -215,14 +213,14 @@ void __stdcall ScriptFunction(LPVOID lpParameter)
 {
 	try
 	{
-		ScriptMain();
+		Cheat::ScriptMain();
 	}
 	catch (...)
 	{
 		char Message[100];
 		snprintf(Message, sizeof(Message), xorstr_("Unhandled Exception. WinAPI error code (if any) %s"), (char*)Cheat::CheatFunctions::GetLastErrorAsString().c_str());
 		Cheat::LogFunctions::Error(Message);
-		::exit(0);
+		std::exit(EXIT_SUCCESS);
 	}
 }
 
@@ -393,7 +391,7 @@ void failPat(const char* name)
 	char Message[100];
 	snprintf(Message, sizeof(Message), xorstr_("Failed to find game pattern\n\nPattern: %s"), name);
 	Cheat::LogFunctions::Error(Message);
-	::exit(0);
+	std::exit(EXIT_SUCCESS);
 }
 
 template <typename T>
@@ -461,8 +459,6 @@ void Hooking::MenuInitialization()
 	Cheat::LogFunctions::Message(xorstr_("Allocating Console"));
 	CreateConsole();
 	Cheat::LogFunctions::Init();
-	HANDLE GTAV = GetModuleHandleA(xorstr_("GTA5.exe"));
-	if (!GTAV) { Cheat::LogFunctions::Error(xorstr_("Invalid module")); ::exit(0); }
 	Cheat::LogFunctions::Message(xorstr_("Creating Cheat Main Fiber"));
 	DoGameHooking();
 }
@@ -591,7 +587,7 @@ void Hooking::DoGameHooking()
 	Cheat::LogFunctions::Message(xorstr_("Grand Theft Auto V Completed Loading"));
 
 
-	if (!InitializeHooks()) ::exit(0);
+	if (!InitializeHooks()) { std::exit(EXIT_SUCCESS); }
 }
 
 static Hooking::NativeHandler _Handler(uint64_t origHash)

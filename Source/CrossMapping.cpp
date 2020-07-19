@@ -1,5 +1,3 @@
-// DEV
-
 #include "stdafx.h"
 #include <mmsystem.h>
 ::std::unordered_map<uint64_t, uint64_t> nativeHashMap;

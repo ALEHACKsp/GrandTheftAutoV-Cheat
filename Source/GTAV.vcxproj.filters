@@ -57,9 +57,6 @@
     <ClInclude Include="natives.h">
       <Filter>Header Files\Game Hooking</Filter>
     </ClInclude>
-    <ClInclude Include="Main.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Memory.h">
       <Filter>Header Files\Game Hooking</Filter>
     </ClInclude>
@@ -106,6 +103,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="GTAVCheat.rc" />
+    <ResourceCompile Include="GTAV.rc" />
   </ItemGroup>
 </Project>

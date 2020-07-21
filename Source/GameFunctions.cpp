@@ -1,46 +1,5 @@
 #include "stdafx.h"
 
-/*
-//NOTIFICATIONS
-Colors:
-~r~ = Red
-~b~ = Blue
-~g~ = Green
-~y~ = Yellow
-~p~ = Purple
-~o~ = Orange
-~c~ = Grey
-~m~ = Dark Grey
-~u~ = Black
-~n~ = Skip Line
-~s~ = White
-~d~ = dark blue
-~f~ = light blue
-~l~ = black
-~t~ = gray
-~v~ = black
-
-
-Fonts:
-~italic~ = italic font
-~bold~ = bold font
-
-~r~ = Red
-~b~ = Blue
-~g~ = Green
-~y~ = Yellow
-~p~ = Purple
-~o~ = Orange
-~c~ = Grey
-~m~ = Darker Grey
-~u~ = Black
-~n~ = New Line
-~s~ = Default White
-~w~ = White
-~h~ = Bold Text
-
-*/
-
 
 float Cheat::GameFunctions::GetGameFramesPerSecond()
 {
@@ -217,11 +176,14 @@ bool Cheat::GameFunctions::IsPlayerFriend(Player player)
 	{
 		BplayerFriend = NETWORK::NETWORK_IS_FRIEND(&handle[0]);
 	}
-	if (BplayerFriend == 1)
-		bplayerFriend = true;
+	if (BplayerFriend == 1) 
+	{ 
+		bplayerFriend = true; 
+	}
 	else
+	{
 		bplayerFriend = false;
-
+	}
 	return bplayerFriend;
 }
 
@@ -537,19 +499,20 @@ void notifyleft(char* msg)
 }
 
 Vector3 TPCoords;
-void TPto(Vector3 Coords)
+void Cheat::GameFunctions::TPto(Vector3 Coords)
 {
-	int Handle = PlayerPedID;
-	if (PED::IS_PED_IN_ANY_VEHICLE(Handle, 0))
+	if (PED::IS_PED_IN_ANY_VEHICLE(PlayerPedID, 0))
 	{
-		ENTITY::SET_ENTITY_COORDS(PED::GET_VEHICLE_PED_IS_IN(Handle, false), Coords.x, Coords.y, Coords.z, 0, 0, 0, 1);
+		ENTITY::SET_ENTITY_COORDS(PED::GET_VEHICLE_PED_IS_IN(PlayerPedID, false), Coords.x, Coords.y, Coords.z, 0, 0, 0, 1);
 	}
 	else
-		ENTITY::SET_ENTITY_COORDS(Handle, Coords.x, Coords.y, Coords.z, 0, 0, 0, 1);
+	{
+		ENTITY::SET_ENTITY_COORDS(PlayerPedID, Coords.x, Coords.y, Coords.z, 0, 0, 0, 1);
+	}
 }
 
 char* Cheat::GameFunctions::CharKeyboard(char* windowName, int maxInput, char* defaultText) {
-	GAMEPLAY::DISPLAY_ONSCREEN_KEYBOARD(0, "", "", defaultText, "", "", "", maxInput);
+	GAMEPLAY::DISPLAY_ONSCREEN_KEYBOARD(0, "", windowName, defaultText, "", "", "", maxInput);
 	while (GAMEPLAY::UPDATE_ONSCREEN_KEYBOARD() == 0) WAIT(0);
 	if (!GAMEPLAY::GET_ONSCREEN_KEYBOARD_RESULT()) return "";
 	return GAMEPLAY::GET_ONSCREEN_KEYBOARD_RESULT();

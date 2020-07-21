@@ -130,9 +130,10 @@ void main() {
 			if (Cheat::Option("Trap All Players", ""))
 			{
 				for (int i = 1; i < 32; i++) {
-					if (PlayerID != i) {
+					if (PlayerID != i) 
+					{
 						Vector3 remotePos = ENTITY::GET_ENTITY_COORDS(PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(i), 0);
-						Object obj = OBJECT::CREATE_OBJECT(GAMEPLAY::GET_HASH_KEY(xorstr_("prop_gold_cont_01")), remotePos.x, remotePos.y, remotePos.z - 1.f, true, false, false);
+						OBJECT::CREATE_OBJECT(GAMEPLAY::GET_HASH_KEY(xorstr_("prop_gold_cont_01")), remotePos.x, remotePos.y, remotePos.z - 1.f, true, false, false);
 					}
 				}
 			}
@@ -140,9 +141,9 @@ void main() {
 			{ 
 				for (int i = 1; i <= 32; i++) 
 				{
-					if (PLAYER::PLAYER_ID() != i) 
+					if (PlayerID != i) 
 					{
-						Cheat::GameFunctions::AttachObjectToPed(PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(i), xorstr_("prop_beach_fire"));
+						Cheat::GameFunctions::AttachObjectToPed(i, xorstr_("prop_beach_fire"));
 					}
 				}
 			}
@@ -2850,6 +2851,7 @@ void main() {
 			}
 			Cheat::Break("~bold~Animations", true);
 			if (Cheat::Option("Sex Receiver", "")) {
+				Cheat::GameFunctions::ClearNearbyPedAnimations();
 				Cheat::GameFunctions::DoNearbyPedsAnimation("rcmpaparazzo_2", "shag_loop_poppy");
 			}
 			if (Cheat::Option("Sex Giver", "")) {
@@ -3687,102 +3689,102 @@ void main() {
 			if (Cheat::Option("Strip Club", "")) {
 				Vector3 Coords;
 				Coords.x = 135.548096; Coords.y = -1308.388306; Coords.z = 28.344141;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Darts", "")) {
 				Vector3 Coords;
 				Coords.x = 1997.273071; Coords.y = 3062.091309; Coords.z = 46.789749;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Golf", "")) {
 				Vector3 Coords;
 				Coords.x = -1379.665039; Coords.y = 51.105522; Coords.z = 53.053589;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Flight School", "")) {
 				Vector3 Coords;
 				Coords.x = -1142.084229; Coords.y = -2697.341553; Coords.z = 13.324973;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Tennis - Richman", "")) {
 				Vector3 Coords;
 				Coords.x = -1624.701904; Coords.y = 256.756073; Coords.z = 59.550262;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Tennis - Golfclub", "")) {
 				Vector3 Coords;
 				Coords.x = -1238, 588867; Coords.y = 339.023224; Coords.z = 79.987083;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Tennis - Rockford Hills", "")) {
 				Vector3 Coords;
 				Coords.x = -1365.342163; Coords.y = -114.440826; Coords.z = 50.704300;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Tennis - La Puerta", "")) {
 				Vector3 Coords;
 				Coords.x = -935.046997; Coords.y = -1253.596802; Coords.z = 7.966503;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Tennis - Vespucci Beach", "")) {
 				Vector3 Coords;
 				Coords.x = -1178.669556; Coords.y = -1636.781738; Coords.z = 3.745456;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Tennis - Pacific Bluffs", "")) {
 				Vector3 Coords;
 				Coords.x = -2881.359619; Coords.y = 31.464552; Coords.z = 10.975588;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Arm Wrestling - Paleto Bay", "")) {
 				Vector3 Coords;
 				Coords.x = -191.088577; Coords.y = 6285.864746; Coords.z = 30.861303;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Arm Wrestling - Grapeseed", "")) {
 				Vector3 Coords;
 				Coords.x = 1686.778564; Coords.y = 4963.882324; Coords.z = 42.297951;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Arm Wrestling - Grand Senora Dust", "")) {
 				Vector3 Coords;
 				Coords.x = 2324.994629; Coords.y = 3116.250000; Coords.z = 47.519794;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Arm Wrestling - Grand Senora Dust 2", "")) {
 				Vector3 Coords;
 				Coords.x = 1054.943970; Coords.y = 2667.030518; Coords.z = 38.930286;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Arm Wrestling - Grand Senora Dust 3", "")) {
 				Vector3 Coords;
 				Coords.x = 270.801758; Coords.y = 2615.143555; Coords.z = 44.081627;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Arm Wrestling - East Vinewood", "")) {
 				Vector3 Coords;
 				Coords.x = 909.300232; Coords.y = -176.126678; Coords.z = 73.576752;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Arm Wrestling - Strawberry", "")) {
 				Vector3 Coords;
 				Coords.x = -89.936722; Coords.y = -1335.010620; Coords.z = 28.588793;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Arm Wrestling - El Burro Heights", "")) {
 				Vector3 Coords;
 				Coords.x = 1432.757813; Coords.y = -2218.378662; Coords.z = 60.211021;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Ammu Nation - Cypress Flats", "")) {
 				Vector3 Coords;
 				Coords.x = 814.442017; Coords.y = -2130.448486; Coords.z = 28.867798;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Ammu Nation - Pillbox Hill", "")) {
 				Vector3 Coords;
 				Coords.x = 17.377790; Coords.y = -1122.183105; Coords.z = 28.469843;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 		}
 		break;
@@ -3792,62 +3794,62 @@ void main() {
 			if (Cheat::Option("Police Car Port", "")) {
 				Vector3 Coords;
 				Coords.x = 404.006012; Coords.y = -1639.643555; Coords.z = 29.291925;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Mort Mutual Insurance", "")) {
 				Vector3 Coords;
 				Coords.x = -221.749908; Coords.y = -1158.249756; Coords.z = 23.040998;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Bennys Garage", "")) {
 				Vector3 Coords;
 				Coords.x = -196.349442; Coords.y = -1303.103271; Coords.z = 30.650515;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Beekers Garage", "")) {
 				Vector3 Coords;
 				Coords.x = 116.223175; Coords.y = 6606.201660; Coords.z = 31.462461;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("LSC - Sandy Shores", "")) {
 				Vector3 Coords;
 				Coords.x = 1176.822632; Coords.y = 2657.973145; Coords.z = 37.370682;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("LSC - Grand Senora Dust", "")) {
 				Vector3 Coords;
 				Coords.x = 1173.452271; Coords.y = 2661.584717; Coords.z = 37.289780;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("LSC - Burton", "")) {
 				Vector3 Coords;
 				Coords.x = -370.533752; Coords.y = -130.402649; Coords.z = 38.197617;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Car Wash - Little Seoul", "")) {
 				Vector3 Coords;
 				Coords.x = -701.829956; Coords.y = -921.928772; Coords.z = 18.589094;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("LSC - La Mesa", "")) {
 				Vector3 Coords;
 				Coords.x = 709.295471; Coords.y = -1081.996216; Coords.z = 21.975765;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Car Wash - Strawberry", "")) {
 				Vector3 Coords;
 				Coords.x = 57.513451; Coords.y = -1389.658691; Coords.z = 28.968079;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("LSC - LS Airport", "")) {
 				Vector3 Coords;
 				Coords.x = -1135.707275; Coords.y = -1987.154175; Coords.z = 12.976217;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Simeon - Docks", "")) {
 				Vector3 Coords;
 				Coords.x = 1205.028442; Coords.y = -3089.802490; Coords.z = 5.374923;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 		}
 		break;
@@ -3857,32 +3859,32 @@ void main() {
 			if (Cheat::Option("LS Airport", "")) {
 				Vector3 Coords;
 				Coords.x = -1070.906250; Coords.y = -2972.122803; Coords.z = 13.773568;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Flight School", "")) {
 				Vector3 Coords;
 				Coords.x = -1142.084229; Coords.y = -2697.341553; Coords.z = 13.324973;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Sandy Shores", "")) {
 				Vector3 Coords;
 				Coords.x = 1682.196411; Coords.y = 3279.987793; Coords.z = 40.647972;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("McKenzie Airfield", "")) {
 				Vector3 Coords;
 				Coords.x = 2124.625732; Coords.y = 4805.270020; Coords.z = 40.479958;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Fort Zancudo", "")) {
 				Vector3 Coords;
 				Coords.x = -2446.711182; Coords.y = 3142.811035; Coords.z = 32.194775;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Fort Zancudo - Front", "")) {
 				Vector3 Coords;
 				Coords.x = -1563.743286; Coords.y = 2769.382080; Coords.z = 16.819347;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 		}
 		break;
@@ -3892,57 +3894,57 @@ void main() {
 			if (Cheat::Option("Ammu Nation - Polito Bay", "")) {
 				Vector3 Coords;
 				Coords.x = -318.859039; Coords.y = 6074.433105; Coords.z = 30.614943;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Ammu Nation - Sandy Shores", "")) {
 				Vector3 Coords;
 				Coords.x = 1704.671997; Coords.y = 3748.880615; Coords.z = 33.286053;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Ammu Nation - Great Chaparral", "")) {
 				Vector3 Coords;
 				Coords.x = -1108.600830; Coords.y = 2685.694092; Coords.z = 18.177374;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Ammu Nation - Chumash", "")) {
 				Vector3 Coords;
 				Coords.x = -3155.888672; Coords.y = 1073.844482; Coords.z = 20.188726;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Ammu Nation - Palomino Fwy", "")) {
 				Vector3 Coords;
 				Coords.x = 2571.371826; Coords.y = 313.879608; Coords.z = 107.970573;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Ammu Nation - Hawick", "")) {
 				Vector3 Coords;
 				Coords.x = 235.666794; Coords.y = -42.263149; Coords.z = 69.221313;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Ammu Nation - Morningwood", "")) {
 				Vector3 Coords;
 				Coords.x = -1328.592896; Coords.y = -387.114410; Coords.z = 36.126881;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Ammu Nation - Little Seoul", "")) {
 				Vector3 Coords;
 				Coords.x = -665.232727; Coords.y = -952.522522; Coords.z = 20.866556;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Ammu Nation - La Mesa", "")) {
 				Vector3 Coords;
 				Coords.x = 844.439026; Coords.y = -1009.422424; Coords.z = 27.511728;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Ammu Nation - Pillbox Hill", "")) {
 				Vector3 Coords;
 				Coords.x = 17.377790; Coords.y = -1122.183105; Coords.z = 28.469843;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Ammu Nation - Cypress Flats", "")) {
 				Vector3 Coords;
 				Coords.x = 814.442017; Coords.y = -2130.448486; Coords.z = 28.867798;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 		}
 		break;
@@ -3952,92 +3954,92 @@ void main() {
 			if (Cheat::Option("Fort Zancudo Tower", "")) {
 				Vector3 Coords;
 				Coords.x = -2353.851318; Coords.y = 3249.980957; Coords.z = 101.450813;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Mount Chilliad", "")) {
 				Vector3 Coords;
 				Coords.x = 501.685181; Coords.y = 5604.763184; Coords.z = 797.909363;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Maze Bank Roof", "")) {
 				Vector3 Coords;
 				Coords.x = -74.942429; Coords.y = -818.634460; Coords.z = 326.174774;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Del Perro", "")) {
 				Vector3 Coords;
 				Coords.x = -1732.708008; Coords.y = -1109.094727; Coords.z = 12.516836;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Police Car Port", "")) {
 				Vector3 Coords;
 				Coords.x = 404.006012; Coords.y = -1639.643555; Coords.z = 29.291925;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Hospital", "")) {
 				Vector3 Coords;
 				Coords.x = 317.820801; Coords.y = -1449.003906; Coords.z = 29.229012;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Vinewood Stadium", "")) {
 				Vector3 Coords;
 				Coords.x = 1143.346313; Coords.y = 279.193146; Coords.z = 80.902786;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Vinewood Theatre", "")) {
 				Vector3 Coords;
 				Coords.x = 685.616455; Coords.y = 577.588013; Coords.z = 130.461227;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Police Academy", "")) {
 				Vector3 Coords;
 				Coords.x = -1058.268799; Coords.y = -863.165222; Coords.z = 4.945185;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Red Light", "")) {
 				Vector3 Coords;
 				Coords.x = 497.743896; Coords.y = -1262.033325; Coords.z = 28.750439;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Construction Tunnel", "")) {
 				Vector3 Coords;
 				Coords.x = -65.878128; Coords.y = -538.042542; Coords.z = 31.225176;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Construction Tunnel Canal", "")) {
 				Vector3 Coords;
 				Coords.x = 1041.377075; Coords.y = -283.447479; Coords.z = 49.774212;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Waterfall", "")) {
 				Vector3 Coords;
 				Coords.x = -1599.794678; Coords.y = 2098.389893; Coords.z = 66.178246;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Mine", "")) {
 				Vector3 Coords;
 				Coords.x = -595.254211; Coords.y = 2097.881592; Coords.z = 131.810333;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Lost", "")) {
 				Vector3 Coords;
 				Coords.x = 93.921341; Coords.y = 3752.506836; Coords.z = 40.769695;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Out of Sea", "")) {
 				Vector3 Coords;
 				Coords.x = 3084.493896; Coords.y = -4705.581543; Coords.z = 17.245109;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Mount Chilliad Rail Road", "")) {
 				Vector3 Coords;
 				Coords.x = -740.278748; Coords.y = 5593.944336; Coords.z = 41.654591;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("UFO", "")) {
 				Vector3 Coords;
 				Coords.x = 37.940517; Coords.y = 222.984421; Coords.z = 126.836281;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 		}
 		break;
@@ -4047,27 +4049,27 @@ void main() {
 			if (Cheat::Option("L.S.I.A. Hangar 1", "")) {
 				Vector3 Coords;
 				Coords.x = -1150.296021f; Coords.y = -3408.536133f; Coords.z = 13.94505405f;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("L.S.I.A. Hangar A17", "")) {
 				Vector3 Coords;
 				Coords.x = -1393.971436; Coords.y = -3264.746826; Coords.z = 13.94483566;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Fort Zancudo Hangar 3499", "")) {
 				Vector3 Coords;
 				Coords.x = -2470.818115; Coords.y = 3273.019775; Coords.z = 32.83986282;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Fort Zancudo Hangar A2", "")) {
 				Vector3 Coords;
 				Coords.x = -2021.536011; Coords.y = 3155.032227; Coords.z = 32.81032181;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Fort Zancudo Hangar 3497", "")) {
 				Vector3 Coords;
 				Coords.x = -1879.005249; Coords.y = 3107.694336; Coords.z = 32.8102951;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 		}
 		break;
@@ -4077,42 +4079,42 @@ void main() {
 			if (Cheat::Option("Farmhouse Bunker", "")) {
 				Vector3 Coords;
 				Coords.x = 1572.591797; Coords.y = 2221.12915; Coords.z = 78.49613953;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Thomson Scrapyard Bunker", "")) {
 				Vector3 Coords;
 				Coords.x = 2487.895264; Coords.y = 3165.456787; Coords.z = 49.09437943;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Smoke Tree Road Bunker", "")) {
 				Vector3 Coords;
 				Coords.x = 2106.014893; Coords.y = 3324.079834; Coords.z = 45.36381531;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Grand Senora Desert Bunker", "")) {
 				Vector3 Coords;
 				Coords.x = 849.0739746; Coords.y = 3025.78833; Coords.z = 41.25616074;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Grand Senora Oilfield Bunker", "")) {
 				Vector3 Coords;
 				Coords.x = 494.7870483; Coords.y = 3016.879395; Coords.z = 41.02281189;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Route 68 Bunker", "")) {
 				Vector3 Coords;
 				Coords.x = 40.26403809; Coords.y = 2927.644775; Coords.z = 55.6977005;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Lago Zancudo Bunker", "")) {
 				Vector3 Coords;
 				Coords.x = -3028.025391; Coords.y = 3334.053467; Coords.z = 10.03091049;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Chumash Bunker", "")) {
 				Vector3 Coords;
 				Coords.x = -3154.625732; Coords.y = 1376.713867; Coords.z = 17.13968658;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 		}
 		break;
@@ -4122,47 +4124,47 @@ void main() {
 			if (Cheat::Option("Trevors Truck", "")) {
 				Vector3 Coords;
 				Coords.x = 1973.865845; Coords.y = 3819.097168; Coords.z = 33.436317;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Michaels House", "")) {
 				Vector3 Coords;
 				Coords.x = -812.573303; Coords.y = 180.043457; Coords.z = 72.159172;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Franklins House", "")) {
 				Vector3 Coords;
 				Coords.x = -6.054853; Coords.y = 520.445007; Coords.z = 174.627792;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Lesters House", "")) {
 				Vector3 Coords;
 				Coords.x = 1269.541504; Coords.y = -1710.447876; Coords.z = 54.771492;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Human Labs", "")) {
 				Vector3 Coords;
 				Coords.x = 3614.394775; Coords.y = 3744.803467; Coords.z = 28.690090;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Franks Aunt", "")) {
 				Vector3 Coords;
 				Coords.x = -14.577254; Coords.y = -1427.414917; Coords.z = 31.101492;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Prison", "")) {
 				Vector3 Coords;
 				Coords.x = 1739.5726; Coords.y = 2576.4565; Coords.z = 45.0334;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("FIB Building", "")) {
 				Vector3 Coords;
 				Coords.x = 128.572662; Coords.y = -727.923401; Coords.z = 254.152115;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Wale", "")) {
 				Vector3 Coords;
 				Coords.x = -1155.725952; Coords.y = -1518.761719; Coords.z = 10.632728;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 		}
 		break;
@@ -4173,83 +4175,83 @@ void main() {
 			{
 				Vector3 Coords;
 				Coords.x = 240.93; Coords.y = -765.19f; Coords.z = 2558.83f;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Diamond Casino & Resort", ""))
 			{
 				Vector3 Coords;
 				Coords.x = 916.37; Coords.y = 51.22f; Coords.z = 80.89f;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Mount Chiliad", "")) {
 				Vector3 Coords;
 				Coords.x = 496.75f; Coords.y = 5591.17f; Coords.z = 795.03f;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}		
 			if (Cheat::Option("Maze Bank", "")) {
 				Vector3 Coords;
 				Coords.x = -74.94243f; Coords.y = -818.63446f; Coords.z = 326.174347f;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}	
 			if (Cheat::Option("Military Base", "")) {
 				Vector3 Coords;
 				Coords.x = -2012.8470f; Coords.y = 2956.5270f; Coords.z = 32.8101f;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Zancudo Tower", "")) {
 				Vector3 Coords;
 				Coords.x = -2356.0940; Coords.y = 3248.645; Coords.z = 101.4505;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Mask Shop", "")) {
 				Vector3 Coords;
 				Coords.x = -1338.16; Coords.y = -1278.11; Coords.z = 4.87;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}	
 			if (Cheat::Option("LSC", "")) {
 				Vector3 Coords;
 				Coords.x = -373.01; Coords.y = -124.91; Coords.z = 38.31;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Ammunation", "")) {
 				Vector3 Coords;
 				Coords.x = 247.3652; Coords.y = -45.8777; Coords.z = 69.9411;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}	
 			if (Cheat::Option("Airport", "")) {
 				Vector3 Coords;
 				Coords.x = -1102.2910f; Coords.y = -2894.5160f; Coords.z = 13.9467f;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Clothes Store", "")) {
 				Vector3 Coords;
 				Coords.x = -718.91; Coords.y = -158.16; Coords.z = 37.00;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Waterfall", "")) {
 				Vector3 Coords;
 				Coords.x = -597.9525f; Coords.y = 4475.2910f; Coords.z = 25.6890f;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("FIB", "")) {
 				Vector3 Coords;
 				Coords.x = 135.5220f; Coords.y = -749.0003f; Coords.z = 260.0000f;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Human Labs", "")) {
 				Vector3 Coords;
 				Coords.x = 3617.231f; Coords.y = 3739.871f; Coords.z = 28.6901f;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}	
 			if (Cheat::Option("MMI", "")) {
 				Vector3 Coords;
 				Coords.x = -222.1977; Coords.y = -1185.8500; Coords.z = 23.0294;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}		
 			if (Cheat::Option("Sandy Shores Airfield", "")) {
 				Vector3 Coords;
 				Coords.x = 1741.4960f; Coords.y = 3269.2570f; Coords.z = 41.6014f;
-				TPto(Coords);
+				Cheat::GameFunctions::TPto(Coords);
 			}
 		}
 		break;
@@ -4893,105 +4895,101 @@ void main() {
 		{
 			Cheat::Title("Scenario's");
 			Cheat::MenuOption("Animations >", animations); 
-			if (Cheat::Option("Stop Scenario", ""))
-			{
-				AI::CLEAR_PED_TASKS_IMMEDIATELY(PlayerPedID);
-				break;
-			}
+			if (Cheat::Option("Stop Scenario", "")) { AI::CLEAR_PED_TASKS_IMMEDIATELY(PlayerPedID); }
 			if (Cheat::Option("Paparizzi", "")) {
-				AI::CLEAR_PED_TASKS_IMMEDIATELY(PlayerPedID);
+				Cheat::GameFunctions::ClearAllAnimations();
 				AI::TASK_START_SCENARIO_IN_PLACE(PlayerPedID, "WORLD_HUMAN_PAPARAZZI", 0, true);
 			}
 			if (Cheat::Option("Drug Dealer", "")) {
-				AI::CLEAR_PED_TASKS_IMMEDIATELY(PlayerPedID);
+				Cheat::GameFunctions::ClearAllAnimations();
 				AI::TASK_START_SCENARIO_IN_PLACE(PlayerPedID, "WORLD_HUMAN_DRUG_DEALER_HARD", 0, true);
 			}
 			if (Cheat::Option("Drinking Coffee", "")) {
-				AI::CLEAR_PED_TASKS_IMMEDIATELY(PlayerPedID);
+				Cheat::GameFunctions::ClearAllAnimations();
 				AI::TASK_START_SCENARIO_IN_PLACE(PlayerPedID, "WORLD_HUMAN_AA_COFFEE", 0, true);
 			}
 			if (Cheat::Option("Playing Instruments", "")) {
-				AI::CLEAR_PED_TASKS_IMMEDIATELY(PlayerPedID);
+				Cheat::GameFunctions::ClearAllAnimations();
 				AI::TASK_START_SCENARIO_IN_PLACE(PlayerPedID, "WORLD_HUMAN_MUSICIAN", 0, true);
 			}
 			if (Cheat::Option("Flexing", "")) {
-				AI::CLEAR_PED_TASKS_IMMEDIATELY(PlayerPedID);
+				Cheat::GameFunctions::ClearAllAnimations();
 				AI::TASK_START_SCENARIO_IN_PLACE(PlayerPedID, "WORLD_HUMAN_MUSCLE_FLEX", 0, true);
 			}
 			if (Cheat::Option("Jogging", "")) {
-				AI::CLEAR_PED_TASKS_IMMEDIATELY(PlayerPedID);
+				Cheat::GameFunctions::ClearAllAnimations();
 				AI::TASK_START_SCENARIO_IN_PLACE(PlayerPedID, "WORLD_HUMAN_JOG_STANDING", 0, true);
 			}
 			if (Cheat::Option("Binoculars", "")) {
-				AI::CLEAR_PED_TASKS_IMMEDIATELY(PlayerPedID);
+				Cheat::GameFunctions::ClearAllAnimations();
 				AI::TASK_START_SCENARIO_IN_PLACE(PlayerPedID, "WORLD_HUMAN_BINOCULARS", 0, true);
 			}
 			if (Cheat::Option("Clipboard", "")) {
-				AI::CLEAR_PED_TASKS_IMMEDIATELY(PlayerPedID);
+				Cheat::GameFunctions::ClearAllAnimations();
 				AI::TASK_START_SCENARIO_IN_PLACE(PlayerPedID, "WORLD_HUMAN_CLIPBOARD", 0, true);
 			}
 			if (Cheat::Option("Bench Press", "")) {
-				AI::CLEAR_PED_TASKS_IMMEDIATELY(PlayerPedID);
+				Cheat::GameFunctions::ClearAllAnimations();
 				AI::TASK_START_SCENARIO_IN_PLACE(PlayerPedID, "PROP_HUMAN_SEAT_MUSCLE_BENCH_PRESS", 0, true);
 			}
 			if (Cheat::Option("Chin Ups", "")) {
-				AI::CLEAR_PED_TASKS_IMMEDIATELY(PlayerPedID);
+				Cheat::GameFunctions::ClearAllAnimations();
 				AI::TASK_START_SCENARIO_IN_PLACE(PlayerPedID, "PROP_HUMAN_MUSCLE_CHIN_UPS", 0, true);
 			}
 			if (Cheat::Option("BBQ", "")) {
-				AI::CLEAR_PED_TASKS_IMMEDIATELY(PlayerPedID);
+				Cheat::GameFunctions::ClearAllAnimations();
 				AI::TASK_START_SCENARIO_IN_PLACE(PlayerPedID, "PROP_HUMAN_BBQ", 0, true);
 			}
 			if (Cheat::Option("Superhero", "")) {
-				AI::CLEAR_PED_TASKS_IMMEDIATELY(PlayerPedID);
+				Cheat::GameFunctions::ClearAllAnimations();
 				AI::TASK_START_SCENARIO_IN_PLACE(PlayerPedID, "WORLD_HUMAN_SUPERHERO", 0, true);
 			}
 			if (Cheat::Option("Fishing", "")) {
-				AI::CLEAR_PED_TASKS_IMMEDIATELY(PlayerPedID);
+				Cheat::GameFunctions::ClearAllAnimations();
 				AI::TASK_START_SCENARIO_IN_PLACE(PlayerPedID, "WORLD_HUMAN_STAND_FISHING", 0, true);
 			}
 			if (Cheat::Option("Security", "")) {
-				AI::CLEAR_PED_TASKS_IMMEDIATELY(PlayerPedID);
+				Cheat::GameFunctions::ClearAllAnimations();
 				AI::TASK_START_SCENARIO_IN_PLACE(PlayerPedID, "WORLD_HUMAN_SECURITY_SHINE_TORCH", 0, true);
 			}
 			if (Cheat::Option("Leaf Blower", "")) {
-				AI::CLEAR_PED_TASKS_IMMEDIATELY(PlayerPedID);
+				Cheat::GameFunctions::ClearAllAnimations();
 				AI::TASK_START_SCENARIO_IN_PLACE(PlayerPedID, "WORLD_HUMAN_GARDENER_LEAF_BLOWER", 0, true);
 			}
 			if (Cheat::Option("Film Shocking", "")) {
-				AI::CLEAR_PED_TASKS_IMMEDIATELY(PlayerPedID);
+				Cheat::GameFunctions::ClearAllAnimations();
 				AI::TASK_START_SCENARIO_IN_PLACE(PlayerPedID, "WORLD_HUMAN_MOBILE_FILM_SHOCKING", 0, true);
 			}
 			if (Cheat::Option("Idle Cop", "")) {
-				AI::CLEAR_PED_TASKS_IMMEDIATELY(PlayerPedID);
+				Cheat::GameFunctions::ClearAllAnimations();
 				AI::TASK_START_SCENARIO_IN_PLACE(PlayerPedID, "WORLD_HUMAN_COP_IDLES", 0, true);
 			}
 			if (Cheat::Option("Drinking", "")) {
-				AI::CLEAR_PED_TASKS_IMMEDIATELY(PlayerPedID);
+				Cheat::GameFunctions::ClearAllAnimations();
 				AI::TASK_START_SCENARIO_IN_PLACE(PlayerPedID, "WORLD_HUMAN_DRINKING", 0, true);
 			}
 			if (Cheat::Option("Golf Player", "")) {
-				AI::CLEAR_PED_TASKS_IMMEDIATELY(PlayerPedID);
+				Cheat::GameFunctions::ClearAllAnimations();
 				AI::TASK_START_SCENARIO_IN_PLACE(PlayerPedID, "WORLD_HUMAN_GOLF_PLAYER", 0, true);
 			}
 			if (Cheat::Option("Welding", "")) {
-				AI::CLEAR_PED_TASKS_IMMEDIATELY(PlayerPedID);
+				Cheat::GameFunctions::ClearAllAnimations();
 				AI::TASK_START_SCENARIO_IN_PLACE(PlayerPedID, "WORLD_HUMAN_WELDING", 0, true);
 			}
 			if (Cheat::Option("Smoking Pot", "")) {
-				AI::CLEAR_PED_TASKS_IMMEDIATELY(PlayerPedID);
+				Cheat::GameFunctions::ClearAllAnimations();
 				AI::TASK_START_SCENARIO_IN_PLACE(PlayerPedID, "WORLD_HUMAN_SMOKING_POT", 0, true);
 			}
 			if (Cheat::Option("Hammering", "")) {
-				AI::CLEAR_PED_TASKS_IMMEDIATELY(PlayerPedID);
+				Cheat::GameFunctions::ClearAllAnimations();
 				AI::TASK_START_SCENARIO_IN_PLACE(PlayerPedID, "WORLD_HUMAN_HAMMERING", 0, true);
 			}
 			if (Cheat::Option("Tennis", "")) {
-				AI::CLEAR_PED_TASKS_IMMEDIATELY(PlayerPedID);
+				Cheat::GameFunctions::ClearAllAnimations();
 				AI::TASK_START_SCENARIO_IN_PLACE(PlayerPedID, "WORLD_HUMAN_TENNIS_PLAYER", 0, true);
 			}
 			if (Cheat::Option("Drilling", "")) {
-				AI::CLEAR_PED_TASKS_IMMEDIATELY(PlayerPedID);
+				Cheat::GameFunctions::ClearAllAnimations();
 				AI::TASK_START_SCENARIO_IN_PLACE(PlayerPedID, "WORLD_HUMAN_CONST_DRILL", 0, true);
 			}
 		}

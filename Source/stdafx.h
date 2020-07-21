@@ -442,6 +442,7 @@ namespace Cheat {
 		void DoLocalPedAnimation(char* AnimationName, char* AnimationID);
 		void AttachObjectToPed(Ped Ped, char* ObjectName);
 		void DetachObjectFromPed(Ped Ped, char* ObjectName);
+		void TPto(Vector3 Coords);
 	}
 	namespace LogFunctions {
 		void Init();

@@ -197,11 +197,9 @@ bool Hooking::HookNatives()
 	status = MH_CreateHook(Hooking::get_event_data, GED, &m_OriginalGetEventData);
 	if ((status != MH_OK && status != MH_ERROR_ALREADY_CREATED) || MH_EnableHook(Hooking::get_event_data) != MH_OK) { return false; }
 	Hooking::m_hooks.push_back(Hooking::get_event_data);
-	//GTAO Model & Vehicle Spawn Bypass
 	status = MH_CreateHook(Hooking::GetScriptHandlerIfNetworked, hkGetScriptHandlerIfNetworked, (void**)&ogGetScriptHandlerIfNetworked);
 	if (status != MH_OK || MH_EnableHook(Hooking::GetScriptHandlerIfNetworked) != MH_OK) { return false;  }
 	Hooking::m_hooks.push_back(Hooking::GetScriptHandlerIfNetworked);
-	//Label Hook
 	status = MH_CreateHook(Hooking::GetLabelText, hkGetLabelText, (void**)&ogGetLabelText);
 	if (status != MH_OK || MH_EnableHook(Hooking::GetLabelText) != MH_OK) { return false; }
 	Hooking::m_hooks.push_back(Hooking::GetLabelText);

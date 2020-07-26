@@ -114,7 +114,7 @@ namespace Cheat {
 		extern bool leftPressed;
 		extern bool rightPressed;
 		extern bool center;
-		extern bool controllerinput;
+		extern bool ControllerInput;
 		extern bool RestorePreviousSubmenu;
 		extern int maxVisOptions;
 		extern int currentOption;
@@ -155,18 +155,6 @@ namespace Cheat {
 		extern int keyPressDelay3;
 		extern int keyPressPreviousTick3;
 		extern int openKey;
-		extern int backKey;
-		extern int upKey;
-		extern int downKey;
-		extern int leftKey;
-		extern int rightKey;
-		extern int selectKey;
-		extern int arrowupKey;
-		extern int arrowdownKey;
-		extern int arrowleftKey;
-		extern int arrowrightKey;
-		extern int enterKey;
-		extern int deleteKey;
 		extern int openpress;
 		extern int downpress;
 		extern int uppress;
@@ -383,6 +371,7 @@ namespace Cheat {
 		bool ReturnPressedKey(int &PressedKey);
 		void PostInitCheat();
 		char* StringToChar(std::string string);
+		std::string VirtualKeyCodeToString(UCHAR virtualKey);
 	}
 	namespace GameFunctions {
 		float GetGameFramesPerSecond();
@@ -534,7 +523,7 @@ namespace Cheat {
 	bool StringVector(const char* option, std::vector<std::string> Vector, int& position, const char* InformationText);
 	bool StringVector(const char* option, std::vector<std::string> Vector, int& position, const char* InformationText, std::function<void()> function);
 	void End();
-	void LoadThemeFiles();
+	void LoadThemeFilesLooped();
 	void LoadTheme(char* ThemeFileName, bool StartUp);
 	void SaveTheme(char* ThemeFileName);
 }

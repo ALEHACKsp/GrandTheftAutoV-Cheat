@@ -123,8 +123,7 @@ bool Cheat::CheatFunctions::IsGameWindowFocussed()
 
 bool Cheat::CheatFunctions::StringIsInteger(const std::string& s)
 {
-	return !s.empty() && std::find_if(s.begin(),
-		s.end(), [](unsigned char c) { return !std::isdigit(c); }) == s.end();
+	return !s.empty() && std::find_if(s.begin(), s.end(), [](unsigned char c) { return !std::isdigit(c); }) == s.end();
 }
 bool Cheat::CheatFunctions::IsIntegerInRange(unsigned low, unsigned high, unsigned x)
 {
@@ -308,7 +307,7 @@ void Cheat::CheatFunctions::SaveSettings()
 	Cheat::Files::WriteBoolToIni(Cheat::CheatFeatures::ExplosiveMeleeBool, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("explosive_melee"));
 	Cheat::Files::WriteBoolToIni(Cheat::CheatFeatures::VehicleGunBool, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("vehiclegun"));
 	Cheat::Files::WriteBoolToIni(Cheat::CheatFeatures::GravityGunBool, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("gravitygun"));
-	Cheat::Files::WriteBoolToIni(Cheat::Settings::controllerinput, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("controllerinput"));
+	Cheat::Files::WriteBoolToIni(Cheat::Settings::ControllerInput, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("controllerinput"));
 	Cheat::Files::WriteBoolToIni(Cheat::CheatFeatures::NeverWantedBool, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("neverwanted"));
 	Cheat::Files::WriteBoolToIni(Cheat::CheatFeatures::OrbitalCannonCooldownBypassBool, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("orbital_cannon_cooldown_bypass"));
 	Cheat::Files::WriteBoolToIni(Cheat::CheatFeatures::NoWeaponReloadBool, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("weapon_noreload"));
@@ -410,7 +409,7 @@ void Cheat::CheatFunctions::LoadSettings(bool StartUp)
 	if (Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("not_visible")) == xorstr_("true")) { Cheat::CheatFeatures::PlayerInvisibleBool = true; }
 	if (Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("mobile_radio")) == xorstr_("true")) { Cheat::CheatFeatures::MobileRadioBool = true; }
 	if (Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("ignored")) == xorstr_("true")) { Cheat::CheatFeatures::PlayerIgnoredBool = true; }
-	if (Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("controllerinput")) == xorstr_("true")) { Cheat::Settings::controllerinput = true; }
+	if (Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("controllerinput")) == xorstr_("true")) { Cheat::Settings::ControllerInput = true; }
 	if (Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("teleportgun")) == xorstr_("true")) { Cheat::CheatFeatures::TeleportGunBool = true; }
 	if (Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("noragdollandseatbelt")) == xorstr_("true")) { Cheat::CheatFeatures::NoRagdollAndSeatbeltBool = true; }
 	if (Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("triggerbot")) == xorstr_("true")) { Cheat::CheatFeatures::TriggerBotBool = true; }
@@ -488,4 +487,28 @@ void Cheat::CheatFunctions::PostInitCheat()
 char* Cheat::CheatFunctions::StringToChar(std::string string)
 {
 	return _strdup(string.c_str());
+}
+
+std::string Cheat::CheatFunctions::VirtualKeyCodeToString(UCHAR virtualKey)
+{
+	UINT scanCode = MapVirtualKey(virtualKey, MAPVK_VK_TO_VSC);
+
+	CHAR szName[128];
+	int result = 0;
+	switch (virtualKey)
+	{
+	case VK_LEFT:		case VK_UP: case VK_RIGHT: case VK_DOWN:
+	case VK_RCONTROL:	case VK_RMENU:
+	case VK_LWIN:		case VK_RWIN: case VK_APPS:
+	case VK_PRIOR:		case VK_NEXT:
+	case VK_END:		case VK_HOME:
+	case VK_INSERT:		case VK_DELETE:
+	case VK_DIVIDE:
+	case VK_NUMLOCK:
+		scanCode |= KF_EXTENDED;
+	default:
+		result = GetKeyNameTextA(scanCode << 16, szName, 128);
+	}
+	if (result == 0) { return xorstr_("Unknown"); }
+	return szName;
 }

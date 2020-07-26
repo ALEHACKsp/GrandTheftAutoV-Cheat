@@ -125,9 +125,9 @@ void Cheat::Title(const char * title)
 	CONTROLS::DISABLE_CONTROL_ACTION(2, INPUT_VEH_HEADLIGHT, true);
 
 	//Control Buttons
+	std::string CloseGUIString = xorstr_("Press ") + Cheat::CheatFunctions::VirtualKeyCodeToString(Cheat::Settings::openKey) + xorstr_(" to close GUI");
 	Cheat::GameFunctions::InstructionsInit();
-	Cheat::GameFunctions::InstructionsAdd(xorstr_("Close"), 134);
-	Cheat::GameFunctions::InstructionsAdd(xorstr_("Close"), 173);
+	Cheat::GameFunctions::InstructionsAdd((char*)CloseGUIString.c_str(), 80);
 	Cheat::GameFunctions::InstructionsAdd(xorstr_("Back"), 136);
 	Cheat::GameFunctions::InstructionsAdd(xorstr_("Up/Down"), 10);
 	Cheat::GameFunctions::InstructionsAdd(xorstr_("Change Value"), 46);
@@ -3110,14 +3110,18 @@ bool Cheat::ToggleCheckMark(const char * option, bool & b00l)
 }
 
 
-bool Cheat::IntNoControl(const char * option, int & _int, int min, int max, const char* InformationText)
+bool Cheat::IntNoControl(const char* option, int& _int, int min, int max, const char* InformationText)
 {
 	Option(option, "");
 
 	if (Settings::currentOption <= Settings::maxVisOptions && Settings::optionCount <= Settings::maxVisOptions)
+	{
 		Drawing::Text(Cheat::CheatFunctions::StringToChar(" " + std::to_string(_int) + " "), Settings::optionText, { Settings::menuX + 0.080f, Settings::optionCount * 0.035f + 0.125f }, { 0.35f, 0.35f }, true);
+	}
 	else if (Settings::optionCount > Settings::currentOption - Settings::maxVisOptions && Settings::optionCount <= Settings::currentOption)
-		Drawing::Text(Cheat::CheatFunctions::StringToChar(" " + std::to_string(_int) + " "), Settings::optionText, { Settings::menuX + 0.080f, (Settings::optionCount - (Settings::currentOption - Settings::maxVisOptions))*0.035f + 0.125f }, { 0.35f, 0.35f }, true);
+	{
+		Drawing::Text(Cheat::CheatFunctions::StringToChar(" " + std::to_string(_int) + " "), Settings::optionText, { Settings::menuX + 0.080f, (Settings::optionCount - (Settings::currentOption - Settings::maxVisOptions)) * 0.035f + 0.125f }, { 0.35f, 0.35f }, true);
+	}
 
 	if (Settings::optionCount == Settings::currentOption)
 	{
@@ -3197,7 +3201,7 @@ bool Cheat::Int(const char * option, int & _int, int min, int max, int step, con
 	else if (Settings::optionCount == Settings::currentOption && Settings::rightPressed) return true;
 	return false;
 }
-#pragma warning(disable: 4244)
+
 bool Cheat::Float(const char * option, float & _float, float min, float max, float steps, bool ReturnTrueWithValueChange, const char* InformationText)
 {
 	Option(option, "");
@@ -3231,7 +3235,6 @@ bool Cheat::Float(const char * option, float & _float, float min, float max, flo
 	else if (Settings::optionCount == Settings::currentOption && Settings::rightPressed && ReturnTrueWithValueChange) return true;
 	return false;
 }
-#pragma warning(default: 4244)
 #pragma warning(disable: 4267)
 bool Cheat::IntVector(const char * option, std::vector<int> Vector, int & position)
 {
@@ -3352,7 +3355,7 @@ void Cheat::End()
 
 void PlaySoundFrontend_default(char* sound_name)
 {
-	AUDIO::PLAY_SOUND_FRONTEND(-1, sound_name, "HUD_FRONTEND_DEFAULT_SOUNDSET", 0);
+	AUDIO::PLAY_SOUND_FRONTEND(-1, sound_name, xorstr_("HUD_FRONTEND_DEFAULT_SOUNDSET"), 0);
 }
 
 int Cheat::Settings::keyPressDelay = 200;
@@ -3361,23 +3364,9 @@ int Cheat::Settings::keyPressDelay2 = 100;
 int Cheat::Settings::keyPressPreviousTick2 = GetTickCount();
 int Cheat::Settings::keyPressDelay3 = 140;
 int Cheat::Settings::keyPressPreviousTick3 = GetTickCount();
-int Cheat::Settings::openKey = VK_MULTIPLY;
-int Cheat::Settings::backKey = VK_NUMPAD0;
-int Cheat::Settings::upKey = VK_NUMPAD8;
-int Cheat::Settings::downKey = VK_NUMPAD2;
-int Cheat::Settings::leftKey = VK_NUMPAD4;
-int Cheat::Settings::rightKey = VK_NUMPAD6;
-int Cheat::Settings::selectKey = VK_NUMPAD5;
-int Cheat::Settings::arrowupKey = VK_UP;
-int Cheat::Settings::arrowdownKey = VK_DOWN;
-int Cheat::Settings::arrowleftKey = VK_LEFT;
-int Cheat::Settings::arrowrightKey = VK_RIGHT;
-int Cheat::Settings::enterKey = VK_RETURN;
-int Cheat::Settings::deleteKey = VK_BACK;
-#pragma endregion
+int Cheat::Settings::openKey = VK_F4;
 
-
-bool Cheat::Settings::controllerinput = true;
+bool Cheat::Settings::ControllerInput = true;
 bool Cheat::Settings::RestorePreviousSubmenu = true;
 void Cheat::Checks::Controls()
 {
@@ -3388,7 +3377,7 @@ void Cheat::Checks::Controls()
 	if (GetTickCount64() - Settings::keyPressPreviousTick > Settings::keyPressDelay) {
 	if (GetTickCount64() - Settings::keyPressPreviousTick2 > Settings::keyPressDelay2) {
 		if (GetTickCount64() - Settings::keyPressPreviousTick3 > Settings::keyPressDelay3) {
-			if (GetAsyncKeyState(Settings::openKey) & 1 && Cheat::CheatFunctions::IsGameWindowFocussed() || GetAsyncKeyState(VK_F4) & 1 && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlScriptRB) && CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendX) && Settings::controllerinput)
+			if (GetAsyncKeyState(Settings::openKey) & 1 && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlScriptRB) && CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendX) && Settings::ControllerInput)
 			{								
 				if (Settings::menuLevel == 0)
 				{
@@ -3403,40 +3392,40 @@ void Cheat::Checks::Controls()
 				PlaySoundFrontend_default("SELECT");
 				Settings::keyPressPreviousTick = GetTickCount64();
 			}
-			else if (GetAsyncKeyState(VK_NUMPAD0) & 1 && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendCancel) && Settings::controllerinput) {
+			else if (GetAsyncKeyState(VK_NUMPAD0) & 1 && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendCancel) && Settings::ControllerInput) {
 				if (Settings::menuLevel > 0) { MenuLevelHandler::BackMenu(); PlaySoundFrontend_default("BACK"); }
 
 				Settings::keyPressPreviousTick = GetTickCount64();
 			}
-			else if (GetAsyncKeyState(VK_NUMPAD8) & 1 && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendUp) && Settings::controllerinput) {
+			else if (GetAsyncKeyState(VK_NUMPAD8) & 1 && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendUp) && Settings::ControllerInput) {
 				Settings::currentOption > 1 ? Settings::currentOption-- : Settings::currentOption = Settings::optionCount;
 				if (Settings::menuLevel > 0)
 					PlaySoundFrontend_default("NAV_UP_DOWN");
 
 				Settings::keyPressPreviousTick2 = GetTickCount64();
 			}
-			else if (GetAsyncKeyState(VK_NUMPAD2) & 1 && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendDown) && Settings::controllerinput) {
+			else if (GetAsyncKeyState(VK_NUMPAD2) & 1 && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendDown) && Settings::ControllerInput) {
 				Settings::currentOption < Settings::optionCount ? Settings::currentOption++ : Settings::currentOption = 1;
 				if (Settings::menuLevel > 0)
 					PlaySoundFrontend_default("NAV_UP_DOWN");
 
 				Settings::keyPressPreviousTick2 = GetTickCount64();
 			}
-			else if (GetAsyncKeyState(VK_NUMPAD6) & 1 && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlPhoneRight) && Settings::controllerinput) {
+			else if (GetAsyncKeyState(VK_NUMPAD6) & 1 && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlPhoneRight) && Settings::ControllerInput) {
 				Settings::leftPressed = true;
 				if (Settings::menuLevel > 0)
 					PlaySoundFrontend_default("NAV_UP_DOWN");
 
 				Settings::keyPressPreviousTick3 = GetTickCount64();
 			}
-			else if (GetAsyncKeyState(VK_NUMPAD4) & 1 && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlPhoneLeft) && Settings::controllerinput) {
+			else if (GetAsyncKeyState(VK_NUMPAD4) & 1 && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlPhoneLeft) && Settings::ControllerInput) {
 				Settings::rightPressed = true;
 				if (Settings::menuLevel > 0)
 					PlaySoundFrontend_default("NAV_UP_DOWN");
 
 				Settings::keyPressPreviousTick3 = GetTickCount64();
 			}
-			else if (GetAsyncKeyState(VK_NUMPAD5) & 1 && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept) && Settings::controllerinput) {
+			else if (GetAsyncKeyState(VK_NUMPAD5) & 1 && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept) && Settings::ControllerInput) {
 				Settings::selectPressed = true;
 				if (Settings::menuLevel > 0)
 					PlaySoundFrontend_default("SELECT");
@@ -3499,7 +3488,15 @@ void Cheat::Files::WriteIntToIni(int intValue, std::string file, std::string app
 
 int Cheat::Files::ReadIntFromIni(std::string file, std::string app, std::string key)
 {
-	return std::stoi(ReadStringFromIni(file, app, key));
+	std::string ReturnTempString = ReadStringFromIni(file, app, key);
+	if (Cheat::CheatFunctions::StringIsInteger(ReturnTempString))
+	{
+		return std::stoi(ReturnTempString);
+	}
+	else
+	{
+		return 0;
+	}
 }
 
 
@@ -3655,10 +3652,10 @@ void Cheat::AddSmallInfo3(char* text, short line)
 
 
 
-char* themefilesarray[100] = {};
-void Cheat::LoadThemeFiles() // Puts all ini files from %appdata%\gtav\Themes into char* array themefilesarray - looped in menu gui
+char* ThemeFilesArray[100] = {};
+void Cheat::LoadThemeFilesLooped()
 {
-	memset(themefilesarray, 0, sizeof themefilesarray); 
+	memset(ThemeFilesArray, 0, sizeof ThemeFilesArray);
 	std::string ThemeFolderPath = Cheat::CheatFunctions::ReturnCheatModuleDirectoryPath() + (std::string)"\\gtav\\Themes";
 	std::string GTAVCheatFolderPath = Cheat::CheatFunctions::ReturnCheatModuleDirectoryPath() + (std::string)xorstr_("\\gtav");
 
@@ -3669,15 +3666,15 @@ void Cheat::LoadThemeFiles() // Puts all ini files from %appdata%\gtav\Themes in
 	for (const auto & file : std::filesystem::directory_iterator(ThemeFolderPath.c_str())) {
 		if (file.path().extension() == ".ini")
 		{
-			themefilesarray[i] = new char[file.path().stem().string().length() + 1];
-			strcpy(themefilesarray[i], file.path().stem().string().c_str());
+			ThemeFilesArray[i] = new char[file.path().stem().string().length() + 1];
+			strcpy(ThemeFilesArray[i], file.path().stem().string().c_str());
 			++i;
 		}
 	}
 }
 
 
-void Cheat::LoadTheme(char* ThemeFileName, bool StartUp) // Loads specified ThemeFile and appends .ini to it automatically
+void Cheat::LoadTheme(char* ThemeFileName, bool StartUp)
 {
 	std::string ThemeFolderPath = Cheat::CheatFunctions::ReturnCheatModuleDirectoryPath() + (std::string)"\\gtav\\Themes";
 	std::string ThemeFilePath = Cheat::CheatFunctions::ReturnCheatModuleDirectoryPath() + (std::string)"\\gtav\\Themes\\" + ThemeFileName + ".ini";
@@ -3687,7 +3684,7 @@ void Cheat::LoadTheme(char* ThemeFileName, bool StartUp) // Loads specified Them
 	CurrentTheme = ThemeFileName;
 
 	std::string ThemeLoaderVersionCheck = Cheat::Files::ReadStringFromIni(ThemeFilePath, "THEME", "theme_loader_version");
-	if (ThemeLoaderVersionCheck != "1.0") { notifyleft("~o~Loaded theme file is outdated"); notifyleft("~o~Some theme settings might not have loaded correctly"); }
+	if (ThemeLoaderVersionCheck != "1.1") { notifyleft("~o~Loaded theme file is outdated"); notifyleft("~o~Some theme settings might not have loaded correctly"); }
 
 	std::string TitleBackgroundRed = Cheat::Files::ReadStringFromIni(ThemeFilePath, "THEME", "title_background_red");
 	std::string TitleBackgroundGreen = Cheat::Files::ReadStringFromIni(ThemeFilePath, "THEME", "title_background_green");
@@ -3772,6 +3769,10 @@ void Cheat::LoadTheme(char* ThemeFileName, bool StartUp) // Loads specified Them
 	if (Cheat::Files::ReadStringFromIni(ThemeFilePath, "THEME", "restore_previous_submenu") == "false") { Cheat::Settings::RestorePreviousSubmenu = false; } else { Cheat::Settings::RestorePreviousSubmenu = true; }
 
 	Cheat::Settings::maxVisOptions = Cheat::Files::ReadIntFromIni(ThemeFilePath, "THEME", "max_vis_options");
+	if (Cheat::Files::ReadIntFromIni(ThemeFilePath, "THEME", "open_key") != 0)
+	{
+		Cheat::Settings::openKey = Cheat::Files::ReadIntFromIni(ThemeFilePath, "THEME", "open_key");
+	}
 	if (!StartUp) { notifyleft("Theme Loaded"); }
 }
 
@@ -3782,7 +3783,7 @@ void Cheat::SaveTheme(char* ThemeFileName)
 	std::string ThemeFolderPath = Cheat::CheatFunctions::ReturnCheatModuleDirectoryPath() + (std::string)"\\gtav\\Themes";
 	if (!Cheat::CheatFunctions::DoesDirectoryExists(Cheat::CheatFunctions::ReturnCheatModuleDirectoryPath() + (std::string)"\\gtav\\Themes")) { Cheat::CheatFunctions::CreateNewDirectory(ThemeFolderPath); }
 
-	Cheat::Files::WriteStringToIni("1.0", ThemeFilePath, "THEME", "theme_loader_version");
+	Cheat::Files::WriteStringToIni("1.1", ThemeFilePath, "THEME", "theme_loader_version");
 	Cheat::Files::WriteBoolToIni(show_header_background, ThemeFilePath, "THEME", "show_header_background");
 	Cheat::Files::WriteBoolToIni(show_header_gui, ThemeFilePath, "THEME", "show_header_gui");
 	Cheat::Files::WriteBoolToIni(Cheat::Settings::RestorePreviousSubmenu, ThemeFilePath, "THEME", "restore_previous_submenu");
@@ -3790,6 +3791,7 @@ void Cheat::SaveTheme(char* ThemeFileName)
 	Cheat::Files::WriteIntToIni(Cheat::Settings::keyPressDelay2, ThemeFilePath, "THEME", "scroll_delay");
 	Cheat::Files::WriteIntToIni(Cheat::Settings::keyPressDelay3, ThemeFilePath, "THEME", "int_delay");
 	Cheat::Files::WriteIntToIni(Cheat::Settings::maxVisOptions, ThemeFilePath, "THEME", "max_vis_options");
+	Cheat::Files::WriteIntToIni(Cheat::Settings::openKey, ThemeFilePath, "THEME", "open_key");
 
 	Cheat::Files::WriteIntToIni(Cheat::Settings::MainTitleRect.r, ThemeFilePath, "THEME", "title_background_red");
 	Cheat::Files::WriteIntToIni(Cheat::Settings::MainTitleRect.g, ThemeFilePath, "THEME", "title_background_green");

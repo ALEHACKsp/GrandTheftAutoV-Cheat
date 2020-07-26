@@ -13,9 +13,9 @@ void Cheat::CheatFeatures::Looped()
 	//Key Instructions, Cheat GUI
 	if (!CheatGUIHasBeenOpened)
 	{
+		std::string OpenGUIString = xorstr_("Press ") + Cheat::CheatFunctions::VirtualKeyCodeToString(Cheat::Settings::openKey) + xorstr_(" to open GUI");
 		Cheat::GameFunctions::InstructionsInit();
-		Cheat::GameFunctions::InstructionsAdd(xorstr_("Open GUI"), 134);
-		Cheat::GameFunctions::InstructionsAdd(xorstr_("Open GUI"), 173);
+		Cheat::GameFunctions::InstructionsAdd((char*)OpenGUIString.c_str(), 80);
 		Cheat::GameFunctions::InstructionsEnd();
 	}
 
@@ -666,7 +666,7 @@ void Cheat::CheatFeatures::NoClip()
 		ENTITY::SET_ENTITY_COORDS_NO_OFFSET(currentCar, Pos.x, Pos.y, Pos.z, 0, 0, 0);
 		if (ENTITY::DOES_ENTITY_EXIST(currentCar) && ENTITY::IS_ENTITY_A_VEHICLE(currentCar))
 		{
-			if (GetAsyncKeyState(0x57) && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, 232) && Cheat::Settings::controllerinput)
+			if (GetAsyncKeyState(0x57) && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, 232) && Cheat::Settings::ControllerInput)
 			{
 				ENTITY::SET_ENTITY_COLLISION(currentCar, false, false);
 				ENTITY::SET_ENTITY_COORDS_NO_OFFSET(currentCar, Pos.x + (x * d), Pos.y + (y * d), Pos.z + (z * d), 0, 0, 0);
@@ -681,7 +681,7 @@ void Cheat::CheatFeatures::NoClip()
 		ENTITY::SET_ENTITY_COLLISION(PlayerPedID, true, true);
 		ENTITY::SET_ENTITY_ROTATION(PlayerPedID, rotation.x, rotation.y, rotation.z, 2, 1);
 		ENTITY::SET_ENTITY_COORDS_NO_OFFSET(PlayerPedID, Pos.x, Pos.y, Pos.z, 0, 0, 0);
-		if (GetAsyncKeyState(0x57) && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, 232) && Cheat::Settings::controllerinput)
+		if (GetAsyncKeyState(0x57) && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, 232) && Cheat::Settings::ControllerInput)
 		{
 			ENTITY::SET_ENTITY_COLLISION(PlayerPedID, false, false);
 			ENTITY::SET_ENTITY_COORDS_NO_OFFSET(PlayerPedID, Pos.x + (x * d), Pos.y + (y * d), Pos.z + (z * d), 0, 0, 0);

@@ -148,6 +148,6 @@ extern bool shop_box_bool_option;
 extern bool medal_bool_option;
 extern bool show_header_background;
 extern bool show_header_gui;
-extern char* themefilesarray[100];
+extern char* ThemeFilesArray[100];
 extern char* CurrentTheme;
 extern bool ShowVehiclePreviews;

@@ -3634,7 +3634,7 @@ void main() {
 		case custombulletsmenu: 
 		{
 			Cheat::Title("Custom Bullets");
-			Cheat::Toggle("Toggle", Cheat::CheatFeatures::CustomWeaponBulletsBool, "Toggle Custom Bullets");
+			Cheat::Toggle("Toggle", Cheat::CheatFeatures::CustomWeaponBulletsBool, "");
 			Cheat::ToggleCheckMark("Valkyrie Bullets", Cheat::CheatFeatures::CustomWeaponBullets_ValkyrieGun);
 			Cheat::ToggleCheckMark("Tank Bullets", Cheat::CheatFeatures::CustomWeaponBullets_TankBullets);
 			Cheat::ToggleCheckMark("RPG Bullets", Cheat::CheatFeatures::CustomWeaponBullets_RpgBullets);
@@ -5055,7 +5055,7 @@ void main() {
 		case menusettingsmenu:
 		{
 			Cheat::Title("Cheat Settings");
-			Cheat::Toggle("Controller Support", Cheat::Settings::controllerinput, "Enables Cheat GUI Controller Support");
+			Cheat::Toggle("Controller Support", Cheat::Settings::ControllerInput, "Enables Cheat GUI Controller Support");
 			Cheat::Break("~bold~Player List", true);
 			Cheat::Toggle("Show Player Information", ShowPlayerInformationPlayerList, "Toggle Player Information Box");
 			Cheat::Toggle("Show Player Tags", Cheat::CheatFeatures::ShowPlayerTagsPlayerList, "Toggle Player Tags");
@@ -5075,6 +5075,14 @@ void main() {
 			Cheat::Int("Max Visible Menu Options", Cheat::Settings::maxVisOptions, 5, 16, 1, "Set Max Visible Menu Options");
 			Cheat::Toggle("Restore To Previous Submenu", Cheat::Settings::RestorePreviousSubmenu, "When opening restores previous submenu");
 			Cheat::Float("MenuX Position", Cheat::Settings::menuX, 0.11f, 0.86f, 0.01, true, "Changes GUI X-Axis Position");
+			std::string OpenKeyString = "Open Key: ~c~" + Cheat::CheatFunctions::VirtualKeyCodeToString(Cheat::Settings::openKey);
+			if (Cheat::Option(OpenKeyString.c_str(), "Select to change"))
+			{
+				int PressedKey;
+				while (!Cheat::CheatFunctions::ReturnPressedKey(PressedKey)) { Cheat::Drawing::Text("~bold~Press any key to set Open Key, press Escape to cancel", { 255, 255, 255, 255 }, { 0.525f, 0.400f }, { 0.900f, 0.900f }, true); WAIT(0); }
+				if (PressedKey == 27) { notifyleft("Canceled Setting Open Key"); break; }
+				if (PressedKey != 0) { Cheat::Settings::openKey = PressedKey; notifyleft("Open Key has been set"); }
+			}
 			if (Cheat::Int("Scroll Delay", Cheat::Settings::keyPressDelay2, 1, 200, 1, ""))
 			{
 				if (GetAsyncKeyState(VK_NUMPAD5) && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
@@ -5511,17 +5519,17 @@ void main() {
 		case themefiles:
 		{
 			Cheat::Title("Theme Files");
-			Cheat::LoadThemeFiles();
+			Cheat::LoadThemeFilesLooped();
 			Cheat::Break("All theme files below - select to load", true);
-			for (int i = 0; i < sizeof(themefilesarray) / sizeof(char*); i++)
+			for (int i = 0; i < sizeof(ThemeFilesArray) / sizeof(char*); i++)
 			{
-				if (themefilesarray[i] != NULL)
+				if (ThemeFilesArray[i] != NULL)
 				{
-					if (Cheat::Option(themefilesarray[i], ""))
+					if (Cheat::Option(ThemeFilesArray[i], ""))
 					{
-						std::string ThemeFilePathMenuList = Cheat::CheatFunctions::ReturnCheatModuleDirectoryPath() + (std::string)"\\gtav\\Themes\\" + themefilesarray[i] + ".ini";
+						std::string ThemeFilePathMenuList = Cheat::CheatFunctions::ReturnCheatModuleDirectoryPath() + (std::string)"\\gtav\\Themes\\" + ThemeFilesArray[i] + ".ini";
 						if (!Cheat::CheatFunctions::DoesFileExists(ThemeFilePathMenuList)) { notifyleft("~r~Unable to locate theme file"); break; }
-						Cheat::LoadTheme(themefilesarray[i], false);
+						Cheat::LoadTheme(ThemeFilesArray[i], false);
 					}
 				}
 			}

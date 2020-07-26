@@ -50,7 +50,7 @@ void Cheat::GameFunctions::RepairAndCleanVehicle()
 	}
 	else 
 	{
-		notifyleft(xorstr_("~r~Player isn't in a vehicle"));
+		Cheat::GameFunctions::MinimapNotification(xorstr_("~r~Player isn't in a vehicle"));
 	}
 }
 
@@ -135,7 +135,7 @@ void Cheat::GameFunctions::TeleportToObjective()
 			blipFound = true;
 		}
 	}
-	blipFound ? Cheat::GameFunctions::TeleportToCoords(e, wayp) : notifyleft(xorstr_("~r~Objective not found"));
+	blipFound ? Cheat::GameFunctions::TeleportToCoords(e, wayp) : Cheat::GameFunctions::MinimapNotification(xorstr_("~r~Objective not found"));
 }
 
 
@@ -161,7 +161,7 @@ void Cheat::GameFunctions::SetOffAlarmPlayerVehicle(Ped selectedPed)
 		RequestControl(PED::GET_VEHICLE_PED_IS_USING(selectedPed));
 		VEHICLE::SET_VEHICLE_ALARM(selectedVehicle, true);
 		VEHICLE::START_VEHICLE_ALARM(selectedVehicle);
-		notifyleft(xorstr_("~g~Set off alarm of vehicle!"));
+		Cheat::GameFunctions::MinimapNotification(xorstr_("~g~Set off alarm of vehicle!"));
 	}
 }
 
@@ -230,7 +230,7 @@ Vector3 Cheat::GameFunctions::RotationToDirection(Vector3 rot) {
 
 void Cheat::GameFunctions::SetRankRockstarGift(int RPValue)
 {
-	if (RPValue < 0 || RPValue > 8000) { notifyleft(xorstr_("Invalid Rank Inputted")); return; }
+	if (RPValue < 0 || RPValue > 8000) { Cheat::GameFunctions::MinimapNotification(xorstr_("Invalid Rank Inputted")); return; }
 
 	int iVar0;
 	STATS::STAT_GET_INT(GAMEPLAY::GET_HASH_KEY(xorstr_("mpply_last_mp_char")), &iVar0, -1);
@@ -242,7 +242,7 @@ void Cheat::GameFunctions::SetRankRockstarGift(int RPValue)
 	{
 		STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY(xorstr_("MP1_CHAR_SET_RP_GIFT_ADMIN")), Cheat::GameArrays::RankPointsArray[RPValue - 1], 0);
 	}
-	notifyleft("Join a new GTAO session for the new ranked to be applied");
+	Cheat::GameFunctions::MinimapNotification("Join a new GTAO session for the new ranked to be applied");
 }
 
 
@@ -491,10 +491,10 @@ Ped Cheat::GameFunctions::ClonePed(Ped ped)
 	return 0;
 }
 
-void notifyleft(char* msg)
+void Cheat::GameFunctions::MinimapNotification(char* Message)
 {
 	UI::_SET_NOTIFICATION_TEXT_ENTRY("STRING");
-	UI::ADD_TEXT_COMPONENT_SUBSTRING_PLAYER_NAME(msg);
+	UI::ADD_TEXT_COMPONENT_SUBSTRING_PLAYER_NAME(Message);
 	UI::_DRAW_NOTIFICATION(false, false);
 }
 
@@ -1089,7 +1089,7 @@ bool spawnmaxupgraded = false;
 void Cheat::GameFunctions::SpawnVehicle(char* ModelHash)
 {
 	Hash model = GAMEPLAY::GET_HASH_KEY(ModelHash);
-	if (!STREAMING::IS_MODEL_IN_CDIMAGE(model) || !STREAMING::IS_MODEL_A_VEHICLE(model)) { notifyleft(xorstr_("~r~That is not a valid vehicle model")); return; }
+	if (!STREAMING::IS_MODEL_IN_CDIMAGE(model) || !STREAMING::IS_MODEL_A_VEHICLE(model)) { Cheat::GameFunctions::MinimapNotification(xorstr_("~r~That is not a valid vehicle model")); return; }
 	if (spawner_deletecurrentvehicle) {
 		if (PED::IS_PED_IN_ANY_VEHICLE(PlayerPedID, 0)) {
 			auto veh = PED::GET_VEHICLE_PED_IS_USING(PlayerPedID);
@@ -1126,13 +1126,13 @@ void Cheat::GameFunctions::SpawnVehicle(char* ModelHash)
 		NETWORK::SET_NETWORK_ID_EXISTS_ON_ALL_MACHINES(NETWORK::NET_TO_VEH(veh), 1);
 		DECORATOR::DECOR_SET_INT(veh, xorstr_("MPBitset"), 0);
 		ENTITY::_SET_ENTITY_SOMETHING(veh, true);
-		notifyleft(xorstr_("Vehicle Spawned"));
+		Cheat::GameFunctions::MinimapNotification(xorstr_("Vehicle Spawned"));
 	}
 }
 
 void Cheat::GameFunctions::TeleportToWaypoint()
 {
-	if (!UI::IS_WAYPOINT_ACTIVE()) { notifyleft(xorstr_("~r~Please set waypoint")); return; }
+	if (!UI::IS_WAYPOINT_ACTIVE()) { Cheat::GameFunctions::MinimapNotification(xorstr_("~r~Please set waypoint")); return; }
 	Vector3 coords = Cheat::GameFunctions::GetBlipMarker();
 
 	Entity e = PlayerPedID;
@@ -1208,7 +1208,7 @@ void Cheat::GameFunctions::CheckNewSessionMembersLoop()
 				if (!std::count(CurrentPlayerNamesSession.begin(), CurrentPlayerNamesSession.end(), var))
 				{
 					std::string NewPlayerString = xorstr_("<C>") + var + xorstr_("</C> joined the session.");
-					notifyleft((char*)NewPlayerString.c_str());
+					Cheat::GameFunctions::MinimapNotification((char*)NewPlayerString.c_str());
 				}
 			}
 			SecondCall = false;

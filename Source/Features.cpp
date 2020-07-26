@@ -49,29 +49,29 @@ void Cheat::CheatFeatures::Looped()
 	{
 		if (GetAsyncKeyState(TeleportForward2mHotkey) & 1 && Cheat::CheatFunctions::IsGameWindowFocussed())
 		{
-			notifyleft(xorstr_("Hotkey 'Teleport Forward (2m)' Triggered"));
+			Cheat::GameFunctions::MinimapNotification(xorstr_("Hotkey 'Teleport Forward (2m)' Triggered"));
 			Vector3 Coords = ENTITY::GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(PlayerPedID, 0.0, 2.0, 0.0);
 			int Handle = PlayerPedID;
 			if (PED::IS_PED_IN_ANY_VEHICLE(Handle, 0)) { Handle = PED::GET_VEHICLE_PED_IS_IN(PlayerPedID, 0); }
 			ENTITY::SET_ENTITY_COORDS_NO_OFFSET(Handle, Coords.x, Coords.y, Coords.z, 0, 0, 1);
 		}
 	}
-	if (MaxUpgradeVehicleHotKey != NULL && HotkeyToggleBool) { if (GetAsyncKeyState(MaxUpgradeVehicleHotKey) & 1 && Cheat::CheatFunctions::IsGameWindowFocussed()) { notifyleft(xorstr_("Hotkey 'Max Upgrade Vehicle' Triggered")); Cheat::GameFunctions::MaxUpgradeVehicle(PED::GET_VEHICLE_PED_IS_USING(PlayerPedID)); } }
-	if (BailToSinglePlayerHotkey != NULL && HotkeyToggleBool) { if (GetAsyncKeyState(BailToSinglePlayerHotkey) & 1 && Cheat::CheatFunctions::IsGameWindowFocussed()) { notifyleft("Hotkey 'Bail To Single Player' Triggered"); NETWORK::SHUTDOWN_AND_LAUNCH_SINGLE_PLAYER_GAME(); } }
-	if (SuicideHotkey != NULL && HotkeyToggleBool) { if (GetAsyncKeyState(SuicideHotkey) & 1 && Cheat::CheatFunctions::IsGameWindowFocussed()) { notifyleft(xorstr_("Hotkey 'Suicide' Triggered")); PED::APPLY_DAMAGE_TO_PED(PlayerPedID, 300, true); } }
+	if (MaxUpgradeVehicleHotKey != NULL && HotkeyToggleBool) { if (GetAsyncKeyState(MaxUpgradeVehicleHotKey) & 1 && Cheat::CheatFunctions::IsGameWindowFocussed()) { Cheat::GameFunctions::MinimapNotification(xorstr_("Hotkey 'Max Upgrade Vehicle' Triggered")); Cheat::GameFunctions::MaxUpgradeVehicle(PED::GET_VEHICLE_PED_IS_USING(PlayerPedID)); } }
+	if (BailToSinglePlayerHotkey != NULL && HotkeyToggleBool) { if (GetAsyncKeyState(BailToSinglePlayerHotkey) & 1 && Cheat::CheatFunctions::IsGameWindowFocussed()) { Cheat::GameFunctions::MinimapNotification("Hotkey 'Bail To Single Player' Triggered"); NETWORK::SHUTDOWN_AND_LAUNCH_SINGLE_PLAYER_GAME(); } }
+	if (SuicideHotkey != NULL && HotkeyToggleBool) { if (GetAsyncKeyState(SuicideHotkey) & 1 && Cheat::CheatFunctions::IsGameWindowFocussed()) { Cheat::GameFunctions::MinimapNotification(xorstr_("Hotkey 'Suicide' Triggered")); PED::APPLY_DAMAGE_TO_PED(PlayerPedID, 300, true); } }
 	if (GodModeToggleHotkey != NULL && HotkeyToggleBool)
 	{
 		if (GetAsyncKeyState(GodModeToggleHotkey) & 1 && Cheat::CheatFunctions::IsGameWindowFocussed())
 		{
-			notifyleft(xorstr_("Hotkey 'Godmode Toggle' Triggered"));
+			Cheat::GameFunctions::MinimapNotification(xorstr_("Hotkey 'Godmode Toggle' Triggered"));
 			if (Cheat::CheatFeatures::GodmodeBool)
-			{ Cheat::CheatFeatures::GodmodeBool = false; notifyleft(xorstr_("~g~Godmode Disabled")); }
-			else  { Cheat::CheatFeatures::GodmodeBool = true; notifyleft(xorstr_("~g~Godmode Enabled")); }
+			{ Cheat::CheatFeatures::GodmodeBool = false; Cheat::GameFunctions::MinimapNotification(xorstr_("~g~Godmode Disabled")); }
+			else  { Cheat::CheatFeatures::GodmodeBool = true; Cheat::GameFunctions::MinimapNotification(xorstr_("~g~Godmode Enabled")); }
 		}
 	}
-	if (RepairAndCleanVehicleHotkey != NULL && HotkeyToggleBool) { if (GetAsyncKeyState(RepairAndCleanVehicleHotkey) & 1 && Cheat::CheatFunctions::IsGameWindowFocussed()) { notifyleft(xorstr_("Hotkey 'Repair & Clean Vehicle' Triggered")); Cheat::GameFunctions::RepairAndCleanVehicle(); } }
-	if (TeleportToWaypointHotkey != NULL && HotkeyToggleBool) { if (GetAsyncKeyState(TeleportToWaypointHotkey) & 1 && Cheat::CheatFunctions::IsGameWindowFocussed()) { notifyleft(xorstr_("Hotkey 'Teleport to Waypoint' Triggered")); Cheat::GameFunctions::TeleportToWaypoint(); } }
-	if (AntiCrashCameraHotkey != NULL && HotkeyToggleBool) { if (GetAsyncKeyState(AntiCrashCameraHotkey) & 1 && Cheat::CheatFunctions::IsGameWindowFocussed()) { notifyleft(xorstr_("Hotkey 'Anti-Crash Camera' Triggered")); Cheat::GameFunctions::EnableDisableAntiCrashCamera(); } }
+	if (RepairAndCleanVehicleHotkey != NULL && HotkeyToggleBool) { if (GetAsyncKeyState(RepairAndCleanVehicleHotkey) & 1 && Cheat::CheatFunctions::IsGameWindowFocussed()) { Cheat::GameFunctions::MinimapNotification(xorstr_("Hotkey 'Repair & Clean Vehicle' Triggered")); Cheat::GameFunctions::RepairAndCleanVehicle(); } }
+	if (TeleportToWaypointHotkey != NULL && HotkeyToggleBool) { if (GetAsyncKeyState(TeleportToWaypointHotkey) & 1 && Cheat::CheatFunctions::IsGameWindowFocussed()) { Cheat::GameFunctions::MinimapNotification(xorstr_("Hotkey 'Teleport to Waypoint' Triggered")); Cheat::GameFunctions::TeleportToWaypoint(); } }
+	if (AntiCrashCameraHotkey != NULL && HotkeyToggleBool) { if (GetAsyncKeyState(AntiCrashCameraHotkey) & 1 && Cheat::CheatFunctions::IsGameWindowFocussed()) { Cheat::GameFunctions::MinimapNotification(xorstr_("Hotkey 'Anti-Crash Camera' Triggered")); Cheat::GameFunctions::EnableDisableAntiCrashCamera(); } }
 
 	GodmodeBool ? Godmode(true) : Godmode(false);
 	NeverWantedBool ? NeverWanted(true) : NeverWanted(false);
@@ -424,7 +424,7 @@ void Cheat::CheatFeatures::SuperJump()
 bool Cheat::CheatFeatures::PlayerForceFieldBool = false;
 void Cheat::CheatFeatures::PlayerForceField()
 {
-	if(!NoRagdollAndSeatbeltBool) { NoRagdollAndSeatbeltBool = true; notifyleft(xorstr_("~o~Enabled No Ragdoll & Seatbelt feature to prevent your character from flying around")); }
+	if(!NoRagdollAndSeatbeltBool) { NoRagdollAndSeatbeltBool = true; Cheat::GameFunctions::MinimapNotification(xorstr_("~o~Enabled No Ragdoll & Seatbelt feature to prevent your character from flying around")); }
 	FIRE::ADD_EXPLOSION(ENTITY::GET_ENTITY_COORDS(PlayerPedID, 0).x, ENTITY::GET_ENTITY_COORDS(PlayerPedID, 0).y, ENTITY::GET_ENTITY_COORDS(PlayerPedID, 0).z, 7, 100.0f, false, true, 0.0f);
 }
 
@@ -1058,7 +1058,7 @@ void Cheat::CheatFeatures::DriveOnWater()
 bool Cheat::CheatFeatures::SuperManBool = false;
 void Cheat::CheatFeatures::SuperMan()
 {
-	if(!Cheat::CheatFeatures::NoRagdollAndSeatbeltBool) { Cheat::CheatFeatures::NoRagdollAndSeatbeltBool = true; notifyleft(xorstr_("No Ragdoll & Seatbelt feature enabled for this feature")); }
+	if(!Cheat::CheatFeatures::NoRagdollAndSeatbeltBool) { Cheat::CheatFeatures::NoRagdollAndSeatbeltBool = true; Cheat::GameFunctions::MinimapNotification(xorstr_("No Ragdoll & Seatbelt feature enabled for this feature")); }
 	WEAPON::GIVE_DELAYED_WEAPON_TO_PED(PlayerPedID, GAMEPLAY::GET_HASH_KEY(xorstr_("GADGET_PARACHUTE")), 1, 1);
 	ENTITY::SET_ENTITY_INVINCIBLE(PlayerPedID, true);
 	PED::SET_PED_TO_RAGDOLL_WITH_FALL(PlayerPedID, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0);

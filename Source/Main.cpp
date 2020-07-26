@@ -1166,7 +1166,7 @@ void main() {
 					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP1_SNIPERRFL_ENEMY_KILLS"), 500, TRUE);
 					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP1_HVYSNIPER_ENEMY_KILLS"), 500, TRUE);
 				}
-				notifyleft("'Unlocked All' completed");
+				Cheat::GameFunctions::MinimapNotification("'Unlocked All' completed");
 			}
 			if (Cheat::Option("Max Skills", "Max out all skill levels")) {
 				int iVar0;
@@ -1189,7 +1189,7 @@ void main() {
 					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP1_SCRIPT_INCREASE_SHO"), 100, 0);
 					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP1_SCRIPT_INCREASE_STL"), 100, 0);
 				}
-				notifyleft("Maxed out all skill values for your current character"); 	
+				Cheat::GameFunctions::MinimapNotification("Maxed out all skill values for your current character"); 	
 			}
 			if (Cheat::Option("Unlock Tattoo's", "Unlock most tattoo's")) {
 				int iVar0;
@@ -1545,7 +1545,7 @@ void main() {
 					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP1_CHAR_WANTED_LEVEL_TIME5STAR"), 2147483647, 1);
 					STATS::STAT_SET_FLOAT(GAMEPLAY::GET_HASH_KEY("MP1_LONGEST_WHEELIE_DIST"), 1000, 1);
 				}
-				notifyleft("GTA Online Awards & Trophies unlocked");
+				Cheat::GameFunctions::MinimapNotification("GTA Online Awards & Trophies unlocked");
 			}
 		}
 		break;
@@ -1568,7 +1568,7 @@ void main() {
 				if (iVar0 == 1) {
 					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP1_CLUB_POPULARITY"), 9999, 0);
 				}
-				notifyleft("~g~Popularity of your Nightclub has been set to the maximum");
+				Cheat::GameFunctions::MinimapNotification("~g~Popularity of your Nightclub has been set to the maximum");
 			}
 			if (Cheat::Option("Redesign Character Prompt", "")) {
 				int iVar0;
@@ -1580,7 +1580,7 @@ void main() {
 				if (iVar0 == 1) {
 					STATS::STAT_SET_BOOL(GAMEPLAY::GET_HASH_KEY("MP1_FM_CHANGECHAR_ASKED"), 0, 1);
 				}
-				notifyleft("~g~Leave GTA Online (go to Single Player) and join back to receive the notification.");
+				Cheat::GameFunctions::MinimapNotification("~g~Leave GTA Online (go to Single Player) and join back to receive the notification.");
 			}
 			if (Cheat::Option("Clear Badsport", "Clears Badsport status")) {
 				STATS::STAT_SET_BOOL(GAMEPLAY::GET_HASH_KEY("MPPLY_CHAR_IS_BADSPORT "), 0, 1);
@@ -1589,7 +1589,7 @@ void main() {
 				Any date[12];
 				memset(&date, 0, sizeof(date));
 				STATS::STAT_SET_DATE(GAMEPLAY::GET_HASH_KEY("MPPLY_BECAME_BADSPORT_DT"), &date[0], 7, 1);
-				notifyleft("~g~Badsport Cleared");
+				Cheat::GameFunctions::MinimapNotification("~g~Badsport Cleared");
 			}
 			if (Cheat::Option("Clear Mental State", "Clear current mental state"))
 			{
@@ -1602,7 +1602,7 @@ void main() {
 				if (iVar0 == 1) {
 					STATS::STAT_SET_FLOAT(GAMEPLAY::GET_HASH_KEY("MP1_PLAYER_MENTAL_STATE"), 0.0, true);
 				}
-				notifyleft("~g~Mental State Cleared");
+				Cheat::GameFunctions::MinimapNotification("~g~Mental State Cleared");
 			}
 		}
 		break; 
@@ -1622,7 +1622,7 @@ void main() {
 				}
 				catch (...)
 				{
-					notifyleft("That is not a valid Rank. Only digits are supported.");
+					Cheat::GameFunctions::MinimapNotification("That is not a valid Rank. Only digits are supported.");
 				}
 			}
 			if (Cheat::Option("Rank 1",""))
@@ -1699,7 +1699,7 @@ void main() {
 				DWORD model = GAMEPLAY::GET_HASH_KEY(CustomModel);
 				if (!STREAMING::IS_MODEL_IN_CDIMAGE(model))
 				{
-					notifyleft("~r~That is not a valid ped model");
+					Cheat::GameFunctions::MinimapNotification("~r~That is not a valid ped model");
 					break;
 				}
 				Hooking::request_model(model);
@@ -2182,7 +2182,7 @@ void main() {
 					}
 				}
 				else {
-					notifyleft("~r~Player isn't in a vehicle");
+					Cheat::GameFunctions::MinimapNotification("~r~Player isn't in a vehicle");
 				}			
 			}
 			if (!VEHICLE::IS_VEHICLE_ON_ALL_WHEELS(PED::GET_VEHICLE_PED_IS_IN(PlayerPedID, false))) { if (Cheat::Option("Flip Up", "Flip vehicle up")) { VEHICLE::SET_VEHICLE_ON_GROUND_PROPERLY(PED::GET_VEHICLE_PED_IS_IN(PlayerPedID, false)); } }
@@ -2199,18 +2199,18 @@ void main() {
 								if (PED::IS_PED_IN_ANY_VEHICLE(PlayerPedID, 0)) {
 									Vehicle veh = PED::GET_VEHICLE_PED_IS_USING(PlayerPedID);
 									ENTITY::SET_ENTITY_MAX_SPEED(veh, VehicleSpeedConverted);
-									notifyleft("~g~Max Speed Set (KM/H)");
+									Cheat::GameFunctions::MinimapNotification("~g~Max Speed Set (KM/H)");
 								}
 								else
 								{
-									notifyleft("~r~Player isn't in a vehicle");
+									Cheat::GameFunctions::MinimapNotification("~r~Player isn't in a vehicle");
 								}
 							}
 						}
 					}
 					else
 					{
-						notifyleft("~r~Player isn't in a vehicle");
+						Cheat::GameFunctions::MinimapNotification("~r~Player isn't in a vehicle");
 					}
 				}
 			}
@@ -2228,11 +2228,11 @@ void main() {
 								if (PED::IS_PED_IN_ANY_VEHICLE(PlayerPedID, 0)) {
 									Vehicle veh = PED::GET_VEHICLE_PED_IS_USING(PlayerPedID);
 									ENTITY::SET_ENTITY_MAX_SPEED(veh, VehicleSpeedConverted);
-									notifyleft("~g~Max Speed Set (MP/H)");
+									Cheat::GameFunctions::MinimapNotification("~g~Max Speed Set (MP/H)");
 								}
 								else
 								{
-									notifyleft("~r~Player isn't in a vehicle");
+									Cheat::GameFunctions::MinimapNotification("~r~Player isn't in a vehicle");
 								}
 
 							}
@@ -2241,7 +2241,7 @@ void main() {
 					}
 					else
 					{
-						notifyleft("~r~Player isn't in a vehicle");
+						Cheat::GameFunctions::MinimapNotification("~r~Player isn't in a vehicle");
 					}
 				}		
 			}
@@ -2272,7 +2272,7 @@ void main() {
 					UI::_DRAW_NOTIFICATION(1, 1);
 				}
 				else {
-					notifyleft("~r~Player isn't in a vehicle");
+					Cheat::GameFunctions::MinimapNotification("~r~Player isn't in a vehicle");
 				}
 			}
 			if (Cheat::Option("Max Downgrade", "Max downgrade current vehicle"))
@@ -2285,7 +2285,7 @@ void main() {
 					UI::_DRAW_NOTIFICATION(1, 1);
 				}
 				else {
-					notifyleft("~r~Player isn't in a vehicle");
+					Cheat::GameFunctions::MinimapNotification("~r~Player isn't in a vehicle");
 				}
 			}
 			if (Cheat::Option("Add Blip Registration", "Add Blip To Current Vehicle")) {
@@ -2308,7 +2308,7 @@ void main() {
 				}
 				else
 				{
-					notifyleft("~r~Player isn't in a vehicle");
+					Cheat::GameFunctions::MinimapNotification("~r~Player isn't in a vehicle");
 				}
 			}
 			if (Cheat::Option("Change License Plate Text", "Input custom vehicle license plate text"))
@@ -2327,7 +2327,7 @@ void main() {
 					UI::_DRAW_NOTIFICATION(false, false);
 				}
 				else {
-					notifyleft("~r~Player isn't in a vehicle");
+					Cheat::GameFunctions::MinimapNotification("~r~Player isn't in a vehicle");
 				}
 			}
 			Cheat::MenuOption("Color Options >", vehicle_lsc_color_options);
@@ -2360,7 +2360,7 @@ void main() {
 				}
 				else
 				{
-					notifyleft("~r~Player isn't in a vehicle");
+					Cheat::GameFunctions::MinimapNotification("~r~Player isn't in a vehicle");
 				}
 			}
 			if (Cheat::Int("Secondary Color: Red", VehicleSecondaryColorRed, 0, 255, 1, "")) {
@@ -2385,7 +2385,7 @@ void main() {
 				}
 				else
 				{
-					notifyleft("~r~Player isn't in a vehicle");
+					Cheat::GameFunctions::MinimapNotification("~r~Player isn't in a vehicle");
 				}
 			}
 		}
@@ -2543,7 +2543,7 @@ void main() {
 				}
 				else
 				{
-					notifyleft("~r~Player isn't in a vehicle");
+					Cheat::GameFunctions::MinimapNotification("~r~Player isn't in a vehicle");
 				}
 			}
 			Cheat::Break("~bold~Neon Presets", true);
@@ -2622,7 +2622,7 @@ void main() {
 				}
 				else
 				{
-					notifyleft("~r~Player isn't in a vehicle");
+					Cheat::GameFunctions::MinimapNotification("~r~Player isn't in a vehicle");
 				}
 			}
 		}
@@ -2724,7 +2724,7 @@ void main() {
 					}
 				}
 				delete[] vehs;
-				notifyleft("Area Cleared");
+				Cheat::GameFunctions::MinimapNotification("Area Cleared");
 			}
 			Cheat::Toggle("No Gravity", Cheat::CheatFeatures::NoGravityBool, "Disable gravity in the world");
 			Cheat::Toggle("Blackout", Cheat::CheatFeatures::WorldBlackoutBool, "Disable All Map Lights");
@@ -3003,74 +3003,74 @@ void main() {
 			{
 				PressedKey = 0;
 				while (!Cheat::CheatFunctions::ReturnPressedKey(PressedKey)) { Cheat::Drawing::Text(PressAnyKeyMessageString, { 255, 255, 255, 255 }, { 0.525f, 0.400f }, { 0.900f, 0.900f }, true); WAIT(0); }
-				if (PressedKey == 27) { notifyleft("Canceled Setting Hotkey"); break; }
-				if (PressedKey != 0) { AntiCrashCameraHotkey = PressedKey; notifyleft("Anti-Crash Camera hotkey has been set"); }
+				if (PressedKey == 27) { Cheat::GameFunctions::MinimapNotification("Canceled Setting Hotkey"); break; }
+				if (PressedKey != 0) { AntiCrashCameraHotkey = PressedKey; Cheat::GameFunctions::MinimapNotification("Anti-Crash Camera hotkey has been set"); }
 			}
-			if (Cheat::Option("Clear Hotkey", "")) { notifyleft("Hotkey Cleared"); AntiCrashCameraHotkey = NULL; }
+			if (Cheat::Option("Clear Hotkey", "")) { Cheat::GameFunctions::MinimapNotification("Hotkey Cleared"); AntiCrashCameraHotkey = NULL; }
 			Cheat::Break("Teleport To Waypoint", true);
 			if (Cheat::Option("Set Hotkey", ""))
 			{
 				PressedKey = 0;
 				while (!Cheat::CheatFunctions::ReturnPressedKey(PressedKey)) { Cheat::Drawing::Text(PressAnyKeyMessageString, { 255, 255, 255, 255 }, { 0.525f, 0.400f }, { 0.900f, 0.900f }, true); WAIT(0); }
-				if (PressedKey == 27) { notifyleft("Canceled Setting Hotkey"); break; }
-				if (PressedKey != 0) { TeleportToWaypointHotkey = PressedKey; notifyleft("Teleport To Waypoint hotkey has been set"); }
+				if (PressedKey == 27) { Cheat::GameFunctions::MinimapNotification("Canceled Setting Hotkey"); break; }
+				if (PressedKey != 0) { TeleportToWaypointHotkey = PressedKey; Cheat::GameFunctions::MinimapNotification("Teleport To Waypoint hotkey has been set"); }
 			}
-			if (Cheat::Option("Clear Hotkey", "")) { notifyleft("Hotkey Cleared"); TeleportToWaypointHotkey = NULL; }
+			if (Cheat::Option("Clear Hotkey", "")) { Cheat::GameFunctions::MinimapNotification("Hotkey Cleared"); TeleportToWaypointHotkey = NULL; }
 			Cheat::Break("Repair & Clean Vehicle", true);
 			if (Cheat::Option("Set Hotkey", ""))
 			{
 				PressedKey = 0;
 				while (!Cheat::CheatFunctions::ReturnPressedKey(PressedKey)) { Cheat::Drawing::Text(PressAnyKeyMessageString, { 255, 255, 255, 255 }, { 0.525f, 0.400f }, { 0.900f, 0.900f }, true); WAIT(0); }
-				if (PressedKey == 27) { notifyleft("Canceled Setting Hotkey"); break; }
-				if (PressedKey != 0) { RepairAndCleanVehicleHotkey = PressedKey; notifyleft("Repair & Clean hotkey has been set"); }
+				if (PressedKey == 27) { Cheat::GameFunctions::MinimapNotification("Canceled Setting Hotkey"); break; }
+				if (PressedKey != 0) { RepairAndCleanVehicleHotkey = PressedKey; Cheat::GameFunctions::MinimapNotification("Repair & Clean hotkey has been set"); }
 			}
-			if (Cheat::Option("Clear Hotkey", "")) { notifyleft("Hotkey Cleared"); RepairAndCleanVehicleHotkey = NULL; }
+			if (Cheat::Option("Clear Hotkey", "")) { Cheat::GameFunctions::MinimapNotification("Hotkey Cleared"); RepairAndCleanVehicleHotkey = NULL; }
 			Cheat::Break("Godmode", true);
 			if (Cheat::Option("Set Hotkey", ""))
 			{
 				PressedKey = 0;
 				while (!Cheat::CheatFunctions::ReturnPressedKey(PressedKey)) { Cheat::Drawing::Text(PressAnyKeyMessageString, { 255, 255, 255, 255 }, { 0.525f, 0.400f }, { 0.900f, 0.900f }, true); WAIT(0); }
-				if (PressedKey == 27) { notifyleft("Canceled Setting Hotkey"); break; }
-				if (PressedKey != 0) { GodModeToggleHotkey = PressedKey; notifyleft("Godmode hotkey has been set"); }
+				if (PressedKey == 27) { Cheat::GameFunctions::MinimapNotification("Canceled Setting Hotkey"); break; }
+				if (PressedKey != 0) { GodModeToggleHotkey = PressedKey; Cheat::GameFunctions::MinimapNotification("Godmode hotkey has been set"); }
 			}
-			if (Cheat::Option("Clear Hotkey", "")) { notifyleft("Hotkey Cleared"); GodModeToggleHotkey = NULL; }
+			if (Cheat::Option("Clear Hotkey", "")) { Cheat::GameFunctions::MinimapNotification("Hotkey Cleared"); GodModeToggleHotkey = NULL; }
 			Cheat::Break("Max Upgrade Vehicle", true);
 			if (Cheat::Option("Set Hotkey", ""))
 			{
 				PressedKey = 0;
 				while (!Cheat::CheatFunctions::ReturnPressedKey(PressedKey)) { Cheat::Drawing::Text(PressAnyKeyMessageString, { 255, 255, 255, 255 }, { 0.525f, 0.400f }, { 0.900f, 0.900f }, true); WAIT(0); }
-				if (PressedKey == 27) { notifyleft("Canceled Setting Hotkey"); break; }
-				if (PressedKey != 0) { MaxUpgradeVehicleHotKey = PressedKey; notifyleft("Max Upgrade Vehicle hotkey has been set"); }
+				if (PressedKey == 27) { Cheat::GameFunctions::MinimapNotification("Canceled Setting Hotkey"); break; }
+				if (PressedKey != 0) { MaxUpgradeVehicleHotKey = PressedKey; Cheat::GameFunctions::MinimapNotification("Max Upgrade Vehicle hotkey has been set"); }
 			}
-			if (Cheat::Option("Clear Hotkey", "")) { notifyleft("Hotkey Cleared"); MaxUpgradeVehicleHotKey = NULL; }
+			if (Cheat::Option("Clear Hotkey", "")) { Cheat::GameFunctions::MinimapNotification("Hotkey Cleared"); MaxUpgradeVehicleHotKey = NULL; }
 			Cheat::Break("Teleport Forward(2m)", true);
 			if (Cheat::Option("Set Hotkey", ""))
 			{
 				PressedKey = 0;
 				TeleportToWaypointHotkey = NULL;
 				while (!Cheat::CheatFunctions::ReturnPressedKey(PressedKey)) { Cheat::Drawing::Text(PressAnyKeyMessageString, { 255, 255, 255, 255 }, { 0.525f, 0.400f }, { 0.900f, 0.900f }, true); WAIT(0); }
-				if (PressedKey == 27) { notifyleft("Canceled Setting Hotkey"); break; }
-				if (PressedKey != 0) { TeleportForward2mHotkey = PressedKey; notifyleft("Teleport Forward (2m) hotkey has been set"); }
+				if (PressedKey == 27) { Cheat::GameFunctions::MinimapNotification("Canceled Setting Hotkey"); break; }
+				if (PressedKey != 0) { TeleportForward2mHotkey = PressedKey; Cheat::GameFunctions::MinimapNotification("Teleport Forward (2m) hotkey has been set"); }
 			}
-			if (Cheat::Option("Clear Hotkey", "")) { notifyleft("Hotkey Cleared"); TeleportForward2mHotkey = NULL; }
+			if (Cheat::Option("Clear Hotkey", "")) { Cheat::GameFunctions::MinimapNotification("Hotkey Cleared"); TeleportForward2mHotkey = NULL; }
 			Cheat::Break("Suicide", true);
 			if (Cheat::Option("Set Hotkey", ""))
 			{
 				PressedKey = 0;
 				while (!Cheat::CheatFunctions::ReturnPressedKey(PressedKey)) { Cheat::Drawing::Text(PressAnyKeyMessageString, { 255, 255, 255, 255 }, { 0.525f, 0.400f }, { 0.900f, 0.900f }, true); WAIT(0); }
-				if (PressedKey == 27) { notifyleft("Canceled Setting Hotkey"); break; }
-				if (PressedKey != 0) { SuicideHotkey = PressedKey; notifyleft("Suicide hotkey has been set"); }
+				if (PressedKey == 27) { Cheat::GameFunctions::MinimapNotification("Canceled Setting Hotkey"); break; }
+				if (PressedKey != 0) { SuicideHotkey = PressedKey; Cheat::GameFunctions::MinimapNotification("Suicide hotkey has been set"); }
 			}
-			if (Cheat::Option("Clear Hotkey", "")) { notifyleft("Hotkey Cleared"); SuicideHotkey = NULL; }
+			if (Cheat::Option("Clear Hotkey", "")) { Cheat::GameFunctions::MinimapNotification("Hotkey Cleared"); SuicideHotkey = NULL; }
 			Cheat::Break("Bail To Single Player", true);
 			if (Cheat::Option("Set Hotkey", ""))
 			{
 				PressedKey = 0;
 				while (!Cheat::CheatFunctions::ReturnPressedKey(PressedKey)) { Cheat::Drawing::Text(PressAnyKeyMessageString, { 255, 255, 255, 255 }, { 0.525f, 0.400f }, { 0.900f, 0.900f }, true); WAIT(0); }
-				if (PressedKey == 27) { notifyleft("Canceled Setting Hotkey"); break; }
-				if (PressedKey != 0) { BailToSinglePlayerHotkey = PressedKey; notifyleft("Bail To Single Player hotkey has been set"); }
+				if (PressedKey == 27) { Cheat::GameFunctions::MinimapNotification("Canceled Setting Hotkey"); break; }
+				if (PressedKey != 0) { BailToSinglePlayerHotkey = PressedKey; Cheat::GameFunctions::MinimapNotification("Bail To Single Player hotkey has been set"); }
 			}
-			if (Cheat::Option("Clear Hotkey", "")) { notifyleft("Hotkey Cleared"); BailToSinglePlayerHotkey = NULL; }
+			if (Cheat::Option("Clear Hotkey", "")) { Cheat::GameFunctions::MinimapNotification("Hotkey Cleared"); BailToSinglePlayerHotkey = NULL; }
 		}
 		break; 
 		case miscmenu:
@@ -3126,10 +3126,10 @@ void main() {
 						AI::TASK_VEHICLE_DRIVE_TO_COORD(Driver, veh, waypoint1.x, waypoint1.y, waypoint1.z, 40, 1, ENTITY::GET_ENTITY_MODEL(veh), 7, 6, -1);
 						char* plateText = ("CRUSADER");
 						VEHICLE::SET_VEHICLE_NUMBER_PLATE_TEXT(veh, plateText);
-						notifyleft("NPC Driver Spawned");
+						Cheat::GameFunctions::MinimapNotification("NPC Driver Spawned");
 					}
 				}
-				else { notifyleft(xorstr_("Please set a waypoint first to use this feature")); }
+				else { Cheat::GameFunctions::MinimapNotification(xorstr_("Please set a waypoint first to use this feature")); }
 			}		
 		}
 		break;
@@ -3221,7 +3221,7 @@ void main() {
 				STREAMING::REQUEST_IPL("prologuerd");
 				STREAMING::REQUEST_IPL("prologuerdb");
 				STREAMING::REQUEST_IPL("prologuerd_lod");
-				notifyleft("North Yankton IPL loaded");
+				Cheat::GameFunctions::MinimapNotification("North Yankton IPL loaded");
 				break;
 			}
 			if (Cheat::Option("Unload North Yankton", ""))
@@ -3297,7 +3297,7 @@ void main() {
 				STREAMING::REMOVE_IPL("prologuerd");
 				STREAMING::REMOVE_IPL("prologuerdb");
 				STREAMING::REMOVE_IPL("prologuerd_lod");
-				notifyleft("North Yankton IPL unloaded");
+				Cheat::GameFunctions::MinimapNotification("North Yankton IPL unloaded");
 				break;
 			}
 
@@ -3313,7 +3313,7 @@ void main() {
 				STREAMING::REQUEST_IPL("hei_yacht_heist_enginrm");
 				STREAMING::REQUEST_IPL("hei_yacht_heist_LODLights");
 				STREAMING::REQUEST_IPL("hei_yacht_heist_Lounge");
-				notifyleft("Heist Yacht IPL loaded");
+				Cheat::GameFunctions::MinimapNotification("Heist Yacht IPL loaded");
 				break;
 			}
 
@@ -3329,7 +3329,7 @@ void main() {
 				STREAMING::REMOVE_IPL("hei_yacht_heist_enginrm");
 				STREAMING::REMOVE_IPL("hei_yacht_heist_LODLights");
 				STREAMING::REMOVE_IPL("hei_yacht_heist_Lounge");
-				notifyleft("Heist Yacht IPL unloaded");
+				Cheat::GameFunctions::MinimapNotification("Heist Yacht IPL unloaded");
 				break;
 			}
 
@@ -3339,7 +3339,7 @@ void main() {
 					)
 				STREAMING::REQUEST_IPL("RC12B_Destroyed");
 				STREAMING::REQUEST_IPL("RC12B_HospitalInterior");
-				notifyleft("Destroyed Hospital IPL Loaded");
+				Cheat::GameFunctions::MinimapNotification("Destroyed Hospital IPL Loaded");
 				break;
 			}
 
@@ -3349,7 +3349,7 @@ void main() {
 					)
 				STREAMING::REMOVE_IPL("RC12B_Destroyed");
 				STREAMING::REMOVE_IPL("RC12B_HospitalInterior");
-				notifyleft("Destroyed Hospital IPL unloaded");
+				Cheat::GameFunctions::MinimapNotification("Destroyed Hospital IPL unloaded");
 				break;
 			}
 
@@ -3360,7 +3360,7 @@ void main() {
 				STREAMING::REQUEST_IPL("post_hiest_unload");
 				STREAMING::REMOVE_IPL("jewel2fake");
 				STREAMING::REMOVE_IPL("bh1_16_refurb");
-				notifyleft("Jewelry Store IPL loaded");
+				Cheat::GameFunctions::MinimapNotification("Jewelry Store IPL loaded");
 				break;
 			}
 
@@ -3369,7 +3369,7 @@ void main() {
 				if (ENTITY::DOES_ENTITY_EXIST(PlayerPedID)
 					)
 				STREAMING::REMOVE_IPL("post_hiest_unload");
-				notifyleft("Jewelry Store IPL unloaded");
+				Cheat::GameFunctions::MinimapNotification("Jewelry Store IPL unloaded");
 				break;
 			}
 
@@ -3378,7 +3378,7 @@ void main() {
 				if (ENTITY::DOES_ENTITY_EXIST(PlayerPedID)
 					)
 				STREAMING::REQUEST_IPL("Coroner_Int_on");
-				notifyleft("Morgue IPL loaded");
+				Cheat::GameFunctions::MinimapNotification("Morgue IPL loaded");
 				break;
 			}
 
@@ -3387,7 +3387,7 @@ void main() {
 				if (ENTITY::DOES_ENTITY_EXIST(PlayerPedID)
 					)
 				STREAMING::REMOVE_IPL("Coroner_Int_on");
-				notifyleft("Morgue IPL unloaded");
+				Cheat::GameFunctions::MinimapNotification("Morgue IPL unloaded");
 				break;
 			}
 			if (Cheat::Option("Load Cargoship", ""))
@@ -3395,7 +3395,7 @@ void main() {
 				if (ENTITY::DOES_ENTITY_EXIST(PlayerPedID)
 					)
 				STREAMING::REQUEST_IPL("cargoship");
-				notifyleft("Cargoship IPL loaded");
+				Cheat::GameFunctions::MinimapNotification("Cargoship IPL loaded");
 				break;	
 			}
 
@@ -3404,7 +3404,7 @@ void main() {
 				if (ENTITY::DOES_ENTITY_EXIST(PlayerPedID)
 					)
 				STREAMING::REMOVE_IPL("cargoship");
-				notifyleft("Cargoship IPL unloaded");
+				Cheat::GameFunctions::MinimapNotification("Cargoship IPL unloaded");
 				break;
 			}
 		}
@@ -3418,7 +3418,7 @@ void main() {
 			}
 			if (Cheat::Option("Remove All Weapons", ""))
 			{
-				if (Cheat::CheatFeatures::AutoGiveAllWeaponsBool) { notifyleft("Disable 'Auto Give All Weapons' to use this"); }
+				if (Cheat::CheatFeatures::AutoGiveAllWeaponsBool) { Cheat::GameFunctions::MinimapNotification("Disable 'Auto Give All Weapons' to use this"); }
 				else { WEAPON::REMOVE_ALL_PED_WEAPONS(PlayerPedID, true); }
 			}
 			if (Cheat::Option("Max Upgrade Weapons", "Max Upgrade All Weapons"))
@@ -3616,11 +3616,11 @@ void main() {
 				if (!GAMEPLAY::GET_ONSCREEN_KEYBOARD_RESULT()) { break; }
 
 				Hash model = GAMEPLAY::GET_HASH_KEY(SpawnVehicle);
-				if (!STREAMING::IS_MODEL_IN_CDIMAGE(model) || !STREAMING::IS_MODEL_A_VEHICLE(model)) { notifyleft("~r~Not a valid vehicle model"); break; }
+				if (!STREAMING::IS_MODEL_IN_CDIMAGE(model) || !STREAMING::IS_MODEL_A_VEHICLE(model)) { Cheat::GameFunctions::MinimapNotification("~r~Not a valid vehicle model"); break; }
 				else
 				{
 					Cheat::CheatFeatures::VehicleGun_VehicleNameChar = SpawnVehicle;
-					notifyleft("~g~Custom Vehicle Set");
+					Cheat::GameFunctions::MinimapNotification("~g~Custom Vehicle Set");
 				}
 			}
 			if (Cheat::Option("Rhino Tank", "")) { Cheat::CheatFeatures::VehicleGun_VehicleNameChar = "RHINO"; }
@@ -4422,7 +4422,7 @@ void main() {
 					Cheat::GameFunctions::SetOffAlarmPlayerVehicle(PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(Cheat::CheatFeatures::selectedPlayer));
 				}
 				else {
-					notifyleft("~r~Player isn't in a vehicle");
+					Cheat::GameFunctions::MinimapNotification("~r~Player isn't in a vehicle");
 				}
 			}
 			if (Cheat::Option("Burst Vehicle Tires", "Burst selected player vehicle tires"))
@@ -4432,7 +4432,7 @@ void main() {
 					Cheat::GameFunctions::BurstSelectedPlayerTires(PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(Cheat::CheatFeatures::selectedPlayer));
 				}
 				else {
-					notifyleft("~r~Player isn't in a vehicle");
+					Cheat::GameFunctions::MinimapNotification("~r~Player isn't in a vehicle");
 				}			
 			}
 			if (Cheat::Option("Airstrike Player", "Airstrike selected player"))
@@ -4465,7 +4465,7 @@ void main() {
 					}
 				}
 				else {
-					notifyleft("~r~Player isn't in a vehicle"); 
+					Cheat::GameFunctions::MinimapNotification("~r~Player isn't in a vehicle"); 
 				}
 
 			}
@@ -4679,7 +4679,7 @@ void main() {
 			Cheat::Int("Player Opacity", Cheat::CheatFeatures::PlayerOpacityInt, 50, 250, 50, "Changes local player opacity");
 			if (Cheat::Option("Suicide", "Kill your character")) { PED::APPLY_DAMAGE_TO_PED(PlayerPedID, 300, true); }
 			if (Cheat::Option("Give BST", "Get Bull Shark Testosterone - GTAO Only")) { globalHandle(2437549).At(3880).As<int>() = 1; }
-			if (Cheat::Option("Clean Player", "Remove any damage from player character")) { PED::CLEAR_PED_BLOOD_DAMAGE(PlayerPedID); PED::RESET_PED_VISIBLE_DAMAGE(PlayerPedID); notifyleft("Player Cleaned"); }	
+			if (Cheat::Option("Clean Player", "Remove any damage from player character")) { PED::CLEAR_PED_BLOOD_DAMAGE(PlayerPedID); PED::RESET_PED_VISIBLE_DAMAGE(PlayerPedID); Cheat::GameFunctions::MinimapNotification("Player Cleaned"); }	
 		}
 		break;
 		case visionsmenu:
@@ -4798,7 +4798,7 @@ void main() {
 				}
 				else
 				{
-					notifyleft("~r~This only works on the female GTA Online character model");
+					Cheat::GameFunctions::MinimapNotification("~r~This only works on the female GTA Online character model");
 				}
 				
 			}
@@ -4849,7 +4849,7 @@ void main() {
 				{ 
 					Cheat::GameFunctions::DetachObjectFromPed(PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(Cheat::CheatFeatures::selectedPlayer), (char*)i.c_str());
 				}			
-				notifyleft("All Objects Deleted From Player");
+				Cheat::GameFunctions::MinimapNotification("All Objects Deleted From Player");
 			}
 		}
 		break;
@@ -5048,7 +5048,7 @@ void main() {
 			Cheat::Toggle("Auto Save Settings", Cheat::CheatFeatures::AutoSaveSettings, "Auto Save Settings - every 10 minutes");
 			if (Cheat::Option("Save Settings Now", "Save settings immediatly")) {
 				Cheat::CheatFunctions::SaveSettings();
-				notifyleft("Settings Saved");
+				Cheat::GameFunctions::MinimapNotification("Settings Saved");
 			}
 		}
 		break;
@@ -5060,8 +5060,8 @@ void main() {
 			Cheat::Toggle("Show Player Information", ShowPlayerInformationPlayerList, "Toggle Player Information Box");
 			Cheat::Toggle("Show Player Tags", Cheat::CheatFeatures::ShowPlayerTagsPlayerList, "Toggle Player Tags");
 			Cheat::Break("~bold~Speed", true);
-			if (Cheat::Option("Use Metric System (KM/H)", "")) { Cheat::CheatFeatures::use_kmh = true; notifyleft("Using metric system now"); }
-			if (Cheat::Option("Use Imperial System (MP/H)", "")) { Cheat::CheatFeatures::use_kmh = false; notifyleft("Using imperial system now"); }
+			if (Cheat::Option("Use Metric System (KM/H)", "")) { Cheat::CheatFeatures::use_kmh = true; Cheat::GameFunctions::MinimapNotification("Using metric system now"); }
+			if (Cheat::Option("Use Imperial System (MP/H)", "")) { Cheat::CheatFeatures::use_kmh = false; Cheat::GameFunctions::MinimapNotification("Using imperial system now"); }
 			Cheat::Break("~bold~Protection", true);
 			Cheat::Toggle("Blocked Script Notifications", show_blocked_script_events_messages, "");
 		}
@@ -5080,8 +5080,8 @@ void main() {
 			{
 				int PressedKey;
 				while (!Cheat::CheatFunctions::ReturnPressedKey(PressedKey)) { Cheat::Drawing::Text("~bold~Press any key to set Open Key, press Escape to cancel", { 255, 255, 255, 255 }, { 0.525f, 0.400f }, { 0.900f, 0.900f }, true); WAIT(0); }
-				if (PressedKey == 27) { notifyleft("Canceled Setting Open Key"); break; }
-				if (PressedKey != 0) { Cheat::Settings::openKey = PressedKey; notifyleft("Open Key has been set"); }
+				if (PressedKey == 27) { Cheat::GameFunctions::MinimapNotification("Canceled Setting Open Key"); break; }
+				if (PressedKey != 0) { Cheat::Settings::openKey = PressedKey; Cheat::GameFunctions::MinimapNotification("Open Key has been set"); }
 			}
 			if (Cheat::Int("Scroll Delay", Cheat::Settings::keyPressDelay2, 1, 200, 1, ""))
 			{
@@ -5092,7 +5092,7 @@ void main() {
 					}
 					else
 					{
-						if (ScrollDelayInt != 0) { notifyleft("~r~The value must be between 1 and 200"); }
+						if (ScrollDelayInt != 0) { Cheat::GameFunctions::MinimapNotification("~r~The value must be between 1 and 200"); }
 					}
 				}
 			}
@@ -5106,7 +5106,7 @@ void main() {
 					}
 					else
 					{			
-						if (IntDelayInt != 0) { notifyleft("~r~The value must be between 1 and 200"); }
+						if (IntDelayInt != 0) { Cheat::GameFunctions::MinimapNotification("~r~The value must be between 1 and 200"); }
 					}
 				}
 			}
@@ -5152,7 +5152,7 @@ void main() {
 					}
 					else
 					{
-						if (KeyBoardInput != 0) { notifyleft("~r~The value must be between 0 and 255"); }
+						if (KeyBoardInput != 0) { Cheat::GameFunctions::MinimapNotification("~r~The value must be between 0 and 255"); }
 					}
 				}
 			}
@@ -5165,7 +5165,7 @@ void main() {
 					}
 					else
 					{
-						if (KeyBoardInput != 0) { notifyleft("~r~The value must be between 0 and 255"); }
+						if (KeyBoardInput != 0) { Cheat::GameFunctions::MinimapNotification("~r~The value must be between 0 and 255"); }
 					}
 				}
 			}
@@ -5178,7 +5178,7 @@ void main() {
 					}
 					else
 					{
-						if (KeyBoardInput != 0) { notifyleft("~r~The value must be between 0 and 255"); }
+						if (KeyBoardInput != 0) { Cheat::GameFunctions::MinimapNotification("~r~The value must be between 0 and 255"); }
 					}
 				}
 			}
@@ -5191,7 +5191,7 @@ void main() {
 					}
 					else
 					{
-						if (KeyBoardInput != 0) { notifyleft("~r~The value must be between 0 and 255"); }
+						if (KeyBoardInput != 0) { Cheat::GameFunctions::MinimapNotification("~r~The value must be between 0 and 255"); }
 					}
 				}
 			}
@@ -5216,7 +5216,7 @@ void main() {
 					}
 					else
 					{
-						if (KeyBoardInput != 0) { notifyleft("~r~The value must be between 0 and 255"); }
+						if (KeyBoardInput != 0) { Cheat::GameFunctions::MinimapNotification("~r~The value must be between 0 and 255"); }
 					}
 				}
 			}
@@ -5229,7 +5229,7 @@ void main() {
 					}
 					else
 					{
-						if (KeyBoardInput != 0) { notifyleft("~r~The value must be between 0 and 255"); }
+						if (KeyBoardInput != 0) { Cheat::GameFunctions::MinimapNotification("~r~The value must be between 0 and 255"); }
 					}
 				}
 			}
@@ -5242,7 +5242,7 @@ void main() {
 					}
 					else
 					{
-						if (KeyBoardInput != 0) { notifyleft("~r~The value must be between 0 and 255"); }
+						if (KeyBoardInput != 0) { Cheat::GameFunctions::MinimapNotification("~r~The value must be between 0 and 255"); }
 					}
 				}
 			}
@@ -5255,7 +5255,7 @@ void main() {
 					}
 					else
 					{
-						if (KeyBoardInput != 0) { notifyleft("~r~The value must be between 0 and 255"); }
+						if (KeyBoardInput != 0) { Cheat::GameFunctions::MinimapNotification("~r~The value must be between 0 and 255"); }
 					}
 				}
 			}
@@ -5280,7 +5280,7 @@ void main() {
 					}
 					else
 					{
-						if (KeyBoardInput != 0) { notifyleft("~r~The value must be between 0 and 255"); }
+						if (KeyBoardInput != 0) { Cheat::GameFunctions::MinimapNotification("~r~The value must be between 0 and 255"); }
 					}
 				}
 			}
@@ -5293,7 +5293,7 @@ void main() {
 					}
 					else
 					{
-						if (KeyBoardInput != 0) { notifyleft("~r~The value must be between 0 and 255"); }
+						if (KeyBoardInput != 0) { Cheat::GameFunctions::MinimapNotification("~r~The value must be between 0 and 255"); }
 					}
 				}
 			}
@@ -5306,7 +5306,7 @@ void main() {
 					}
 					else
 					{
-						if (KeyBoardInput != 0) { notifyleft("~r~The value must be between 0 and 255"); }
+						if (KeyBoardInput != 0) { Cheat::GameFunctions::MinimapNotification("~r~The value must be between 0 and 255"); }
 					}
 				}
 			}
@@ -5319,7 +5319,7 @@ void main() {
 					}
 					else
 					{
-						if (KeyBoardInput != 0) { notifyleft("~r~The value must be between 0 and 255"); }
+						if (KeyBoardInput != 0) { Cheat::GameFunctions::MinimapNotification("~r~The value must be between 0 and 255"); }
 					}
 				}
 			}
@@ -5344,7 +5344,7 @@ void main() {
 					}
 					else
 					{
-						if (KeyBoardInput != 0) { notifyleft("~r~The value must be between 0 and 255"); }
+						if (KeyBoardInput != 0) { Cheat::GameFunctions::MinimapNotification("~r~The value must be between 0 and 255"); }
 					}
 				}
 			}
@@ -5357,7 +5357,7 @@ void main() {
 					}
 					else
 					{
-						if (KeyBoardInput != 0) { notifyleft("~r~The value must be between 0 and 255"); }
+						if (KeyBoardInput != 0) { Cheat::GameFunctions::MinimapNotification("~r~The value must be between 0 and 255"); }
 					}
 				}
 			}
@@ -5370,7 +5370,7 @@ void main() {
 					}
 					else
 					{
-						if (KeyBoardInput != 0) { notifyleft("~r~The value must be between 0 and 255"); }
+						if (KeyBoardInput != 0) { Cheat::GameFunctions::MinimapNotification("~r~The value must be between 0 and 255"); }
 					}
 				}
 			}
@@ -5383,7 +5383,7 @@ void main() {
 					}
 					else
 					{
-						if (KeyBoardInput != 0) { notifyleft("~r~The value must be between 0 and 255"); }
+						if (KeyBoardInput != 0) { Cheat::GameFunctions::MinimapNotification("~r~The value must be between 0 and 255"); }
 					}
 				}
 			}
@@ -5408,7 +5408,7 @@ void main() {
 					}
 					else
 					{
-						if (KeyBoardInput != 0) { notifyleft("~r~The value must be between 0 and 255"); }
+						if (KeyBoardInput != 0) { Cheat::GameFunctions::MinimapNotification("~r~The value must be between 0 and 255"); }
 					}
 				}
 			}
@@ -5421,7 +5421,7 @@ void main() {
 					}
 					else
 					{
-						if (KeyBoardInput != 0) { notifyleft("~r~The value must be between 0 and 255"); }
+						if (KeyBoardInput != 0) { Cheat::GameFunctions::MinimapNotification("~r~The value must be between 0 and 255"); }
 					}
 				}
 			}
@@ -5434,7 +5434,7 @@ void main() {
 					}
 					else
 					{
-						if (KeyBoardInput != 0) { notifyleft("~r~The value must be between 0 and 255"); }
+						if (KeyBoardInput != 0) { Cheat::GameFunctions::MinimapNotification("~r~The value must be between 0 and 255"); }
 					}
 				}
 			}
@@ -5447,7 +5447,7 @@ void main() {
 					}
 					else
 					{
-						if (KeyBoardInput != 0) { notifyleft("~r~The value must be between 0 and 255"); }
+						if (KeyBoardInput != 0) { Cheat::GameFunctions::MinimapNotification("~r~The value must be between 0 and 255"); }
 					}
 				}
 			}
@@ -5499,7 +5499,7 @@ void main() {
 				if (Cheat::Option("Delete Current Theme", "Delete active theme"))
 				{
 					std::string ThemeFilePath = Cheat::CheatFunctions::ReturnCheatModuleDirectoryPath() + (std::string)"\\gtav\\Themes\\" + CurrentTheme + ".ini";
-					if (remove(ThemeFilePath.c_str()) != 0) { notifyleft("~r~Failed To Delete Theme File"); } else { CurrentTheme = NULL; notifyleft("Theme File Removed"); }
+					if (remove(ThemeFilePath.c_str()) != 0) { Cheat::GameFunctions::MinimapNotification("~r~Failed To Delete Theme File"); } else { CurrentTheme = NULL; Cheat::GameFunctions::MinimapNotification("Theme File Removed"); }
 				}
 			}
 			if (Cheat::Option("Save To New", "Save current GUI to new theme file"))
@@ -5528,7 +5528,7 @@ void main() {
 					if (Cheat::Option(ThemeFilesArray[i], ""))
 					{
 						std::string ThemeFilePathMenuList = Cheat::CheatFunctions::ReturnCheatModuleDirectoryPath() + (std::string)"\\gtav\\Themes\\" + ThemeFilesArray[i] + ".ini";
-						if (!Cheat::CheatFunctions::DoesFileExists(ThemeFilePathMenuList)) { notifyleft("~r~Unable to locate theme file"); break; }
+						if (!Cheat::CheatFunctions::DoesFileExists(ThemeFilePathMenuList)) { Cheat::GameFunctions::MinimapNotification("~r~Unable to locate theme file"); break; }
 						Cheat::LoadTheme(ThemeFilesArray[i], false);
 					}
 				}
@@ -5554,7 +5554,7 @@ void main() {
 					}
 					else
 					{
-						if (KeyBoardInput != 0) { notifyleft("~r~The value must be between 0 and 255"); }
+						if (KeyBoardInput != 0) { Cheat::GameFunctions::MinimapNotification("~r~The value must be between 0 and 255"); }
 					}
 				}
 			}
@@ -5567,7 +5567,7 @@ void main() {
 					}
 					else
 					{
-						if (KeyBoardInput != 0) { notifyleft("~r~The value must be between 0 and 255"); }
+						if (KeyBoardInput != 0) { Cheat::GameFunctions::MinimapNotification("~r~The value must be between 0 and 255"); }
 					}
 				}
 			}
@@ -5580,7 +5580,7 @@ void main() {
 					}
 					else
 					{
-						if (KeyBoardInput != 0) { notifyleft("~r~The value must be between 0 and 255"); }
+						if (KeyBoardInput != 0) { Cheat::GameFunctions::MinimapNotification("~r~The value must be between 0 and 255"); }
 					}
 				}
 			}
@@ -5593,7 +5593,7 @@ void main() {
 					}
 					else
 					{
-						if (KeyBoardInput != 0) { notifyleft("~r~The value must be between 0 and 255"); }
+						if (KeyBoardInput != 0) { Cheat::GameFunctions::MinimapNotification("~r~The value must be between 0 and 255"); }
 					}
 				}
 			}
@@ -5618,7 +5618,7 @@ void main() {
 					}
 					else
 					{
-						if (KeyBoardInput != 0) { notifyleft("~r~The value must be between 0 and 255"); }
+						if (KeyBoardInput != 0) { Cheat::GameFunctions::MinimapNotification("~r~The value must be between 0 and 255"); }
 					}
 				}
 			}
@@ -5631,7 +5631,7 @@ void main() {
 					}
 					else
 					{
-						if (KeyBoardInput != 0) { notifyleft("~r~The value must be between 0 and 255"); }
+						if (KeyBoardInput != 0) { Cheat::GameFunctions::MinimapNotification("~r~The value must be between 0 and 255"); }
 					}
 				}
 			}
@@ -5644,7 +5644,7 @@ void main() {
 					}
 					else
 					{
-						if (KeyBoardInput != 0) { notifyleft("~r~The value must be between 0 and 255"); }
+						if (KeyBoardInput != 0) { Cheat::GameFunctions::MinimapNotification("~r~The value must be between 0 and 255"); }
 					}
 				}
 			}
@@ -5657,7 +5657,7 @@ void main() {
 					}
 					else
 					{
-						if (KeyBoardInput != 0) { notifyleft("~r~The value must be between 0 and 255"); }
+						if (KeyBoardInput != 0) { Cheat::GameFunctions::MinimapNotification("~r~The value must be between 0 and 255"); }
 					}
 				}
 			}
@@ -5682,7 +5682,7 @@ void main() {
 					}
 					else
 					{
-						if (KeyBoardInput != 0) { notifyleft("~r~The value must be between 0 and 255"); }
+						if (KeyBoardInput != 0) { Cheat::GameFunctions::MinimapNotification("~r~The value must be between 0 and 255"); }
 					}
 				}
 			}
@@ -5695,7 +5695,7 @@ void main() {
 					}
 					else
 					{
-						if (KeyBoardInput != 0) { notifyleft("~r~The value must be between 0 and 255"); }
+						if (KeyBoardInput != 0) { Cheat::GameFunctions::MinimapNotification("~r~The value must be between 0 and 255"); }
 					}
 				}
 			}
@@ -5708,7 +5708,7 @@ void main() {
 					}
 					else
 					{
-						if (KeyBoardInput != 0) { notifyleft("~r~The value must be between 0 and 255"); }
+						if (KeyBoardInput != 0) { Cheat::GameFunctions::MinimapNotification("~r~The value must be between 0 and 255"); }
 					}
 				}
 			}
@@ -5721,7 +5721,7 @@ void main() {
 					}
 					else
 					{
-						if (KeyBoardInput != 0) { notifyleft("~r~The value must be between 0 and 255"); }
+						if (KeyBoardInput != 0) { Cheat::GameFunctions::MinimapNotification("~r~The value must be between 0 and 255"); }
 					}
 				}
 			}

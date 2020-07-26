@@ -180,7 +180,7 @@ bool GED(int eventGroup, int eventIndex, int* argStruct, int argStructSize)
 	if (result && block_script_events && IsBlackListedScript)
 	{
 		if (PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(argStruct[1]) != PlayerPedID) {
-			if (show_blocked_script_events_messages) { notifyleft(xorstr_("~r~Script Event Blocked")); }
+			if (show_blocked_script_events_messages) { Cheat::GameFunctions::MinimapNotification(xorstr_("~r~Script Event Blocked")); }
 			return false;
 		}
 	}

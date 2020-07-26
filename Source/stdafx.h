@@ -432,6 +432,7 @@ namespace Cheat {
 		void AttachObjectToPed(Ped Ped, char* ObjectName);
 		void DetachObjectFromPed(Ped Ped, char* ObjectName);
 		void TPto(Vector3 Coords);
+		void MinimapNotification(char* Message);
 	}
 	namespace LogFunctions {
 		void Init();

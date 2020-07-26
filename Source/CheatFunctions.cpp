@@ -480,7 +480,7 @@ void Cheat::CheatFunctions::PostInitCheat()
 {
 	Cheat::Drawing::YTD(); // Load Textures
 	Cheat::CheatFunctions::LoadSettings(true); // Load config.ini
-	notifyleft(xorstr_("GTAV Cheat Loaded"));
+	Cheat::GameFunctions::MinimapNotification(xorstr_("GTAV Cheat Loaded"));
 	Cheat::LogFunctions::Message(xorstr_("GTAV Cheat Initialization Completed"));
 }
 

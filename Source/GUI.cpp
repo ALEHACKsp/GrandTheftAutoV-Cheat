@@ -7,7 +7,7 @@ void Cheat::Drawing::YTD()
 	Cheat::LogFunctions::Message(xorstr_("Loading GUI"));
 	int textureID;
 	if (Cheat::CheatFunctions::DoesFileExists(Cheat::CheatFunctions::TextureFilePath())) { file_register(&textureID, Cheat::CheatFunctions::TextureFilePath().c_str(), true, xorstr_("Textures.ytd"), false); }
-	else { notifyleft(xorstr_("~r~Failed to load GUI")); }
+	else { Cheat::GameFunctions::MinimapNotification(xorstr_("~r~Failed to load GUI")); }
 }
 
 
@@ -3679,12 +3679,12 @@ void Cheat::LoadTheme(char* ThemeFileName, bool StartUp)
 	std::string ThemeFolderPath = Cheat::CheatFunctions::ReturnCheatModuleDirectoryPath() + (std::string)"\\gtav\\Themes";
 	std::string ThemeFilePath = Cheat::CheatFunctions::ReturnCheatModuleDirectoryPath() + (std::string)"\\gtav\\Themes\\" + ThemeFileName + ".ini";
 
-	if (!Cheat::CheatFunctions::DoesFileExists(ThemeFilePath)) { notifyleft("~r~Failed to load theme: theme file does not exist"); return; }
+	if (!Cheat::CheatFunctions::DoesFileExists(ThemeFilePath)) { Cheat::GameFunctions::MinimapNotification("~r~Failed to load theme: theme file does not exist"); return; }
 
 	CurrentTheme = ThemeFileName;
 
 	std::string ThemeLoaderVersionCheck = Cheat::Files::ReadStringFromIni(ThemeFilePath, "THEME", "theme_loader_version");
-	if (ThemeLoaderVersionCheck != "1.1") { notifyleft("~o~Loaded theme file is outdated"); notifyleft("~o~Some theme settings might not have loaded correctly"); }
+	if (ThemeLoaderVersionCheck != "1.1") { Cheat::GameFunctions::MinimapNotification("~o~Loaded theme file is outdated"); Cheat::GameFunctions::MinimapNotification("~o~Some theme settings might not have loaded correctly"); }
 
 	std::string TitleBackgroundRed = Cheat::Files::ReadStringFromIni(ThemeFilePath, "THEME", "title_background_red");
 	std::string TitleBackgroundGreen = Cheat::Files::ReadStringFromIni(ThemeFilePath, "THEME", "title_background_green");
@@ -3773,7 +3773,7 @@ void Cheat::LoadTheme(char* ThemeFileName, bool StartUp)
 	{
 		Cheat::Settings::openKey = Cheat::Files::ReadIntFromIni(ThemeFilePath, "THEME", "open_key");
 	}
-	if (!StartUp) { notifyleft("Theme Loaded"); }
+	if (!StartUp) { Cheat::GameFunctions::MinimapNotification("Theme Loaded"); }
 }
 
 
@@ -3833,5 +3833,5 @@ void Cheat::SaveTheme(char* ThemeFileName)
 	Cheat::Files::WriteIntToIni(Cheat::Settings::MenuBottomRect.b, ThemeFilePath, "THEME", "menu_bottom_background_blue");
 	Cheat::Files::WriteIntToIni(Cheat::Settings::MenuBottomRect.a, ThemeFilePath, "THEME", "menu_bottom_background_opacity");
 
-	notifyleft(xorstr_("Theme Saved"));
+	Cheat::GameFunctions::MinimapNotification(xorstr_("Theme Saved"));
 }

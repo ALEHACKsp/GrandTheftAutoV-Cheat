@@ -623,7 +623,8 @@ void Cheat::CheatFeatures::MobileRadio(bool toggle)
 bool Cheat::CheatFeatures::WeaponRapidFireBool = false;
 void Cheat::CheatFeatures::WeaponRapidFire()
 {
-	if (!PED::IS_PED_IN_ANY_VEHICLE(PlayerPedID, 1)) {
+	if (!PED::IS_PED_IN_ANY_VEHICLE(PlayerPedID, 1)) 
+	{
 		PLAYER::DISABLE_PLAYER_FIRING(PlayerPedID, 1);
 		Vector3 gameplayCam = CAM::_GET_GAMEPLAY_CAM_COORDS();
 		Vector3 gameplayCamRot = CAM::GET_GAMEPLAY_CAM_ROT(0);
@@ -632,7 +633,8 @@ void Cheat::CheatFeatures::WeaponRapidFire()
 		Vector3 endCoords = Cheat::GameFunctions::AddVector(startCoords, Cheat::GameFunctions::MultiplyVector(gameplayCamDirection, 500.0f));
 		Hash weaponhash;
 		WEAPON::GET_CURRENT_PED_WEAPON(PlayerPedID, &weaponhash, 1);
-		if (CONTROLS::IS_CONTROL_PRESSED(2, 208) || GetKeyState(VK_LBUTTON) & 0x8000 && Cheat::CheatFunctions::IsGameWindowFocussed()) {
+		if (CONTROLS::IS_CONTROL_PRESSED(2, 208) || GetKeyState(VK_LBUTTON) & 0x8000 && Cheat::CheatFunctions::IsGameWindowFocussed()) 
+		{
 			GAMEPLAY::SHOOT_SINGLE_BULLET_BETWEEN_COORDS(startCoords.x, startCoords.y, startCoords.z, endCoords.x, endCoords.y, endCoords.z, 50, 1, weaponhash, PlayerPedID, 1, 1, 0xbf800000);
 		}
 	}
@@ -701,9 +703,7 @@ void Cheat::CheatFeatures::RainbowVehicle()
 bool Cheat::CheatFeatures::TeleportGunBool = false;
 void Cheat::CheatFeatures::TeleportGun()
 {
-	Vehicle veh = PED::GET_VEHICLE_PED_IS_USING(PlayerPedID);
-	Vector3 coords = ENTITY::GET_ENTITY_COORDS(PlayerPedID, 1);
-	if (PED::IS_PED_SHOOTING_IN_AREA(PlayerPedID, coords.x, coords.y, coords.z, coords.x, coords.y, coords.z, true, true))
+	if (PED::IS_PED_SHOOTING(PlayerPedID))
 	{
 		Vector3 iCoord;
 		if (WEAPON::GET_PED_LAST_WEAPON_IMPACT_COORD(PlayerPedID, &iCoord))

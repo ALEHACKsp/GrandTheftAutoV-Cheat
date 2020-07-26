@@ -43,7 +43,7 @@ std::string Cheat::CheatFunctions::ReturnDateAndTimeAsString()
 
 std::string Cheat::CheatFunctions::ReturnCheatBuildAsString()
 {
-	return xorstr_("1.0.0.2");
+	return xorstr_("1.1.0.0");
 }
 
 std::string Cheat::CheatFunctions::ReturnCheatModuleDirectoryPath()

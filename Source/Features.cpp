@@ -1306,7 +1306,7 @@ void Cheat::CheatFeatures::ShowSessionInformation()
 bool Cheat::CheatFeatures::AutoGiveAllWeaponsBool = false;
 void Cheat::CheatFeatures::AutoGiveAllWeapons()
 {
-	if (PLAYER::IS_PLAYER_PLAYING(PlayerID) && !PED::IS_PED_DEAD_OR_DYING(PlayerPedID, false)) 
+	if (PLAYER::IS_PLAYER_PLAYING(PlayerID)) 
 	{ 
 		for (int i = 0; i < (sizeof(Cheat::GameArrays::WeaponsHashList) / 4); i++)
 		{

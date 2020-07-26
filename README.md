@@ -4,4 +4,4 @@ Cheat for Grand Theft Auto V. The "nano42" code base was originally used with th
 
 This source code will continue to be updated for game updates, bug fixes and new features.
 
-![Optional Text](../cheat_preview.png)
+![alt text](../cheat_preview.png)

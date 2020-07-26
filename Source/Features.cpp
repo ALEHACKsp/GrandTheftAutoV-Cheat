@@ -539,11 +539,8 @@ void Cheat::CheatFeatures::VehicleHornBoost()
 	if (PLAYER::IS_PLAYER_PRESSING_HORN(PlayerID))
 	{
 		Vehicle Veh = PED::GET_VEHICLE_PED_IS_IN(PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(PlayerID), false);
-		NETWORK::NETWORK_REQUEST_CONTROL_OF_ENTITY(Veh);
-		if (NETWORK::NETWORK_HAS_CONTROL_OF_ENTITY(Veh))
-		{
-			VEHICLE::SET_VEHICLE_FORWARD_SPEED(Veh, 70);
-		}
+		Cheat::GameFunctions::RequestControlOfEnt(Veh);
+		VEHICLE::SET_VEHICLE_FORWARD_SPEED(Veh, 70);
 	}
 }
 

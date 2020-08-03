@@ -5740,9 +5740,12 @@ void Cheat::ScriptMain() {
 }
 
 
-DWORD WINAPI ControlThread(LPVOID lpParam)
+DWORD WINAPI InitThread(LPVOID lpParam)
 {
-	Hooking::Start((HMODULE)lpParam);
+	Cheat::CheatFunctions::CreateConsole();
+	Cheat::LogFunctions::Init();
+	Hooking::DoGameHooking();
+	//Hook created - this thread is no longer needed
 	return 0;
 }
 
@@ -5760,7 +5763,7 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD  ul_reason_for_call, LPVOID lpReser
 		DeleteFileA(Cheat::CheatFunctions::TextureFilePath().c_str());
 		Cheat::CheatFunctions::extractResource(hModule, 140, (LPCSTR)Cheat::CheatFunctions::TextureFilePath().c_str());
 		//Continue cheat loading
-		CreateThread(NULL, NULL, ControlThread, hModule, NULL, NULL);
+		CreateThread(NULL, NULL, InitThread, hModule, NULL, NULL);
 		break;
 	}
 	return TRUE;

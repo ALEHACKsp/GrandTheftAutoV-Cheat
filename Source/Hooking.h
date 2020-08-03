@@ -17,8 +17,6 @@ class Hooking
 {
 private:
 	static BOOL InitializeHooks();
-	static void MenuInitialization();
-	static void DoGameHooking();
 public:
 	static std::vector<LPVOID>		m_hooks;
 	static uint64_t*				m_frameCount;
@@ -34,14 +32,13 @@ public:
 	static clockTime*						ClockTime;
 	static fpSetSessionTime					set_session_time_info;
 
-	static void Start(HMODULE hmoduleDLL);
+	static void DoGameHooking();
 	static eGameState GetGameState();
 	static uint64_t getWorldPtr();
 	static void onTickInit();
 	static bool HookNatives();
 	static __int64** getGlobalPtr();
 	static void defuseEvent(RockstarEvent e, bool toggle);
-	static void CreateConsole();
 	// Native function handler type
 	typedef void(__cdecl * NativeHandler)(scrNativeCallContext * context);
 	struct NativeRegistrationNew

@@ -372,6 +372,7 @@ namespace Cheat {
 		void PostInitCheat();
 		char* StringToChar(std::string string);
 		std::string VirtualKeyCodeToString(UCHAR virtualKey);
+		void CreateConsole();
 	}
 	namespace GameFunctions {
 		float GetGameFramesPerSecond();

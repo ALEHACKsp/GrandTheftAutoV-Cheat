@@ -76,26 +76,26 @@ int Cheat::Settings::TotalOptionsCount = 0; // unlike OptionCount this will alwa
 SubMenus Cheat::Settings::currentMenu;
 int Cheat::Settings::menuLevel = 0;
 SubMenus Cheat::Settings::PreviousMenu = NOMENU;
-int  Cheat::Settings::PreviousMenuLevel;
+int Cheat::Settings::PreviousMenuLevel;
 int Cheat::Settings::optionsArray[1000];
 SubMenus Cheat::Settings::menusArray[1000];
 
-RGBAF Cheat::Settings::count{ 255, 255, 255, 255, 0 };
-RGBAF Cheat::Settings::titleText{ 255, 255, 255, 255, 0 };
-RGBA Cheat::Settings::titleRect{ 0, 0, 255, 255 };
-RGBA Cheat::Settings::MainTitleRect{ 0, 0, 0, 255 };
-RGBA Cheat::Settings::headerRect{ 0, 0, 255, 255 };
-RGBAF Cheat::Settings::optionText{ 255, 255, 255, 255, 0 };
-RGBAF Cheat::Settings::breakText{ 255, 255, 255, 255, 0 };
-RGBAF Cheat::Settings::arrow{ 255, 255, 255, 255, 3 };                          
-RGBA Cheat::Settings::optionRect{ 0, 0, 0, 255 }; 
-RGBA Cheat::Settings::MenuBackgroundRect{ 0, 0, 0, 220 }; 
-RGBA Cheat::Settings::MenuBottomRect{ 0, 0, 0, 255 };
-RGBA Cheat::Settings::scroller{ 0, 0, 255, 255 };
-RGBAF Cheat::Settings::integre{ 255, 255, 255, 255, 2 };
-RGBA Cheat::Settings::line{ 0, 0, 255, 255 };
-RGBA Cheat::Settings::primary{ 255, 0, 0 };
-RGBA Cheat::Settings::secondary{ 0, 255, 0 };
+RGBAF Cheat::Settings::count				{ 255, 255, 255, 255, 0 };
+RGBAF Cheat::Settings::titleText			{ 255, 255, 255, 255, 0 };
+RGBA Cheat::Settings::titleRect				{ 0, 0, 255, 255 };
+RGBA Cheat::Settings::MainTitleRect			{ 0, 0, 0, 255 };
+RGBA Cheat::Settings::headerRect			{ 0, 0, 255, 255 };
+RGBAF Cheat::Settings::optionText			{ 255, 255, 255, 255, 0 };
+RGBAF Cheat::Settings::breakText			{ 255, 255, 255, 255, 0 };
+RGBAF Cheat::Settings::arrow				{ 255, 255, 255, 255, 3 };                          
+RGBA Cheat::Settings::optionRect			{ 0, 0, 0, 255 }; 
+RGBA Cheat::Settings::MenuBackgroundRect	{ 0, 0, 0, 220 }; 
+RGBA Cheat::Settings::MenuBottomRect		{ 0, 0, 0, 255 };
+RGBA Cheat::Settings::scroller				{ 0, 0, 255, 255 };
+RGBAF Cheat::Settings::integre				{ 255, 255, 255, 255, 2 };
+RGBA Cheat::Settings::line					{ 0, 0, 255, 255 };
+RGBA Cheat::Settings::primary				{ 255, 0, 0 };
+RGBA Cheat::Settings::secondary				{ 0, 255, 0 };
 
 
 void Cheat::Title(const char * title)

@@ -35,11 +35,6 @@ static std::vector<void*> EventPtr;
 static char EventRestore[EVENT_COUNT] = {};
 
 
-int IntegrityCheck;
-void Hooking::Start(HMODULE hmoduleDLL)
-{
-	MenuInitialization();
-}
 BOOL Hooking::InitializeHooks()
 {
 	BOOL returnVal = TRUE;
@@ -452,19 +447,10 @@ void	setFn
 	return;
 }
 
-void Hooking::MenuInitialization()
-{
-	Cheat::LogFunctions::Message(xorstr_("Allocating Console"));
-	CreateConsole();
-	Cheat::LogFunctions::Init();
-	Cheat::LogFunctions::Message(xorstr_("Creating Cheat Main Fiber"));
-	DoGameHooking();
-}
-
 
 void Hooking::DoGameHooking()
 {
-	Cheat::LogFunctions::Message(xorstr_("Hooking Game Functions"));
+	Cheat::LogFunctions::Message(xorstr_("Hooking Game Function & Creating Main Cheat Fiber"));
 	auto p_activeThread = pattern("E8 ? ? ? ? 48 8B 88 10 01 00 00");
 	auto p_blipList = pattern("4C 8D 05 ? ? ? ? 0F B7 C1");
 	auto p_fixVector3Result = pattern("83 79 18 00 48 8B D1 74 4A FF 4A 18");
@@ -659,64 +645,4 @@ void Hooking::defuseEvent(RockstarEvent e, bool toggle)
 __int64** Hooking::getGlobalPtr()
 {
 	return m_globalPtr;
-}
-
-
-void Hooking::CreateConsole()
-{
-	AllocConsole();
-	SetConsoleTitleA(xorstr_("GTAV Cheat Console"));
-
-	// Set Console Dimensions so all text is properly visible
-	HWND ConsoleWindowHandle = GetConsoleWindow();
-	RECT CurrentRect;
-	GetWindowRect(ConsoleWindowHandle, &CurrentRect);
-	MoveWindow(ConsoleWindowHandle, CurrentRect.left, CurrentRect.top, 1100, 500, TRUE);
-	CloseHandle(ConsoleWindowHandle);
-
-	//Disable Close Button Console Window And Set Max Window Size
-	HWND hwnd = ::GetConsoleWindow();
-	if (hwnd != NULL)
-	{
-		SetWindowLong(hwnd, GWL_STYLE, GetWindowLong(hwnd, GWL_STYLE) & ~WS_MAXIMIZEBOX & ~WS_SIZEBOX);
-
-		HMENU hMenu = ::GetSystemMenu(hwnd, FALSE);
-		if (hMenu != NULL) DeleteMenu(hMenu, SC_CLOSE, MF_BYCOMMAND);
-		
-
-		//Disable Console Quick Edit Mode
-		HANDLE stdIn = GetStdHandle(STD_INPUT_HANDLE);
-		if (stdIn != INVALID_HANDLE_VALUE) {
-			DWORD dwMode = 0;
-			if (GetConsoleMode(stdIn, &dwMode)) {
-				dwMode &= ~ENABLE_QUICK_EDIT_MODE;
-				SetConsoleMode(stdIn, dwMode | ENABLE_EXTENDED_FLAGS);
-			}
-		}
-	}
-
-	//Redirect Std Outputs to Console
-	HANDLE ConsoleOutput	= GetStdHandle(STD_OUTPUT_HANDLE);
-	int SystemOutput		= _open_osfhandle(intptr_t(ConsoleOutput), _O_TEXT);
-	FILE* COutputHandle		= _fdopen(SystemOutput, xorstr_("w"));
-	HANDLE ConsoleError		= GetStdHandle(STD_ERROR_HANDLE);
-	int SystemError			= _open_osfhandle(intptr_t(ConsoleError), _O_TEXT);
-	FILE* CErrorHandle		= _fdopen(SystemError, xorstr_("w"));
-	HANDLE ConsoleInput		= GetStdHandle(STD_INPUT_HANDLE);
-	int SystemInput			= _open_osfhandle(intptr_t(ConsoleInput), _O_TEXT);
-	FILE* CInputHandle		= _fdopen(SystemInput, xorstr_("r"));
-	std::ios::sync_with_stdio(true);
-	freopen_s(&CInputHandle, xorstr_("CONIN$"), xorstr_("r"), stdin);
-	freopen_s(&COutputHandle, xorstr_("CONOUT$"), xorstr_("w"), stdout);
-	freopen_s(&CErrorHandle, xorstr_("CONOUT$"), xorstr_("w"), stderr);
-	std::wcout.clear();
-	std::cout.clear();
-	std::wcerr.clear();
-	std::cerr.clear();
-	std::wcin.clear();
-	std::cin.clear();
-
-
-	// Print current build
-	std::cout << xorstr_("Build: ") << Cheat::CheatFunctions::ReturnCheatBuildAsString() << std::endl;
 }

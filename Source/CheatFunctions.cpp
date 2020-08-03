@@ -80,7 +80,6 @@ bool Cheat::CheatFunctions::DoesFileExists(const std::string& fileName)
 
 std::string Cheat::CheatFunctions::GetLastErrorAsString()
 {
-	//Get the error message, if any.
 	DWORD errorMessageID = ::GetLastError();
 	if (errorMessageID == 0) { return std::string(); }
 
@@ -89,10 +88,7 @@ std::string Cheat::CheatFunctions::GetLastErrorAsString()
 		NULL, errorMessageID, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPSTR)& messageBuffer, 0, NULL);
 
 	std::string message(messageBuffer, size);
-
-	//Free the buffer.
 	LocalFree(messageBuffer);
-
 	return message;
 }
 
@@ -181,14 +177,14 @@ std::string Cheat::CheatFunctions::TextureFilePath()
 	return ReturnCheatModuleDirectoryPath() + (std::string)xorstr_("\\gtav\\Textures.ytd");
 }
 
-int AntiCrashCameraHotkey = NULL;
-int BailToSinglePlayerHotkey = NULL;
-int SuicideHotkey = NULL;
-int TeleportForward2mHotkey = NULL;
-int MaxUpgradeVehicleHotKey = NULL;
-int GodModeToggleHotkey = NULL;
+int AntiCrashCameraHotkey		= NULL;
+int BailToSinglePlayerHotkey	= NULL;
+int SuicideHotkey				= NULL;
+int TeleportForward2mHotkey		= NULL;
+int MaxUpgradeVehicleHotKey		= NULL;
+int GodModeToggleHotkey			= NULL;
 int RepairAndCleanVehicleHotkey = NULL;
-int TeleportToWaypointHotkey = NULL;
+int TeleportToWaypointHotkey	= NULL;
 bool Cheat::CheatFunctions::ReturnPressedKey(int& PressedKey)
 {
 	if (GetAsyncKeyState(VK_LBUTTON) & 0x8000) { PressedKey = VK_LBUTTON; return true; }

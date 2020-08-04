@@ -366,7 +366,6 @@ void Cheat::CheatFunctions::SaveSettings()
 	Cheat::Files::WriteIntToIni(TeleportToWaypointHotkey, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("hotkey_teleporttowaypoint"));
 	Cheat::Files::WriteIntToIni(AntiCrashCameraHotkey, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("hotkey_anticrashcamera"));
 	Cheat::Files::WriteBoolToIni(Cheat::CheatFeatures::DeleteGunBool, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("delete_gun"));
-	Cheat::Files::WriteBoolToIni(Cheat::CheatFeatures::AutoLoadIPL, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("auto_load_ipl"));
 	Cheat::Files::WriteBoolToIni(Cheat::CheatFeatures::HotkeyToggleBool, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("hotkey_toggle"));
 	Cheat::Files::WriteBoolToIni(show_joining_players_notification, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("show_joining_players_notification"));
 	if (CurrentTheme != NULL) { Cheat::Files::WriteStringToIni(CurrentTheme, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("active_theme")); }
@@ -449,8 +448,6 @@ void Cheat::CheatFunctions::LoadSettings(bool StartUp)
 	if (Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("show_joining_players_notification")) == xorstr_("true")) { show_joining_players_notification = true; }
 	if (Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("show_vehicle_previews")) == xorstr_("true")) { ShowVehiclePreviews = true; }
 	else { if (Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), "show_vehicle_previews") == "false") ShowVehiclePreviews = false; }
-	if (Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("auto_load_ipl")) == xorstr_("true")) { Cheat::CheatFeatures::AutoLoadIPL = true; }
-	else { if (Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), "auto_load_ipl") == "false") Cheat::CheatFeatures::AutoLoadIPL = false; }
 	std::string ActiveThemeSetting = Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("active_theme")); char* ActiveThemeSettingChar = new char[Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("active_theme")).length() + 1]; strcpy(ActiveThemeSettingChar, ActiveThemeSetting.c_str()); if (ActiveThemeSetting != xorstr_("NULL")) { Cheat::LoadTheme((char*)ActiveThemeSettingChar, true); }
 
 	//Load Hotkeys

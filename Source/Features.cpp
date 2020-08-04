@@ -8,7 +8,6 @@ bool Cheat::CheatFeatures::BlockScriptEvents = true;
 bool Cheat::CheatFeatures::ShowBlockedScriptEventNotifications = true;
 bool Cheat::CheatFeatures::ShowPlayerTagsPlayerList = true;
 bool Cheat::CheatFeatures::AutoSaveSettings = false;
-bool Cheat::CheatFeatures::AutoLoadIPL = true;
 
 void Cheat::CheatFeatures::Looped()
 {

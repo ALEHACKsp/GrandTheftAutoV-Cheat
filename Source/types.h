@@ -78,21 +78,3 @@ public:
 	Blip_t* m_Blips[1500]; //0x0000 
 
 };//Size=0x2F18
-
-/*
-struct PlayerData {
-	Ped ped;
-	Vehicle veh;
-	Vector3 coords;
-	float heading;
-	Group group;
-	char* name;
-	bool inVehicle;
-	bool male;
-	bool driveOnWater = false;
-	bool alive;
-	std::vector<int> AttachedEntities;
-	bool playing;
-	int netHandle[13];
-};
-*/

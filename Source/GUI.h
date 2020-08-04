@@ -2,8 +2,8 @@
 
 enum SubMenus {
 	NOMENU,
-	mainmenu,
-	selfoptions,
+	MainMenu,
+	SelfOptionsMenu,
 	settings,
 	settingstheme,
 	themeloader,

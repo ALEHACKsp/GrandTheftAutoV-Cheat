@@ -190,7 +190,6 @@ namespace Cheat {
 		extern bool ShowBlockedScriptEventNotifications;
 		extern bool ShowPlayerTagsPlayerList;
 		extern bool AutoSaveSettings;
-		extern bool AutoLoadIPL;
 
 		void Looped();
 		extern bool GodmodeBool;

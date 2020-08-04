@@ -54,10 +54,10 @@ void main() {
 
 		switch (Cheat::Settings::currentMenu) {
 
-		case mainmenu:
+		case MainMenu:
 		{
 			Cheat::Title(xorstr_("Main Menu"));
-			Cheat::MenuOption(xorstr_("Self Options >"), selfoptions);
+			Cheat::MenuOption(xorstr_("Self Options >"), SelfOptionsMenu);
 			Cheat::MenuOption(xorstr_("Network Options >"), networkoptions);
 			Cheat::MenuOption(xorstr_("Weapon Options >"), weaponmenu);
 			Cheat::MenuOption(xorstr_("Vehicle Options >"), vehiclemenu);
@@ -3151,8 +3151,6 @@ void main() {
 			Cheat::MenuOption("Go to IPL Teleports submenu", iplteleports);
 			if (Cheat::Option("Load North Yankton", ""))
 			{
-				if (ENTITY::DOES_ENTITY_EXIST(PlayerPedID)
-					)
 				STREAMING::REQUEST_IPL("plg_01");
 				STREAMING::REQUEST_IPL("prologue01");
 				STREAMING::REQUEST_IPL("prologue01_lod");
@@ -3183,13 +3181,8 @@ void main() {
 				STREAMING::REQUEST_IPL("prologue03_lod");
 				STREAMING::REQUEST_IPL("prologue03b");
 				STREAMING::REQUEST_IPL("prologue03b_lod");
-				//the commented code disables the 'Prologue' grave and
-				//enables the 'Bury the Hatchet' grave
-				//STREAMING::REQUEST_IPL("prologue03_grv_cov");
-				//STREAMING::REQUEST_IPL("prologue03_grv_cov_lod");
 				STREAMING::REQUEST_IPL("prologue03_grv_dug");
 				STREAMING::REQUEST_IPL("prologue03_grv_dug_lod");
-				//STREAMING::REQUEST_IPL("prologue03_grv_fun");
 				STREAMING::REQUEST_IPL("prologue_grv_torch");
 				STREAMING::REQUEST_IPL("plg_04");
 				STREAMING::REQUEST_IPL("prologue04");
@@ -3221,14 +3214,11 @@ void main() {
 				STREAMING::REQUEST_IPL("plg_rd");
 				STREAMING::REQUEST_IPL("prologuerd");
 				STREAMING::REQUEST_IPL("prologuerdb");
-				STREAMING::REQUEST_IPL("prologuerd_lod");
+				STREAMING::REQUEST_IPL("prologuerd_lod");			
 				Cheat::GameFunctions::MinimapNotification("North Yankton IPL loaded");
-				break;
 			}
 			if (Cheat::Option("Unload North Yankton", ""))
 			{
-				if (ENTITY::DOES_ENTITY_EXIST(PlayerPedID)
-					)
 				STREAMING::REMOVE_IPL("plg_01");
 				STREAMING::REMOVE_IPL("prologue01");
 				STREAMING::REMOVE_IPL("prologue01_lod");
@@ -3259,13 +3249,8 @@ void main() {
 				STREAMING::REMOVE_IPL("prologue03_lod");
 				STREAMING::REMOVE_IPL("prologue03b");
 				STREAMING::REMOVE_IPL("prologue03b_lod");
-				//the commented code disables the 'Prologue' grave and
-				//enables the 'Bury the Hatchet' grave
-				//STREAMING::REMOVE_IPL("prologue03_grv_cov");
-				//STREAMING::REMOVE_IPL("prologue03_grv_cov_lod");
 				STREAMING::REMOVE_IPL("prologue03_grv_dug");
 				STREAMING::REMOVE_IPL("prologue03_grv_dug_lod");
-				//STREAMING::REQUEST_IPL("prologue03_grv_fun");
 				STREAMING::REMOVE_IPL("prologue_grv_torch");
 				STREAMING::REMOVE_IPL("plg_04");
 				STREAMING::REMOVE_IPL("prologue04");
@@ -3297,15 +3282,11 @@ void main() {
 				STREAMING::REMOVE_IPL("plg_rd");
 				STREAMING::REMOVE_IPL("prologuerd");
 				STREAMING::REMOVE_IPL("prologuerdb");
-				STREAMING::REMOVE_IPL("prologuerd_lod");
+				STREAMING::REMOVE_IPL("prologuerd_lod");			
 				Cheat::GameFunctions::MinimapNotification("North Yankton IPL unloaded");
-				break;
 			}
-
 			if (Cheat::Option("Load Heist Yacht", ""))
 			{
-				if (ENTITY::DOES_ENTITY_EXIST(PlayerPedID)
-					)
 				STREAMING::REQUEST_IPL("hei_yacht_heist");
 				STREAMING::REQUEST_IPL("hei_yacht_heist_Bar");
 				STREAMING::REQUEST_IPL("hei_yacht_heist_Bedrm");
@@ -3315,13 +3296,9 @@ void main() {
 				STREAMING::REQUEST_IPL("hei_yacht_heist_LODLights");
 				STREAMING::REQUEST_IPL("hei_yacht_heist_Lounge");
 				Cheat::GameFunctions::MinimapNotification("Heist Yacht IPL loaded");
-				break;
 			}
-
 			if (Cheat::Option("Unload Heist Yacht", ""))
 			{
-				if (ENTITY::DOES_ENTITY_EXIST(PlayerPedID)
-					)
 				STREAMING::REMOVE_IPL("hei_yacht_heist");
 				STREAMING::REMOVE_IPL("hei_yacht_heist_Bar");
 				STREAMING::REMOVE_IPL("hei_yacht_heist_Bedrm");
@@ -3329,84 +3306,52 @@ void main() {
 				STREAMING::REMOVE_IPL("hei_yacht_heist_DistantLights");
 				STREAMING::REMOVE_IPL("hei_yacht_heist_enginrm");
 				STREAMING::REMOVE_IPL("hei_yacht_heist_LODLights");
-				STREAMING::REMOVE_IPL("hei_yacht_heist_Lounge");
+				STREAMING::REMOVE_IPL("hei_yacht_heist_Lounge");			
 				Cheat::GameFunctions::MinimapNotification("Heist Yacht IPL unloaded");
-				break;
 			}
-
 			if (Cheat::Option("Load Destroyed hospital", ""))
 			{
-				if (ENTITY::DOES_ENTITY_EXIST(PlayerPedID)
-					)
 				STREAMING::REQUEST_IPL("RC12B_Destroyed");
-				STREAMING::REQUEST_IPL("RC12B_HospitalInterior");
+				STREAMING::REQUEST_IPL("RC12B_HospitalInterior");			
 				Cheat::GameFunctions::MinimapNotification("Destroyed Hospital IPL Loaded");
-				break;
 			}
-
 			if (Cheat::Option("Unload Destroyed hospital", ""))
 			{
-				if (ENTITY::DOES_ENTITY_EXIST(PlayerPedID)
-					)
 				STREAMING::REMOVE_IPL("RC12B_Destroyed");
-				STREAMING::REMOVE_IPL("RC12B_HospitalInterior");
+				STREAMING::REMOVE_IPL("RC12B_HospitalInterior");		
 				Cheat::GameFunctions::MinimapNotification("Destroyed Hospital IPL unloaded");
-				break;
 			}
-
 			if (Cheat::Option("Load Jewelry Store", ""))
 			{
-				if (ENTITY::DOES_ENTITY_EXIST(PlayerPedID)
-					)
 				STREAMING::REQUEST_IPL("post_hiest_unload");
 				STREAMING::REMOVE_IPL("jewel2fake");
-				STREAMING::REMOVE_IPL("bh1_16_refurb");
+				STREAMING::REMOVE_IPL("bh1_16_refurb");			
 				Cheat::GameFunctions::MinimapNotification("Jewelry Store IPL loaded");
-				break;
 			}
-
 			if (Cheat::Option("Unload Jewelry Store", ""))
 			{
-				if (ENTITY::DOES_ENTITY_EXIST(PlayerPedID)
-					)
-				STREAMING::REMOVE_IPL("post_hiest_unload");
+				STREAMING::REMOVE_IPL("post_hiest_unload");		
 				Cheat::GameFunctions::MinimapNotification("Jewelry Store IPL unloaded");
-				break;
 			}
-
 			if (Cheat::Option("Load Morgue", ""))
 			{
-				if (ENTITY::DOES_ENTITY_EXIST(PlayerPedID)
-					)
-				STREAMING::REQUEST_IPL("Coroner_Int_on");
+				STREAMING::REQUEST_IPL("Coroner_Int_on");			
 				Cheat::GameFunctions::MinimapNotification("Morgue IPL loaded");
-				break;
 			}
-
 			if (Cheat::Option("Unload Morgue", ""))
 			{
-				if (ENTITY::DOES_ENTITY_EXIST(PlayerPedID)
-					)
-				STREAMING::REMOVE_IPL("Coroner_Int_on");
+				STREAMING::REMOVE_IPL("Coroner_Int_on");		
 				Cheat::GameFunctions::MinimapNotification("Morgue IPL unloaded");
-				break;
 			}
 			if (Cheat::Option("Load Cargoship", ""))
-			{
-				if (ENTITY::DOES_ENTITY_EXIST(PlayerPedID)
-					)
+			{			
 				STREAMING::REQUEST_IPL("cargoship");
 				Cheat::GameFunctions::MinimapNotification("Cargoship IPL loaded");
-				break;	
 			}
-
 			if (Cheat::Option("Unload Cargoship", ""))
-			{
-				if (ENTITY::DOES_ENTITY_EXIST(PlayerPedID)
-					)
+			{		
 				STREAMING::REMOVE_IPL("cargoship");
 				Cheat::GameFunctions::MinimapNotification("Cargoship IPL unloaded");
-				break;
 			}
 		}
 		break; 
@@ -4259,143 +4204,29 @@ void main() {
 		case iplteleports:
 		{
 			Cheat::Title("IPL Teleports");
-			Cheat::Toggle("Auto load IPL when teleporting", Cheat::CheatFeatures::AutoLoadIPL, "");
+			Cheat::MenuOption("Go to IPL Loader submenu", iplloader);
 			if (Cheat::Option("North Yankton", ""))
 			{
-				if (Cheat::CheatFeatures::AutoLoadIPL)
-				{
-					if (ENTITY::DOES_ENTITY_EXIST(PlayerPedID)
-						)
-						STREAMING::REQUEST_IPL("plg_01");
-					STREAMING::REQUEST_IPL("prologue01");
-					STREAMING::REQUEST_IPL("prologue01_lod");
-					STREAMING::REQUEST_IPL("prologue01c");
-					STREAMING::REQUEST_IPL("prologue01c_lod");
-					STREAMING::REQUEST_IPL("prologue01d");
-					STREAMING::REQUEST_IPL("prologue01d_lod");
-					STREAMING::REQUEST_IPL("prologue01e");
-					STREAMING::REQUEST_IPL("prologue01e_lod");
-					STREAMING::REQUEST_IPL("prologue01f");
-					STREAMING::REQUEST_IPL("prologue01f_lod");
-					STREAMING::REQUEST_IPL("prologue01g");
-					STREAMING::REQUEST_IPL("prologue01h");
-					STREAMING::REQUEST_IPL("prologue01h_lod");
-					STREAMING::REQUEST_IPL("prologue01i");
-					STREAMING::REQUEST_IPL("prologue01i_lod");
-					STREAMING::REQUEST_IPL("prologue01j");
-					STREAMING::REQUEST_IPL("prologue01j_lod");
-					STREAMING::REQUEST_IPL("prologue01k");
-					STREAMING::REQUEST_IPL("prologue01k_lod");
-					STREAMING::REQUEST_IPL("prologue01z");
-					STREAMING::REQUEST_IPL("prologue01z_lod");
-					STREAMING::REQUEST_IPL("plg_02");
-					STREAMING::REQUEST_IPL("prologue02");
-					STREAMING::REQUEST_IPL("prologue02_lod");
-					STREAMING::REQUEST_IPL("plg_03");
-					STREAMING::REQUEST_IPL("prologue03");
-					STREAMING::REQUEST_IPL("prologue03_lod");
-					STREAMING::REQUEST_IPL("prologue03b");
-					STREAMING::REQUEST_IPL("prologue03b_lod");
-					//the commented code disables the 'Prologue' grave and
-					//enables the 'Bury the Hatchet' grave
-					//STREAMING::REQUEST_IPL("prologue03_grv_cov");
-					//STREAMING::REQUEST_IPL("prologue03_grv_cov_lod");
-					STREAMING::REQUEST_IPL("prologue03_grv_dug");
-					STREAMING::REQUEST_IPL("prologue03_grv_dug_lod");
-					//STREAMING::REQUEST_IPL("prologue03_grv_fun");
-					STREAMING::REQUEST_IPL("prologue_grv_torch");
-					STREAMING::REQUEST_IPL("plg_04");
-					STREAMING::REQUEST_IPL("prologue04");
-					STREAMING::REQUEST_IPL("prologue04_lod");
-					STREAMING::REQUEST_IPL("prologue04b");
-					STREAMING::REQUEST_IPL("prologue04b_lod");
-					STREAMING::REQUEST_IPL("prologue04_cover");
-					STREAMING::REQUEST_IPL("des_protree_end");
-					STREAMING::REQUEST_IPL("des_protree_start");
-					STREAMING::REQUEST_IPL("des_protree_start_lod");
-					STREAMING::REQUEST_IPL("plg_05");
-					STREAMING::REQUEST_IPL("prologue05");
-					STREAMING::REQUEST_IPL("prologue05_lod");
-					STREAMING::REQUEST_IPL("prologue05b");
-					STREAMING::REQUEST_IPL("prologue05b_lod");
-					STREAMING::REQUEST_IPL("plg_06");
-					STREAMING::REQUEST_IPL("prologue06");
-					STREAMING::REQUEST_IPL("prologue06_lod");
-					STREAMING::REQUEST_IPL("prologue06b");
-					STREAMING::REQUEST_IPL("prologue06b_lod");
-					STREAMING::REQUEST_IPL("prologue06_int");
-					STREAMING::REQUEST_IPL("prologue06_int_lod");
-					STREAMING::REQUEST_IPL("prologue06_pannel");
-					STREAMING::REQUEST_IPL("prologue06_pannel_lod");
-					STREAMING::REQUEST_IPL("prologue_m2_door");
-					STREAMING::REQUEST_IPL("prologue_m2_door_lod");
-					STREAMING::REQUEST_IPL("plg_occl_00");
-					STREAMING::REQUEST_IPL("prologue_occl");
-					STREAMING::REQUEST_IPL("plg_rd");
-					STREAMING::REQUEST_IPL("prologuerd");
-					STREAMING::REQUEST_IPL("prologuerdb");
-					STREAMING::REQUEST_IPL("prologuerd_lod");
-				}
 				ENTITY::SET_ENTITY_COORDS(PlayerPedID, 5309.519, -5212.37, 83.522, true, false, false, true);
 			}
 			if (Cheat::Option("Yacht", ""))
 			{
-				if (Cheat::CheatFeatures::AutoLoadIPL)
-				{
-					if (ENTITY::DOES_ENTITY_EXIST(PlayerPedID)
-						)
-						STREAMING::REQUEST_IPL("hei_yacht_heist");
-					STREAMING::REQUEST_IPL("hei_yacht_heist_Bar");
-					STREAMING::REQUEST_IPL("hei_yacht_heist_Bedrm");
-					STREAMING::REQUEST_IPL("hei_yacht_heist_Bridge");
-					STREAMING::REQUEST_IPL("hei_yacht_heist_DistantLights");
-					STREAMING::REQUEST_IPL("hei_yacht_heist_enginrm");
-					STREAMING::REQUEST_IPL("hei_yacht_heist_LODLights");
-					STREAMING::REQUEST_IPL("hei_yacht_heist_Lounge");
-				}
 				ENTITY::SET_ENTITY_COORDS(PlayerPedID, -2045.8, -1031.2, 11.9, true, false, false, true);
 			}
 			if (Cheat::Option("Destroyed Hospital", ""))
 			{
-				if (Cheat::CheatFeatures::AutoLoadIPL)
-				{
-					if (ENTITY::DOES_ENTITY_EXIST(PlayerPedID)
-						)
-						STREAMING::REQUEST_IPL("RC12B_Destroyed");
-					STREAMING::REQUEST_IPL("RC12B_HospitalInterior");
-				}
 				ENTITY::SET_ENTITY_COORDS(PlayerPedID, 356.8, -590.1, 43.3, true, false, false, true);
 			}
 			if (Cheat::Option("Jewelry Store", ""))
 			{
-				if (Cheat::CheatFeatures::AutoLoadIPL)
-				{
-					if (ENTITY::DOES_ENTITY_EXIST(PlayerPedID)
-						)
-						STREAMING::REQUEST_IPL("post_hiest_unload");
-					STREAMING::REMOVE_IPL("jewel2fake");
-					STREAMING::REMOVE_IPL("bh1_16_refurb");
-				}
 				ENTITY::SET_ENTITY_COORDS(PlayerPedID, -630.4, -236.7, 40.0, true, false, false, true);
 			}
 			if (Cheat::Option("Morgue", ""))
 			{
-				if (Cheat::CheatFeatures::AutoLoadIPL)
-				{
-					if (ENTITY::DOES_ENTITY_EXIST(PlayerPedID)
-						)
-						STREAMING::REQUEST_IPL("Coroner_Int_on");
-				}
 				ENTITY::SET_ENTITY_COORDS(PlayerPedID, 244.9, -1374.7, 39.5, true, false, false, true);
 			}
 			if (Cheat::Option("Cargo Ship", ""))
 			{
-				if (Cheat::CheatFeatures::AutoLoadIPL)
-				{
-					if (ENTITY::DOES_ENTITY_EXIST(PlayerPedID)
-						)
-						STREAMING::REQUEST_IPL("cargoship");
-				}
 				ENTITY::SET_ENTITY_COORDS(PlayerPedID, -90.0, -2365.8, 14.3, true, false, false, true);
 			}
 		}
@@ -4468,7 +4299,6 @@ void main() {
 				else {
 					Cheat::GameFunctions::MinimapNotification("~r~Player isn't in a vehicle"); 
 				}
-
 			}
 			if (Cheat::Option("Ram With Vehicle", "Ram selected player with vehicle"))
 			{
@@ -4656,7 +4486,7 @@ void main() {
 			}
 		}
 		break; 
-		case selfoptions:
+		case SelfOptionsMenu:
 		{
 			Cheat::Title("Self Options");
 			Cheat::MenuOption("Change Model >", modelchanger);

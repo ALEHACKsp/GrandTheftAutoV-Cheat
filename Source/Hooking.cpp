@@ -13,7 +13,6 @@ uint64_t*				Hooking::m_frameCount;
 fpIsDLCPresent			Hooking::is_DLC_present;
 TriggerScriptEvent		Hooking::trigger_script_event;
 SessionWeather			Hooking::session_weather;
-RequestModel	        Hooking::request_model;
 GetEventData	        Hooking::get_event_data;
 
 static eGameState* 											m_gameState;
@@ -165,17 +164,15 @@ int MiscScriptsArray[] = { 297770348, 498709856, -1297785021, 143196100, -181855
 						   709335341, 1152017566, -1246838892, 1667907776, -2017629233, -297770348, -815817885, 774421744, 4136296512, 3763470309, 3030904167, 140733193388032,
 						   394650472960, -1542848512, -4294967296, -2063859712, -941739545, 1062333317
 						};
-bool block_script_events = true;
-bool show_blocked_script_events_messages = true;
 void* m_OriginalGetEventData = nullptr;
 bool GED(int eventGroup, int eventIndex, int* argStruct, int argStructSize)
 {
 	auto result = static_cast<decltype(&GED)>(m_OriginalGetEventData)(eventGroup, eventIndex, argStruct, argStructSize);
 	bool IsBlackListedScript = std::find(std::begin(MiscScriptsArray), std::end(MiscScriptsArray), argStruct[0]) != std::end(MiscScriptsArray);
-	if (result && block_script_events && IsBlackListedScript)
+	if (result && Cheat::CheatFeatures::BlockScriptEvents && IsBlackListedScript)
 	{
 		if (PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(argStruct[1]) != PlayerPedID) {
-			if (show_blocked_script_events_messages) { Cheat::GameFunctions::MinimapNotification(xorstr_("~r~Script Event Blocked")); }
+			if (Cheat::CheatFeatures::ShowBlockedScriptEventNotifications) { Cheat::GameFunctions::MinimapNotification(xorstr_("~r~Script Event Blocked")); }
 			return false;
 		}
 	}
@@ -477,10 +474,6 @@ void Hooking::DoGameHooking()
 		&Hooking::is_DLC_present);
 	setFn<TriggerScriptEvent>(xorstr_("trigger_script_event"), xorstr_("\x48\x8B\xC4\x48\x89\x58\x08\x48\x89\x68\x10\x48\x89\x70\x18\x48\x89\x78\x20\x41\x56\x48\x81\xEC\x00\x00\x00\x00\x45\x8B\xF0\x41\x8B\xF9"), xorstr_("xxxxxxxxxxxxxxxxxxxxxxxx????xxxxxx"), &Hooking::trigger_script_event);
 	setFn<SessionWeather>(xorstr_("session_weather"), xorstr_("\x48\x89\x5C\x24\x00\x48\x89\x6C\x24\x00\x48\x89\x74\x24\x00\x57\x48\x83\xEC\x30\x40\x8A\xE9"), xorstr_("xxxx?xxxx?xxxx?xxxxxxxx"), &Hooking::session_weather);
-	setFn<RequestModel>(xorstr_("request_model"),
-		xorstr_("\x48\x89\x5C\x24\x00\x48\x89\x7C\x24\x00\x55\x48\x8B\xEC\x48\x83\xEC\x50\x8B\x45\x18"),
-		xorstr_("xxxx?xxxx?xxxxxxxxxxx"),
-		&Hooking::request_model);
 	setFn<GetEventData>(xorstr_("get_event_data"),
 		xorstr_("\x48\x89\x5C\x24\x00\x57\x48\x83\xEC\x20\x49\x8B\xF8\x4C\x8D\x05\x00\x00\x00\x00\x41\x8B\xD9\xE8\x00\x00\x00\x00\x48\x85\xC0\x74\x14\x4C\x8B\x10\x44\x8B\xC3\x48\x8B\xD7\x41\xC1\xE0\x03\x48\x8B\xC8\x41\xFF\x52\x30\x48\x8B\x5C\x24\x00"),
 		xorstr_("xxxx?xxxxxxxxxxx????xxxx????xxxxxxxxxxxxxxxxxxxxxxxxxxxxx?"),

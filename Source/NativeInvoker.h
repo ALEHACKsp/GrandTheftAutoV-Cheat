@@ -1,6 +1,3 @@
-#ifndef __NATIVE_INVOKER_H__
-#define __NATIVE_INVOKER_H__
-
 #pragma once
 
 class scrNativeCallContext {
@@ -129,5 +126,3 @@ void nativeInit(UINT64 hash);
 void nativePush64(UINT64 val);
 
 PUINT64 nativeCall();
-
-#endif // __NATIVE_INVOKER_H__

@@ -3,7 +3,9 @@
 int Cheat::CheatFeatures::speedometer_vector_position = 0;
 int Cheat::CheatFeatures::PlayerOpacityInt = 250;
 bool Cheat::CheatFeatures::HotkeyToggleBool = true;
-bool Cheat::CheatFeatures::use_kmh = true;
+bool Cheat::CheatFeatures::UseKMH = true;
+bool Cheat::CheatFeatures::BlockScriptEvents = true;
+bool Cheat::CheatFeatures::ShowBlockedScriptEventNotifications = true;
 bool Cheat::CheatFeatures::ShowPlayerTagsPlayerList = true;
 bool Cheat::CheatFeatures::AutoSaveSettings = false;
 bool Cheat::CheatFeatures::AutoLoadIPL = true;
@@ -27,7 +29,7 @@ void Cheat::CheatFeatures::Looped()
 		std::ostringstream Speed;
 		float vehSpeed = ENTITY::GET_ENTITY_SPEED(PED::GET_VEHICLE_PED_IS_IN(PlayerPedID, 0));
 		float vehSpeedConverted;
-		if (use_kmh)
+		if (UseKMH)
 		{
 			vehSpeedConverted = roundf(vehSpeed * 3.6);
 			Speed << vehSpeedConverted << xorstr_(" KM/H");
@@ -633,7 +635,7 @@ void Cheat::CheatFeatures::WeaponRapidFire()
 		Vector3 endCoords = Cheat::GameFunctions::AddVector(startCoords, Cheat::GameFunctions::MultiplyVector(gameplayCamDirection, 500.0f));
 		Hash weaponhash;
 		WEAPON::GET_CURRENT_PED_WEAPON(PlayerPedID, &weaponhash, 1);
-		if (CONTROLS::IS_CONTROL_PRESSED(2, 208) || GetKeyState(VK_LBUTTON) & 1 && Cheat::CheatFunctions::IsGameWindowFocussed()) 
+		if (CONTROLS::IS_CONTROL_PRESSED(2, 208) || GetKeyState(VK_LBUTTON) & 0x8000 && Cheat::CheatFunctions::IsGameWindowFocussed())
 		{
 			GAMEPLAY::SHOOT_SINGLE_BULLET_BETWEEN_COORDS(startCoords.x, startCoords.y, startCoords.z, endCoords.x, endCoords.y, endCoords.z, 50, 1, weaponhash, PlayerPedID, 1, 1, 0xbf800000);
 		}

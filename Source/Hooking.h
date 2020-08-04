@@ -3,7 +3,6 @@
 typedef bool(*fpIsDLCPresent)(std::uint32_t dlcHash);
 typedef int(__cdecl*	TriggerScriptEvent)(int unk0, int* args, int argCount, int bitFlags);
 typedef int(__cdecl*	SessionWeather)(int unk0, int, int argCount, int bitFlags);
-typedef BOOL(__cdecl*	RequestModel)(DWORD hash);
 typedef uint32_t*(*__cdecl        fpFileRegister)(int*, const char*, bool, const char*, bool);
 typedef BOOL(_cdecl* GetEventData)(int eventGroup, int eventIndex, uint64_t* argStruct, int argStructSize);
 using fpGetScriptHandlerIfNetworked = void* (*) ();
@@ -23,7 +22,6 @@ public:
 	static fpIsDLCPresent			is_DLC_present;
 	static TriggerScriptEvent		trigger_script_event;
 	static SessionWeather			session_weather;
-	static RequestModel				request_model;
 	static fpFileRegister           m_fileregister;
 	static GetEventData	            get_event_data;
 	static fpGetScriptHandlerIfNetworked	GetScriptHandlerIfNetworked;
@@ -261,8 +259,4 @@ protected:
 	uint64_t	find_pattern(uint64_t i64Address, uint64_t end, BYTE *btMask, char *szMask);
 	uint64_t	virtual_find_pattern(uint64_t address, BYTE *btMask, char *szMask);
 };
-
-
-extern bool block_script_events;
-extern bool show_blocked_script_events_messages;
 

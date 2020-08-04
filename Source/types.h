@@ -79,6 +79,7 @@ public:
 
 };//Size=0x2F18
 
+/*
 struct PlayerData {
 	Ped ped;
 	Vehicle veh;
@@ -94,3 +95,4 @@ struct PlayerData {
 	bool playing;
 	int netHandle[13];
 };
+*/

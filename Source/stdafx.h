@@ -7,7 +7,6 @@
 #pragma warning(disable : 4091)	
 #pragma warning(disable: 6262)
 
-// Windows Header Files
 #include <windows.h>
 #include <Mmsystem.h>
 #include <string>
@@ -186,7 +185,9 @@ namespace Cheat {
 		extern int selectedPlayer;
 		extern int PlayerOpacityInt;
 		extern bool HotkeyToggleBool;
-		extern bool use_kmh;
+		extern bool UseKMH;
+		extern bool BlockScriptEvents;
+		extern bool ShowBlockedScriptEventNotifications;
 		extern bool ShowPlayerTagsPlayerList;
 		extern bool AutoSaveSettings;
 		extern bool AutoLoadIPL;
@@ -358,7 +359,6 @@ namespace Cheat {
 		bool DoesFileExists(const std::string& fileName);
 		bool DoesDirectoryExists(const std::string& dirName_in);
 		void CreateNewDirectory(std::string Path);
-		std::string ReturnCheatCompileDateTime();
 		std::string ReturnDateAndTimeAsString();
 		std::string GetLastErrorAsString();
 		void CheatThreadLoopFunctions();

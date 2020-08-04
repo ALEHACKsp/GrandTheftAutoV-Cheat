@@ -1702,7 +1702,7 @@ void main() {
 					Cheat::GameFunctions::MinimapNotification("~r~That is not a valid ped model");
 					break;
 				}
-				Hooking::request_model(model);
+				STREAMING::REQUEST_MODEL(model);
 				while (!STREAMING::HAS_MODEL_LOADED(model)) WAIT(0);
 				PLAYER::SET_PLAYER_MODEL(PlayerID, model);
 				PED::SET_PED_DEFAULT_COMPONENT_VARIATION(PlayerPedID);
@@ -1716,7 +1716,7 @@ void main() {
 				if (Cheat::Option((char*)i.c_str(), ""))
 				{
 					DWORD model = GAMEPLAY::GET_HASH_KEY((char*)i.c_str());
-					Hooking::request_model(model);
+					STREAMING::REQUEST_MODEL(model);
 					if (!STREAMING::HAS_MODEL_LOADED(model)) WAIT(250);
 					PLAYER::SET_PLAYER_MODEL(PlayerID, model);
 					PED::SET_PED_DEFAULT_COMPONENT_VARIATION(PlayerPedID);
@@ -2186,7 +2186,7 @@ void main() {
 				}			
 			}
 			if (!VEHICLE::IS_VEHICLE_ON_ALL_WHEELS(PED::GET_VEHICLE_PED_IS_IN(PlayerPedID, false))) { if (Cheat::Option("Flip Up", "Flip vehicle up")) { VEHICLE::SET_VEHICLE_ON_GROUND_PROPERLY(PED::GET_VEHICLE_PED_IS_IN(PlayerPedID, false)); } }
-			if (Cheat::CheatFeatures::use_kmh) {
+			if (Cheat::CheatFeatures::UseKMH) {
 				if (Cheat::Option("Set Max Speed (KM/H)", "Set max vehicle speed")) {
 					if (PED::IS_PED_IN_ANY_VEHICLE(PlayerPedID, 0)) {
 						if (GetAsyncKeyState(VK_NUMPAD5) || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
@@ -2326,7 +2326,8 @@ void main() {
 					UI::_SET_NOTIFICATION_MESSAGE_CLAN_TAG("CHAR_LS_CUSTOMS", "CHAR_LS_CUSTOMS", false, 7, "Simple Customs", "", 1.0, "");
 					UI::_DRAW_NOTIFICATION(false, false);
 				}
-				else {
+				else 
+				{
 					Cheat::GameFunctions::MinimapNotification("~r~Player isn't in a vehicle");
 				}
 			}
@@ -4867,7 +4868,7 @@ void main() {
 				Cheat::CheatFeatures::ProtectionWorldEventsBool = true;
 				Cheat::CheatFeatures::ProtectionAlterWantedLevelBool = true;
 				Cheat::CheatFeatures::ProtectionVehicleBool = true;
-				block_script_events = true;
+				Cheat::CheatFeatures::BlockScriptEvents = true;
 			}
 			if (Cheat::Option("Disable All", "Disable all protection options")) {
 				Cheat::CheatFeatures::ProtectionVoteKickBool = false;
@@ -4878,9 +4879,9 @@ void main() {
 				Cheat::CheatFeatures::ProtectionWorldEventsBool = false;
 				Cheat::CheatFeatures::ProtectionAlterWantedLevelBool = false;
 				Cheat::CheatFeatures::ProtectionVehicleBool = false;
-				block_script_events = false;
+				Cheat::CheatFeatures::BlockScriptEvents = false;
 			}
-			Cheat::Toggle("Remote Events", block_script_events, "Some missions might not work");
+			Cheat::Toggle("Remote Events", Cheat::CheatFeatures::BlockScriptEvents, "Some missions might not work");
 			Cheat::Toggle("Vote Kick", Cheat::CheatFeatures::ProtectionVoteKickBool, "");
 			Cheat::Toggle("Freeze", Cheat::CheatFeatures::ProtectionFreezeBool, "");
 			Cheat::Toggle("Session Weather", Cheat::CheatFeatures::ProtectionSessionWeatherBool, "");
@@ -5060,10 +5061,10 @@ void main() {
 			Cheat::Toggle("Show Player Information", ShowPlayerInformationPlayerList, "Toggle Player Information Box");
 			Cheat::Toggle("Show Player Tags", Cheat::CheatFeatures::ShowPlayerTagsPlayerList, "Toggle Player Tags");
 			Cheat::Break("~bold~Speed", true);
-			if (Cheat::Option("Use Metric System (KM/H)", "")) { Cheat::CheatFeatures::use_kmh = true; Cheat::GameFunctions::MinimapNotification("Using metric system now"); }
-			if (Cheat::Option("Use Imperial System (MP/H)", "")) { Cheat::CheatFeatures::use_kmh = false; Cheat::GameFunctions::MinimapNotification("Using imperial system now"); }
+			if (Cheat::Option("Use Metric System (KM/H)", "")) { Cheat::CheatFeatures::UseKMH = true; Cheat::GameFunctions::MinimapNotification("Using metric system now"); }
+			if (Cheat::Option("Use Imperial System (MP/H)", "")) { Cheat::CheatFeatures::UseKMH = false; Cheat::GameFunctions::MinimapNotification("Using imperial system now"); }
 			Cheat::Break("~bold~Protection", true);
-			Cheat::Toggle("Blocked Script Notifications", show_blocked_script_events_messages, "");
+			Cheat::Toggle("Blocked Script Notifications", Cheat::CheatFeatures::ShowBlockedScriptEventNotifications, "");
 		}
 		break;
 		case guisettings:

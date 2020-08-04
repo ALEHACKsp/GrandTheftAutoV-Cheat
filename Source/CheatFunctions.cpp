@@ -25,13 +25,6 @@ bool Cheat::CheatFunctions::DoesDirectoryExists(const std::string& dirName_in)
 	return false;   
 }
 
- 
-std::string Cheat::CheatFunctions::ReturnCheatCompileDateTime()
-{
-	return xorstr_("Compile Date/Time: ") + (std::string) __DATE__ + xorstr_(" ") + (std::string)__TIME__;
-}
-
-
 std::string Cheat::CheatFunctions::ReturnDateAndTimeAsString()
 {
 	auto t = std::time(nullptr);
@@ -350,8 +343,8 @@ void Cheat::CheatFunctions::SaveSettings()
 	Cheat::Files::WriteBoolToIni(Cheat::CheatFeatures::ProtectionSessionTimeBool, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("protection_sessiontime"));
 	Cheat::Files::WriteBoolToIni(Cheat::CheatFeatures::ProtectionGiveRemoveWeaponsBool, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("protection_giveremoveweapons"));
 	Cheat::Files::WriteBoolToIni(Cheat::CheatFeatures::ProtectionSessionWeatherBool, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("protection_sessionweather"));
-	Cheat::Files::WriteBoolToIni(block_script_events, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("protection_remote_events"));
-	Cheat::Files::WriteBoolToIni(show_blocked_script_events_messages, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("show_blocked_script_events_messages"));
+	Cheat::Files::WriteBoolToIni(Cheat::CheatFeatures::BlockScriptEvents, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("protection_remote_events"));
+	Cheat::Files::WriteBoolToIni(Cheat::CheatFeatures::ShowBlockedScriptEventNotifications, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("show_blocked_script_events_messages"));
 	Cheat::Files::WriteIntToIni(Cheat::CheatFeatures::speedometer_vector_position, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("speedometer"));
 	Cheat::Files::WriteBoolToIni(Cheat::CheatFeatures::AutoTeleportToWaypointBool, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("autoteleporttowaypoint"));
 	Cheat::Files::WriteBoolToIni(Cheat::CheatFeatures::NoGravityBool, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("nogravity"));
@@ -360,7 +353,7 @@ void Cheat::CheatFunctions::SaveSettings()
 	Cheat::Files::WriteBoolToIni(Cheat::CheatFeatures::ShowPlayerTagsPlayerList, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("show_player_tags_player_list"));
 	Cheat::Files::WriteBoolToIni(Cheat::CheatFeatures::ShowFPSBool, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("showfps"));
 	Cheat::Files::WriteBoolToIni(Cheat::CheatFeatures::AutoSaveSettings, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("autosavesettings"));
-	Cheat::Files::WriteBoolToIni(Cheat::CheatFeatures::use_kmh, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("use_kmh"));
+	Cheat::Files::WriteBoolToIni(Cheat::CheatFeatures::UseKMH, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("use_kmh"));
 	Cheat::Files::WriteBoolToIni(medal_bool_option, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("medal_bool_option"));
 	Cheat::Files::WriteBoolToIni(ShowVehiclePreviews, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("show_vehicle_previews"));
 	Cheat::Files::WriteBoolToIni(shop_box_bool_option, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("shop_box_bool_option"));
@@ -432,13 +425,13 @@ void Cheat::CheatFunctions::LoadSettings(bool StartUp)
 	if (Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("drawlaserbool")) == xorstr_("true")) { Cheat::CheatFeatures::VehicleWeapons_DrawLaser = true; }
 	if (Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("rapidfire")) == xorstr_("true")) { Cheat::CheatFeatures::WeaponRapidFireBool = true; }
 	if (Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("fakewantedlevel6")) == xorstr_("true")) { Cheat::CheatFeatures::FakeWantedLevelBool = true; }
-	if (Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("protection_remote_events")) == xorstr_("true")) { block_script_events = true; }
-	if (Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("show_blocked_script_events_messages")) == xorstr_("false")) { show_blocked_script_events_messages = false; }
+	if (Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("protection_remote_events")) == xorstr_("true")) { Cheat::CheatFeatures::BlockScriptEvents = true; }
+	if (Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("show_blocked_script_events_messages")) == xorstr_("false")) { Cheat::CheatFeatures::ShowBlockedScriptEventNotifications = false; }
 	if (Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("forcefield")) == xorstr_("true")) { Cheat::CheatFeatures::PlayerForceFieldBool = true; }
 	if (Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("onehitkill")) == xorstr_("true")) { Cheat::CheatFeatures::OneHitKillBool = true; }
 	if (Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("airstrikegun")) == xorstr_("true")) { Cheat::CheatFeatures::AirstrikeGunBool = true; }
 	if (Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("protection_freeze")) == xorstr_("true")) { Cheat::CheatFeatures::ProtectionFreezeBool = true; }
-	if (Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("use_kmh")) == xorstr_("true")) { Cheat::CheatFeatures::use_kmh = true; }
+	if (Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("use_kmh")) == xorstr_("true")) { Cheat::CheatFeatures::UseKMH = true; }
 	if (Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("protection_worldevents")) == xorstr_("true")) { Cheat::CheatFeatures::ProtectionWorldEventsBool = true; }
 	if (Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("protection_vehicle")) == xorstr_("true")) { Cheat::CheatFeatures::ProtectionVehicleBool = true; }
 	if (Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("protection_alterwantedlevel")) == xorstr_("true")) { Cheat::CheatFeatures::ProtectionAlterWantedLevelBool = true; }

@@ -1,6 +1,3 @@
-#ifndef __MEMORY_H__
-#define __MEMORY_H__
-
 #pragma once
 
 // from boost libraries
@@ -316,8 +313,5 @@ namespace Memory {
 	}
 
 }
-
-
-#endif // __MEMORY_H__
 
 

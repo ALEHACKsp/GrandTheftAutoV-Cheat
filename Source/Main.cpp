@@ -4949,6 +4949,7 @@ void main() {
 			Cheat::Title("Headers");
 			Cheat::Toggle("Show Header GUI", show_header_gui, "Toggle Header GUI");
 			Cheat::Toggle("Show Header Background", show_header_background, "Toggle Header Background");
+			Cheat::Toggle("Show Header Glare", ShowHeaderGlare, "Show GTAO Interaction Menu Glare");
 		}
 		break;
 		case settingstheme:
@@ -4972,7 +4973,7 @@ void main() {
 				Cheat::Settings::MenuBottomRect.r = 0;
 				Cheat::Settings::MenuBottomRect.g = 0;
 				Cheat::Settings::MenuBottomRect.b = 0;
-				Cheat::Settings::MenuBottomRect.a = 220;
+				Cheat::Settings::MenuBottomRect.a = 255;
 			}
 			if (Cheat::Int("Red", Cheat::Settings::MenuBottomRect.r, 0, 255, 1, ""))
 			{
@@ -5097,9 +5098,9 @@ void main() {
 			Cheat::Title("Small Title Background");
 			if (Cheat::Option("Set Default", ""))
 			{
-				Cheat::Settings::titleRect.r = 178;
-				Cheat::Settings::titleRect.g = 92;
-				Cheat::Settings::titleRect.b = 24;
+				Cheat::Settings::titleRect.r = 0;
+				Cheat::Settings::titleRect.g = 0;
+				Cheat::Settings::titleRect.b = 255;
 				Cheat::Settings::titleRect.a = 255;
 			}
 			if (Cheat::Int("Red", Cheat::Settings::titleRect.r, 0, 255, 1, ""))
@@ -5161,9 +5162,9 @@ void main() {
 			Cheat::Title("Line And Arrow");
 			if (Cheat::Option("Set Default", ""))
 			{
-				Cheat::Settings::line.r = 178;
-				Cheat::Settings::line.g = 92;
-				Cheat::Settings::line.b = 24;
+				Cheat::Settings::line.r = 0;
+				Cheat::Settings::line.g = 0;
+				Cheat::Settings::line.b = 255;
 				Cheat::Settings::line.a = 255;
 			}
 			if (Cheat::Int("Red", Cheat::Settings::line.r, 0, 255, 1, ""))
@@ -5225,10 +5226,10 @@ void main() {
 			Cheat::Title("Header Background");
 			if (Cheat::Option("Set Default", ""))
 			{
-				Cheat::Settings::headerRect.r = 178;
-				Cheat::Settings::headerRect.g = 92;
-				Cheat::Settings::headerRect.b = 24;
-				Cheat::Settings::headerRect.a = 255;
+				Cheat::Settings::headerRect.r = 0;
+				Cheat::Settings::headerRect.g = 0;
+				Cheat::Settings::headerRect.b = 255;
+				Cheat::Settings::headerRect.a = 200;
 			}
 			if (Cheat::Int("Red", Cheat::Settings::headerRect.r, 0, 255, 1, ""))
 			{
@@ -5499,9 +5500,9 @@ void main() {
 			Cheat::Title("Selection Box");
 			if (Cheat::Option("Set Default", ""))
 			{
-				Cheat::Settings::scroller.r = 178;
-				Cheat::Settings::scroller.g = 92;
-				Cheat::Settings::scroller.b = 24;
+				Cheat::Settings::scroller.r = 0;
+				Cheat::Settings::scroller.g = 0;
+				Cheat::Settings::scroller.b = 255;
 				Cheat::Settings::scroller.a = 255;
 			}
 			if (Cheat::Int("Red", Cheat::Settings::scroller.r, 0, 255, 1, ""))

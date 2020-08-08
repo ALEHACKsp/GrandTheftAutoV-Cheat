@@ -42,15 +42,10 @@ void Cheat::Drawing::Rect(RGBA rgba, VECTOR2 position, VECTOR2_2 size)
 	GRAPHICS::DRAW_RECT(position.x, position.y, size.w, size.h, rgba.r, rgba.g, rgba.b, rgba.a);
 }
 
-float gGlareDir;
-float conv360(float base, float min, float max)
+void Cheat::Drawing::DrawGlare(const float x, const float y, const float sx, const float sy, const int r, const int g, const int b)
 {
-	float fVar0;
-	if (min == max) return min;
-	fVar0 = max - min;
-	base -= SYSTEM::ROUND(base - min / fVar0) * fVar0;
-	if (base < min) base += fVar0;
-	return base;
+	int GlareHandle = GRAPHICS::REQUEST_SCALEFORM_MOVIE(xorstr_("MP_MENU_GLARE"));
+	GRAPHICS::DRAW_SCALEFORM_MOVIE(GlareHandle, x, y, sx, sy, r, g, b, 255, 0);
 }
 
 
@@ -64,6 +59,7 @@ bool show_header_background = true;
 bool shop_box_bool_option = true;
 bool medal_bool_option = false;
 bool show_header_gui = true;
+bool ShowHeaderGlare = true;
 bool CheatGUIHasBeenOpened = false;
 char* CurrentTheme;
 int Cheat::Settings::maxVisOptions = 10;
@@ -84,7 +80,7 @@ RGBAF Cheat::Settings::count				{ 255, 255, 255, 255, 0 };
 RGBAF Cheat::Settings::titleText			{ 255, 255, 255, 255, 0 };
 RGBA Cheat::Settings::titleRect				{ 0, 0, 255, 255 };
 RGBA Cheat::Settings::MainTitleRect			{ 0, 0, 0, 255 };
-RGBA Cheat::Settings::headerRect			{ 0, 0, 255, 255 };
+RGBA Cheat::Settings::headerRect			{ 0, 0, 255, 200 };
 RGBAF Cheat::Settings::optionText			{ 255, 255, 255, 255, 0 };
 RGBAF Cheat::Settings::breakText			{ 255, 255, 255, 255, 0 };
 RGBAF Cheat::Settings::arrow				{ 255, 255, 255, 255, 3 };                          
@@ -94,17 +90,16 @@ RGBA Cheat::Settings::MenuBottomRect		{ 0, 0, 0, 255 };
 RGBA Cheat::Settings::scroller				{ 0, 0, 255, 255 };
 RGBAF Cheat::Settings::integre				{ 255, 255, 255, 255, 2 };
 RGBA Cheat::Settings::line					{ 0, 0, 255, 255 };
-RGBA Cheat::Settings::primary				{ 255, 0, 0 };
-RGBA Cheat::Settings::secondary				{ 0, 255, 0 };
 
 
 void Cheat::Title(const char * title)
 {
 	Drawing::Text(title, { Settings::titleText }, { Settings::menuX, 0.130f }, { 0.50f, 0.35f }, true);
 	if (show_header_background) { Drawing::Rect(Settings::headerRect, { Settings::menuX, 0.092f }, { 0.21f, 0.083f });  } // Header Rect
+	if (ShowHeaderGlare) { Drawing::DrawGlare(Settings::menuX + .330f, 0.457f, 1.0f, 0.900f, 255, 255, 255); } // Header Glare
+	if (show_header_gui) { Cheat::Drawing::Spriter(xorstr_("Textures"), xorstr_("HeaderDefaultTransparent"), Cheat::Settings::menuX, 0.092f, 0.21f, 0.083f, 0, 255, 255, 255, 255); }
 	Drawing::Rect(Settings::MainTitleRect, { Settings::menuX, 0.146f }, { 0.21f, 0.026f }); // Title Rect
 	Drawing::Rect(Settings::line, { Settings::menuX, 0.158f }, { 0.21f, 0.002f });
-	if (show_header_gui) { Cheat::Drawing::Spriter(xorstr_("Textures"), xorstr_("HeaderDefaultTransparent"), Cheat::Settings::menuX, 0.092f, 0.21f, 0.083f, 0, 255, 255, 255, 255); }
 
 	CheatGUIHasBeenOpened = true;
 	UI::HIDE_HELP_TEXT_THIS_FRAME();
@@ -3365,9 +3360,9 @@ int Cheat::Settings::keyPressPreviousTick2 = GetTickCount();
 int Cheat::Settings::keyPressDelay3 = 140;
 int Cheat::Settings::keyPressPreviousTick3 = GetTickCount();
 int Cheat::Settings::openKey = VK_F4;
-
 bool Cheat::Settings::ControllerInput = true;
 bool Cheat::Settings::RestorePreviousSubmenu = true;
+
 void Cheat::Checks::Controls()
 {
 	Settings::selectPressed = false;
@@ -3684,7 +3679,7 @@ void Cheat::LoadTheme(char* ThemeFileName, bool StartUp)
 	CurrentTheme = ThemeFileName;
 
 	std::string ThemeLoaderVersionCheck = Cheat::Files::ReadStringFromIni(ThemeFilePath, "THEME", "theme_loader_version");
-	if (ThemeLoaderVersionCheck != "1.1") { Cheat::GameFunctions::MinimapNotification("~o~Loaded theme file is outdated"); Cheat::GameFunctions::MinimapNotification("~o~Some theme settings might not have loaded correctly"); }
+	if (ThemeLoaderVersionCheck != xorstr_("1.2")) { Cheat::GameFunctions::MinimapNotification("~o~Loaded theme file is outdated"); Cheat::GameFunctions::MinimapNotification("~o~Some theme settings might not have loaded correctly"); }
 
 	std::string TitleBackgroundRed = Cheat::Files::ReadStringFromIni(ThemeFilePath, "THEME", "title_background_red");
 	std::string TitleBackgroundGreen = Cheat::Files::ReadStringFromIni(ThemeFilePath, "THEME", "title_background_green");
@@ -3767,6 +3762,7 @@ void Cheat::LoadTheme(char* ThemeFileName, bool StartUp)
 	if (Cheat::Files::ReadStringFromIni(ThemeFilePath, "THEME", "show_header_background") == "true") { show_header_background = true; }
 	if (Cheat::Files::ReadStringFromIni(ThemeFilePath, "THEME", "show_header_gui") == "true") { show_header_gui = true; }
 	if (Cheat::Files::ReadStringFromIni(ThemeFilePath, "THEME", "restore_previous_submenu") == "false") { Cheat::Settings::RestorePreviousSubmenu = false; } else { Cheat::Settings::RestorePreviousSubmenu = true; }
+	if (Cheat::Files::ReadStringFromIni(ThemeFilePath, "THEME", "show_header_glare") == "false") { ShowHeaderGlare = false; } else { ShowHeaderGlare = true; }
 
 	Cheat::Settings::maxVisOptions = Cheat::Files::ReadIntFromIni(ThemeFilePath, "THEME", "max_vis_options");
 	if (Cheat::Files::ReadIntFromIni(ThemeFilePath, "THEME", "open_key") != 0)
@@ -3783,10 +3779,11 @@ void Cheat::SaveTheme(char* ThemeFileName)
 	std::string ThemeFolderPath = Cheat::CheatFunctions::ReturnCheatModuleDirectoryPath() + (std::string)"\\gtav\\Themes";
 	if (!Cheat::CheatFunctions::DoesDirectoryExists(Cheat::CheatFunctions::ReturnCheatModuleDirectoryPath() + (std::string)"\\gtav\\Themes")) { Cheat::CheatFunctions::CreateNewDirectory(ThemeFolderPath); }
 
-	Cheat::Files::WriteStringToIni("1.1", ThemeFilePath, "THEME", "theme_loader_version");
+	Cheat::Files::WriteStringToIni(xorstr_("1.2"), ThemeFilePath, "THEME", "theme_loader_version");
 	Cheat::Files::WriteBoolToIni(show_header_background, ThemeFilePath, "THEME", "show_header_background");
 	Cheat::Files::WriteBoolToIni(show_header_gui, ThemeFilePath, "THEME", "show_header_gui");
 	Cheat::Files::WriteBoolToIni(Cheat::Settings::RestorePreviousSubmenu, ThemeFilePath, "THEME", "restore_previous_submenu");
+	Cheat::Files::WriteBoolToIni(ShowHeaderGlare, ThemeFilePath, "THEME", "show_header_glare");
 	Cheat::Files::WriteFloatToIni(Cheat::Settings::menuX, ThemeFilePath, "THEME", "menu_x");
 	Cheat::Files::WriteIntToIni(Cheat::Settings::keyPressDelay2, ThemeFilePath, "THEME", "scroll_delay");
 	Cheat::Files::WriteIntToIni(Cheat::Settings::keyPressDelay3, ThemeFilePath, "THEME", "int_delay");

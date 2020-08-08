@@ -44,7 +44,7 @@ void Cheat::GameFunctions::RepairAndCleanVehicle()
 		VEHICLE::SET_VEHICLE_DIRT_LEVEL(PED::GET_VEHICLE_PED_IS_USING(PlayerPedID), 0);
 		VEHICLE::SET_VEHICLE_ENGINE_HEALTH(PED::GET_VEHICLE_PED_IS_USING(PlayerPedID), 1000);
 		VEHICLE::SET_VEHICLE_ENGINE_ON(PED::GET_VEHICLE_PED_IS_USING(PlayerPedID), true, true, true);
-		Cheat::GameFunctions::AdvancedMinimapNotification(xorstr_("Vehicle Fixed & Cleaned"), xorstr_("Textures"), xorstr_("AdvancedNotificationImage"), false, 4, xorstr_("Simple Customs"), "", 1.0, "");
+		Cheat::GameFunctions::AdvancedMinimapNotification(xorstr_("Vehicle Fixed & Cleaned"), xorstr_("Textures"), xorstr_("AdvancedNotificationImage"), false, 4, xorstr_("Vehicle Customizer"), "", 1.0, "");
 	}
 	else 
 	{

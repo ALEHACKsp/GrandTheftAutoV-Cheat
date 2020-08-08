@@ -108,15 +108,15 @@ const char* hkGetLabelText(void* this_, const char* label)
 {
 	if (std::strcmp(label, "HUD_MPREENTER") == 0)
 	{
-		return "Joining A New GTA Online Session with GTAV Cheat";
+		return "Joining a New GTA Online Session With GTAV Cheat";
 	}
 	if (std::strcmp(label, "HUD_JOINING") == 0)
 	{
-		return "Loading GTA Online With GTAV Cheat (Cloud Simulator 2021)";
+		return "Loading GTA Online With GTAV Cheat";
 	}
 	if (std::strcmp(label, "HUD_QUITTING") == 0)
 	{
-		return "Leave Online With GTAV Cheat";
+		return "Leaving GTA Online With GTAV Cheat";
 	}
 	if (std::strcmp(label, "PM_QUIT_MP") == 0)
 	{

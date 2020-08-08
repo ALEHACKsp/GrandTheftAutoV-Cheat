@@ -122,9 +122,9 @@ enum SubMenus {
 	cinemas_teleportmenu,
 	superjumps_teleportmenu,
 	otherlocations_teleportmenu,
-	simplemenucustomsmenu,
 	headeroptionsmenu,
 	player_otherpickupsmenu,
+	VehicleCustomizerMenu
 };
 extern enum SubMenus;
 

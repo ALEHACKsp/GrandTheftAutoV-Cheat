@@ -2169,7 +2169,7 @@ void main() {
 			Cheat::Title("Vehicle Options");
 			Cheat::MenuOption("Spawner >", vehiclespawnermenu);
 			Cheat::MenuOption("Vehicle Weapons >", vehicleweaponsmenu);
-			Cheat::MenuOption("Simple Customs >", simplemenucustomsmenu);
+			Cheat::MenuOption("Vehicle Customizer >", VehicleCustomizerMenu);
 			Cheat::MenuOption("Door Options >", vehicledooroptionsmenu);
 			if (Cheat::Option("Delete Current Vehicle", "Delete the current vehicle"))
 			{
@@ -2255,9 +2255,9 @@ void main() {
 			Cheat::Toggle("Super Brakes", Cheat::CheatFeatures::SuperBrakesBool, "");
 		}
 		break; 
-		case simplemenucustomsmenu:
+		case VehicleCustomizerMenu:
 		{
-			Cheat::Title("Simple Customs");
+			Cheat::Title("Vehicle Customizer");
 			if (Cheat::Option("Repair & Clean", "Repair & Clean current vehicle"))
 			{
 				Cheat::GameFunctions::RepairAndCleanVehicle();
@@ -2266,7 +2266,7 @@ void main() {
 			{
 				if (PED::IS_PED_IN_ANY_VEHICLE(PlayerPedID, 0)) {
 					Cheat::GameFunctions::MaxUpgradeVehicle(PED::GET_VEHICLE_PED_IS_USING(PlayerPedID));
-					Cheat::GameFunctions::AdvancedMinimapNotification(xorstr_("Vehicle Max Upgraded"), xorstr_("Textures"), xorstr_("AdvancedNotificationImage"), false, 4, xorstr_("Simple Customs"), "", 1.0, "");
+					Cheat::GameFunctions::AdvancedMinimapNotification(xorstr_("Vehicle Max Upgraded"), xorstr_("Textures"), xorstr_("AdvancedNotificationImage"), false, 4, xorstr_("Vehicle Customizer"), "", 1.0, "");
 				}
 				else 
 				{
@@ -2277,7 +2277,7 @@ void main() {
 			{
 				if (PED::IS_PED_IN_ANY_VEHICLE(PlayerPedID, 0)) {
 					Cheat::GameFunctions::MaxDowngradeVehicle(PED::GET_VEHICLE_PED_IS_USING(PlayerPedID));
-					Cheat::GameFunctions::AdvancedMinimapNotification(xorstr_("Vehicle Max Downgraded"), xorstr_("Textures"), xorstr_("AdvancedNotificationImage"), false, 4, xorstr_("Simple Customs"), "", 1.0, "");
+					Cheat::GameFunctions::AdvancedMinimapNotification(xorstr_("Vehicle Max Downgraded"), xorstr_("Textures"), xorstr_("AdvancedNotificationImage"), false, 4, xorstr_("Vehicle Customizer"), "", 1.0, "");
 				}
 				else 
 				{
@@ -2316,7 +2316,7 @@ void main() {
 
 					Vehicle veh = PED::GET_VEHICLE_PED_IS_USING(PlayerPedID);
 					VEHICLE::SET_VEHICLE_NUMBER_PLATE_TEXT(veh, GAMEPLAY::GET_ONSCREEN_KEYBOARD_RESULT());
-					Cheat::GameFunctions::AdvancedMinimapNotification(xorstr_("License Plate Text Updated"), xorstr_("Textures"), xorstr_("AdvancedNotificationImage"), false, 4, xorstr_("Simple Customs"), "", 1.0, "");
+					Cheat::GameFunctions::AdvancedMinimapNotification(xorstr_("License Plate Text Updated"), xorstr_("Textures"), xorstr_("AdvancedNotificationImage"), false, 4, xorstr_("Vehicle Customizer"), "", 1.0, "");
 				}
 				else 
 				{

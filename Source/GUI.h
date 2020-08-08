@@ -123,7 +123,7 @@ enum SubMenus {
 	superjumps_teleportmenu,
 	otherlocations_teleportmenu,
 	simplemenucustomsmenu,
-	customheadersmenu,
+	headeroptionsmenu,
 	player_otherpickupsmenu,
 };
 extern enum SubMenus;

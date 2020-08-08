@@ -42,7 +42,7 @@ void Cheat::Drawing::Rect(RGBA rgba, VECTOR2 position, VECTOR2_2 size)
 	GRAPHICS::DRAW_RECT(position.x, position.y, size.w, size.h, rgba.r, rgba.g, rgba.b, rgba.a);
 }
 
-void Cheat::Drawing::DrawGlare(const float x, const float y, const float sx, const float sy, const int r, const int g, const int b)
+void Cheat::Drawing::DrawScaleform(const float x, const float y, const float sx, const float sy, const int r, const int g, const int b)
 {
 	int GlareHandle = GRAPHICS::REQUEST_SCALEFORM_MOVIE(xorstr_("MP_MENU_GLARE"));
 	GRAPHICS::DRAW_SCALEFORM_MOVIE(GlareHandle, x, y, sx, sy, r, g, b, 255, 0);
@@ -96,7 +96,7 @@ void Cheat::Title(const char * title)
 {
 	Drawing::Text(title, { Settings::titleText }, { Settings::menuX, 0.130f }, { 0.50f, 0.35f }, true);
 	if (show_header_background) { Drawing::Rect(Settings::headerRect, { Settings::menuX, 0.092f }, { 0.21f, 0.083f });  } // Header Rect
-	if (ShowHeaderGlare) { Drawing::DrawGlare(Settings::menuX + .330f, 0.457f, 1.0f, 0.900f, 255, 255, 255); } // Header Glare
+	if (ShowHeaderGlare) { Drawing::DrawScaleform(Settings::menuX + .330f, 0.457f, 1.0f, 0.900f, 255, 255, 255); } // Header Glare
 	if (show_header_gui) { Cheat::Drawing::Spriter(xorstr_("Textures"), xorstr_("HeaderDefaultTransparent"), Cheat::Settings::menuX, 0.092f, 0.21f, 0.083f, 0, 255, 255, 255, 255); }
 	Drawing::Rect(Settings::MainTitleRect, { Settings::menuX, 0.146f }, { 0.21f, 0.026f }); // Title Rect
 	Drawing::Rect(Settings::line, { Settings::menuX, 0.158f }, { 0.21f, 0.002f });

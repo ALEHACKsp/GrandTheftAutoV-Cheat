@@ -4901,7 +4901,7 @@ void main() {
 		{
 			Cheat::Title("GUI Settings");
 			Cheat::MenuOption("Colors >", settingstheme);
-			Cheat::MenuOption("Headers >", customheadersmenu);
+			Cheat::MenuOption("Header Options >", headeroptionsmenu);
 			Cheat::MenuOption("Toggles >", togglesmenu);
 			Cheat::Int("Max Visible Menu Options", Cheat::Settings::maxVisOptions, 5, 16, 1, "Set Max Visible Menu Options");
 			Cheat::Toggle("Restore To Previous Submenu", Cheat::Settings::RestorePreviousSubmenu, "When opening restores previous submenu");
@@ -4944,9 +4944,9 @@ void main() {
 			Cheat::MenuOption("Theme Loader >", themeloader);
 		}
 		break; 
-		case customheadersmenu:
+		case headeroptionsmenu:
 		{
-			Cheat::Title("Headers");
+			Cheat::Title("Header Options");
 			Cheat::Toggle("Show Header GUI", show_header_gui, "Toggle Header GUI");
 			Cheat::Toggle("Show Header Background", show_header_background, "Toggle Header Background");
 			Cheat::Toggle("Show Header Glare", ShowHeaderGlare, "Show GTAO Interaction Menu Glare");

@@ -107,7 +107,7 @@ namespace Cheat {
 		void Rect(RGBA rgba, VECTOR2 position, VECTOR2_2 size);
 		void Spriter(std::string Streamedtexture, std::string textureName, float x, float y, float width, float height, float rotation, int r, int g, int b, int a);
 		void YTD();
-		void DrawGlare(const float x, const float y, const float sx, const float sy, const int r, const int g, const int b);
+		void DrawScaleform(const float x, const float y, const float sx, const float sy, const int r, const int g, const int b);
 	}
 	namespace Settings {
 		extern bool selectPressed;

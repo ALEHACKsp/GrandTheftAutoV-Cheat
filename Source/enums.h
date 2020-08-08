@@ -1980,7 +1980,8 @@ enum eHudComponent
 	HudComponentReplayTimer
 };
 
-enum eGameState {
+enum eGameState 
+{
 	GameStatePlaying,
 	GameStateIntro,
 	GameStateLicenseShit = 3,

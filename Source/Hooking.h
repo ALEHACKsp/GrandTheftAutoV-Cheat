@@ -14,8 +14,6 @@ typedef void(__cdecl* fpSetSessionTime)(int, int);
 
 class Hooking
 {
-private:
-	static BOOL InitializeHooks();
 public:
 	static std::vector<LPVOID>		m_hooks;
 	static uint64_t*				m_frameCount;
@@ -31,10 +29,8 @@ public:
 	static fpSetSessionTime					set_session_time_info;
 
 	static void DoGameHooking();
-	static eGameState GetGameState();
 	static uint64_t getWorldPtr();
 	static void onTickInit();
-	static bool HookNatives();
 	static __int64** getGlobalPtr();
 	static void defuseEvent(RockstarEvent e, bool toggle);
 	// Native function handler type

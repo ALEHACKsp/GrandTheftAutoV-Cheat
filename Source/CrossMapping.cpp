@@ -1,8 +1,7 @@
 #include "stdafx.h"
-#include <mmsystem.h>
 ::std::unordered_map<uint64_t, uint64_t> nativeHashMap;
 
-uint64_t __HASHMAPDATA[] = {
+uint64_t HashMapDataArray[] = {
 0x846AA8E7D55EE5B6,0x26B6708414F99F95,
 0xD3A58A12C77D9D4B,0xDB5C71C3E9F5C572,
 0x1514FB24C02C2322,0x7BAAA02B81BE82AF,
@@ -6131,41 +6130,6 @@ uint64_t __HASHMAPDATA[] = {
 0x973A9781A34F8DEB,0x22AB6AC3DFC82535
 };
 
-/*
-void CrossMapping::initNativeMap() {
-static int init = 0;
-struct twoQwords {
-uint64_t first;
-uint64_t second;
-} *p2q;
-
-if (init) {
-DEBUGMSG("Already init, nativeHashMap has %lli members", nativeHashMap.size());
-return;
-}
-
-p2q = reinterpret_cast<twoQwords *>(__HASHMAPDATA);
-//DEBUG_OUT("p2q: %p", p2q);
-//DEBUG_OUT("p2q->first: %llx", p2q->first);
-//DEBUG_OUT("p2q->second: %llx", p2q->second);
-while (p2q->first) {
-//DEBUG_OUT("initNHM: %llx, %llx", p2q->first, p2q->second);
-nativeHashMap.emplace(p2q->first, p2q->second);
-//DEBUG_OUT("nativeHashMap now has %lli members", nativeHashMap.size());
-++p2q;
-}
-init = 1;
-DEBUGMSG("nativeHashMap has %lli members", nativeHashMap.size());
-
-
-std::ofstream file;
-file.open("EntryPoints.txt");
-for (int i = 0; i < sizeof(__HASHMAPDATA) / sizeof(*__HASHMAPDATA); i += 2) {
-auto addr = Hooking::GetNativeHandler(__HASHMAPDATA[i]);
-file << std::hex << "0x" << __HASHMAPDATA[i] << " : " << "0x" << addr << std::endl;
-}
-file.close();
-}*/
 
 void CrossMapping::initNativeMap()
 {
@@ -6177,47 +6141,34 @@ void CrossMapping::initNativeMap()
 	} *p2q;
 
 	if (init) {
-		//DEBUGMSG("Already init, nativeHashMap has %lli members", nativeHashMap.size());
 		return;
 	}
 
-	p2q = reinterpret_cast<twoQwords *>(__HASHMAPDATA);
-	//DEBUG_OUT("p2q: %p", p2q);
-	//DEBUG_OUT("p2q->first: %llx", p2q->first);
-	//DEBUG_OUT("p2q->second: %llx", p2q->second);
+	p2q = reinterpret_cast<twoQwords *>(HashMapDataArray);
 
 	//loops through all items in the hash array, inserts into hash map if unique
 	while (p2q->first)
 	{
-		//DEBUG_OUT("initNHM: %llx, %llx", p2q->first, p2q->second);
 		nativeHashMap.emplace(p2q->first, p2q->second);
-		//DEBUG_OUT("nativeHashMap now has %lli members", nativeHashMap.size());
 		++p2q;
 	}
 	init = 1;
-	//DEBUGMSG("nativeHashMap has %lli members", nativeHashMap.size());
 }
-/*##################################################################################################*/
 
 
 static nMap nativeCache;
-
 bool CrossMapping::searchMap(nMap map, uint64_t inNative, uint64_t *outNative)
 {
 	bool found = false;
-	//LOG_DEBUG("inNative 0x%016llx", inNative);
 	for (nMap::const_iterator it = map.begin(); it != map.end(); ++it)
 	{
 		found = (inNative == it->first);
 		if (found) {
 			*outNative = it->second;
-			//LOG_DEBUG("outNative 0x%016llx", outNative);
 			break;
 		}
 	}
-
 	return found;
-
 }
 
 uint64_t CrossMapping::MapNative(uint64_t inNative)
@@ -6233,51 +6184,6 @@ uint64_t CrossMapping::MapNative(uint64_t inNative)
 		nativeCache[inNative] = outNative;
 		return outNative;
 	}
-
-	// Fail safe to prevent LOG_ERROR spam due to ontick run failed natives
-	found = std::find(nativeFailedVec.begin(), nativeFailedVec.end(), inNative) != nativeFailedVec.end();
-	if (found) {
-		return NULL;
-	}
-	else nativeFailedVec.push_back(inNative);
-	//Log::Error("Failed to find new hash for 0x%p", inNative);
 	return NULL;
-}
-
-void CrossMapping::dumpNativeMappingCache()
-{
-	// read the mapping table
-	/*FILE *file;
-	int file_exists;
-	char filename[0x400];
-	snprintf(filename, sizeof(filename), "native_cache.log");
-	//first check if the file exists...
-	fopen_s(&file, filename, "r");
-	if (file == NULL) file_exists = 0;
-	else { file_exists = 1; fclose(file); }
-
-	//...then open it in the appropriate way
-	if (file_exists == 1)
-	{
-	fopen_s(&file, filename, "r+b");
-	}
-	else
-	{
-	fopen_s(&file, filename, "w+b");
-	}
-
-	if (file != NULL)
-	{
-	char buffer[50];
-	for (nMap::const_iterator it = nativeCache.begin(); it != nativeCache.end(); ++it)
-	{
-	sprintf_s(buffer, "{ 0x%llx, 0x%llx },\n", it->first, it->second);
-	fputs(buffer, file);
-	}
-
-	PlaySound(L"C:\\WINDOWS\\Media\\tada.wav", NULL, SND_ASYNC);
-
-	fclose(file);
-	}*/
 }
 

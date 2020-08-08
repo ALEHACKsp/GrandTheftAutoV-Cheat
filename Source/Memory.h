@@ -1,6 +1,7 @@
 #pragma once
 
-// from boost libraries
+//Boost C++ Libraries Code
+
 template <uint64_t FnvPrime, uint64_t OffsetBasis>
 struct basic_fnv_1 {
 
@@ -92,13 +93,9 @@ namespace Memory {
 		bool				m_matched;
 
 	private:
-
 		void Initialize( const char* pattern, size_t length );
-
 		bool ConsiderMatch( uintptr_t offset );
-
 		void EnsureMatches( int maxCount );
-
 	public:
 
 		template<size_t Len>
@@ -311,7 +308,6 @@ namespace Memory {
 
 		*reinterpret_cast<T*>(Addr) = value;
 	}
-
 }
 
 

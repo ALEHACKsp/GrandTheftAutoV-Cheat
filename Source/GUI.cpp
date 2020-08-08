@@ -3382,7 +3382,7 @@ void Cheat::Checks::Controls()
 				if (Settings::menuLevel == 0)
 				{
 					if (Settings::PreviousMenu != NOMENU && Cheat::Settings::RestorePreviousSubmenu) { MenuLevelHandler::MoveMenu(Settings::PreviousMenu); Settings::menuLevel = Settings::PreviousMenuLevel; Settings::currentOption = Settings::previousOption; }
-					else { MenuLevelHandler::MoveMenu(SubMenus::mainmenu);  }
+					else { MenuLevelHandler::MoveMenu(SubMenus::MainMenu);  }
 				}
 				else
 				{

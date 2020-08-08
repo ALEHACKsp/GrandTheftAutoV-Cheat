@@ -434,6 +434,7 @@ namespace Cheat {
 		void DetachObjectFromPed(Ped Ped, char* ObjectName);
 		void TPto(Vector3 Coords);
 		void MinimapNotification(char* Message);
+		void AdvancedMinimapNotification(char* Message, char* PicName1, char* PicName2, bool Flash, int IconType, char* Sender, char* Subject, float Duration, char* ClanTag);
 	}
 	namespace LogFunctions {
 		void Init();

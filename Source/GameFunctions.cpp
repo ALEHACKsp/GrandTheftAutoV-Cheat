@@ -37,16 +37,14 @@ void Cheat::GameFunctions::GiveAllWeaponsToPlayer(Ped Player)
 
 void Cheat::GameFunctions::RepairAndCleanVehicle()
 {
-	if (PED::IS_PED_IN_ANY_VEHICLE(PlayerPedID, false)) {
+	if (PED::IS_PED_IN_ANY_VEHICLE(PlayerPedID, false)) 
+	{
 		VEHICLE::SET_VEHICLE_FIXED(PED::GET_VEHICLE_PED_IS_USING(PlayerPedID));
 		ENTITY::SET_ENTITY_HEALTH(PED::GET_VEHICLE_PED_IS_USING(PlayerPedID), ENTITY::GET_ENTITY_MAX_HEALTH(PED::GET_VEHICLE_PED_IS_USING(PlayerPedID)));
 		VEHICLE::SET_VEHICLE_DIRT_LEVEL(PED::GET_VEHICLE_PED_IS_USING(PlayerPedID), 0);
 		VEHICLE::SET_VEHICLE_ENGINE_HEALTH(PED::GET_VEHICLE_PED_IS_USING(PlayerPedID), 1000);
 		VEHICLE::SET_VEHICLE_ENGINE_ON(PED::GET_VEHICLE_PED_IS_USING(PlayerPedID), true, true, true);
-		UI::_SET_NOTIFICATION_TEXT_ENTRY("STRING");
-		UI::ADD_TEXT_COMPONENT_SUBSTRING_PLAYER_NAME(xorstr_("Vehicle Fixed & Cleaned"));
-		UI::_SET_NOTIFICATION_MESSAGE_CLAN_TAG(xorstr_("CHAR_LS_CUSTOMS"), xorstr_("CHAR_LS_CUSTOMS"), false, 7, xorstr_("Simple Customs"), "", 1.0, "");
-		UI::_DRAW_NOTIFICATION(false, false);
+		Cheat::GameFunctions::AdvancedMinimapNotification(xorstr_("Vehicle Fixed & Cleaned"), xorstr_("Textures"), xorstr_("AdvancedNotificationImage"), false, 4, xorstr_("Simple Customs"), "", 1.0, "");
 	}
 	else 
 	{
@@ -495,6 +493,26 @@ void Cheat::GameFunctions::MinimapNotification(char* Message)
 {
 	UI::_SET_NOTIFICATION_TEXT_ENTRY("STRING");
 	UI::ADD_TEXT_COMPONENT_SUBSTRING_PLAYER_NAME(Message);
+	UI::_DRAW_NOTIFICATION(false, false);
+}
+
+/*
+Icon Types:
+1 : Chat Box
+2 : Email
+3 : Add Friend Request
+4 : Nothing
+5 : Nothing
+6 : Nothing
+7 : Right Jumping Arrow
+8 : RP Icon
+9 : $ Icon
+*/
+void Cheat::GameFunctions::AdvancedMinimapNotification(char* Message, char* PicName1, char* PicName2, bool Flash, int IconType, char* Sender, char* Subject, float Duration, char* ClanTag)
+{
+	UI::_SET_NOTIFICATION_TEXT_ENTRY("STRING");
+	UI::ADD_TEXT_COMPONENT_SUBSTRING_PLAYER_NAME(Message);
+	UI::END_TEXT_COMMAND_THEFEED_POST_MESSAGETEXT_WITH_CREW_TAG(PicName1, PicName2, Flash, IconType, Sender, Subject, Duration, ClanTag);
 	UI::_DRAW_NOTIFICATION(false, false);
 }
 

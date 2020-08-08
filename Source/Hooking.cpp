@@ -151,8 +151,8 @@ int MiscScriptsArray[] = { 297770348, 498709856, -1297785021, 143196100, -181855
 						   140733193388032, 394650472960, -1542848512, -4294967296, -2063859712, -941739545, 732781082, 693546501, 693546501, 149365611, -1941292498,
 						   1953937033, -498955166, 20218675039, -1424895288, -1264063129, 423635655, 400031869, -531496987, 1062544784, -803645682, -771910813, 1476326089,
 						   1800294560, 1209128713, -123645928, -332594529, -327286343, -701823896, -2066829834, -125347541, -552065831, 189238289, 561831609, -2105858993,
-						   564131320, -1089379066, -348418057, -615431083, 121406262, -163616977, -1961284186, 1663317123, 297770348, 498709856, -1297785021, 143196100
-						   - 1818550779, 1432301416, 2037380969, 1818550779, -1964956981, -1010395481, 1070706073, -1933245257, 380850754, -1924332863, -1704719905,
+						   564131320, -1089379066, -348418057, -615431083, 121406262, -163616977, -1961284186, 1663317123, 297770348, 498709856, -1297785021, 143196100,
+						   -1818550779, 1432301416, 2037380969, 1818550779, -1964956981, -1010395481, 1070706073, -1933245257, 380850754, -1924332863, -1704719905,
 						   709335341, 1152017566, -1246838892, 1667907776, -2017629233, -297770348, -815817885, 774421744, 4136296512, 3763470309, 3030904167, 140733193388032,
 						   394650472960, -1542848512, -4294967296, -2063859712, -941739545, 1062333317
 						};
@@ -160,17 +160,15 @@ void* m_OriginalGetEventData = nullptr;
 bool GetEventDataFunc(int eventGroup, int eventIndex, int* argStruct, int argStructSize)
 {
 	auto result = static_cast<decltype(&GetEventDataFunc)>(m_OriginalGetEventData)(eventGroup, eventIndex, argStruct, argStructSize);
-	if (NETWORK::NETWORK_IS_SESSION_STARTED())
+	bool IsBlackListedScript = std::find(std::begin(MiscScriptsArray), std::end(MiscScriptsArray), argStruct[0]) != std::end(MiscScriptsArray);
+	if (result && Cheat::CheatFeatures::BlockScriptEvents && IsBlackListedScript)
 	{
-		bool IsBlackListedScript = std::find(std::begin(MiscScriptsArray), std::end(MiscScriptsArray), argStruct[0]) != std::end(MiscScriptsArray);
-		if (result && Cheat::CheatFeatures::BlockScriptEvents && IsBlackListedScript)
+		if (Cheat::CheatFeatures::ShowBlockedScriptEventNotifications)
 		{
-			if (PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(argStruct[1]) != PlayerPedID) 
-			{
-				if (Cheat::CheatFeatures::ShowBlockedScriptEventNotifications) { Cheat::GameFunctions::MinimapNotification(xorstr_("~r~Script Event Blocked")); }
-				return false;
-			}
+			std::string MessageString = xorstr_("Blocked Script Event ") + std::to_string(argStruct[0]);
+			Cheat::GameFunctions::AdvancedMinimapNotification(MessageString.data(), xorstr_("Textures"), xorstr_("AdvancedNotificationImage"), false, 4, xorstr_("Remote Events Protection"), "", .2f, "");
 		}
+		return false;
 	}
 	return result;
 }

@@ -257,7 +257,7 @@ void main() {
 		case unlocksmenu:
 		{
 			Cheat::Title("Unlocks");
-			if (Cheat::Option("Unlock All", "Unlock most unlockable GTA Online items")) {
+			if (Cheat::Option("Unlock All", "Unlocks most unlockable GTA Online items")) {
 				int iVar0;
 				STATS::STAT_GET_INT(GAMEPLAY::GET_HASH_KEY("mpply_last_mp_char"), &iVar0, -1);
 				if (iVar0 == 0) {
@@ -2266,12 +2266,10 @@ void main() {
 			{
 				if (PED::IS_PED_IN_ANY_VEHICLE(PlayerPedID, 0)) {
 					Cheat::GameFunctions::MaxUpgradeVehicle(PED::GET_VEHICLE_PED_IS_USING(PlayerPedID));
-					UI::_SET_NOTIFICATION_TEXT_ENTRY("STRING");
-					UI::ADD_TEXT_COMPONENT_SUBSTRING_PLAYER_NAME("Vehicle Max Upgraded");
-					UI::_SET_NOTIFICATION_MESSAGE_CLAN_TAG("CHAR_LS_CUSTOMS", "CHAR_LS_CUSTOMS", false, 7, "Simple Customs", "", 1.0, "");
-					UI::_DRAW_NOTIFICATION(1, 1);
+					Cheat::GameFunctions::AdvancedMinimapNotification(xorstr_("Vehicle Max Upgraded"), xorstr_("Textures"), xorstr_("AdvancedNotificationImage"), false, 4, xorstr_("Simple Customs"), "", 1.0, "");
 				}
-				else {
+				else 
+				{
 					Cheat::GameFunctions::MinimapNotification("~r~Player isn't in a vehicle");
 				}
 			}
@@ -2279,12 +2277,10 @@ void main() {
 			{
 				if (PED::IS_PED_IN_ANY_VEHICLE(PlayerPedID, 0)) {
 					Cheat::GameFunctions::MaxDowngradeVehicle(PED::GET_VEHICLE_PED_IS_USING(PlayerPedID));
-					UI::_SET_NOTIFICATION_TEXT_ENTRY("STRING");
-					UI::ADD_TEXT_COMPONENT_SUBSTRING_PLAYER_NAME("Vehicle Max Downgraded");
-					UI::_SET_NOTIFICATION_MESSAGE_CLAN_TAG("CHAR_LS_CUSTOMS", "CHAR_LS_CUSTOMS", false, 7, "Simple Customs", "", 1.0, "");
-					UI::_DRAW_NOTIFICATION(1, 1);
+					Cheat::GameFunctions::AdvancedMinimapNotification(xorstr_("Vehicle Max Downgraded"), xorstr_("Textures"), xorstr_("AdvancedNotificationImage"), false, 4, xorstr_("Simple Customs"), "", 1.0, "");
 				}
-				else {
+				else 
+				{
 					Cheat::GameFunctions::MinimapNotification("~r~Player isn't in a vehicle");
 				}
 			}
@@ -2320,11 +2316,7 @@ void main() {
 
 					Vehicle veh = PED::GET_VEHICLE_PED_IS_USING(PlayerPedID);
 					VEHICLE::SET_VEHICLE_NUMBER_PLATE_TEXT(veh, GAMEPLAY::GET_ONSCREEN_KEYBOARD_RESULT());
-
-					UI::_SET_NOTIFICATION_TEXT_ENTRY("STRING");
-					UI::ADD_TEXT_COMPONENT_SUBSTRING_PLAYER_NAME("License Plate Text Updated");
-					UI::_SET_NOTIFICATION_MESSAGE_CLAN_TAG("CHAR_LS_CUSTOMS", "CHAR_LS_CUSTOMS", false, 7, "Simple Customs", "", 1.0, "");
-					UI::_DRAW_NOTIFICATION(false, false);
+					Cheat::GameFunctions::AdvancedMinimapNotification(xorstr_("License Plate Text Updated"), xorstr_("Textures"), xorstr_("AdvancedNotificationImage"), false, 4, xorstr_("Simple Customs"), "", 1.0, "");
 				}
 				else 
 				{

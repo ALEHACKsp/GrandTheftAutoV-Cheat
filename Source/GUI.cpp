@@ -44,8 +44,8 @@ void Cheat::Drawing::Rect(RGBA rgba, VECTOR2 position, VECTOR2_2 size)
 
 void Cheat::Drawing::DrawScaleform(const float x, const float y, const float sx, const float sy, const int r, const int g, const int b)
 {
-	int GlareHandle = GRAPHICS::REQUEST_SCALEFORM_MOVIE(xorstr_("MP_MENU_GLARE"));
-	GRAPHICS::DRAW_SCALEFORM_MOVIE(GlareHandle, x, y, sx, sy, r, g, b, 255, 0);
+	int ScaleFormHandle = GRAPHICS::REQUEST_SCALEFORM_MOVIE(xorstr_("MP_MENU_GLARE"));
+	GRAPHICS::DRAW_SCALEFORM_MOVIE(ScaleFormHandle, x, y, sx, sy, r, g, b, 255, 0);
 }
 
 

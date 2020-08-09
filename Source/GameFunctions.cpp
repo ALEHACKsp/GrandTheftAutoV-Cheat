@@ -763,10 +763,7 @@ void Cheat::GameFunctions::LoadPlayerInformation(char* playerName, Player p)
 		if (WEAPON::GET_CURRENT_PED_WEAPON(SelectedPlayerPed, &weaponHash, 1))
 		{
 			char* weaponName;
-			if (weaponHash == 2725352035) {
-				weaponName = xorstr_("Unarmed");
-			}
-			else if (weaponHash == 2578778090) {
+			if (weaponHash == 2578778090) {
 				weaponName = xorstr_("Knife");
 			}
 			else if (weaponHash == 0x678B81B1) {
@@ -1052,7 +1049,7 @@ void Cheat::GameFunctions::LoadPlayerInformation(char* playerName, Player p)
 		if (distance > 1000)
 		{
 			distance = round((distance / 1000) * 100) / 100;
-			Distance << distance << xorstr_(" Kilometers");
+			Distance << distance << xorstr_(" KM");
 		}
 		else
 		{
@@ -1066,7 +1063,7 @@ void Cheat::GameFunctions::LoadPlayerInformation(char* playerName, Player p)
 		//Modded Model
 		Hash SelectedPlayerPedModel = ENTITY::GET_ENTITY_MODEL(SelectedPlayerPed);
 		Cheat::AddPlayerInfoBoxTextEntry(xorstr_("Modded Model"), NULL, NULL, 2);
-		if (NETWORK::NETWORK_IS_SESSION_STARTED() && SelectedPlayerPedModel != GAMEPLAY::GET_HASH_KEY(xorstr_("mp_m_freemode_01")) || NETWORK::NETWORK_IS_SESSION_STARTED() && SelectedPlayerPedModel != GAMEPLAY::GET_HASH_KEY(xorstr_("mp_f_freemode_01")))
+		if (SelectedPlayerPedModel != GAMEPLAY::GET_HASH_KEY(xorstr_("mp_m_freemode_01")) || SelectedPlayerPedModel != GAMEPLAY::GET_HASH_KEY(xorstr_("mp_f_freemode_01")))
 		{
 			Cheat::AddPlayerInfoBoxTextEntry(xorstr_("Yes"), NULL, NULL, NULL, 2);
 		}

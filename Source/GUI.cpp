@@ -2944,14 +2944,14 @@ bool Cheat::VehicleOption(const char* option, std::string ModelName)
 			 std::transform(ModelName.begin(), ModelName.end(), ModelName.begin(), ::tolower);
 			 std::string ModelNameDrawingText = "Model name: " + ModelName;
 			 if (Cheat::Settings::menuX < 0.71f) {
-				 Drawing::Text("Vehicle Preview", Settings::count, { Settings::menuX + 0.187f, 0.130f }, { 0.115f, 16 * 0.035f + -0.193f }, true);
+				 Drawing::Text("Vehicle Preview", Settings::count, { Settings::menuX + 0.187f, 0.135f }, { 0.115f, 16 * 0.035f + -0.193f }, true);
 				 Drawing::Text(ModelNameDrawingText.c_str(), Settings::count, { Settings::menuX + 0.111f, 0.308f }, { 0.45f, 0.30f }, false);
 				 Drawing::Rect(Settings::MenuBackgroundRect, { Settings::menuX + 0.187f, 0.231f }, { 0.16f, 0.20f });
 				 Drawing::Spriter(VehiclePreviewDictName, VehiclePreviewName, Settings::menuX + 0.187f, 0.232f, 0.15, 0.15, 0, 255, 255, 255, 255);
 			 }
 			 else
 			 {
-				 Drawing::Text("Vehicle Preview", Settings::count, { Settings::menuX - 0.187f, 0.130f }, { 0.115f, 16 * 0.035f + -0.193f }, true);
+				 Drawing::Text("Vehicle Preview", Settings::count, { Settings::menuX - 0.187f, 0.135f }, { 0.115f, 16 * 0.035f + -0.193f }, true);
 				 Drawing::Text(ModelNameDrawingText.c_str(), Settings::count, { Settings::menuX - 0.262f, 0.308f }, { 0.45f, 0.30f }, false);
 				 Drawing::Rect(Settings::MenuBackgroundRect, { Settings::menuX - 0.187f, 0.231f }, { 0.16f, 0.20f });
 				 Drawing::Spriter(VehiclePreviewDictName, VehiclePreviewName, Settings::menuX - 0.187f, 0.232f, 0.15, 0.15, 0, 255, 255, 255, 255);

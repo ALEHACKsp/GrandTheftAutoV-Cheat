@@ -172,7 +172,8 @@ bool GetEventDataFunc(int eventGroup, int eventIndex, int* argStruct, int argStr
 
 void __stdcall ScriptFunction(LPVOID lpParameter)
 {
-	Cheat::ScriptMain();
+	srand(GetTickCount64());
+	Cheat::Main();
 }
 
 
@@ -402,7 +403,7 @@ void	setFn
 
 void Hooking::DoGameHooking()
 {
-	Cheat::LogFunctions::Message(xorstr_("Hooking Game Functions & Creating Main Cheat Fiber"));
+	Cheat::LogFunctions::Message(xorstr_("Hooking Game Functions & Creating Main Fiber"));
 	auto p_activeThread = pattern("E8 ? ? ? ? 48 8B 88 10 01 00 00");
 	auto p_blipList = pattern("4C 8D 05 ? ? ? ? 0F B7 C1");
 	auto p_fixVector3Result = pattern("83 79 18 00 48 8B D1 74 4A FF 4A 18");
@@ -557,7 +558,7 @@ uint64_t Hooking::getWorldPtr()
 }
 void WAIT(DWORD ms, bool ShowMessage)
 {
-	if (ShowMessage) { Cheat::Drawing::Text("One moment please", { 255, 255, 255, 255 }, { 0.525f, 0.400f }, { 2.f, 2.f }, true); }
+	if (ShowMessage) { Cheat::Drawing::Text(xorstr_("One moment please"), { 255, 255, 255, 255 }, { 0.525f, 0.400f }, { 2.f, 2.f }, true); }
 	wakeAt = timeGetTime() + ms;
 	SwitchToFiber(mainFiber);
 }

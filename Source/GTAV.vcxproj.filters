@@ -28,10 +28,10 @@
     <ClCompile Include="NativeInvoker.cpp">
       <Filter>Source Files\Game Hooking</Filter>
     </ClCompile>
-    <ClCompile Include="Features.cpp">
+    <ClCompile Include="GameArrays.cpp">
       <Filter>Source Files\Game Functions</Filter>
     </ClCompile>
-    <ClCompile Include="GameArrays.cpp">
+    <ClCompile Include="CheatFeatures.cpp">
       <Filter>Source Files\Game Functions</Filter>
     </ClCompile>
   </ItemGroup>

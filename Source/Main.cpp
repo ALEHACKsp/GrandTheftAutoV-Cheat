@@ -42,7 +42,7 @@ int SessionTimeHour;
 int SessionTimeMinutes;
 int SessionTimeSeconds;
 
-void main() { 
+void Cheat::Main() { 
 	Cheat::CheatFunctions::PostInitCheat();
 	while (true) 
 	{
@@ -1607,7 +1607,7 @@ void main() {
 			Cheat::Title("Rank");
 			if (Cheat::Option("Custom Rank", "Input a custom Rank")) {
 				GAMEPLAY::DISPLAY_ONSCREEN_KEYBOARD(true, "Custom Rank", "", "", "", "", "", 4);
-				while (GAMEPLAY::UPDATE_ONSCREEN_KEYBOARD() == 0) WAIT(0);
+				while (GAMEPLAY::UPDATE_ONSCREEN_KEYBOARD() == 0) WAIT(0, false);
 				char* CustomRankChar0 = GAMEPLAY::GET_ONSCREEN_KEYBOARD_RESULT();
 
 				if (!GAMEPLAY::GET_ONSCREEN_KEYBOARD_RESULT()) { break; }
@@ -1685,7 +1685,7 @@ void main() {
 			if (Cheat::Option("Custom Input", "Input custom ped model"))
 			{
 				GAMEPLAY::DISPLAY_ONSCREEN_KEYBOARD(true, "", "", "", "", "", "", 30);
-				while (GAMEPLAY::UPDATE_ONSCREEN_KEYBOARD() == 0) WAIT(0);
+				while (GAMEPLAY::UPDATE_ONSCREEN_KEYBOARD() == 0) WAIT(0, false);
 				char* CustomModel = GAMEPLAY::GET_ONSCREEN_KEYBOARD_RESULT();
 
 				if (!GAMEPLAY::GET_ONSCREEN_KEYBOARD_RESULT()) {
@@ -1730,7 +1730,7 @@ void main() {
 			if (Cheat::Option("Custom Input", "Input custom vehicle model"))
 			{
 				GAMEPLAY::DISPLAY_ONSCREEN_KEYBOARD(true, "", "", "", "", "", "", 16);
-				while (GAMEPLAY::UPDATE_ONSCREEN_KEYBOARD() == 0) WAIT(0);
+				while (GAMEPLAY::UPDATE_ONSCREEN_KEYBOARD() == 0) WAIT(0, false);
 				char* SpawnVehicle = GAMEPLAY::GET_ONSCREEN_KEYBOARD_RESULT();
 				if (!GAMEPLAY::GET_ONSCREEN_KEYBOARD_RESULT()) { break; }
 				Cheat::GameFunctions::SpawnVehicle(SpawnVehicle);
@@ -2287,7 +2287,7 @@ void main() {
 			{
 				if (PED::IS_PED_IN_ANY_VEHICLE(PlayerPedID, 0)) {
 					GAMEPLAY::DISPLAY_ONSCREEN_KEYBOARD(true, "", "", "", "", "", "", 8);
-					while (GAMEPLAY::UPDATE_ONSCREEN_KEYBOARD() == 0) WAIT(0);
+					while (GAMEPLAY::UPDATE_ONSCREEN_KEYBOARD() == 0) WAIT(0, false);
 					if (!GAMEPLAY::GET_ONSCREEN_KEYBOARD_RESULT()) { break; }
 
 					Vehicle veh = PED::GET_VEHICLE_PED_IS_USING(PlayerPedID);
@@ -2972,7 +2972,7 @@ void main() {
 			if (Cheat::Option("Set Hotkey", ""))
 			{
 				PressedKey = 0;
-				while (!Cheat::CheatFunctions::ReturnPressedKey(PressedKey)) { Cheat::Drawing::Text(PressAnyKeyMessageString, { 255, 255, 255, 255 }, { 0.525f, 0.400f }, { 0.900f, 0.900f }, true); WAIT(0); }
+				while (!Cheat::CheatFunctions::ReturnPressedKey(PressedKey)) { Cheat::Drawing::Text(PressAnyKeyMessageString, { 255, 255, 255, 255 }, { 0.525f, 0.400f }, { 0.900f, 0.900f }, true); WAIT(0, false); }
 				if (PressedKey == 27) { Cheat::GameFunctions::MinimapNotification("Canceled Setting Hotkey"); break; }
 				if (PressedKey != 0) { AntiCrashCameraHotkey = PressedKey; Cheat::GameFunctions::MinimapNotification("Anti-Crash Camera hotkey has been set"); }
 			}
@@ -2981,7 +2981,7 @@ void main() {
 			if (Cheat::Option("Set Hotkey", ""))
 			{
 				PressedKey = 0;
-				while (!Cheat::CheatFunctions::ReturnPressedKey(PressedKey)) { Cheat::Drawing::Text(PressAnyKeyMessageString, { 255, 255, 255, 255 }, { 0.525f, 0.400f }, { 0.900f, 0.900f }, true); WAIT(0); }
+				while (!Cheat::CheatFunctions::ReturnPressedKey(PressedKey)) { Cheat::Drawing::Text(PressAnyKeyMessageString, { 255, 255, 255, 255 }, { 0.525f, 0.400f }, { 0.900f, 0.900f }, true); WAIT(0, false); }
 				if (PressedKey == 27) { Cheat::GameFunctions::MinimapNotification("Canceled Setting Hotkey"); break; }
 				if (PressedKey != 0) { TeleportToWaypointHotkey = PressedKey; Cheat::GameFunctions::MinimapNotification("Teleport To Waypoint hotkey has been set"); }
 			}
@@ -2990,7 +2990,7 @@ void main() {
 			if (Cheat::Option("Set Hotkey", ""))
 			{
 				PressedKey = 0;
-				while (!Cheat::CheatFunctions::ReturnPressedKey(PressedKey)) { Cheat::Drawing::Text(PressAnyKeyMessageString, { 255, 255, 255, 255 }, { 0.525f, 0.400f }, { 0.900f, 0.900f }, true); WAIT(0); }
+				while (!Cheat::CheatFunctions::ReturnPressedKey(PressedKey)) { Cheat::Drawing::Text(PressAnyKeyMessageString, { 255, 255, 255, 255 }, { 0.525f, 0.400f }, { 0.900f, 0.900f }, true); WAIT(0, false); }
 				if (PressedKey == 27) { Cheat::GameFunctions::MinimapNotification("Canceled Setting Hotkey"); break; }
 				if (PressedKey != 0) { RepairAndCleanVehicleHotkey = PressedKey; Cheat::GameFunctions::MinimapNotification("Repair & Clean hotkey has been set"); }
 			}
@@ -2999,7 +2999,7 @@ void main() {
 			if (Cheat::Option("Set Hotkey", ""))
 			{
 				PressedKey = 0;
-				while (!Cheat::CheatFunctions::ReturnPressedKey(PressedKey)) { Cheat::Drawing::Text(PressAnyKeyMessageString, { 255, 255, 255, 255 }, { 0.525f, 0.400f }, { 0.900f, 0.900f }, true); WAIT(0); }
+				while (!Cheat::CheatFunctions::ReturnPressedKey(PressedKey)) { Cheat::Drawing::Text(PressAnyKeyMessageString, { 255, 255, 255, 255 }, { 0.525f, 0.400f }, { 0.900f, 0.900f }, true); WAIT(0, false); }
 				if (PressedKey == 27) { Cheat::GameFunctions::MinimapNotification("Canceled Setting Hotkey"); break; }
 				if (PressedKey != 0) { GodModeToggleHotkey = PressedKey; Cheat::GameFunctions::MinimapNotification("Godmode hotkey has been set"); }
 			}
@@ -3008,7 +3008,7 @@ void main() {
 			if (Cheat::Option("Set Hotkey", ""))
 			{
 				PressedKey = 0;
-				while (!Cheat::CheatFunctions::ReturnPressedKey(PressedKey)) { Cheat::Drawing::Text(PressAnyKeyMessageString, { 255, 255, 255, 255 }, { 0.525f, 0.400f }, { 0.900f, 0.900f }, true); WAIT(0); }
+				while (!Cheat::CheatFunctions::ReturnPressedKey(PressedKey)) { Cheat::Drawing::Text(PressAnyKeyMessageString, { 255, 255, 255, 255 }, { 0.525f, 0.400f }, { 0.900f, 0.900f }, true); WAIT(0, false); }
 				if (PressedKey == 27) { Cheat::GameFunctions::MinimapNotification("Canceled Setting Hotkey"); break; }
 				if (PressedKey != 0) { MaxUpgradeVehicleHotKey = PressedKey; Cheat::GameFunctions::MinimapNotification("Max Upgrade Vehicle hotkey has been set"); }
 			}
@@ -3018,7 +3018,7 @@ void main() {
 			{
 				PressedKey = 0;
 				TeleportToWaypointHotkey = NULL;
-				while (!Cheat::CheatFunctions::ReturnPressedKey(PressedKey)) { Cheat::Drawing::Text(PressAnyKeyMessageString, { 255, 255, 255, 255 }, { 0.525f, 0.400f }, { 0.900f, 0.900f }, true); WAIT(0); }
+				while (!Cheat::CheatFunctions::ReturnPressedKey(PressedKey)) { Cheat::Drawing::Text(PressAnyKeyMessageString, { 255, 255, 255, 255 }, { 0.525f, 0.400f }, { 0.900f, 0.900f }, true); WAIT(0, false); }
 				if (PressedKey == 27) { Cheat::GameFunctions::MinimapNotification("Canceled Setting Hotkey"); break; }
 				if (PressedKey != 0) { TeleportForward2mHotkey = PressedKey; Cheat::GameFunctions::MinimapNotification("Teleport Forward (2m) hotkey has been set"); }
 			}
@@ -3027,7 +3027,7 @@ void main() {
 			if (Cheat::Option("Set Hotkey", ""))
 			{
 				PressedKey = 0;
-				while (!Cheat::CheatFunctions::ReturnPressedKey(PressedKey)) { Cheat::Drawing::Text(PressAnyKeyMessageString, { 255, 255, 255, 255 }, { 0.525f, 0.400f }, { 0.900f, 0.900f }, true); WAIT(0); }
+				while (!Cheat::CheatFunctions::ReturnPressedKey(PressedKey)) { Cheat::Drawing::Text(PressAnyKeyMessageString, { 255, 255, 255, 255 }, { 0.525f, 0.400f }, { 0.900f, 0.900f }, true); WAIT(0, false); }
 				if (PressedKey == 27) { Cheat::GameFunctions::MinimapNotification("Canceled Setting Hotkey"); break; }
 				if (PressedKey != 0) { SuicideHotkey = PressedKey; Cheat::GameFunctions::MinimapNotification("Suicide hotkey has been set"); }
 			}
@@ -3036,7 +3036,7 @@ void main() {
 			if (Cheat::Option("Set Hotkey", ""))
 			{
 				PressedKey = 0;
-				while (!Cheat::CheatFunctions::ReturnPressedKey(PressedKey)) { Cheat::Drawing::Text(PressAnyKeyMessageString, { 255, 255, 255, 255 }, { 0.525f, 0.400f }, { 0.900f, 0.900f }, true); WAIT(0); }
+				while (!Cheat::CheatFunctions::ReturnPressedKey(PressedKey)) { Cheat::Drawing::Text(PressAnyKeyMessageString, { 255, 255, 255, 255 }, { 0.525f, 0.400f }, { 0.900f, 0.900f }, true); WAIT(0, false); }
 				if (PressedKey == 27) { Cheat::GameFunctions::MinimapNotification("Canceled Setting Hotkey"); break; }
 				if (PressedKey != 0) { BailToSinglePlayerHotkey = PressedKey; Cheat::GameFunctions::MinimapNotification("Bail To Single Player hotkey has been set"); }
 			}
@@ -3526,7 +3526,7 @@ void main() {
 			if (Cheat::Option("Custom Input", "Custom Vehicle Gun Input"))
 			{
 				GAMEPLAY::DISPLAY_ONSCREEN_KEYBOARD(true, "", "", "", "", "", "", 16);
-				while (GAMEPLAY::UPDATE_ONSCREEN_KEYBOARD() == 0) WAIT(0);
+				while (GAMEPLAY::UPDATE_ONSCREEN_KEYBOARD() == 0) WAIT(0, false);
 				char* SpawnVehicle = GAMEPLAY::GET_ONSCREEN_KEYBOARD_RESULT();
 
 				if (!GAMEPLAY::GET_ONSCREEN_KEYBOARD_RESULT()) { break; }
@@ -4880,7 +4880,7 @@ void main() {
 			if (Cheat::Option(OpenKeyString.c_str(), "Select to change"))
 			{
 				int PressedKey;
-				while (!Cheat::CheatFunctions::ReturnPressedKey(PressedKey)) { Cheat::Drawing::Text("~bold~Press any key to set Open Key, press Escape to cancel", { 255, 255, 255, 255 }, { 0.525f, 0.400f }, { 0.900f, 0.900f }, true); WAIT(0); }
+				while (!Cheat::CheatFunctions::ReturnPressedKey(PressedKey)) { Cheat::Drawing::Text("~bold~Press any key to set Open Key, press Escape to cancel", { 255, 255, 255, 255 }, { 0.525f, 0.400f }, { 0.900f, 0.900f }, true); WAIT(0, false); }
 				if (PressedKey == 27) { Cheat::GameFunctions::MinimapNotification("Canceled Setting Open Key"); break; }
 				if (PressedKey != 0) { Cheat::Settings::openKey = PressedKey; Cheat::GameFunctions::MinimapNotification("Open Key has been set"); }
 			}
@@ -5285,7 +5285,7 @@ void main() {
 			if (Cheat::Option("Save To New", "Save current GUI to new theme file"))
 			{
 				GAMEPLAY::DISPLAY_ONSCREEN_KEYBOARD(true, "", "", "", "", "", "", 20);
-				while (GAMEPLAY::UPDATE_ONSCREEN_KEYBOARD() == 0) WAIT(0);
+				while (GAMEPLAY::UPDATE_ONSCREEN_KEYBOARD() == 0) WAIT(0, false);
 				char* ThemeName = GAMEPLAY::GET_ONSCREEN_KEYBOARD_RESULT();
 
 				if (!GAMEPLAY::GET_ONSCREEN_KEYBOARD_RESULT()) {
@@ -5512,13 +5512,6 @@ void main() {
 		WAIT(0, false);
 	}
 }
-
-
-void Cheat::ScriptMain() {
-	srand(GetTickCount64());
-	main();
-}
-
 
 DWORD WINAPI InitThread(LPVOID lpParam)
 {

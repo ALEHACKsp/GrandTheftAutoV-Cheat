@@ -17,9 +17,6 @@ void Cheat::Drawing::Text(const char * text, RGBAF rgbaf, VECTOR2 position, VECT
 	UI::SET_TEXT_COLOUR(rgbaf.r, rgbaf.g, rgbaf.b, rgbaf.a);
 	UI::SET_TEXT_FONT(rgbaf.f);
 	UI::SET_TEXT_SCALE(size.w, size.h);
-	UI::SET_TEXT_DROPSHADOW(1, 0, 0, 0, 0);
-	UI::SET_TEXT_EDGE(1, 0, 0, 0, 0);
-	UI::SET_TEXT_OUTLINE();
 	UI::BEGIN_TEXT_COMMAND_DISPLAY_TEXT("STRING");
 	UI::ADD_TEXT_COMPONENT_SUBSTRING_PLAYER_NAME((char*)text);
 	UI::END_TEXT_COMMAND_DISPLAY_TEXT(position.x, position.y);
@@ -94,10 +91,10 @@ RGBA Cheat::Settings::line					{ 0, 0, 255, 255 };
 void Cheat::Title(const char * title)
 {
 	Drawing::Text(title, { Settings::titleText }, { Settings::menuX, 0.130f }, { 0.50f, 0.35f }, true);
-	if (show_header_background) { Drawing::Rect(Settings::headerRect, { Settings::menuX, 0.092f }, { 0.21f, 0.083f });  } // Header Rect
-	if (ShowHeaderGlare) { Drawing::DrawScaleform(Settings::menuX + .330f, 0.457f, 1.0f, 0.900f, 255, 255, 255); } // Header Glare
-	if (show_header_gui) { Cheat::Drawing::Spriter(xorstr_("Textures"), xorstr_("HeaderDefaultTransparent"), Cheat::Settings::menuX, 0.092f, 0.21f, 0.083f, 0, 255, 255, 255, 255); }
-	Drawing::Rect(Settings::MainTitleRect, { Settings::menuX, 0.146f }, { 0.21f, 0.026f }); // Title Rect
+	if (show_header_background) { Drawing::Rect(Settings::headerRect, { Settings::menuX, 0.092f }, { 0.21f, 0.084f });  } // Header Rect
+	if (ShowHeaderGlare) { Drawing::DrawScaleform(Settings::menuX + .330f, 0.462f, 1.0f, 0.912f, 255, 255, 255); } // Header Glare
+	if (show_header_gui) { Cheat::Drawing::Spriter(xorstr_("Textures"), xorstr_("HeaderDefaultTransparent"), Cheat::Settings::menuX, 0.092f, 0.21f, 0.084f, 0, 255, 255, 255, 255); }
+	Drawing::Rect(Settings::MainTitleRect, { Settings::menuX, 0.146f }, { 0.21f, 0.023f }); // Title Rect
 	Drawing::Rect(Settings::line, { Settings::menuX, 0.158f }, { 0.21f, 0.002f });
 
 	CheatGUIHasBeenOpened = true;
@@ -2949,14 +2946,14 @@ bool Cheat::VehicleOption(const char* option, std::string ModelName)
 			 if (Cheat::Settings::menuX < 0.71f) {
 				 Drawing::Text("Vehicle Preview", Settings::count, { Settings::menuX + 0.187f, 0.130f }, { 0.115f, 16 * 0.035f + -0.193f }, true);
 				 Drawing::Text(ModelNameDrawingText.c_str(), Settings::count, { Settings::menuX + 0.111f, 0.308f }, { 0.45f, 0.30f }, false);
-				 Drawing::Rect(Settings::MenuBackgroundRect, { Settings::menuX + 0.187f, 0.233f }, { 0.16f, 0.20f });
+				 Drawing::Rect(Settings::MenuBackgroundRect, { Settings::menuX + 0.187f, 0.231f }, { 0.16f, 0.20f });
 				 Drawing::Spriter(VehiclePreviewDictName, VehiclePreviewName, Settings::menuX + 0.187f, 0.232f, 0.15, 0.15, 0, 255, 255, 255, 255);
 			 }
 			 else
 			 {
 				 Drawing::Text("Vehicle Preview", Settings::count, { Settings::menuX - 0.187f, 0.130f }, { 0.115f, 16 * 0.035f + -0.193f }, true);
 				 Drawing::Text(ModelNameDrawingText.c_str(), Settings::count, { Settings::menuX - 0.262f, 0.308f }, { 0.45f, 0.30f }, false);
-				 Drawing::Rect(Settings::MenuBackgroundRect, { Settings::menuX - 0.187f, 0.233f }, { 0.16f, 0.20f });
+				 Drawing::Rect(Settings::MenuBackgroundRect, { Settings::menuX - 0.187f, 0.231f }, { 0.16f, 0.20f });
 				 Drawing::Spriter(VehiclePreviewDictName, VehiclePreviewName, Settings::menuX - 0.187f, 0.232f, 0.15, 0.15, 0, 255, 255, 255, 255);
 			 }
 		 }
@@ -3536,30 +3533,45 @@ void Cheat::AddSmallTitle(char* text)
 		Drawing::Spriter("CommonMenu", "", Settings::menuX - 0.175f, 0.1175f - 0.019f, 0.115f, 0.045f, 180, Settings::titleRect.r, Settings::titleRect.g, Settings::titleRect.b, Settings::titleRect.a);
 	}
 }
-void Cheat::PlayerInfoBoxTitle(char* text)
+void Cheat::AddPlayerInfoBoxTextEntry(char* text, int Row1, int Row2, int Row3, int Row4)
 {
-	if (Cheat::Settings::menuX < 0.70f)
-	{
-		Drawing::Text(text, { Settings::titleText }, { Settings::menuX + 0.200f, 0.130f }, { 0.50f, 0.35f }, true);
-		Drawing::Rect(Settings::MainTitleRect, { Settings::menuX + 0.203f, 0.145f }, { 0.19f, 0.024f });
+	if (Cheat::Settings::menuX < 0.54f)
+	{		
+		if (Row1 != NULL)
+		{
+			Drawing::Text(text, Settings::count, { Settings::menuX + 0.110f, (Row1 * 0.020f) + 0.140f }, { 0.30f, 0.30f }, false);
+		}
+		else if (Row2 != NULL)
+		{
+			Drawing::Text(text, Settings::count, { Settings::menuX + 0.210f, (Row2 * 0.020f) + 0.140f }, { 0.30f, 0.30f }, false);
+		}
+		else if (Row3 != NULL)
+		{
+			Drawing::Text(text, Settings::count, { Settings::menuX + 0.310f, (Row3 * 0.020f) + 0.140f }, { 0.30f, 0.30f }, false);
+		}
+		else if (Row4 != NULL)
+		{
+			Drawing::Text(text, Settings::count, { Settings::menuX + 0.385f, (Row4 * 0.020f) + 0.140f }, { 0.30f, 0.30f }, false);
+		}
 	}
 	else
 	{
-		Drawing::Text(text, { Settings::titleText }, { Settings::menuX - 0.200f, 0.130f }, { 0.50f, 0.35f }, true);
-		Drawing::Rect(Settings::MainTitleRect, { Settings::menuX - 0.203f, 0.145f }, { 0.19f, 0.024f });
-	}
-}
-void Cheat::PlayerInfoBoxText(char* text, short line)
-{
-	if (Cheat::Settings::menuX < 0.70f)
-	{
-		if (line == 1) { Drawing::Rect(Settings::scroller, { Settings::menuX + 0.203f, ((16 * 0.035f) / 2.0f) + 0.060f }, { 0.19f, 16 * 0.035f + -0.193f }); }
-		Drawing::Text(text, Settings::count, { Settings::menuX + 0.110f, (line * 0.020f) + 0.140f }, { 0.30f, 0.30f }, false);
-	}
-	else
-	{
-		if (line == 1) { Drawing::Rect(Settings::scroller, { Settings::menuX - 0.203f, ((16 * 0.035f) / 2.0f) + 0.060f }, { 0.19f, 16 * 0.035f + -0.193f }); }
-		Drawing::Text(text, Settings::count, { Settings::menuX - 0.295f, (line * 0.020f) + 0.140f }, { 0.30f, 0.30f }, false);
+		if (Row1 != NULL)
+		{
+			Drawing::Text(text, Settings::count, { Settings::menuX - 0.420f, (Row1 * 0.020f) + 0.140f }, { 0.30f, 0.30f }, false);
+		}
+		else if (Row2 != NULL)
+		{
+			Drawing::Text(text, Settings::count, { Settings::menuX - 0.340f, (Row2 * 0.020f) + 0.140f }, { 0.30f, 0.30f }, false);
+		}
+		else if (Row3 != NULL)
+		{
+			Drawing::Text(text, Settings::count, { Settings::menuX - 0.260f, (Row3 * 0.020f) + 0.140f }, { 0.30f, 0.30f }, false);
+		}
+		else if (Row4 != NULL)
+		{
+			Drawing::Text(text, Settings::count, { Settings::menuX - 0.160f, (Row4 * 0.020f) + 0.140f }, { 0.30f, 0.30f }, false);
+		}
 	}
 }
 void Cheat::AddSmallInfo(char* text, short line)

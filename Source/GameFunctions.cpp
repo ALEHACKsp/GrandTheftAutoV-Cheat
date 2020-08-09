@@ -630,47 +630,137 @@ void Cheat::GameFunctions::LoadPlayerInformation(char* playerName, Player p)
 {
 	if (ShowPlayerInformationPlayerList)
 	{
-		Ped ped = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(p);
-		RequestControlOfEnt(ped);
-		std::ostringstream PlayerMoney; PlayerMoney << xorstr_("Cash: $") << globalHandle(1590446).At(p, 871).At(211).At(3).As<int>();
-		std::ostringstream PlayerRank; PlayerRank << xorstr_("Rank: ") << globalHandle(1590446).At(p, 871).At(211).At(6).As<int>();
-		float health = ENTITY::GET_ENTITY_HEALTH(ped);
-		float maxHealth = ENTITY::GET_ENTITY_MAX_HEALTH(ped);
-		float healthPercent = health * 100 / maxHealth;
-		std::ostringstream Health; Health << xorstr_("Health:~s~ ") << healthPercent;
-		float armor = PED::GET_PED_ARMOUR(ped);
-		float maxArmor = PLAYER::GET_PLAYER_MAX_ARMOUR(p);
-		float armorPercent = armor * 100 / maxArmor;
-		std::ostringstream Armor; Armor << xorstr_("Armor:~s~ ") << armorPercent;
-		bool alive = !PED::IS_PED_DEAD_OR_DYING(ped, 1);
-		char* aliveStatus;
-		if (alive) aliveStatus = xorstr_("Yes"); else aliveStatus = xorstr_("No");
-		std::ostringstream Alive; Alive << xorstr_("Alive:~s~ ") << aliveStatus;
-		bool inVehicle = PED::IS_PED_IN_ANY_VEHICLE(ped, 0);
-		std::ostringstream VehicleModel; VehicleModel << xorstr_("Vehicle:~s~ ");
-		std::ostringstream Speed; Speed << xorstr_("Speed:~s~ ");
-		std::ostringstream IsInAVehicle; IsInAVehicle << xorstr_("In Vehicle:~s~ ");
-		if (inVehicle) 
+		//Definitions
+		Ped SelectedPlayerPed = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(p);
+		RequestControlOfEnt(SelectedPlayerPed);
+
+
+		//Draw Title and Background
+		if (Cheat::Settings::menuX < 0.54f)
 		{
-			IsInAVehicle << xorstr_("Yes");
-			Hash vehHash = ENTITY::GET_ENTITY_MODEL(PED::GET_VEHICLE_PED_IS_IN(ped, 0));
-			VehicleModel << UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(vehHash));
-			float vehSpeed = ENTITY::GET_ENTITY_SPEED(PED::GET_VEHICLE_PED_IS_IN(ped, 0));
-			float vehSpeedConverted;
-			vehSpeedConverted = round(vehSpeed * 1.6);
-			Speed << vehSpeedConverted << xorstr_(" KM/H");
+			Drawing::Rect(Settings::scroller, { Settings::menuX + 0.266f, 0.31f }, { 0.32f, 0.31f }); //Main Background Rect
+			Drawing::Text(xorstr_("Player Information"), { Settings::titleText }, { Settings::menuX + 0.260f, 0.130f }, { 0.50f, 0.35f }, true);
+			Drawing::Rect(Settings::MainTitleRect, { Settings::menuX + 0.266f, 0.146f }, { 0.32f, 0.023f });
+		}
+		else
+		{
+			Drawing::Rect(Settings::scroller, { Settings::menuX - 0.266f, 0.31f }, { 0.32f, 0.31f }); //Main Background Rect
+			Drawing::Text(xorstr_("Player Information"), { Settings::titleText }, { Settings::menuX - 0.260f, 0.130f }, { 0.50f, 0.35f }, true);
+			Drawing::Rect(Settings::MainTitleRect, { Settings::menuX - 0.266f, 0.146f }, { 0.32f, 0.023f });
+		}
+
+		//Text Entry's
+		Cheat::AddPlayerInfoBoxTextEntry(xorstr_("Name"), 1);
+		Cheat::AddPlayerInfoBoxTextEntry(PLAYER::GET_PLAYER_NAME(p), NULL, 1);
+
+		Cheat::AddPlayerInfoBoxTextEntry(xorstr_("Rank"), 2);
+		Cheat::AddPlayerInfoBoxTextEntry(xorstr_("Money"), 3);
+		if (NETWORK::NETWORK_IS_SESSION_STARTED()) 
+		{
+			std::ostringstream PlayerRank;
+			PlayerRank << globalHandle(1590446).At(p, 871).At(211).At(6).As<int>();
+			Cheat::AddPlayerInfoBoxTextEntry((char*)PlayerRank.str().c_str(), NULL, 2);
+
+			std::ostringstream PlayerMoney;
+			PlayerMoney << globalHandle(1590446).At(p, 871).At(211).At(3).As<int>();
+			Cheat::AddPlayerInfoBoxTextEntry((char*)PlayerMoney.str().c_str(), NULL, 3);
+		}
+		else
+		{
+			Cheat::AddPlayerInfoBoxTextEntry(xorstr_("GTAO Only"), NULL, 2);
+			Cheat::AddPlayerInfoBoxTextEntry(xorstr_("GTAO Only"), NULL, 3);
+		}
+
+
+		//Health
+		std::ostringstream Health;
+		float health = ENTITY::GET_ENTITY_HEALTH(SelectedPlayerPed);
+		float HealthValue = health * 100 / ENTITY::GET_ENTITY_MAX_HEALTH(SelectedPlayerPed);
+		Cheat::AddPlayerInfoBoxTextEntry(xorstr_("Health"), 4);
+		if (HealthValue == 100) 
+		{ 
+			Cheat::AddPlayerInfoBoxTextEntry(xorstr_("Full"), NULL, 4);
 		}
 		else 
-		{
-			IsInAVehicle << xorstr_("No");
-			float speed = round(ENTITY::GET_ENTITY_SPEED(ped) * 100) / 100;
-			Speed << speed << xorstr_(" M/S");
-			VehicleModel << xorstr_("None");
+		{ 
+			Health << HealthValue << xorstr_("%");
+			Cheat::AddPlayerInfoBoxTextEntry((char*)Health.str().c_str(), NULL, 4);
 		}
-		std::ostringstream WantedLevel; WantedLevel << xorstr_("Wanted Level:~s~ ") << PLAYER::GET_PLAYER_WANTED_LEVEL(p);
-		std::ostringstream Weapon; Weapon << xorstr_("Weapon: ~s~");
+		
+
+		//Armor
+		std::ostringstream Armor;
+		int ArmorValue = PED::GET_PED_ARMOUR(SelectedPlayerPed) * 100 / PLAYER::GET_PLAYER_MAX_ARMOUR(p);
+		Cheat::AddPlayerInfoBoxTextEntry(xorstr_("Armor"), 5);
+		if (ArmorValue == 99 || ArmorValue == 100) 
+		{ 		
+			Cheat::AddPlayerInfoBoxTextEntry(xorstr_("Full"), NULL, 5);
+		}
+		else 
+		{ 
+			Armor << ArmorValue; 
+			Cheat::AddPlayerInfoBoxTextEntry((char*)Armor.str().c_str(), NULL, 5);
+		}
+
+		//Status
+		std::ostringstream Status;
+		Cheat::AddPlayerInfoBoxTextEntry(xorstr_("Status"), 6);
+		if (AI::IS_PED_STILL(SelectedPlayerPed)) { Status << xorstr_("Player is still"); }
+		else if (AI::IS_PED_WALKING(SelectedPlayerPed)) { Status << xorstr_("Player is walking"); }
+		else if (AI::IS_PED_RUNNING(SelectedPlayerPed)) { Status << xorstr_("Player is running"); }
+		else if (AI::IS_PED_SPRINTING(SelectedPlayerPed)) { Status << xorstr_("Player is sprinting"); }
+		else if (PED::IS_PED_CLIMBING(SelectedPlayerPed)) { Status << xorstr_("Player is climbing"); }
+		else if (PED::IS_PED_DIVING(SelectedPlayerPed)) { Status << xorstr_("Player is diving"); }
+		else if (PED::IS_PED_FALLING(SelectedPlayerPed)) { Status << xorstr_("Player is falling"); }
+		else if (PED::IS_PED_DEAD_OR_DYING(SelectedPlayerPed, true)) { Status << xorstr_("Player is dead"); }
+		else { Status << xorstr_("~c~Unknown"); }
+		Cheat::AddPlayerInfoBoxTextEntry((char*)Status.str().c_str(), NULL, 6);
+
+
+		//Vehicle
+		bool InAnyVehicle = PED::IS_PED_IN_ANY_VEHICLE(SelectedPlayerPed, 0);
+		std::ostringstream Vehicle;
+		Cheat::AddPlayerInfoBoxTextEntry(xorstr_("Vehicle"), 7);
+		if (InAnyVehicle)
+		{
+			Vehicle << UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(ENTITY::GET_ENTITY_MODEL(PED::GET_VEHICLE_PED_IS_IN(SelectedPlayerPed, 0))));
+		}
+		else
+		{
+			Vehicle << xorstr_("~c~Not in a vehicle");
+		}
+		Cheat::AddPlayerInfoBoxTextEntry((char*)Vehicle.str().c_str(), NULL, 7);
+
+
+		//Speed
+		std::ostringstream Speed;
+		if (InAnyVehicle)
+		{
+			Cheat::AddPlayerInfoBoxTextEntry(xorstr_("Vehicle Speed"), 8);
+			float VehicleSpeed = round(ENTITY::GET_ENTITY_SPEED(PED::GET_VEHICLE_PED_IS_IN(SelectedPlayerPed, false)) * 100) / 100;
+			Speed << round(VehicleSpeed * 3.6) << xorstr_(" KM/H");
+			Cheat::AddPlayerInfoBoxTextEntry((char*)Speed.str().c_str(), NULL, 8);
+		}
+		else
+		{
+			Cheat::AddPlayerInfoBoxTextEntry(xorstr_("Movement Speed"), 8);
+			Speed << round(ENTITY::GET_ENTITY_SPEED(SelectedPlayerPed) * 100) / 100 << xorstr_(" M/S");
+			Cheat::AddPlayerInfoBoxTextEntry((char*)Speed.str().c_str(), NULL, 8);
+		}
+
+
+		//Wanted Level
+		std::ostringstream WantedLevel;
+		int PlayerWantedLevel = PLAYER::GET_PLAYER_WANTED_LEVEL(p);
+		Cheat::AddPlayerInfoBoxTextEntry(xorstr_("Wanted Level"), 9);
+		WantedLevel << PlayerWantedLevel << xorstr_("/5");
+		Cheat::AddPlayerInfoBoxTextEntry((char*)WantedLevel.str().c_str(), NULL, 9);
+
+
+		std::ostringstream Weapon;
 		Hash weaponHash;
-		if (WEAPON::GET_CURRENT_PED_WEAPON(ped, &weaponHash, 1)) 
+		Cheat::AddPlayerInfoBoxTextEntry(xorstr_("Weapon"), 10);
+		if (WEAPON::GET_CURRENT_PED_WEAPON(SelectedPlayerPed, &weaponHash, 1))
 		{
 			char* weaponName;
 			if (weaponHash == 2725352035) {
@@ -821,7 +911,7 @@ void Cheat::GameFunctions::LoadPlayerInformation(char* playerName, Player p)
 				weaponName = xorstr_("Vintage Pistol");
 			}
 			else if (weaponHash == 0x7F7497E5) {
-				weaponName = xorstr_("Firework");
+				weaponName = xorstr_("Firework Launcher");
 			}
 			else if (weaponHash == 0xA89CB99E) {
 				weaponName = xorstr_("Musket");
@@ -920,55 +1010,92 @@ void Cheat::GameFunctions::LoadPlayerInformation(char* playerName, Player p)
 		}
 		else
 		{
-			Weapon << xorstr_("Unarmed");
+			Weapon << xorstr_("~c~Unarmed");
 		}
+		Cheat::AddPlayerInfoBoxTextEntry((char*)Weapon.str().c_str(), NULL, 10);
 
-		Vector3 myCoords = ENTITY::GET_ENTITY_COORDS(PlayerPedID, 1);
-		Vector3 coords = ENTITY::GET_ENTITY_COORDS(ped, 1);
-		std::ostringstream Zone; Zone << xorstr_("Zone: ~s~") << UI::_GET_LABEL_TEXT(ZONE::GET_NAME_OF_ZONE(coords.x, coords.y, coords.z));
+
+		//Coords
+		Vector3 SelectedPlayerPedCoords = ENTITY::GET_ENTITY_COORDS(PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(p), true);
+		std::ostringstream CoordX;
+		std::ostringstream CoordY;
+		std::ostringstream CoordZ;
+
+		CoordX << SelectedPlayerPedCoords.x;
+		CoordY << SelectedPlayerPedCoords.y;
+		CoordZ << SelectedPlayerPedCoords.z;
+
+		Cheat::AddPlayerInfoBoxTextEntry(xorstr_("X"), 11);
+		Cheat::AddPlayerInfoBoxTextEntry(xorstr_("Y"), 12);
+		Cheat::AddPlayerInfoBoxTextEntry(xorstr_("Z"), 13);
+		Cheat::AddPlayerInfoBoxTextEntry((char*)CoordX.str().c_str(), NULL, 11);
+		Cheat::AddPlayerInfoBoxTextEntry((char*)CoordY.str().c_str(), NULL, 12);
+		Cheat::AddPlayerInfoBoxTextEntry((char*)CoordZ.str().c_str(), NULL, 13);
+
+
+		std::ostringstream Zone; 
+		Cheat::AddPlayerInfoBoxTextEntry(xorstr_("Zone"), 14);
+		Zone << UI::_GET_LABEL_TEXT(ZONE::GET_NAME_OF_ZONE(SelectedPlayerPedCoords.x, SelectedPlayerPedCoords.y, SelectedPlayerPedCoords.z));
+		Cheat::AddPlayerInfoBoxTextEntry((char*)Zone.str().c_str(), NULL, 14);
+
+
 		Hash streetName, crossingRoad;
-		PATHFIND::GET_STREET_NAME_AT_COORD(coords.x, coords.y, coords.z, &streetName, &crossingRoad);
-		std::ostringstream Street; Street << xorstr_("Street: ~s~") << UI::GET_STREET_NAME_FROM_HASH_KEY(streetName);
-		float distance = Get3DDistance(coords, myCoords);
-		std::ostringstream Distance; Distance << xorstr_("Distance: ~s~");
+		PATHFIND::GET_STREET_NAME_AT_COORD(SelectedPlayerPedCoords.x, SelectedPlayerPedCoords.y, SelectedPlayerPedCoords.z, &streetName, &crossingRoad);
+		Cheat::AddPlayerInfoBoxTextEntry(xorstr_("Street"), 15);
+		std::ostringstream Street; 
+		Street << UI::GET_STREET_NAME_FROM_HASH_KEY(streetName);
+		Cheat::AddPlayerInfoBoxTextEntry((char*)Street.str().c_str(), NULL, 15);
 
-		if (distance > 1000) 
+		float distance = Get3DDistance(SelectedPlayerPedCoords, ENTITY::GET_ENTITY_COORDS(PlayerPedID, true));
+		std::ostringstream Distance;
+
+		if (distance > 1000)
 		{
 			distance = round((distance / 1000) * 100) / 100;
 			Distance << distance << xorstr_(" Kilometers");
 		}
-		else 
+		else
 		{
 			distance = round(distance * 1000) / 100;
 			Distance << distance << xorstr_(" Meters");
 		}
+		Cheat::AddPlayerInfoBoxTextEntry(xorstr_("Distance"), NULL, NULL, 1);
+		Cheat::AddPlayerInfoBoxTextEntry((char*)Distance.str().c_str(), NULL, NULL, NULL, 1);
 
-		char* PlayerNameString = Cheat::CheatFunctions::CombineTwoStrings(xorstr_("Playername: "), PLAYER::GET_PLAYER_NAME(p));
-		Cheat::PlayerInfoBoxTitle(xorstr_("Player Information"));
-		Cheat::PlayerInfoBoxText(PlayerNameString, 1);
 
-		if (NETWORK::NETWORK_IS_SESSION_STARTED()) 
+		//Modded Model
+		Hash SelectedPlayerPedModel = ENTITY::GET_ENTITY_MODEL(SelectedPlayerPed);
+		Cheat::AddPlayerInfoBoxTextEntry(xorstr_("Modded Model"), NULL, NULL, 2);
+		if (NETWORK::NETWORK_IS_SESSION_STARTED() && SelectedPlayerPedModel != GAMEPLAY::GET_HASH_KEY(xorstr_("mp_m_freemode_01")) || NETWORK::NETWORK_IS_SESSION_STARTED() && SelectedPlayerPedModel != GAMEPLAY::GET_HASH_KEY(xorstr_("mp_f_freemode_01")))
 		{
-			Cheat::PlayerInfoBoxText((char*)PlayerRank.str().c_str(), 2);
-			Cheat::PlayerInfoBoxText((char*)PlayerMoney.str().c_str(), 3);
+			Cheat::AddPlayerInfoBoxTextEntry(xorstr_("Yes"), NULL, NULL, NULL, 2);
 		}
 		else
 		{
-			Cheat::PlayerInfoBoxText(xorstr_("Rank: GTA Online Only"), 2);
-			Cheat::PlayerInfoBoxText(xorstr_("Cash: GTA Online Only"), 3);
+			Cheat::AddPlayerInfoBoxTextEntry(xorstr_("No"), NULL, NULL, NULL, 2);
 		}
 
-		Cheat::PlayerInfoBoxText((char*)Health.str().c_str(), 4);
-		Cheat::PlayerInfoBoxText((char*)Armor.str().c_str(), 5);
-		Cheat::PlayerInfoBoxText((char*)Alive.str().c_str(), 6);
-		Cheat::PlayerInfoBoxText((char*)IsInAVehicle.str().c_str(), 7);
-		Cheat::PlayerInfoBoxText((char*)VehicleModel.str().c_str(), 8);
-		Cheat::PlayerInfoBoxText((char*)Speed.str().c_str(), 9);
-		Cheat::PlayerInfoBoxText((char*)WantedLevel.str().c_str(), 10);
-		Cheat::PlayerInfoBoxText((char*)Weapon.str().c_str(), 11);
-		Cheat::PlayerInfoBoxText((char*)Zone.str().c_str(), 12);
-		Cheat::PlayerInfoBoxText((char*)Street.str().c_str(), 13);
-		if (playerName != PLAYER::GET_PLAYER_NAME(PlayerID)) { Cheat::PlayerInfoBoxText((char*)Distance.str().c_str(), 14); }
+		//Is in interior
+		Cheat::AddPlayerInfoBoxTextEntry(xorstr_("In Interior"), NULL, NULL, 3);
+		if (Cheat::GameFunctions::IsEntityInInterior(PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(p)))
+		{
+			Cheat::AddPlayerInfoBoxTextEntry(xorstr_("Yes"), NULL, NULL, NULL, 3);
+		}
+		else
+		{
+			Cheat::AddPlayerInfoBoxTextEntry(xorstr_("No"), NULL, NULL, NULL, 3);
+		}
+
+		//Cutscene
+		Cheat::AddPlayerInfoBoxTextEntry(xorstr_("Cutscene"), NULL, NULL, 4);
+		if (NETWORK::IS_PLAYER_IN_CUTSCENE(p))
+		{
+			Cheat::AddPlayerInfoBoxTextEntry(xorstr_("Yes"), NULL, NULL, NULL, 4);
+		}
+		else
+		{
+			Cheat::AddPlayerInfoBoxTextEntry(xorstr_("No"), NULL, NULL, NULL, 4);
+		}
 	}
 }
 

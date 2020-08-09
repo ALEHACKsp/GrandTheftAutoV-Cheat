@@ -101,7 +101,7 @@ public:
 
 
 namespace Cheat {
-	void ScriptMain();
+	void Main();
 	namespace Drawing {
 		void Text(const char* text, RGBAF rgbaf, VECTOR2 position, VECTOR2_2 size, bool center);
 		void Rect(RGBA rgba, VECTOR2 position, VECTOR2_2 size);
@@ -501,8 +501,7 @@ namespace Cheat {
 	void Speedometer(char* text);
 	void fps(char* text);
 	void AddSmallTitle(char* text);
-	void PlayerInfoBoxTitle(char* text);
-	void PlayerInfoBoxText(char* text, short line);
+	void AddPlayerInfoBoxTextEntry(char* text, int Row1 = NULL, int Row2 = NULL, int Row3 = NULL, int Row4 = NULL);
 	void AddSmallInfo(char* text, short line);
 	void AddSmallTitle2(char* text);
 	void AddSmallInfo2(char* text, short line);

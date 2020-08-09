@@ -53,7 +53,6 @@ void Cheat::GameFunctions::RepairAndCleanVehicle()
 }
 
 
-
 int torso = 0;
 int torsotexture = 0;
 int face = 0;
@@ -1100,24 +1099,16 @@ void Cheat::GameFunctions::DrawMarkerAbovePlayer(int Type, Player player, RGBA C
 	GRAPHICS::DRAW_MARKER(Type, coords.x, coords.y, coords.z + 1.3f, 0, 0, 0, 0, 180, 0, 0.3, 0.3, 0.3, Color.r, Color.g, Color.b, Color.a, 1, 1, 1, 0, 0, 0, 0);
 }
 
-bool spawninvehicle = false;
-bool spawner_deletecurrentvehicle = false;
+bool VehicleSpawnerSpawnInsideVehicle = false;
+bool VehicleSpawnerDeleteOldVehicle = false;
+bool VehicleSpawnerSpawnWithBlip = false;
 bool spawnvehiclewithgodmode = false;
 bool spawnmaxupgraded = false;
 void Cheat::GameFunctions::SpawnVehicle(char* ModelHash)
 {
 	Hash model = GAMEPLAY::GET_HASH_KEY(ModelHash);
 	if (!STREAMING::IS_MODEL_IN_CDIMAGE(model) || !STREAMING::IS_MODEL_A_VEHICLE(model)) { Cheat::GameFunctions::MinimapNotification(xorstr_("~r~That is not a valid vehicle model")); return; }
-	if (spawner_deletecurrentvehicle) {
-		if (PED::IS_PED_IN_ANY_VEHICLE(PlayerPedID, 0)) {
-			auto veh = PED::GET_VEHICLE_PED_IS_USING(PlayerPedID);
-			if (ENTITY::DOES_ENTITY_EXIST(veh))
-			{
-				ENTITY::SET_ENTITY_AS_MISSION_ENTITY(veh, 1, 1);
-				VEHICLE::DELETE_VEHICLE(&veh);
-			}
-		}
-	}
+	if (VehicleSpawnerDeleteOldVehicle) { Cheat::GameFunctions::DeleteVehicle(PED::GET_VEHICLE_PED_IS_USING(PlayerPedID)); }
 	STREAMING::REQUEST_MODEL(GAMEPLAY::GET_HASH_KEY(ModelHash));
 	while (!STREAMING::HAS_MODEL_LOADED(GAMEPLAY::GET_HASH_KEY(ModelHash))) WAIT(0);
 	Vector3 pos = ENTITY::GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(PlayerPedID, 0.0, 5.0, 0);
@@ -1125,16 +1116,10 @@ void Cheat::GameFunctions::SpawnVehicle(char* ModelHash)
 	if (veh != 0)
 	{
 		NETWORK::NETWORK_FADE_OUT_ENTITY(veh, false, true);
-		if (spawninvehicle) { PED::SET_PED_INTO_VEHICLE(PlayerPedID, veh, -1); }
-		if (spawnvehiclewithgodmode)
-		{
-			ENTITY::SET_ENTITY_INVINCIBLE(veh, TRUE);
-			ENTITY::SET_ENTITY_PROOFS(veh, 0, 0, 0, 0, 0, 0, 0, 0);
-			VEHICLE::SET_VEHICLE_TYRES_CAN_BURST(veh, 0);
-			VEHICLE::SET_VEHICLE_WHEELS_CAN_BREAK(veh, 0);
-			VEHICLE::SET_VEHICLE_CAN_BE_VISIBLY_DAMAGED(veh, 0);
-		}
+		if (VehicleSpawnerSpawnInsideVehicle) { PED::SET_PED_INTO_VEHICLE(PlayerPedID, veh, -1); }
+		if (spawnvehiclewithgodmode) { Cheat::CheatFeatures::VehicleGodmodeBool = true; }
 		if (spawnmaxupgraded) { MaxUpgradeVehicle(veh); }
+		if (VehicleSpawnerSpawnWithBlip) { Cheat::GameFunctions::AddBlipToVehicle(veh); }
 		VEHICLE::SET_VEHICLE_NUMBER_PLATE_TEXT(veh, "Vehicle");
 		VEHICLE::SET_VEHICLE_ENGINE_ON(veh, true, true, true);
 		VEHICLE::SET_VEHICLE_IS_STOLEN(veh, false);
@@ -1292,4 +1277,28 @@ void Cheat::GameFunctions::SetSessionTime(int h, int m, int s) {
 	Hooking::ClockTime->minute = h;
 	Hooking::ClockTime->second = s;
 	Hooking::set_session_time_info(4, 0);
+}
+
+
+void Cheat::GameFunctions::AddBlipToVehicle(Vehicle Vehicle)
+{
+	RequestControlOfEnt(Vehicle);
+	ENTITY::SET_ENTITY_AS_MISSION_ENTITY(Vehicle, true, true);
+	for (int i = 0; i < 350; i++)NETWORK::SET_NETWORK_ID_CAN_MIGRATE(Vehicle, 0);
+	VEHICLE::SET_VEHICLE_HAS_BEEN_OWNED_BY_PLAYER(Vehicle, true);
+	int b = UI::ADD_BLIP_FOR_ENTITY(Vehicle);
+	UI::SET_BLIP_SPRITE(b, 60);
+	UI::SET_BLIP_NAME_FROM_TEXT_FILE(b, "Vehicle");
+}
+
+bool Cheat::GameFunctions::DeleteVehicle(Vehicle Vehicle)
+{
+	RequestControlOfEnt(Vehicle);
+	if (PED::IS_PED_IN_ANY_VEHICLE(PlayerPedID, false) && ENTITY::DOES_ENTITY_EXIST(Vehicle))
+	{
+		ENTITY::SET_ENTITY_AS_MISSION_ENTITY(Vehicle, true, true);
+		VEHICLE::DELETE_VEHICLE(&Vehicle);
+		return true;
+	}
+	return false;
 }

@@ -25,7 +25,6 @@ static __int64**                                            m_globalPtr;
 clockTime*													Hooking::ClockTime;
 fpSetSessionTime											Hooking::set_session_time_info;
 
-
 fpGetLabelText Hooking::GetLabelText = nullptr;
 fpGetScriptHandlerIfNetworked Hooking::GetScriptHandlerIfNetworked = nullptr;
 fpGetScriptHandler Hooking::GetScriptHandler = nullptr;
@@ -33,23 +32,23 @@ const int EVENT_COUNT = 78;
 static std::vector<void*> EventPtr;
 static char EventRestore[EVENT_COUNT] = {};
 
-
 template <typename T>
 bool Native(DWORD64 hash, LPVOID hookFunction, T** trampoline)
 {
 	if (*reinterpret_cast<LPVOID*>(trampoline) != NULL)
+	{
 		return true;
+	}
 	auto originalFunction = Hooking::GetNativeHandler(hash);
 	if (originalFunction != 0) {
 		MH_STATUS createHookStatus = MH_CreateHook(originalFunction, hookFunction, reinterpret_cast<LPVOID*>(trampoline));
 		if (((createHookStatus == MH_OK) || (createHookStatus == MH_ERROR_ALREADY_CREATED)) && (MH_EnableHook(originalFunction) == MH_OK))
 		{
 			m_hookedNative.push_back((LPVOID)originalFunction);
-			DEBUGMSG(xorstr_("Hooked Native 0x%#p"), hash);
+			Cheat::LogFunctions::DebugMessage(xorstr_("Hooked Native 0x%#p"), hash);
 			return true;
 		}
 	}
-
 	return false;
 }
 
@@ -73,9 +72,7 @@ DWORD CMetaData::size()
 
 void CMetaData::init()
 {
-	if (m_begin && m_size)
-		return;
-
+	if (m_begin && m_size) { return; }
 	m_begin = (uint64_t)GetModuleHandleA(nullptr);
 	const IMAGE_DOS_HEADER*	headerDos = (const IMAGE_DOS_HEADER*)m_begin;
 	const IMAGE_NT_HEADERS*	headerNt = (const IMAGE_NT_HEADERS64*)((const BYTE*)headerDos + headerDos->e_lfanew);
@@ -88,7 +85,7 @@ fpIsDLCPresent OG_IS_DLC_PRESENT = nullptr;
 bool HK_IS_DLC_PRESENT(std::uint32_t dlcHash)
 {
 	static uint64_t	last = 0;
-	uint64_t		cur = *Hooking::m_frameCount;
+	uint64_t cur = *Hooking::m_frameCount;
 	if (last != cur)
 	{
 		last = cur;
@@ -120,7 +117,7 @@ const char* hkGetLabelText(void* this_, const char* label)
 	}
 	if (std::strcmp(label, "PM_QUIT_MP") == 0)
 	{
-		return "Leave Online with GTAV Cheat";
+		return "Leave GTA Online with GTAV Cheat";
 	}
 	if (std::strcmp(label, "PM_ENTER_MP") == 0)
 	{
@@ -166,7 +163,7 @@ bool GetEventDataFunc(int eventGroup, int eventIndex, int* argStruct, int argStr
 		if (Cheat::CheatFeatures::ShowBlockedScriptEventNotifications)
 		{
 			std::string MessageString = xorstr_("Blocked Script Event ") + std::to_string(argStruct[0]);
-			Cheat::GameFunctions::AdvancedMinimapNotification(MessageString.data(), xorstr_("Textures"), xorstr_("AdvancedNotificationImage"), false, 4, xorstr_("Remote Events Protection"), "", .2f, "");
+			Cheat::GameFunctions::AdvancedMinimapNotification(MessageString.data(), xorstr_("Textures"), xorstr_("AdvancedNotificationImage"), false, 4, xorstr_("Remote Events Protection"), "", .5, "");
 		}
 		return false;
 	}

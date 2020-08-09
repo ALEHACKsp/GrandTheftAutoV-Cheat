@@ -314,9 +314,10 @@ void Cheat::CheatFunctions::SaveSettings()
 	Cheat::Files::WriteBoolToIni(Cheat::CheatFeatures::TriggerBot_ShootNPCBool, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("triggerbot_shootnpc"));
 	Cheat::Files::WriteBoolToIni(Cheat::CheatFeatures::TriggerBot_ShootPlayersBool, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("triggerbot_shootplayers"));
 	Cheat::Files::WriteBoolToIni(Cheat::CheatFeatures::SuperBrakesBool, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("superbrakes"));
-	Cheat::Files::WriteBoolToIni(spawninvehicle, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("spawninvehicle"));
+	Cheat::Files::WriteBoolToIni(VehicleSpawnerSpawnInsideVehicle, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("spawninvehicle"));
 	Cheat::Files::WriteBoolToIni(spawnvehiclewithgodmode, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("spawnvehiclewithgodmode"));
 	Cheat::Files::WriteBoolToIni(spawnmaxupgraded, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("spawnmaxupgraded"));
+	Cheat::Files::WriteBoolToIni(VehicleSpawnerSpawnWithBlip, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("spawn_vehicle_with_blip"));
 	Cheat::Files::WriteBoolToIni(Cheat::CheatFeatures::JumpAroundModeBool, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("jumparoundmode"));
 	Cheat::Files::WriteBoolToIni(Cheat::CheatFeatures::TinyPlayerBool, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("tinyplayer"));
 	Cheat::Files::WriteBoolToIni(Cheat::CheatFeatures::PlayerESPBool, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("allplayersesp"));
@@ -348,7 +349,7 @@ void Cheat::CheatFunctions::SaveSettings()
 	Cheat::Files::WriteIntToIni(Cheat::CheatFeatures::speedometer_vector_position, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("speedometer"));
 	Cheat::Files::WriteBoolToIni(Cheat::CheatFeatures::AutoTeleportToWaypointBool, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("autoteleporttowaypoint"));
 	Cheat::Files::WriteBoolToIni(Cheat::CheatFeatures::NoGravityBool, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("nogravity"));
-	Cheat::Files::WriteBoolToIni(spawner_deletecurrentvehicle, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("spawner_deletecurrentvehicle"));
+	Cheat::Files::WriteBoolToIni(VehicleSpawnerDeleteOldVehicle, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("spawner_deletecurrentvehicle"));
 	Cheat::Files::WriteBoolToIni(Cheat::CheatFeatures::AutoGiveAllWeaponsBool, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("autogiveallweapons"));
 	Cheat::Files::WriteBoolToIni(Cheat::CheatFeatures::ShowPlayerTagsPlayerList, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("show_player_tags_player_list"));
 	Cheat::Files::WriteBoolToIni(Cheat::CheatFeatures::ShowFPSBool, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("showfps"));
@@ -404,8 +405,9 @@ void Cheat::CheatFunctions::LoadSettings(bool StartUp)
 	if (Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("triggerbot_shootnpc")) == xorstr_("true")) { Cheat::CheatFeatures::TriggerBot_ShootNPCBool = true; }
 	if (Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("triggerbot_shootplayers")) == xorstr_("true")) { Cheat::CheatFeatures::TriggerBot_ShootPlayersBool= true; }
 	if (Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("superbrakes")) == xorstr_("true")) { Cheat::CheatFeatures::SuperBrakesBool = true; }
-	if (Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("spawninvehicle")) == xorstr_("true")) { spawninvehicle = true; }
-	if (Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("spawner_deletecurrentvehicle")) == xorstr_("true")) { spawner_deletecurrentvehicle = true; }
+	if (Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("spawninvehicle")) == xorstr_("true")) { VehicleSpawnerSpawnInsideVehicle = true; }
+	if (Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("spawn_vehicle_with_blip")) == xorstr_("true")) { VehicleSpawnerSpawnWithBlip = true; }
+	if (Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("spawner_deletecurrentvehicle")) == xorstr_("true")) { VehicleSpawnerDeleteOldVehicle = true; }
 	if (Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("spawnvehiclewithgodmode")) == xorstr_("true")) { spawnvehiclewithgodmode = true; }
 	if (Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("spawnmaxupgraded")) == xorstr_("true")) { spawnmaxupgraded = true; }
 	if (Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("tinyplayer")) == xorstr_("true")) { Cheat::CheatFeatures::TinyPlayerBool = true; }

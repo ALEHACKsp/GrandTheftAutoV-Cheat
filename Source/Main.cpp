@@ -2173,19 +2173,12 @@ void main() {
 			Cheat::MenuOption("Door Options >", vehicledooroptionsmenu);
 			if (Cheat::Option("Delete Current Vehicle", "Delete the current vehicle"))
 			{
-				if (PED::IS_PED_IN_ANY_VEHICLE(PlayerPedID, 0)) {
-					Vehicle veh = PED::GET_VEHICLE_PED_IS_USING(PlayerPedID);
-					if (ENTITY::DOES_ENTITY_EXIST(veh))
-					{
-						ENTITY::SET_ENTITY_AS_MISSION_ENTITY(veh, 1, 1);
-						VEHICLE::DELETE_VEHICLE(&veh);
-					}
-				}
-				else {
+				if (!Cheat::GameFunctions::DeleteVehicle(PED::GET_VEHICLE_PED_IS_USING(PlayerPedID))) 
+				{
 					Cheat::GameFunctions::MinimapNotification("~r~Player isn't in a vehicle");
-				}			
+				}		
 			}
-			if (!VEHICLE::IS_VEHICLE_ON_ALL_WHEELS(PED::GET_VEHICLE_PED_IS_IN(PlayerPedID, false))) { if (Cheat::Option("Flip Up", "Flip vehicle up")) { VEHICLE::SET_VEHICLE_ON_GROUND_PROPERLY(PED::GET_VEHICLE_PED_IS_IN(PlayerPedID, false)); } }
+			if (Cheat::Option("Flip Up", "Flip vehicle up")) { VEHICLE::SET_VEHICLE_ON_GROUND_PROPERLY(PED::GET_VEHICLE_PED_IS_IN(PlayerPedID, false)); }
 			if (Cheat::CheatFeatures::UseKMH) {
 				if (Cheat::Option("Set Max Speed (KM/H)", "Set max vehicle speed")) {
 					if (PED::IS_PED_IN_ANY_VEHICLE(PlayerPedID, 0)) {
@@ -2287,20 +2280,7 @@ void main() {
 			if (Cheat::Option("Add Blip Registration", "Add Blip To Current Vehicle")) {
 				if (PED::IS_PED_IN_ANY_VEHICLE(PlayerPedID, 0)) {
 
-					Vehicle e = PED::GET_VEHICLE_PED_IS_USING(PlayerPedID);
-					NETWORK::SET_NETWORK_ID_CAN_MIGRATE(e, 1);
-					for (int i = 0; i < 350; i++) {
-						NETWORK::NETWORK_REQUEST_CONTROL_OF_NETWORK_ID(NETWORK::NETWORK_GET_NETWORK_ID_FROM_ENTITY(e));
-						NETWORK::NETWORK_REQUEST_CONTROL_OF_ENTITY(e);
-					}
-					ENTITY::SET_ENTITY_AS_MISSION_ENTITY(e, true, true);
-					for (int i = 0; i < 350; i++)NETWORK::SET_NETWORK_ID_CAN_MIGRATE(e, 0);
-					VEHICLE::SET_VEHICLE_HAS_BEEN_OWNED_BY_PLAYER(e, true);
-					int b;
-					char bname[] = "Vehicle";
-					b = UI::ADD_BLIP_FOR_ENTITY(e);
-					UI::SET_BLIP_SPRITE(b, 60);
-					UI::SET_BLIP_NAME_FROM_TEXT_FILE(b, bname);
+					Cheat::GameFunctions::AddBlipToVehicle(PED::GET_VEHICLE_PED_IS_USING(PlayerPedID));
 				}
 				else
 				{
@@ -2675,11 +2655,12 @@ void main() {
 		break;
 		case vehicle_spawnsettings:
 		{
-			Cheat::Title("Spawn Settings");
-			Cheat::Toggle("Spawn In Vehicle", spawninvehicle, "Spawn your character in vehicle");
-			Cheat::Toggle("Spawn In With Godmode", spawnvehiclewithgodmode, "Spawn Vehicle Invincible");
-			Cheat::Toggle("Spawn Max Upgraded", spawnmaxupgraded, "Spawn Vehicle Max Upgraded");
-			Cheat::Toggle("Delete Current Vehicle", spawner_deletecurrentvehicle, "");
+			Cheat::Title("Vehicle Spawn Settings");
+			Cheat::Toggle("Spawn Inside Vehicle", VehicleSpawnerSpawnInsideVehicle, "");
+			Cheat::Toggle("Spawn With Godmode", spawnvehiclewithgodmode, "Enables Vehicle Godmode if disabled");
+			Cheat::Toggle("Spawn Max Upgraded", spawnmaxupgraded, "");
+			Cheat::Toggle("Delete Old Vehicle", VehicleSpawnerDeleteOldVehicle, "");
+			Cheat::Toggle("Spawn With Blip", VehicleSpawnerSpawnWithBlip, "");
 		}
 		break; 
 		case worldmenu:
@@ -4703,15 +4684,15 @@ void main() {
 				Cheat::CheatFeatures::ProtectionVehicleBool = false;
 				Cheat::CheatFeatures::BlockScriptEvents = false;
 			}
-			Cheat::Toggle("Remote Events", Cheat::CheatFeatures::BlockScriptEvents, "Some missions might not work");
+			Cheat::Toggle("Remote Events", Cheat::CheatFeatures::BlockScriptEvents, "Some GTAO missions might not work");
 			Cheat::Toggle("Vote Kick", Cheat::CheatFeatures::ProtectionVoteKickBool, "");
 			Cheat::Toggle("Freeze", Cheat::CheatFeatures::ProtectionFreezeBool, "");
 			Cheat::Toggle("Session Weather", Cheat::CheatFeatures::ProtectionSessionWeatherBool, "");
 			Cheat::Toggle("Session Time", Cheat::CheatFeatures::ProtectionSessionTimeBool, "");
 			Cheat::Toggle("Give/Remove Weapons", Cheat::CheatFeatures::ProtectionGiveRemoveWeaponsBool, "");
 			Cheat::Toggle("Alter Wanted Level", Cheat::CheatFeatures::ProtectionAlterWantedLevelBool, "");
-			Cheat::Toggle("World Events (explosions, fire etc)", Cheat::CheatFeatures::ProtectionWorldEventsBool, "");
-			Cheat::Toggle("Vehicle (control, explosions etc)", Cheat::CheatFeatures::ProtectionVehicleBool, "");
+			Cheat::Toggle("World Events", Cheat::CheatFeatures::ProtectionWorldEventsBool, "Fire, explosions and more");
+			Cheat::Toggle("Vehicle", Cheat::CheatFeatures::ProtectionVehicleBool, "Control & Explosions");
 		}
 		break; 
 		case scenarios:

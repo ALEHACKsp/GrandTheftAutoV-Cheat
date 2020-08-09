@@ -435,6 +435,8 @@ namespace Cheat {
 		void TPto(Vector3 Coords);
 		void MinimapNotification(char* Message);
 		void AdvancedMinimapNotification(char* Message, char* PicName1, char* PicName2, bool Flash, int IconType, char* Sender, char* Subject, float Duration, char* ClanTag);
+		void AddBlipToVehicle(Vehicle Vehicle);
+		bool DeleteVehicle(Vehicle Vehicle);
 	}
 	namespace LogFunctions {
 		void Init();
@@ -533,8 +535,9 @@ namespace Cheat {
 
 extern Player PlayerID;
 extern Ped PlayerPedID;
-extern bool spawninvehicle;
-extern bool spawner_deletecurrentvehicle;
+extern bool VehicleSpawnerSpawnInsideVehicle;
+extern bool VehicleSpawnerDeleteOldVehicle;
+extern bool VehicleSpawnerSpawnWithBlip;
 extern bool spawnvehiclewithgodmode;
 extern bool spawnmaxupgraded;
 extern bool show_joining_players_notification;

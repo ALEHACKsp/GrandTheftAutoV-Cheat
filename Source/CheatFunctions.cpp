@@ -355,9 +355,7 @@ void Cheat::CheatFunctions::SaveSettings()
 	Cheat::Files::WriteBoolToIni(Cheat::CheatFeatures::ShowFPSBool, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("showfps"));
 	Cheat::Files::WriteBoolToIni(Cheat::CheatFeatures::AutoSaveSettings, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("autosavesettings"));
 	Cheat::Files::WriteBoolToIni(Cheat::CheatFeatures::UseKMH, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("use_kmh"));
-	Cheat::Files::WriteBoolToIni(medal_bool_option, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("medal_bool_option"));
 	Cheat::Files::WriteBoolToIni(ShowVehiclePreviews, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("show_vehicle_previews"));
-	Cheat::Files::WriteBoolToIni(shop_box_bool_option, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("shop_box_bool_option"));
 	Cheat::Files::WriteIntToIni(BailToSinglePlayerHotkey, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("hotkey_bailtosingleplayer"));
 	Cheat::Files::WriteIntToIni(SuicideHotkey, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("hotkey_suicide"));
 	Cheat::Files::WriteIntToIni(TeleportForward2mHotkey, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("hotkey_teleportforward2m"));
@@ -441,8 +439,6 @@ void Cheat::CheatFunctions::LoadSettings(bool StartUp)
 	if (Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("protection_sessionweather")) == xorstr_("true")) { Cheat::CheatFeatures::ProtectionSessionWeatherBool = true; }
 	if (Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("protection_votekick")) == xorstr_("true")) { Cheat::CheatFeatures::ProtectionVoteKickBool = true; }
 	if (Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("nogravity")) == xorstr_("true")) { Cheat::CheatFeatures::NoGravityBool = true; }
-	if (Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("medal_bool_option")) == xorstr_("true")) { medal_bool_option = true; }
-	if (Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("shop_box_bool_option")) == xorstr_("true")) { shop_box_bool_option = true; }
 	if (Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("autogiveallweapons")) == xorstr_("true")) { Cheat::CheatFeatures::AutoGiveAllWeaponsBool = true; }
 	if (Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("delete_gun")) == xorstr_("true")) { Cheat::CheatFeatures::DeleteGunBool = true; }
 	if (Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("explosive_melee")) == xorstr_("true")) { Cheat::CheatFeatures::ExplosiveMeleeBool = true; }
@@ -451,6 +447,7 @@ void Cheat::CheatFunctions::LoadSettings(bool StartUp)
 	if (Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("show_vehicle_previews")) == xorstr_("true")) { ShowVehiclePreviews = true; }
 	else { if (Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), "show_vehicle_previews") == "false") ShowVehiclePreviews = false; }
 	std::string ActiveThemeSetting = Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("active_theme")); char* ActiveThemeSettingChar = new char[Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("active_theme")).length() + 1]; strcpy(ActiveThemeSettingChar, ActiveThemeSetting.c_str()); if (ActiveThemeSetting != xorstr_("NULL")) { Cheat::LoadTheme((char*)ActiveThemeSettingChar, true); }
+
 
 	//Load Hotkeys
 	std::string LoadHotkey_BailToSinglePlayer = Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("hotkey_bailtosingleplayer")); if (Cheat::CheatFunctions::StringIsInteger(LoadHotkey_BailToSinglePlayer)) { BailToSinglePlayerHotkey = std::stoi(LoadHotkey_BailToSinglePlayer.c_str()); }
@@ -468,7 +465,6 @@ void Cheat::CheatFunctions::PostInitCheat()
 {
 	Cheat::Drawing::YTD(); // Load Textures
 	Cheat::CheatFunctions::LoadSettings(true); // Load config.ini
-	//Cheat::GameFunctions::MinimapNotification(xorstr_("GTAV Cheat Loaded"));
 	Cheat::LogFunctions::Message(xorstr_("GTAV Cheat Initialization Completed"));
 }
 

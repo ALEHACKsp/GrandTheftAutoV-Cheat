@@ -99,7 +99,6 @@ enum SubMenus {
 	miscstatsmenu, 
 	player_teleportmenu,
 	sessionoptionsmenu,
-	togglesmenu,
 	hudmenu,
 	guisettings, 
 	menusettingsmenu,
@@ -144,8 +143,7 @@ typedef struct RGB {
 	int r, g, b;
 };
 
-extern bool shop_box_bool_option;
-extern bool medal_bool_option;
+extern int BoolOptionVectorPosition;
 extern bool show_header_background;
 extern bool show_header_gui;
 extern char* ThemeFilesArray[100];

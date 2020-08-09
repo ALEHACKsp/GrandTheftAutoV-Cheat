@@ -13,14 +13,14 @@ auto PostInitScaleFormStart = std::chrono::high_resolution_clock::now();
 auto AutoSaveSettingsStart = std::chrono::high_resolution_clock::now();
 void Cheat::CheatFeatures::Looped()
 {
-	//Post Init Scaleform Banner Notification - Show for 10 seconds or until cheat GUI is opened
-	if (!CheatGUIHasBeenOpened && !(std::chrono::duration_cast<std::chrono::seconds>(std::chrono::high_resolution_clock::now() - PostInitScaleFormStart).count() > 10))
+	//Post Init Scaleform Banner Notification - Show for 15 seconds or until cheat GUI is opened
+	if (!CheatGUIHasBeenOpened && !(std::chrono::duration_cast<std::chrono::seconds>(std::chrono::high_resolution_clock::now() - PostInitScaleFormStart).count() > 15))
 	{ 
-		auto ScaleformHandle = GRAPHICS::REQUEST_SCALEFORM_MOVIE("mp_big_message_freemode");
+		auto ScaleformHandle = GRAPHICS::REQUEST_SCALEFORM_MOVIE(xorstr_("mp_big_message_freemode"));
 		while (!GRAPHICS::HAS_SCALEFORM_MOVIE_LOADED(ScaleformHandle)) { WAIT(0); }
-		GRAPHICS::BEGIN_SCALEFORM_MOVIE_METHOD(ScaleformHandle, "SHOW_SHARD_WASTED_MP_MESSAGE");
-		GRAPHICS::_ADD_SCALEFORM_MOVIE_METHOD_PARAMETER_STRING("<FONT FACE='$Font2'>GTAV Cheat");
-		GRAPHICS::_ADD_SCALEFORM_MOVIE_METHOD_PARAMETER_STRING("Cheat has been successfully initialized. Have fun!");
+		GRAPHICS::BEGIN_SCALEFORM_MOVIE_METHOD(ScaleformHandle, xorstr_("SHOW_SHARD_WASTED_MP_MESSAGE"));
+		GRAPHICS::_ADD_SCALEFORM_MOVIE_METHOD_PARAMETER_STRING(xorstr_("<FONT FACE='$Font2'>GTAV Cheat"));
+		GRAPHICS::_ADD_SCALEFORM_MOVIE_METHOD_PARAMETER_STRING(xorstr_("Cheat has been successfully initialized. Have fun!"));
 		GRAPHICS::_ADD_SCALEFORM_MOVIE_METHOD_PARAMETER_INT(5);
 		GRAPHICS::END_SCALEFORM_MOVIE_METHOD();
 		GRAPHICS::DRAW_SCALEFORM_MOVIE_FULLSCREEN(ScaleformHandle, 255, 255, 255, 255, 0);

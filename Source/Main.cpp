@@ -4872,7 +4872,7 @@ void main() {
 			Cheat::Title("GUI Settings");
 			Cheat::MenuOption("Colors >", settingstheme);
 			Cheat::MenuOption("Header Options >", headeroptionsmenu);
-			Cheat::MenuOption("Toggles >", togglesmenu);
+			Cheat::StringVector("Toggles", { "Shop Box", "Circle" }, BoolOptionVectorPosition, "Select Boolean Toggle");
 			Cheat::Int("Max Visible Menu Options", Cheat::Settings::maxVisOptions, 5, 16, 1, "Set Max Visible Menu Options");
 			Cheat::Toggle("Restore To Previous Submenu", Cheat::Settings::RestorePreviousSubmenu, "When opening restores previous submenu");
 			Cheat::Float("MenuX Position", Cheat::Settings::menuX, 0.11f, 0.86f, 0.01, true, "Changes GUI X-Axis Position");
@@ -5252,28 +5252,6 @@ void main() {
 						if (KeyBoardInput != 0) { Cheat::GameFunctions::MinimapNotification("~r~The value must be between 0 and 255"); }
 					}
 				}
-			}
-		}
-		break;
-		case togglesmenu:
-		{
-			Cheat::Title("Toggles");	
-			if (shop_box_bool_option) {
-				Cheat::Break("Current: ~c~Shop Box", false);
-			}
-			if (medal_bool_option) {
-				Cheat::Break("Current: ~c~Circle", false);
-			}
-			if (!medal_bool_option && !shop_box_bool_option) {
-				Cheat::Break("Current: ~c~None", false);
-			}
-			if (Cheat::Option("Shop Box", "")) {
-				shop_box_bool_option = true;
-				medal_bool_option = false;
-			}
-			if (Cheat::Option("Circle", "")) {
-				medal_bool_option = true;
-				shop_box_bool_option = false;
 			}
 		}
 		break;

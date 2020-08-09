@@ -33,7 +33,6 @@ public:
 	static void onTickInit();
 	static __int64** getGlobalPtr();
 	static void defuseEvent(RockstarEvent e, bool toggle);
-	// Native function handler type
 	typedef void(__cdecl * NativeHandler)(scrNativeCallContext * context);
 	struct NativeRegistrationNew
 	{
@@ -87,7 +86,7 @@ public:
 	static NativeHandler GetNativeHandler(uint64_t origHash);
 };
 
-void WAIT(DWORD ms);
+void WAIT(DWORD ms, bool ShowMessage = true);
 
 
 enum eThreadState

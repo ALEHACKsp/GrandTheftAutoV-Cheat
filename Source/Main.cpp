@@ -2618,7 +2618,7 @@ void main() {
 		case vehicleweaponsmenu:
 		{
 			Cheat::Title("Vehicle Weapons");
-			Cheat::Toggle("Toggle", Cheat::CheatFeatures::VehicleWeaponsBool, "Toggle Vehicle Weapons - press E to use");
+			Cheat::Toggle("Toggle", Cheat::CheatFeatures::VehicleWeaponsBool, "Press horn button to use");
 			Cheat::Toggle("Show Lines", Cheat::CheatFeatures::VehicleWeapons_DrawLaser, "Show lines in front of vehicle");
 			if (Cheat::CheatFeatures::VehicleWeapons_TankRounds) {
 				Cheat::Break("Current: ~c~Tank Rounds", false);
@@ -5509,7 +5509,7 @@ void main() {
 		break;
 		}
 		Cheat::End();
-		WAIT(0);
+		WAIT(0, false);
 	}
 }
 

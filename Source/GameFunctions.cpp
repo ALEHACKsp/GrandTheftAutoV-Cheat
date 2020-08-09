@@ -634,7 +634,6 @@ void Cheat::GameFunctions::LoadPlayerInformation(char* playerName, Player p)
 		Ped SelectedPlayerPed = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(p);
 		RequestControlOfEnt(SelectedPlayerPed);
 
-
 		//Draw Title and Background
 		if (Cheat::Settings::menuX < 0.54f)
 		{

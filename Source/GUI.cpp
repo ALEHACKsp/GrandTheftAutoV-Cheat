@@ -2949,7 +2949,7 @@ bool Cheat::VehicleOption(const char* option, std::string ModelName)
 			 {
 				 Drawing::Text(xorstr_("Vehicle Info & Preview"), Settings::count, { Settings::menuX + 0.187f, 0.132f }, { 0.50f, 0.35f }, true);
 				 Drawing::Text(ModelNameDrawingText.c_str(), Settings::count, { Settings::menuX + 0.111f, 0.308f }, { 0.45f, 0.30f }, false);
-				 Drawing::Text(ModelMaxSpeed.c_str(), Settings::count, { Settings::menuX + 0.111f, 0.325f }, { 0.45f, 0.30f }, false);
+				 Drawing::Text(ModelMaxSpeed.c_str(), Settings::count, { Settings::menuX + 0.111f, 0.326f }, { 0.45f, 0.30f }, false);
 				 Drawing::Rect(Settings::MenuBackgroundRect, { Settings::menuX + 0.187f, 0.244f }, { 0.16f, 0.22f });
 				 Drawing::Spriter(VehiclePreviewDictName, VehiclePreviewName, Settings::menuX + 0.187f, 0.232f, 0.15, 0.15, 0, 255, 255, 255, 255);
 			 }
@@ -2957,7 +2957,7 @@ bool Cheat::VehicleOption(const char* option, std::string ModelName)
 			 {
 				 Drawing::Text(xorstr_("Vehicle Info & Preview"), Settings::count, { Settings::menuX - 0.187f, 0.132f }, { 0.50f, 0.35f }, true);
 				 Drawing::Text(ModelNameDrawingText.c_str(), Settings::count, { Settings::menuX - 0.262f, 0.308f }, { 0.45f, 0.30f }, false);
-				 Drawing::Text(ModelMaxSpeed.c_str(), Settings::count, { Settings::menuX - 0.262f, 0.325f }, { 0.45f, 0.30f }, false);
+				 Drawing::Text(ModelMaxSpeed.c_str(), Settings::count, { Settings::menuX - 0.262f, 0.326f }, { 0.45f, 0.30f }, false);
 				 Drawing::Rect(Settings::MenuBackgroundRect, { Settings::menuX - 0.187f, 0.244f }, { 0.16f, 0.22f });
 				 Drawing::Spriter(VehiclePreviewDictName, VehiclePreviewName, Settings::menuX - 0.187f, 0.232f, 0.15, 0.15, 0, 255, 255, 255, 255);
 			 }

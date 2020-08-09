@@ -1726,7 +1726,7 @@ void Cheat::Main() {
 		case vehiclespawnermenu:
 		{
 			Cheat::Title("Vehicle Spawner");
-			Cheat::MenuOption("Spawn Settings >", vehicle_spawnsettings);
+			Cheat::MenuOption("Spawn Settings >", VehicleSpawnSettings);
 			if (Cheat::Option("Custom Input", "Input custom vehicle model"))
 			{
 				GAMEPLAY::DISPLAY_ONSCREEN_KEYBOARD(true, "", "", "", "", "", "", 16);
@@ -1736,17 +1736,8 @@ void Cheat::Main() {
 				Cheat::GameFunctions::SpawnVehicle(SpawnVehicle);
 			}
 			Cheat::Toggle("Show Vehicle Info & Preview", ShowVehicleInfoAndPreview, "Shows selected vehicle info & picture");
-			Cheat::Break("~bold~DLC Vehicles", true);
-			Cheat::MenuOption("The Diamond Casino Heist >", diamondcasinoheist);
-			Cheat::MenuOption("The Diamond Casino & Resort >", casinodlc);
-			Cheat::MenuOption("Arena War >", arenawardlc);
-			Cheat::MenuOption("After Hours >", afterhoursdlc);
-			Cheat::MenuOption("SSASSS >", SSASSSDLC);
-			Cheat::MenuOption("The Doomsday Heist >", doomsdayheistdlc);
-			Cheat::MenuOption("Smuggler's Run >", smugglersrun);
-			Cheat::MenuOption("Gunrunning >", gunrunningdlc);
-			Cheat::MenuOption("Cunning Stunts >", CunningStuntsDLCMenu);
-			Cheat::Break("~bold~Categories", true);
+			Cheat::MenuOption("DLC Vehicles >", DLCVehiclesMenu);
+			Cheat::Break("Categories", true);
 			Cheat::MenuOption("Super >", Super);
 			Cheat::MenuOption("Sports >", Sports);
 			Cheat::MenuOption("Sport Classic >", SportClassic);
@@ -1770,8 +1761,22 @@ void Cheat::Main() {
 			Cheat::MenuOption("Trains >", Trains);
 			Cheat::MenuOption("Utility >", Utility);
 			Cheat::MenuOption("Vans >", Vans);
-			break;
 		}
+		break;
+		case DLCVehiclesMenu:
+		{
+			Cheat::Title("DLC Vehicles");
+			Cheat::MenuOption("The Diamond Casino Heist >", diamondcasinoheist);
+			Cheat::MenuOption("The Diamond Casino & Resort >", casinodlc);
+			Cheat::MenuOption("Arena War >", arenawardlc);
+			Cheat::MenuOption("After Hours >", afterhoursdlc);
+			Cheat::MenuOption("SSASSS >", SSASSSDLC);
+			Cheat::MenuOption("The Doomsday Heist >", doomsdayheistdlc);
+			Cheat::MenuOption("Smuggler's Run >", smugglersrun);
+			Cheat::MenuOption("Gunrunning >", gunrunningdlc);
+			Cheat::MenuOption("Cunning Stunts >", CunningStuntsDLCMenu);
+		}
+		break;
 		case CunningStuntsDLCMenu:
 		{
 			Cheat::Title("Cunning Stunts");
@@ -2649,7 +2654,7 @@ void Cheat::Main() {
 			}
 		}
 		break;
-		case vehicle_spawnsettings:
+		case VehicleSpawnSettings:
 		{
 			Cheat::Title("Vehicle Spawn Settings");
 			Cheat::Toggle("Spawn Inside Vehicle", VehicleSpawnerSpawnInsideVehicle, "");

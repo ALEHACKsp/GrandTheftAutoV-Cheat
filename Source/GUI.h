@@ -30,7 +30,7 @@ enum SubMenus {
 	iplloader,
 	iplteleports,
 	weathermenu,
-	vehicle_spawnsettings,
+	VehicleSpawnSettings,
 	hotkeys,
 	allplayers,
 	modelchanger,
@@ -123,7 +123,8 @@ enum SubMenus {
 	otherlocations_teleportmenu,
 	headeroptionsmenu,
 	player_otherpickupsmenu,
-	VehicleCustomizerMenu
+	VehicleCustomizerMenu,
+	DLCVehiclesMenu
 };
 extern enum SubMenus;
 

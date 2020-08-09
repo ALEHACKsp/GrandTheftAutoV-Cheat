@@ -1735,7 +1735,7 @@ void Cheat::Main() {
 				if (!GAMEPLAY::GET_ONSCREEN_KEYBOARD_RESULT()) { break; }
 				Cheat::GameFunctions::SpawnVehicle(SpawnVehicle);
 			}
-			Cheat::Toggle("Show Vehicle Previews", ShowVehiclePreviews, "Shows a picture of the selected vehicle");
+			Cheat::Toggle("Show Vehicle Info & Preview", ShowVehicleInfoAndPreview, "Shows selected vehicle info & picture");
 			Cheat::Break("~bold~DLC Vehicles", true);
 			Cheat::MenuOption("The Diamond Casino Heist >", diamondcasinoheist);
 			Cheat::MenuOption("The Diamond Casino & Resort >", casinodlc);

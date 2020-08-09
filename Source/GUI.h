@@ -148,4 +148,4 @@ extern bool show_header_background;
 extern bool show_header_gui;
 extern char* ThemeFilesArray[100];
 extern char* CurrentTheme;
-extern bool ShowVehiclePreviews;
+extern bool ShowVehicleInfoAndPreview;

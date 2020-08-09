@@ -355,7 +355,7 @@ void Cheat::CheatFunctions::SaveSettings()
 	Cheat::Files::WriteBoolToIni(Cheat::CheatFeatures::ShowFPSBool, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("showfps"));
 	Cheat::Files::WriteBoolToIni(Cheat::CheatFeatures::AutoSaveSettings, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("autosavesettings"));
 	Cheat::Files::WriteBoolToIni(Cheat::CheatFeatures::UseKMH, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("use_kmh"));
-	Cheat::Files::WriteBoolToIni(ShowVehiclePreviews, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("show_vehicle_previews"));
+	Cheat::Files::WriteBoolToIni(ShowVehicleInfoAndPreview, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("show_vehicle_previews"));
 	Cheat::Files::WriteIntToIni(BailToSinglePlayerHotkey, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("hotkey_bailtosingleplayer"));
 	Cheat::Files::WriteIntToIni(SuicideHotkey, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("hotkey_suicide"));
 	Cheat::Files::WriteIntToIni(TeleportForward2mHotkey, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("hotkey_teleportforward2m"));
@@ -444,8 +444,8 @@ void Cheat::CheatFunctions::LoadSettings(bool StartUp)
 	if (Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("explosive_melee")) == xorstr_("true")) { Cheat::CheatFeatures::ExplosiveMeleeBool = true; }
 	if (Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("hotkey_toggle")) == xorstr_("false")) { Cheat::CheatFeatures::HotkeyToggleBool = false; }
 	if (Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("show_joining_players_notification")) == xorstr_("true")) { show_joining_players_notification = true; }
-	if (Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("show_vehicle_previews")) == xorstr_("true")) { ShowVehiclePreviews = true; }
-	else { if (Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), "show_vehicle_previews") == "false") ShowVehiclePreviews = false; }
+	if (Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("show_vehicle_previews")) == xorstr_("true")) { ShowVehicleInfoAndPreview = true; }
+	else { if (Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), "show_vehicle_previews") == "false") ShowVehicleInfoAndPreview = false; }
 	std::string ActiveThemeSetting = Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("active_theme")); char* ActiveThemeSettingChar = new char[Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("active_theme")).length() + 1]; strcpy(ActiveThemeSettingChar, ActiveThemeSetting.c_str()); if (ActiveThemeSetting != xorstr_("NULL")) { Cheat::LoadTheme((char*)ActiveThemeSettingChar, true); }
 
 

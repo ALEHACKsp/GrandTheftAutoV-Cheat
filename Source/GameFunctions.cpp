@@ -1001,7 +1001,7 @@ void Cheat::GameFunctions::LoadPlayerInformation(char* playerName, Player p)
 				weaponName = xorstr_("SMG Mk II");
 			}
 			else {
-				weaponName = xorstr_("Unarmed");
+				weaponName = xorstr_("~c~Unarmed");
 			}
 			Weapon << weaponName;
 		}

@@ -48,7 +48,7 @@ void Cheat::Drawing::DrawScaleform(const float x, const float y, const float sx,
 
 float Cheat::Settings::menuX = 0.11f;
 const char* OptionInformationText;
-bool ShowVehiclePreviews = true;
+bool ShowVehicleInfoAndPreview = true;
 bool Cheat::Settings::selectPressed = false;
 bool Cheat::Settings::leftPressed = false;
 bool Cheat::Settings::rightPressed = false;
@@ -2939,21 +2939,26 @@ bool Cheat::VehicleOption(const char* option, std::string ModelName)
 			 VehiclePreviewName = "tug";
 		 }
 		
-		 if (ShowVehiclePreviews)
+		 //TODO: Show speed in MPHP/KMH depending on state of UseKMH -> Make GameFunctions functions
+		 if (ShowVehicleInfoAndPreview)
 		 {
 			 std::transform(ModelName.begin(), ModelName.end(), ModelName.begin(), ::tolower);
-			 std::string ModelNameDrawingText = "Model name: " + ModelName;
-			 if (Cheat::Settings::menuX < 0.71f) {
-				 Drawing::Text("Vehicle Preview", Settings::count, { Settings::menuX + 0.187f, 0.135f }, { 0.115f, 16 * 0.035f + -0.193f }, true);
+			 std::string ModelNameDrawingText = xorstr_("Model Name: ") + ModelName;
+			 std::string ModelMaxSpeed = xorstr_("Max Speed (M/S): ") + std::to_string(VEHICLE::GET_VEHICLE_MODEL_ESTIMATED_MAX_SPEED(GAMEPLAY::GET_HASH_KEY((char*)ModelName.c_str()))); while (ModelMaxSpeed.size() > ModelMaxSpeed.find(".")) { ModelMaxSpeed.pop_back(); }
+			 if (Cheat::Settings::menuX < 0.71f) 
+			 {
+				 Drawing::Text(xorstr_("Vehicle Info & Preview"), Settings::count, { Settings::menuX + 0.187f, 0.132f }, { 0.50f, 0.35f }, true);
 				 Drawing::Text(ModelNameDrawingText.c_str(), Settings::count, { Settings::menuX + 0.111f, 0.308f }, { 0.45f, 0.30f }, false);
-				 Drawing::Rect(Settings::MenuBackgroundRect, { Settings::menuX + 0.187f, 0.231f }, { 0.16f, 0.20f });
+				 Drawing::Text(ModelMaxSpeed.c_str(), Settings::count, { Settings::menuX + 0.111f, 0.325f }, { 0.45f, 0.30f }, false);
+				 Drawing::Rect(Settings::MenuBackgroundRect, { Settings::menuX + 0.187f, 0.244f }, { 0.16f, 0.22f });
 				 Drawing::Spriter(VehiclePreviewDictName, VehiclePreviewName, Settings::menuX + 0.187f, 0.232f, 0.15, 0.15, 0, 255, 255, 255, 255);
 			 }
 			 else
 			 {
-				 Drawing::Text("Vehicle Preview", Settings::count, { Settings::menuX - 0.187f, 0.135f }, { 0.115f, 16 * 0.035f + -0.193f }, true);
+				 Drawing::Text(xorstr_("Vehicle Info & Preview"), Settings::count, { Settings::menuX - 0.187f, 0.132f }, { 0.50f, 0.35f }, true);
 				 Drawing::Text(ModelNameDrawingText.c_str(), Settings::count, { Settings::menuX - 0.262f, 0.308f }, { 0.45f, 0.30f }, false);
-				 Drawing::Rect(Settings::MenuBackgroundRect, { Settings::menuX - 0.187f, 0.231f }, { 0.16f, 0.20f });
+				 Drawing::Text(ModelMaxSpeed.c_str(), Settings::count, { Settings::menuX - 0.262f, 0.325f }, { 0.45f, 0.30f }, false);
+				 Drawing::Rect(Settings::MenuBackgroundRect, { Settings::menuX - 0.187f, 0.244f }, { 0.16f, 0.22f });
 				 Drawing::Spriter(VehiclePreviewDictName, VehiclePreviewName, Settings::menuX - 0.187f, 0.232f, 0.15, 0.15, 0, 255, 255, 255, 255);
 			 }
 		 }

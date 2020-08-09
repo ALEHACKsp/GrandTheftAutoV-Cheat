@@ -402,7 +402,7 @@ void	setFn
 
 void Hooking::DoGameHooking()
 {
-	Cheat::LogFunctions::Message(xorstr_("Hooking Game Function & Creating Main Cheat Fiber"));
+	Cheat::LogFunctions::Message(xorstr_("Hooking Game Functions & Creating Main Cheat Fiber"));
 	auto p_activeThread = pattern("E8 ? ? ? ? 48 8B 88 10 01 00 00");
 	auto p_blipList = pattern("4C 8D 05 ? ? ? ? 0F B7 C1");
 	auto p_fixVector3Result = pattern("83 79 18 00 48 8B D1 74 4A FF 4A 18");

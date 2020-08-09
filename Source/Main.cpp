@@ -3503,6 +3503,7 @@ void main() {
 			Cheat::Toggle("No reload", Cheat::CheatFeatures::NoWeaponReloadBool, "Always have max amount of ammo");
 			Cheat::Toggle("Auto Give All Weapons", Cheat::CheatFeatures::AutoGiveAllWeaponsBool, "Always have all weapons");
 			Cheat::Toggle("Teleport Gun", Cheat::CheatFeatures::TeleportGunBool, "Teleport to where you shoot");
+			Cheat::Toggle("Cartoon Gun", Cheat::CheatFeatures::CartoonGunBool, "Shows cartoon effects while shooting");
 			Cheat::Toggle("Delete Gun", Cheat::CheatFeatures::DeleteGunBool, "Use SNS Pistol with this option");
 			Cheat::Toggle("Rapid Fire", Cheat::CheatFeatures::WeaponRapidFireBool, "Shoot very fast");
 			Cheat::Toggle("Money Gun", Cheat::CheatFeatures::MoneyGunBool, "Drops money bags where you shoot");

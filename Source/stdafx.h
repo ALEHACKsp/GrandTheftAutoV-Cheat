@@ -348,6 +348,8 @@ namespace Cheat {
 		void AutoGiveAllWeapons();
 		extern bool FreeCamBool;
 		void FreeCam(bool toggle);
+		extern bool CartoonGunBool;
+		void CartoonGun();
 	}
 	namespace CheatFunctions {
 		std::string ReturnCheatBuildAsString();

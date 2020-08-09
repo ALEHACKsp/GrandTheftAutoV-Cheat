@@ -182,7 +182,7 @@ namespace Cheat {
 		bool ReadBoolFromIni(std::string file, std::string app, std::string key);
 	}
 	namespace CheatFeatures {
-		extern int speedometer_vector_position;
+		extern int SpeedometerVectorPosition;
 		extern int selectedPlayer;
 		extern int PlayerOpacityInt;
 		extern bool HotkeyToggleBool;

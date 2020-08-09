@@ -44,16 +44,12 @@ int SessionTimeSeconds;
 
 void main() { 
 	Cheat::CheatFunctions::PostInitCheat();
-	double AutoSaveSettings_startTime = GetTickCount64();
-	while (true) {
+	while (true) 
+	{
 		Cheat::Checks::Controls();
 		Cheat::CheatFunctions::CheatThreadLoopFunctions();
 
-		double AutoSaveSettings_currentTime = GetTickCount64() - AutoSaveSettings_startTime;
-		if (AutoSaveSettings_currentTime >= 600000) { if (Cheat::CheatFeatures::AutoSaveSettings) { Cheat::CheatFunctions::SaveSettings(); } AutoSaveSettings_startTime = GetTickCount64(); }
-
 		switch (Cheat::Settings::currentMenu) {
-
 		case MainMenu:
 		{
 			Cheat::Title(xorstr_("Main Menu"));
@@ -2242,7 +2238,7 @@ void main() {
 			Cheat::Toggle("Vehicle Invisible", Cheat::CheatFeatures::VehicleInvisibleBool, "Makes current vehicle invisible");
 			Cheat::Toggle("Vehicle Horn Boost", Cheat::CheatFeatures::VehicleHornBoostBool, "Press horn button to use");
 			Cheat::Toggle("Unlimited Rocket Boost", Cheat::CheatFeatures::UnlimitedRocketBoostBool, "");
-			Cheat::StringVector("Speedometer", { "Disabled", "On-Screen", "License Plate", "Both" }, Cheat::CheatFeatures::speedometer_vector_position, "Set speedometer");
+			Cheat::StringVector("Speedometer", { "Disabled", "On-Screen", "License Plate", "Both" }, Cheat::CheatFeatures::SpeedometerVectorPosition, "Set speedometer");
 			Cheat::Toggle("Rainbow Vehicle", Cheat::CheatFeatures::RainbowVehicleBool, "Loops rainbow colors on current vehicle");
 			Cheat::Toggle("Drive On Water", Cheat::CheatFeatures::DriveOnWaterBool, "Drive your vehicle on water");
 			Cheat::Toggle("Super Brakes", Cheat::CheatFeatures::SuperBrakesBool, "");

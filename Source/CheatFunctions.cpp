@@ -346,7 +346,7 @@ void Cheat::CheatFunctions::SaveSettings()
 	Cheat::Files::WriteBoolToIni(Cheat::CheatFeatures::ProtectionSessionWeatherBool, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("protection_sessionweather"));
 	Cheat::Files::WriteBoolToIni(Cheat::CheatFeatures::BlockScriptEvents, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("protection_remote_events"));
 	Cheat::Files::WriteBoolToIni(Cheat::CheatFeatures::ShowBlockedScriptEventNotifications, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("show_blocked_script_events_messages"));
-	Cheat::Files::WriteIntToIni(Cheat::CheatFeatures::speedometer_vector_position, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("speedometer"));
+	Cheat::Files::WriteIntToIni(Cheat::CheatFeatures::SpeedometerVectorPosition, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("speedometer"));
 	Cheat::Files::WriteBoolToIni(Cheat::CheatFeatures::AutoTeleportToWaypointBool, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("autoteleporttowaypoint"));
 	Cheat::Files::WriteBoolToIni(Cheat::CheatFeatures::NoGravityBool, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("nogravity"));
 	Cheat::Files::WriteBoolToIni(VehicleSpawnerDeleteOldVehicle, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("spawner_deletecurrentvehicle"));
@@ -389,7 +389,7 @@ void Cheat::CheatFunctions::LoadSettings(bool StartUp)
 	if (Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("superjump")) == xorstr_("true")) { Cheat::CheatFeatures::SuperJumpBool = true; }
 	if (Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("superrun")) == xorstr_("true")) { Cheat::CheatFeatures::SuperRunBool = true; }
 	if (Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("orbital_cannon_cooldown_bypass")) == xorstr_("true")) { Cheat::CheatFeatures::OrbitalCannonCooldownBypassBool = true; }
-	std::string SpeedoMeterSetting = Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("speedometer")); if (Cheat::CheatFunctions::StringIsInteger(SpeedoMeterSetting)) { Cheat::CheatFeatures::speedometer_vector_position = std::stoi(SpeedoMeterSetting.c_str()); }
+	std::string SpeedoMeterSetting = Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("speedometer")); if (Cheat::CheatFunctions::StringIsInteger(SpeedoMeterSetting)) { Cheat::CheatFeatures::SpeedometerVectorPosition = std::stoi(SpeedoMeterSetting.c_str()); }
 	if (Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("vehicle_boost")) == xorstr_("true")) { Cheat::CheatFeatures::VehicleHornBoostBool = true; }
 	if (Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("showfps")) == xorstr_("true")) { Cheat::CheatFeatures::ShowFPSBool = true; }
 	if (Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("vehiclegun")) == xorstr_("true")) { Cheat::CheatFeatures::VehicleGunBool = true; }
@@ -468,7 +468,7 @@ void Cheat::CheatFunctions::PostInitCheat()
 {
 	Cheat::Drawing::YTD(); // Load Textures
 	Cheat::CheatFunctions::LoadSettings(true); // Load config.ini
-	Cheat::GameFunctions::MinimapNotification(xorstr_("GTAV Cheat Loaded"));
+	//Cheat::GameFunctions::MinimapNotification(xorstr_("GTAV Cheat Loaded"));
 	Cheat::LogFunctions::Message(xorstr_("GTAV Cheat Initialization Completed"));
 }
 

@@ -1,6 +1,6 @@
 #include "stdafx.h"
 
-int Cheat::CheatFeatures::speedometer_vector_position = 0;
+int Cheat::CheatFeatures::SpeedometerVectorPosition = 0;
 int Cheat::CheatFeatures::PlayerOpacityInt = 250;
 bool Cheat::CheatFeatures::HotkeyToggleBool = true;
 bool Cheat::CheatFeatures::UseKMH = true;
@@ -9,8 +9,23 @@ bool Cheat::CheatFeatures::ShowBlockedScriptEventNotifications = true;
 bool Cheat::CheatFeatures::ShowPlayerTagsPlayerList = true;
 bool Cheat::CheatFeatures::AutoSaveSettings = false;
 
+auto PostInitScaleFormStart = std::chrono::high_resolution_clock::now();
+auto AutoSaveSettingsStart = std::chrono::high_resolution_clock::now();
 void Cheat::CheatFeatures::Looped()
 {
+	//Post Init Scaleform Banner Notification - Show for 10 seconds or until cheat GUI is opened
+	if (!CheatGUIHasBeenOpened && !(std::chrono::duration_cast<std::chrono::seconds>(std::chrono::high_resolution_clock::now() - PostInitScaleFormStart).count() > 10))
+	{ 
+		auto ScaleformHandle = GRAPHICS::REQUEST_SCALEFORM_MOVIE("mp_big_message_freemode");
+		while (!GRAPHICS::HAS_SCALEFORM_MOVIE_LOADED(ScaleformHandle)) { WAIT(0); }
+		GRAPHICS::BEGIN_SCALEFORM_MOVIE_METHOD(ScaleformHandle, "SHOW_SHARD_WASTED_MP_MESSAGE");
+		GRAPHICS::_ADD_SCALEFORM_MOVIE_METHOD_PARAMETER_STRING("<FONT FACE='$Font2'>GTAV Cheat");
+		GRAPHICS::_ADD_SCALEFORM_MOVIE_METHOD_PARAMETER_STRING("Cheat has been successfully initialized. Have fun!");
+		GRAPHICS::_ADD_SCALEFORM_MOVIE_METHOD_PARAMETER_INT(5);
+		GRAPHICS::END_SCALEFORM_MOVIE_METHOD();
+		GRAPHICS::DRAW_SCALEFORM_MOVIE_FULLSCREEN(ScaleformHandle, 255, 255, 255, 255, 0);
+	}
+
 	//Key Instructions, Cheat GUI
 	if (!CheatGUIHasBeenOpened)
 	{
@@ -18,6 +33,17 @@ void Cheat::CheatFeatures::Looped()
 		Cheat::GameFunctions::InstructionsInit();
 		Cheat::GameFunctions::InstructionsAdd((char*)OpenGUIString.c_str(), 80);
 		Cheat::GameFunctions::InstructionsEnd();
+	}
+
+	//Auto Save Settings Loop - once every 10 minutes
+	if (Cheat::CheatFeatures::AutoSaveSettings)
+	{
+		auto AutoSaveSettingsEnd = std::chrono::high_resolution_clock::now();
+		if (std::chrono::duration_cast<std::chrono::seconds>(AutoSaveSettingsEnd - AutoSaveSettingsStart).count() > 600)
+		{
+			Cheat::CheatFunctions::SaveSettings();
+			AutoSaveSettingsStart = std::chrono::high_resolution_clock::now();
+		}
 	}
 
 	//New Session Member Notification Feature
@@ -38,8 +64,8 @@ void Cheat::CheatFeatures::Looped()
 			vehSpeedConverted = roundf(vehSpeed * 2.2369);
 			Speed << vehSpeedConverted << xorstr_(" MP/H");
 		}
-		if (speedometer_vector_position == 1 || speedometer_vector_position == 3) { Cheat::Speedometer((char*)Speed.str().c_str()); }
-		if (speedometer_vector_position == 2 || speedometer_vector_position == 3) { VEHICLE::SET_VEHICLE_NUMBER_PLATE_TEXT(PED::GET_VEHICLE_PED_IS_IN(PlayerPedID, 0), (char*)Speed.str().c_str()); }
+		if (SpeedometerVectorPosition == 1 || SpeedometerVectorPosition == 3) { Cheat::Speedometer((char*)Speed.str().c_str()); }
+		if (SpeedometerVectorPosition == 2 || SpeedometerVectorPosition == 3) { VEHICLE::SET_VEHICLE_NUMBER_PLATE_TEXT(PED::GET_VEHICLE_PED_IS_IN(PlayerPedID, 0), (char*)Speed.str().c_str()); }
 	}
 
 	//Player Opacity
@@ -722,7 +748,7 @@ void Cheat::CheatFeatures::CartoonGun()
 	if (PED::IS_PED_SHOOTING(PlayerPedID))
 	{
 		STREAMING::REQUEST_NAMED_PTFX_ASSET("scr_rcbarry2");
-		while (!STREAMING::HAS_NAMED_PTFX_ASSET_LOADED("scr_rcbarry2")) WAIT(0);		
+		while (!STREAMING::HAS_NAMED_PTFX_ASSET_LOADED("scr_rcbarry2")) { WAIT(0); }
 		auto WeaponEntityHandle = WEAPON::GET_CURRENT_PED_WEAPON_ENTITY_INDEX(PlayerPedID);
 		Vector3 v0, v1;
 		GAMEPLAY::GET_MODEL_DIMENSIONS(WEAPON::GET_SELECTED_PED_WEAPON(PlayerPedID), &v0, &v1);

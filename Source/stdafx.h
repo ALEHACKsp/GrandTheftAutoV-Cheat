@@ -170,6 +170,7 @@ namespace Cheat
 		extern int click;
 		extern int leftpress;
 		extern int rightpress;
+		extern void DeleteCurrentTheme();
 	}
 	namespace MenuLevelHandler 
 	{
@@ -394,6 +395,7 @@ namespace Cheat
 		char* StringToChar(std::string string);
 		std::string VirtualKeyCodeToString(UCHAR virtualKey);
 		void CreateConsole();
+		int ReturnNumberOfDigitsInValue(double Number);
 	}
 	namespace GameFunctions 
 	{
@@ -430,7 +432,8 @@ namespace Cheat
 		bool RequestNetworkControl(uint vehID);
 		Ped CreatePed(char* PedName, Vector3 SpawnCoordinates, int ped_type, bool network_handle);
 		Ped ClonePed(Ped ped);
-		char* CharKeyboard(char* windowName, int maxInput, char* defaultText);
+		char* DisplayKeyboardAndReturnInput(int MaxInput);
+		int DisplayKeyboardAndReturnInputInteger(int MaxInput);
 		void ClearAllAnimations();
 		void LoadPlayerInformation(char* playerName, Player p);
 		float Get3DDistance(Vector3 a, Vector3 b);
@@ -461,6 +464,8 @@ namespace Cheat
 		bool DeleteVehicle(Vehicle Vehicle);
 		float MSToKMH(float MS);
 		float MSToMPH(float MS);
+		float KMHToMS(float MS);
+		float MPHToMS(float MS);
 		void ChangeEntityInvincibilityState(Entity EntityHandle, bool Enable);
 		char* ReturnOnlinePlayerPictureString(Player PlayerHandle);
 	}
@@ -535,7 +540,7 @@ namespace Cheat
 	bool Toggle(const char* option, bool& b00l, const char* InformationText);
 	bool ToggleCheckMark(const char* option, bool& b00l);
 	bool IntNoControl(const char* option, int& _int, int min, int max, const char* InformationText);
-	bool Int(const char* option, int& _int, int min, int max, int step, const char* InformationText);
+	bool Int(const char* option, int& _int, int min, int max, int step, const char* InformationText = xorstr_("Select to change"));
 	bool Float(const char* option, float& _float, float min, float max, float steps, bool ReturnTrueWithValueChange, const char* InformationText);
 	bool IntVector(const char* option, std::vector<int> Vector, int& position);
 	bool FloatVector(const char* option, std::vector<float> Vector, int& position);

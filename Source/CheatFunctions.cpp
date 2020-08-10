@@ -559,3 +559,20 @@ void Cheat::CheatFunctions::CreateConsole()
 	// Print current build
 	std::cout << xorstr_("Build: ") << Cheat::CheatFunctions::ReturnCheatBuildAsString() << std::endl;
 }
+
+
+
+int Cheat::CheatFunctions::ReturnNumberOfDigitsInValue(double Number) 
+{
+	int i = 0;
+	if (Number < 0)
+	{
+		Number *= -1;
+	}
+	while (Number > pow(10, i))
+	{
+		i++;
+	}
+	return i;
+}
+

@@ -528,17 +528,24 @@ void Cheat::GameFunctions::TPto(Vector3 Coords)
 	}
 }
 
-char* Cheat::GameFunctions::CharKeyboard(char* windowName, int maxInput, char* defaultText) {
-	GAMEPLAY::DISPLAY_ONSCREEN_KEYBOARD(0, "", windowName, defaultText, "", "", "", maxInput);
-	while (GAMEPLAY::UPDATE_ONSCREEN_KEYBOARD() == 0) WAIT(0);
-	if (!GAMEPLAY::GET_ONSCREEN_KEYBOARD_RESULT()) return "";
+char* Cheat::GameFunctions::DisplayKeyboardAndReturnInput(int MaxInput)
+{
+	GAMEPLAY::DISPLAY_ONSCREEN_KEYBOARD(0, "", "", "", "", "", "", MaxInput);
+	while (GAMEPLAY::UPDATE_ONSCREEN_KEYBOARD() == 0) WAIT(0, false);
+	if (!GAMEPLAY::GET_ONSCREEN_KEYBOARD_RESULT()) return "0";
 	return GAMEPLAY::GET_ONSCREEN_KEYBOARD_RESULT();
 }
-int NumberKeyboard() {
-	GAMEPLAY::DISPLAY_ONSCREEN_KEYBOARD(1, "", "", "", "", "", "", 10);
-	while (GAMEPLAY::UPDATE_ONSCREEN_KEYBOARD() == 0) WAIT(0);
-	if (!GAMEPLAY::GET_ONSCREEN_KEYBOARD_RESULT()) return 0;
-	return atof(GAMEPLAY::GET_ONSCREEN_KEYBOARD_RESULT());
+
+int Cheat::GameFunctions::DisplayKeyboardAndReturnInputInteger(int MaxInput)
+{	
+	try
+	{
+		return std::stoi(DisplayKeyboardAndReturnInput(MaxInput));
+	}
+	catch (...)
+	{
+		return 0;
+	}
 }
 
 void Cheat::GameFunctions::ClearAllAnimations()
@@ -1440,6 +1447,15 @@ float Cheat::GameFunctions::MSToKMH(float MS)
 float Cheat::GameFunctions::MSToMPH(float MS)
 {
 	return roundf(MS * 2.2);
+}
+
+float Cheat::GameFunctions::KMHToMS(float MS)
+{
+	return roundf(MS * 0.27);
+}
+float Cheat::GameFunctions::MPHToMS(float MS)
+{
+	return roundf(MS * 0.44);
 }
 
 void Cheat::GameFunctions::ChangeEntityInvincibilityState(Entity EntityHandle, bool Enable)

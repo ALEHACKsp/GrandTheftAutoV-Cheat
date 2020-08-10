@@ -32,5 +32,4 @@ extern int MaxUpgradeVehicleHotKey;
 extern int GodModeToggleHotkey;
 extern int RepairAndCleanVehicleHotkey;
 extern int TeleportToWaypointHotkey;
-extern int NumberKeyboard();
 extern void PlayScenarioNearbyPeds(char* Scenario);

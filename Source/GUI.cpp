@@ -3237,7 +3237,15 @@ bool Cheat::Int(const char * option, int & _int, int min, int max, int step, con
 			Drawing::Text(Cheat::CheatFunctions::StringToChar("< " + std::to_string(_int) + " >"), GUI::optionText, { Cheat::CheatFeatures::guiX + 0.06f, (GUI::optionCount - (GUI::currentOption - GUI::maxVisOptions)) * 0.035f + 0.125f }, { 0.32f, 0.32f }, false);
 		}
 	}
-	if (GUI::optionCount == GUI::currentOption && GUI::selectPressed) return true;
+	if (GUI::optionCount == GUI::currentOption && GUI::selectPressed)
+	{
+		int KeyBoardInput = Cheat::GameFunctions::DisplayKeyboardAndReturnInputInteger(CheatFunctions::ReturnNumberOfDigitsInValue(max));
+		if (KeyBoardInput >= min && KeyBoardInput <= max)
+		{
+			_int = KeyBoardInput;
+		}
+		return true;
+	}
 	else if (GUI::optionCount == GUI::currentOption && GUI::leftPressed) return true;
 	else if (GUI::optionCount == GUI::currentOption && GUI::rightPressed) return true;
 	return false;
@@ -3738,6 +3746,21 @@ void Cheat::LoadTheme(char* ThemeFileName, bool StartUp)
 	if (!StartUp) { Cheat::GameFunctions::MinimapNotification("Theme Loaded"); }
 }
 
+
+void Cheat::GUI::DeleteCurrentTheme()
+{
+	std::string ThemeFileNamePath = Cheat::CheatFunctions::ReturnCheatModuleDirectoryPath() + (std::string)xorstr_("\\gtav\\Themes\\") + Cheat::GUI::CurrentTheme + xorstr_(".ini");
+	if (remove(ThemeFileNamePath.c_str()) != 0) 
+	{ 
+		Cheat::GameFunctions::MinimapNotification("~r~Failed To Delete Theme File"); 
+	}
+	else 
+	{ 
+		Cheat::GUI::CurrentTheme = NULL; 
+		GUI::currentOption = 1;
+		Cheat::GameFunctions::MinimapNotification("Theme File Removed"); 
+	}
+}
 
 void Cheat::SaveTheme(char* ThemeFileName)
 {

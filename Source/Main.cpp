@@ -1605,21 +1605,9 @@ void Cheat::Main() {
 		case rankmenu:
 		{
 			Cheat::Title("Rank");
-			if (Cheat::Option("Custom Rank", "Input a custom Rank")) {
-				GAMEPLAY::DISPLAY_ONSCREEN_KEYBOARD(true, "Custom Rank", "", "", "", "", "", 4);
-				while (GAMEPLAY::UPDATE_ONSCREEN_KEYBOARD() == 0) WAIT(0, false);
-				char* CustomRankChar0 = GAMEPLAY::GET_ONSCREEN_KEYBOARD_RESULT();
-
-				if (!GAMEPLAY::GET_ONSCREEN_KEYBOARD_RESULT()) { break; }
-
-				try 
-				{
-					Cheat::GameFunctions::SetRankRockstarGift(std::stoi(CustomRankChar0));
-				}
-				catch (...)
-				{
-					Cheat::GameFunctions::MinimapNotification("That is not a valid Rank. Only digits are supported.");
-				}
+			if (Cheat::Option("Custom Rank", "Input a custom Rank")) 
+			{
+				Cheat::GameFunctions::SetRankRockstarGift(Cheat::GameFunctions::DisplayKeyboardAndReturnInputInteger(4));
 			}
 			if (Cheat::Option("Rank 1",""))
 			{
@@ -1684,15 +1672,9 @@ void Cheat::Main() {
 			Cheat::Title("Change Model");
 			if (Cheat::Option("Custom Input", "Input custom ped model"))
 			{
-				GAMEPLAY::DISPLAY_ONSCREEN_KEYBOARD(true, "", "", "", "", "", "", 30);
-				while (GAMEPLAY::UPDATE_ONSCREEN_KEYBOARD() == 0) WAIT(0, false);
-				char* CustomModel = GAMEPLAY::GET_ONSCREEN_KEYBOARD_RESULT();
-
-				if (!GAMEPLAY::GET_ONSCREEN_KEYBOARD_RESULT()) {
-					break;
-				}
-	
-				DWORD model = GAMEPLAY::GET_HASH_KEY(CustomModel);
+				char* KeyboardInput = Cheat::GameFunctions::DisplayKeyboardAndReturnInput(30);
+				if (KeyboardInput == "0") { break; }
+				DWORD model = GAMEPLAY::GET_HASH_KEY(KeyboardInput);
 				if (!STREAMING::IS_MODEL_IN_CDIMAGE(model))
 				{
 					Cheat::GameFunctions::MinimapNotification("~r~That is not a valid ped model");
@@ -1729,11 +1711,9 @@ void Cheat::Main() {
 			Cheat::MenuOption("Spawn Settings >", VehicleSpawnSettings);
 			if (Cheat::Option("Custom Input", "Input custom vehicle model"))
 			{
-				GAMEPLAY::DISPLAY_ONSCREEN_KEYBOARD(true, "", "", "", "", "", "", 16);
-				while (GAMEPLAY::UPDATE_ONSCREEN_KEYBOARD() == 0) WAIT(0, false);
-				char* SpawnVehicle = GAMEPLAY::GET_ONSCREEN_KEYBOARD_RESULT();
-				if (!GAMEPLAY::GET_ONSCREEN_KEYBOARD_RESULT()) { break; }
-				Cheat::GameFunctions::SpawnVehicle(SpawnVehicle);
+				char* KeyboardInput = Cheat::GameFunctions::DisplayKeyboardAndReturnInput(30);
+				if (KeyboardInput == "0") { break; }
+				Cheat::GameFunctions::SpawnVehicle(KeyboardInput);
 			}
 			Cheat::Toggle("Show Vehicle Info & Preview", Cheat::CheatFeatures::ShowVehicleInfoAndPreview, "Shows selected vehicle info & picture");
 			Cheat::Break("Categories", true);
@@ -2180,65 +2160,28 @@ void Cheat::Main() {
 				}		
 			}
 			if (Cheat::Option("Flip Up", "Flip vehicle up")) { VEHICLE::SET_VEHICLE_ON_GROUND_PROPERLY(PED::GET_VEHICLE_PED_IS_IN(PlayerPedID, false)); }
-			if (Cheat::CheatFeatures::UseKMH) {
-				if (Cheat::Option("Set Max Speed (KM/H)", "Set max vehicle speed")) {
-					if (PED::IS_PED_IN_ANY_VEHICLE(PlayerPedID, 0)) {
-						if (GetAsyncKeyState(VK_NUMPAD5) || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
-							vehicle_max_speed = NumberKeyboard();
-
-							if (vehicle_max_speed != 0) {
-								float VehicleSpeedConverted;
-								VehicleSpeedConverted = roundf(vehicle_max_speed * 0.277778);
-
-								if (PED::IS_PED_IN_ANY_VEHICLE(PlayerPedID, 0)) {
-									Vehicle veh = PED::GET_VEHICLE_PED_IS_USING(PlayerPedID);
-									ENTITY::SET_ENTITY_MAX_SPEED(veh, VehicleSpeedConverted);
-									Cheat::GameFunctions::MinimapNotification("~g~Max Speed Set (KM/H)");
-								}
-								else
-								{
-									Cheat::GameFunctions::MinimapNotification("~r~Player isn't in a vehicle");
-								}
-							}
-						}
+			if (Cheat::Option("Set Max Vehicle Speed", "")) 
+			{
+				if (PED::IS_PED_IN_ANY_VEHICLE(PlayerPedID, false)) 
+				{
+					int MaxSpeedInput = Cheat::GameFunctions::DisplayKeyboardAndReturnInputInteger(3);
+					Vehicle VehicleHandle = PED::GET_VEHICLE_PED_IS_USING(PlayerPedID);
+					if (Cheat::CheatFeatures::UseKMH) 
+					{
+						ENTITY::SET_ENTITY_MAX_SPEED(VehicleHandle, Cheat::GameFunctions::KMHToMS(MaxSpeedInput));
+						Cheat::GameFunctions::MinimapNotification("Max Speed Set (KM/H)");
 					}
 					else
 					{
-						Cheat::GameFunctions::MinimapNotification("~r~Player isn't in a vehicle");
+						ENTITY::SET_ENTITY_MAX_SPEED(VehicleHandle, Cheat::GameFunctions::MPHToMS(MaxSpeedInput));
+						Cheat::GameFunctions::MinimapNotification("Max Speed Set (MP/H)");
 					}
 				}
-			}
-			else
-			{
-				if (Cheat::Option("Set Max Speed (MP/H)", "Set max vehicle speed")) {
-					if (PED::IS_PED_IN_ANY_VEHICLE(PlayerPedID, 0)) {
-						if (GetAsyncKeyState(VK_NUMPAD5) || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
-							vehicle_max_speed = NumberKeyboard();
-
-							if (vehicle_max_speed != 0) {
-								float VehicleSpeedConverted;
-								VehicleSpeedConverted = roundf(vehicle_max_speed * 0.44704);
-
-								if (PED::IS_PED_IN_ANY_VEHICLE(PlayerPedID, 0)) {
-									Vehicle veh = PED::GET_VEHICLE_PED_IS_USING(PlayerPedID);
-									ENTITY::SET_ENTITY_MAX_SPEED(veh, VehicleSpeedConverted);
-									Cheat::GameFunctions::MinimapNotification("~g~Max Speed Set (MP/H)");
-								}
-								else
-								{
-									Cheat::GameFunctions::MinimapNotification("~r~Player isn't in a vehicle");
-								}
-
-							}
-
-						}
-					}
-					else
-					{
-						Cheat::GameFunctions::MinimapNotification("~r~Player isn't in a vehicle");
-					}
-				}		
-			}
+				else
+				{
+					Cheat::GameFunctions::MinimapNotification("~r~Player isn't in a vehicle");
+				}
+			}		
 			Cheat::Toggle("Vehicle Godmode", Cheat::CheatFeatures::VehicleGodmodeBool, "Makes current vehicle invincible");
 			Cheat::Toggle("Vehicle Invisible", Cheat::CheatFeatures::VehicleInvisibleBool, "Makes current vehicle invisible");
 			Cheat::Toggle("Vehicle Horn Boost", Cheat::CheatFeatures::VehicleHornBoostBool, "Press horn button to use");
@@ -2290,13 +2233,11 @@ void Cheat::Main() {
 			}
 			if (Cheat::Option("Change License Plate Text", "Input custom vehicle license plate text"))
 			{
-				if (PED::IS_PED_IN_ANY_VEHICLE(PlayerPedID, 0)) {
-					GAMEPLAY::DISPLAY_ONSCREEN_KEYBOARD(true, "", "", "", "", "", "", 8);
-					while (GAMEPLAY::UPDATE_ONSCREEN_KEYBOARD() == 0) WAIT(0, false);
-					if (!GAMEPLAY::GET_ONSCREEN_KEYBOARD_RESULT()) { break; }
-
-					Vehicle veh = PED::GET_VEHICLE_PED_IS_USING(PlayerPedID);
-					VEHICLE::SET_VEHICLE_NUMBER_PLATE_TEXT(veh, GAMEPLAY::GET_ONSCREEN_KEYBOARD_RESULT());
+				if (PED::IS_PED_IN_ANY_VEHICLE(PlayerPedID, 0)) {			
+					Vehicle VehicleHandle = PED::GET_VEHICLE_PED_IS_USING(PlayerPedID);
+					char* KeyboardInput = Cheat::GameFunctions::DisplayKeyboardAndReturnInput(8);
+					if (KeyboardInput == "0") { break; }
+					VEHICLE::SET_VEHICLE_NUMBER_PLATE_TEXT(VehicleHandle, KeyboardInput);
 					Cheat::GameFunctions::AdvancedMinimapNotification(xorstr_("License Plate Text Updated"), xorstr_("Textures"), xorstr_("AdvancedNotificationImage"), false, 4, xorstr_("Vehicle Customizer"), "", 1.0, "");
 				}
 				else 
@@ -2312,23 +2253,13 @@ void Cheat::Main() {
 		case VehicleCustomizerColorMenu:
 		{
 			Cheat::Title("Custom Color");
-			if (Cheat::Int("Primary Color: Red", VehiclePrimaryColorRed, 0, 255, 1, "")) {
-				if (GetAsyncKeyState(VK_NUMPAD5) || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
-					VehiclePrimaryColorRed = NumberKeyboard();
-				}
-			}
-			if (Cheat::Int("Primary Color: Green", VehiclePrimaryColorGreen, 0, 255, 1, "")) {
-				if (GetAsyncKeyState(VK_NUMPAD5) || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
-					VehiclePrimaryColorGreen = NumberKeyboard();
-				}
-			}
-			if (Cheat::Int("Primary Color: Blue", VehiclePrimaryColorBlue, 0, 255, 1, "")) {
-				if (GetAsyncKeyState(VK_NUMPAD5) || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
-					VehiclePrimaryColorBlue = NumberKeyboard();
-				}
-			}
-			if (Cheat::Option("Set Primary Color", "")) {
-				if (PED::IS_PED_IN_ANY_VEHICLE(PlayerPedID, 0)) {
+			Cheat::Int("Primary Color: Red", VehiclePrimaryColorRed, 0, 255, 1);
+			Cheat::Int("Primary Color: Green", VehiclePrimaryColorGreen, 0, 255, 1);
+			Cheat::Int("Primary Color: Blue", VehiclePrimaryColorBlue, 0, 255, 1);
+			if (Cheat::Option("Set Primary Color", "")) 
+			{
+				if (PED::IS_PED_IN_ANY_VEHICLE(PlayerPedID, 0)) 
+				{
 					Vehicle veh = PED::GET_VEHICLE_PED_IS_IN(PlayerPedID, 0);
 					VEHICLE::SET_VEHICLE_CUSTOM_PRIMARY_COLOUR(veh, VehiclePrimaryColorRed, VehiclePrimaryColorGreen, VehiclePrimaryColorBlue);
 				}
@@ -2337,23 +2268,13 @@ void Cheat::Main() {
 					Cheat::GameFunctions::MinimapNotification("~r~Player isn't in a vehicle");
 				}
 			}
-			if (Cheat::Int("Secondary Color: Red", VehicleSecondaryColorRed, 0, 255, 1, "")) {
-				if (GetAsyncKeyState(VK_NUMPAD5) || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
-					VehicleSecondaryColorRed = NumberKeyboard();
-				}
-			}
-			if (Cheat::Int("Secondary Color: Green", VehicleSecondaryColorGreen, 0, 255, 1, "")) {
-				if (GetAsyncKeyState(VK_NUMPAD5) || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
-					VehicleSecondaryColorGreen = NumberKeyboard();
-				}
-			}
-			if (Cheat::Int("Secondary Color: Blue", VehicleSecondaryColorBlue, 0, 255, 1, "")) {
-				if (GetAsyncKeyState(VK_NUMPAD5) || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
-					VehicleSecondaryColorBlue = NumberKeyboard();
-				}
-			}
-			if (Cheat::Option("Set Secondary Color", "")) {
-				if (PED::IS_PED_IN_ANY_VEHICLE(PlayerPedID, 0)) {
+			Cheat::Int("Secondary Color: Red", VehicleSecondaryColorRed, 0, 255, 1);
+			Cheat::Int("Secondary Color: Green", VehicleSecondaryColorGreen, 0, 255, 1);
+			Cheat::Int("Secondary Color: Blue", VehicleSecondaryColorBlue, 0, 255, 1);
+			if (Cheat::Option("Set Secondary Color", "")) 
+			{
+				if (PED::IS_PED_IN_ANY_VEHICLE(PlayerPedID, 0)) 
+				{
 					Vehicle veh = PED::GET_VEHICLE_PED_IS_IN(PlayerPedID, 0);
 					VEHICLE::SET_VEHICLE_CUSTOM_SECONDARY_COLOUR(veh, VehicleSecondaryColorRed, VehicleSecondaryColorGreen, VehicleSecondaryColorBlue);
 				}
@@ -2495,23 +2416,13 @@ void Cheat::Main() {
 				VEHICLE::_SET_VEHICLE_NEON_LIGHT_ENABLED(VehID, 7, 0);
 				VEHICLE::SET_VEHICLE_MOD_KIT(VehID, 0);
 			}
-			if (Cheat::Int("Neon Color: Red", VehicleNeonLightRed, 0, 255, 1, "")) {
-				if (GetAsyncKeyState(VK_NUMPAD5) || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
-					VehicleNeonLightRed = NumberKeyboard();
-				}
-			}
-			if (Cheat::Int("Neon Color: Green", VehicleNeonLightGreen, 0, 255, 1, "")) {
-				if (GetAsyncKeyState(VK_NUMPAD5) || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
-					VehicleNeonLightGreen = NumberKeyboard();
-				}
-			}
-			if (Cheat::Int("Neon Color: Blue", VehicleNeonLightBlue, 0, 255, 1, "")) {
-				if (GetAsyncKeyState(VK_NUMPAD5) || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
-					VehicleNeonLightBlue = NumberKeyboard();
-				}
-			}
-			if (Cheat::Option("Set Neon Color", "Set Vehicle Neon Colors")) {
-				if (PED::IS_PED_IN_ANY_VEHICLE(PlayerPedID, 0)) {
+			Cheat::Int("Neon Color: Red", VehicleNeonLightRed, 0, 255, 1);
+			Cheat::Int("Neon Color: Green", VehicleNeonLightGreen, 0, 255, 1);
+			Cheat::Int("Neon Color: Blue", VehicleNeonLightBlue, 0, 255, 1);
+			if (Cheat::Option("Set Neon Color", "Set Vehicle Neon Colors")) 
+			{
+				if (PED::IS_PED_IN_ANY_VEHICLE(PlayerPedID, 0)) 
+				{
 					Vehicle veh = PED::GET_VEHICLE_PED_IS_IN(PlayerPedID, 0);
 					VEHICLE::_SET_VEHICLE_NEON_LIGHTS_COLOUR(veh, VehicleNeonLightRed, VehicleNeonLightGreen, VehicleNeonLightBlue);
 				}
@@ -3509,23 +3420,23 @@ void Cheat::Main() {
 			}
 			else
 			{
-				Cheat::Break("Current: ~t~None", false);
+				Cheat::Break("Current: ~c~None", false);
 			}
-			Cheat::Break("~bold~Vehicles", true);
+			Cheat::Break("Vehicles", true);
 			if (Cheat::Option("Custom Input", "Custom Vehicle Gun Input"))
 			{
-				GAMEPLAY::DISPLAY_ONSCREEN_KEYBOARD(true, "", "", "", "", "", "", 16);
-				while (GAMEPLAY::UPDATE_ONSCREEN_KEYBOARD() == 0) WAIT(0, false);
-				char* SpawnVehicle = GAMEPLAY::GET_ONSCREEN_KEYBOARD_RESULT();
-
-				if (!GAMEPLAY::GET_ONSCREEN_KEYBOARD_RESULT()) { break; }
+				char* SpawnVehicle = Cheat::GameFunctions::DisplayKeyboardAndReturnInput(30);
+				if (SpawnVehicle == "0") { break; }
 
 				Hash model = GAMEPLAY::GET_HASH_KEY(SpawnVehicle);
-				if (!STREAMING::IS_MODEL_IN_CDIMAGE(model) || !STREAMING::IS_MODEL_A_VEHICLE(model)) { Cheat::GameFunctions::MinimapNotification("~r~Not a valid vehicle model"); break; }
+				if (!STREAMING::IS_MODEL_IN_CDIMAGE(model) || !STREAMING::IS_MODEL_A_VEHICLE(model)) 
+				{ 
+					Cheat::GameFunctions::MinimapNotification("~r~Not a valid vehicle model"); 
+				}
 				else
 				{
 					Cheat::CheatFeatures::VehicleGun_VehicleNameChar = SpawnVehicle;
-					Cheat::GameFunctions::MinimapNotification("~g~Custom Vehicle Set");
+					Cheat::GameFunctions::MinimapNotification("Custom Vehicle Set");
 				}
 			}
 			if (Cheat::Option("Rhino Tank", "")) { Cheat::CheatFeatures::VehicleGun_VehicleNameChar = "RHINO"; }
@@ -4876,33 +4787,8 @@ void Cheat::Main() {
 				if (PressedKey == 27) { Cheat::GameFunctions::MinimapNotification("Canceled Setting Open Key"); break; }
 				if (PressedKey != 0) { Cheat::GUI::openKey = PressedKey; Cheat::GameFunctions::MinimapNotification("Open Key has been set"); }
 			}
-			if (Cheat::Int("Scroll Delay", Cheat::GUI::keyPressDelay2, 1, 200, 1, ""))
-			{
-				if (GetAsyncKeyState(VK_NUMPAD5) && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
-					int ScrollDelayInt = NumberKeyboard();
-					if (ScrollDelayInt <= 200 && ScrollDelayInt >= 1) {
-						Cheat::GUI::keyPressDelay2 = ScrollDelayInt;
-					}
-					else
-					{
-						if (ScrollDelayInt != 0) { Cheat::GameFunctions::MinimapNotification("~r~The value must be between 1 and 200"); }
-					}
-				}
-			}
-			if (Cheat::Int("Int Delay", Cheat::GUI::keyPressDelay3, 1, 200, 1, ""))
-			{
-				if (GetAsyncKeyState(VK_NUMPAD5) && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) 
-				{
-					int IntDelayInt = NumberKeyboard();
-					if (IntDelayInt <= 200 && IntDelayInt >= 1) {
-						Cheat::GUI::keyPressDelay3 = IntDelayInt;
-					}
-					else
-					{			
-						if (IntDelayInt != 0) { Cheat::GameFunctions::MinimapNotification("~r~The value must be between 1 and 200"); }
-					}
-				}
-			}
+			Cheat::Int("Scroll Delay", Cheat::GUI::keyPressDelay2, 1, 200, 1);
+			Cheat::Int("Int Delay", Cheat::GUI::keyPressDelay3, 1, 200, 1);
 			Cheat::MenuOption("Theme Loader >", ThemeLoaderMenu);
 		}
 		break; 
@@ -4936,59 +4822,11 @@ void Cheat::Main() {
 				Cheat::GUI::MenuBottomRect.g = 0;
 				Cheat::GUI::MenuBottomRect.b = 0;
 				Cheat::GUI::MenuBottomRect.a = 255;
-			}
-			if (Cheat::Int("Red", Cheat::GUI::MenuBottomRect.r, 0, 255, 1, ""))
-			{
-				if (GetAsyncKeyState(VK_NUMPAD5) && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
-					int KeyBoardInput = NumberKeyboard();
-					if (KeyBoardInput <= 255 && KeyBoardInput >= 0) {
-						Cheat::GUI::MenuBottomRect.r = KeyBoardInput;
-					}
-					else
-					{
-						if (KeyBoardInput != 0) { Cheat::GameFunctions::MinimapNotification("~r~The value must be between 0 and 255"); }
-					}
-				}
-			}
-			if (Cheat::Int("Green", Cheat::GUI::MenuBottomRect.g, 0, 255, 1, ""))
-			{
-				if (GetAsyncKeyState(VK_NUMPAD5) && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
-					int KeyBoardInput = NumberKeyboard();
-					if (KeyBoardInput <= 255 && KeyBoardInput >= 0) {
-						Cheat::GUI::MenuBottomRect.g = KeyBoardInput;
-					}
-					else
-					{
-						if (KeyBoardInput != 0) { Cheat::GameFunctions::MinimapNotification("~r~The value must be between 0 and 255"); }
-					}
-				}
-			}
-			if (Cheat::Int("Blue", Cheat::GUI::MenuBottomRect.b, 0, 255, 1, ""))
-			{
-				if (GetAsyncKeyState(VK_NUMPAD5) && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
-					int KeyBoardInput = NumberKeyboard();
-					if (KeyBoardInput <= 255 && KeyBoardInput >= 0) {
-						Cheat::GUI::MenuBottomRect.b = KeyBoardInput;
-					}
-					else
-					{
-						if (KeyBoardInput != 0) { Cheat::GameFunctions::MinimapNotification("~r~The value must be between 0 and 255"); }
-					}
-				}
-			}
-			if (Cheat::Int("Opacity", Cheat::GUI::MenuBottomRect.a, 0, 255, 1, ""))
-			{
-				if (GetAsyncKeyState(VK_NUMPAD5) && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
-					int KeyBoardInput = NumberKeyboard();
-					if (KeyBoardInput <= 255 && KeyBoardInput >= 0) {
-						Cheat::GUI::MenuBottomRect.a = KeyBoardInput;
-					}
-					else
-					{
-						if (KeyBoardInput != 0) { Cheat::GameFunctions::MinimapNotification("~r~The value must be between 0 and 255"); }
-					}
-				}
-			}
+			}		
+			Cheat::Int("Red", Cheat::GUI::MenuBottomRect.r, 0, 255, 1);
+			Cheat::Int("Green", Cheat::GUI::MenuBottomRect.g, 0, 255, 1);			
+			Cheat::Int("Blue", Cheat::GUI::MenuBottomRect.b, 0, 255, 1);
+			Cheat::Int("Opacity", Cheat::GUI::MenuBottomRect.a, 0, 255, 1);
 		}
 		break;
 		case settingsmenubackground:
@@ -5001,58 +4839,10 @@ void Cheat::Main() {
 				Cheat::GUI::MenuBackgroundRect.b = 0;
 				Cheat::GUI::MenuBackgroundRect.a = 220;
 			}
-			if (Cheat::Int("Red", Cheat::GUI::MenuBackgroundRect.r, 0, 255, 1, ""))
-			{
-				if (GetAsyncKeyState(VK_NUMPAD5) && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
-					int KeyBoardInput = NumberKeyboard();
-					if (KeyBoardInput <= 255 && KeyBoardInput >= 0) {
-						Cheat::GUI::MenuBackgroundRect.r = KeyBoardInput;
-					}
-					else
-					{
-						if (KeyBoardInput != 0) { Cheat::GameFunctions::MinimapNotification("~r~The value must be between 0 and 255"); }
-					}
-				}
-			}
-			if (Cheat::Int("Green", Cheat::GUI::MenuBackgroundRect.g, 0, 255, 1, ""))
-			{
-				if (GetAsyncKeyState(VK_NUMPAD5) && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
-					int KeyBoardInput = NumberKeyboard();
-					if (KeyBoardInput <= 255 && KeyBoardInput >= 0) {
-						Cheat::GUI::MenuBackgroundRect.g = KeyBoardInput;
-					}
-					else
-					{
-						if (KeyBoardInput != 0) { Cheat::GameFunctions::MinimapNotification("~r~The value must be between 0 and 255"); }
-					}
-				}
-			}
-			if (Cheat::Int("Blue", Cheat::GUI::MenuBackgroundRect.b, 0, 255, 1, ""))
-			{
-				if (GetAsyncKeyState(VK_NUMPAD5) && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
-					int KeyBoardInput = NumberKeyboard();
-					if (KeyBoardInput <= 255 && KeyBoardInput >= 0) {
-						Cheat::GUI::MenuBackgroundRect.b = KeyBoardInput;
-					}
-					else
-					{
-						if (KeyBoardInput != 0) { Cheat::GameFunctions::MinimapNotification("~r~The value must be between 0 and 255"); }
-					}
-				}
-			}
-			if (Cheat::Int("Opacity", Cheat::GUI::MenuBackgroundRect.a, 0, 255, 1, ""))
-			{
-				if (GetAsyncKeyState(VK_NUMPAD5) && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
-					int KeyBoardInput = NumberKeyboard();
-					if (KeyBoardInput <= 255 && KeyBoardInput >= 0) {
-						Cheat::GUI::MenuBackgroundRect.a = KeyBoardInput;
-					}
-					else
-					{
-						if (KeyBoardInput != 0) { Cheat::GameFunctions::MinimapNotification("~r~The value must be between 0 and 255"); }
-					}
-				}
-			}
+			Cheat::Int("Red", Cheat::GUI::MenuBackgroundRect.r, 0, 255, 1);
+			Cheat::Int("Green", Cheat::GUI::MenuBackgroundRect.g, 0, 255, 1);
+			Cheat::Int("Blue", Cheat::GUI::MenuBackgroundRect.b, 0, 255, 1);
+			Cheat::Int("Opacity", Cheat::GUI::MenuBackgroundRect.a, 0, 255, 1);
 		}
 		break;
 		case settingssmalltitlebackground:
@@ -5065,58 +4855,10 @@ void Cheat::Main() {
 				Cheat::GUI::titleRect.b = 255;
 				Cheat::GUI::titleRect.a = 255;
 			}
-			if (Cheat::Int("Red", Cheat::GUI::titleRect.r, 0, 255, 1, ""))
-			{
-				if (GetAsyncKeyState(VK_NUMPAD5) && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
-					int KeyBoardInput = NumberKeyboard();
-					if (KeyBoardInput <= 255 && KeyBoardInput >= 0) {
-						Cheat::GUI::titleRect.r = KeyBoardInput;
-					}
-					else
-					{
-						if (KeyBoardInput != 0) { Cheat::GameFunctions::MinimapNotification("~r~The value must be between 0 and 255"); }
-					}
-				}
-			}
-			if (Cheat::Int("Green", Cheat::GUI::titleRect.g, 0, 255, 1, ""))
-			{
-				if (GetAsyncKeyState(VK_NUMPAD5) && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
-					int KeyBoardInput = NumberKeyboard();
-					if (KeyBoardInput <= 255 && KeyBoardInput >= 0) {
-						Cheat::GUI::titleRect.g = KeyBoardInput;
-					}
-					else
-					{
-						if (KeyBoardInput != 0) { Cheat::GameFunctions::MinimapNotification("~r~The value must be between 0 and 255"); }
-					}
-				}
-			}
-			if (Cheat::Int("Blue", Cheat::GUI::titleRect.b, 0, 255, 1, ""))
-			{
-				if (GetAsyncKeyState(VK_NUMPAD5) && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
-					int KeyBoardInput = NumberKeyboard();
-					if (KeyBoardInput <= 255 && KeyBoardInput >= 0) {
-						Cheat::GUI::titleRect.b = KeyBoardInput;
-					}
-					else
-					{
-						if (KeyBoardInput != 0) { Cheat::GameFunctions::MinimapNotification("~r~The value must be between 0 and 255"); }
-					}
-				}
-			}
-			if (Cheat::Int("Opacity", Cheat::GUI::titleRect.a, 0, 255, 1, ""))
-			{
-				if (GetAsyncKeyState(VK_NUMPAD5) && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
-					int KeyBoardInput = NumberKeyboard();
-					if (KeyBoardInput <= 255 && KeyBoardInput >= 0) {
-						Cheat::GUI::titleRect.a = KeyBoardInput;
-					}
-					else
-					{
-						if (KeyBoardInput != 0) { Cheat::GameFunctions::MinimapNotification("~r~The value must be between 0 and 255"); }
-					}
-				}
-			}
+			Cheat::Int("Red", Cheat::GUI::titleRect.r, 0, 255, 1);
+			Cheat::Int("Green", Cheat::GUI::titleRect.g, 0, 255, 1);
+			Cheat::Int("Blue", Cheat::GUI::titleRect.b, 0, 255, 1);
+			Cheat::Int("Opacity", Cheat::GUI::titleRect.a, 0, 255, 1);
 		}
 		break;
 		case settingsbottomline:
@@ -5129,58 +4871,10 @@ void Cheat::Main() {
 				Cheat::GUI::line.b = 255;
 				Cheat::GUI::line.a = 255;
 			}
-			if (Cheat::Int("Red", Cheat::GUI::line.r, 0, 255, 1, ""))
-			{
-				if (GetAsyncKeyState(VK_NUMPAD5) && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
-					int KeyBoardInput = NumberKeyboard();
-					if (KeyBoardInput <= 255 && KeyBoardInput >= 0) {
-						Cheat::GUI::line.r = KeyBoardInput;
-					}
-					else
-					{
-						if (KeyBoardInput != 0) { Cheat::GameFunctions::MinimapNotification("~r~The value must be between 0 and 255"); }
-					}
-				}
-			}
-			if (Cheat::Int("Green", Cheat::GUI::line.g, 0, 255, 1, ""))
-			{
-				if (GetAsyncKeyState(VK_NUMPAD5) && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
-					int KeyBoardInput = NumberKeyboard();
-					if (KeyBoardInput <= 255 && KeyBoardInput >= 0) {
-						Cheat::GUI::line.g = KeyBoardInput;
-					}
-					else
-					{
-						if (KeyBoardInput != 0) { Cheat::GameFunctions::MinimapNotification("~r~The value must be between 0 and 255"); }
-					}
-				}
-			}
-			if (Cheat::Int("Blue", Cheat::GUI::line.b, 0, 255, 1, ""))
-			{
-				if (GetAsyncKeyState(VK_NUMPAD5) && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
-					int KeyBoardInput = NumberKeyboard();
-					if (KeyBoardInput <= 255 && KeyBoardInput >= 0) {
-						Cheat::GUI::line.b = KeyBoardInput;
-					}
-					else
-					{
-						if (KeyBoardInput != 0) { Cheat::GameFunctions::MinimapNotification("~r~The value must be between 0 and 255"); }
-					}
-				}
-			}
-			if (Cheat::Int("Opacity", Cheat::GUI::line.a, 0, 255, 1, ""))
-			{
-				if (GetAsyncKeyState(VK_NUMPAD5) && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
-					int KeyBoardInput = NumberKeyboard();
-					if (KeyBoardInput <= 255 && KeyBoardInput >= 0) {
-						Cheat::GUI::line.a = KeyBoardInput;
-					}
-					else
-					{
-						if (KeyBoardInput != 0) { Cheat::GameFunctions::MinimapNotification("~r~The value must be between 0 and 255"); }
-					}
-				}
-			}
+			Cheat::Int("Red", Cheat::GUI::line.r, 0, 255, 1);
+			Cheat::Int("Green", Cheat::GUI::line.g, 0, 255, 1);
+			Cheat::Int("Blue", Cheat::GUI::line.b, 0, 255, 1);
+			Cheat::Int("Opacity", Cheat::GUI::line.a, 0, 255, 1);
 		}
 		break;
 		case settingsheaderbackground:
@@ -5193,58 +4887,10 @@ void Cheat::Main() {
 				Cheat::GUI::headerRect.b = 255;
 				Cheat::GUI::headerRect.a = 200;
 			}
-			if (Cheat::Int("Red", Cheat::GUI::headerRect.r, 0, 255, 1, ""))
-			{
-				if (GetAsyncKeyState(VK_NUMPAD5) && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
-					int KeyBoardInput = NumberKeyboard();
-					if (KeyBoardInput <= 255 && KeyBoardInput >= 0) {
-						Cheat::GUI::headerRect.r = KeyBoardInput;
-					}
-					else
-					{
-						if (KeyBoardInput != 0) { Cheat::GameFunctions::MinimapNotification("~r~The value must be between 0 and 255"); }
-					}
-				}
-			}
-			if (Cheat::Int("Green", Cheat::GUI::headerRect.g, 0, 255, 1, ""))
-			{
-				if (GetAsyncKeyState(VK_NUMPAD5) && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
-					int KeyBoardInput = NumberKeyboard();
-					if (KeyBoardInput <= 255 && KeyBoardInput >= 0) {
-						Cheat::GUI::headerRect.g = KeyBoardInput;
-					}
-					else
-					{
-						if (KeyBoardInput != 0) { Cheat::GameFunctions::MinimapNotification("~r~The value must be between 0 and 255"); }
-					}
-				}
-			}
-			if (Cheat::Int("Blue", Cheat::GUI::headerRect.b, 0, 255, 1, ""))
-			{
-				if (GetAsyncKeyState(VK_NUMPAD5) && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
-					int KeyBoardInput = NumberKeyboard();
-					if (KeyBoardInput <= 255 && KeyBoardInput >= 0) {
-						Cheat::GUI::headerRect.b = KeyBoardInput;
-					}
-					else
-					{
-						if (KeyBoardInput != 0) { Cheat::GameFunctions::MinimapNotification("~r~The value must be between 0 and 255"); }
-					}
-				}
-			}
-			if (Cheat::Int("Opacity", Cheat::GUI::headerRect.a, 0, 255, 1, ""))
-			{
-				if (GetAsyncKeyState(VK_NUMPAD5) && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
-					int KeyBoardInput = NumberKeyboard();
-					if (KeyBoardInput <= 255 && KeyBoardInput >= 0) {
-						Cheat::GUI::headerRect.a = KeyBoardInput;
-					}
-					else
-					{
-						if (KeyBoardInput != 0) { Cheat::GameFunctions::MinimapNotification("~r~The value must be between 0 and 255"); }
-					}
-				}
-			}
+			Cheat::Int("Red", Cheat::GUI::headerRect.r, 0, 255, 1);
+			Cheat::Int("Green", Cheat::GUI::headerRect.g, 0, 255, 1);
+			Cheat::Int("Blue", Cheat::GUI::headerRect.b, 0, 255, 1);
+			Cheat::Int("Opacity", Cheat::GUI::headerRect.a, 0, 255, 1);
 		}
 		break;
 		case ThemeLoaderMenu:
@@ -5254,37 +4900,24 @@ void Cheat::Main() {
 			if (Cheat::GUI::CurrentTheme != NULL)
 			{
 				Cheat::Break(Cheat::CheatFunctions::CombineTwoStrings("Active Theme: ~c~", Cheat::GUI::CurrentTheme), false);
+				if (Cheat::Option("Save To Current Theme", ""))
+				{
+					Cheat::SaveTheme(Cheat::GUI::CurrentTheme);
+				}
+				if (Cheat::Option("Delete Current Theme", "Delete active theme"))
+				{
+					Cheat::GUI::DeleteCurrentTheme();
+				}
 			}
 			else
 			{
 				Cheat::Break("Active Theme: ~c~None", false);
 			}
-			if (Cheat::GUI::CurrentTheme != NULL)
-			{
-				if (Cheat::Option("Save To Current Theme", ""))
-				{
-					Cheat::SaveTheme(Cheat::GUI::CurrentTheme);
-				}
-			}
-			if (Cheat::GUI::CurrentTheme != NULL)
-			{
-				if (Cheat::Option("Delete Current Theme", "Delete active theme"))
-				{
-					std::string ThemeFilePath = Cheat::CheatFunctions::ReturnCheatModuleDirectoryPath() + (std::string)"\\gtav\\Themes\\" + Cheat::GUI::CurrentTheme + ".ini";
-					if (remove(ThemeFilePath.c_str()) != 0) { Cheat::GameFunctions::MinimapNotification("~r~Failed To Delete Theme File"); } else { Cheat::GUI::CurrentTheme = NULL; Cheat::GameFunctions::MinimapNotification("Theme File Removed"); }
-				}
-			}
 			if (Cheat::Option("Save To New", "Save current GUI to new theme file"))
 			{
-				GAMEPLAY::DISPLAY_ONSCREEN_KEYBOARD(true, "", "", "", "", "", "", 20);
-				while (GAMEPLAY::UPDATE_ONSCREEN_KEYBOARD() == 0) WAIT(0, false);
-				char* ThemeName = GAMEPLAY::GET_ONSCREEN_KEYBOARD_RESULT();
-
-				if (!GAMEPLAY::GET_ONSCREEN_KEYBOARD_RESULT()) {
-					break;
-				}
-
-				Cheat::SaveTheme(ThemeName);
+				char* NewThemeFileName = Cheat::GameFunctions::DisplayKeyboardAndReturnInput(20);
+				if (NewThemeFileName == "0") { break; }
+				Cheat::SaveTheme(NewThemeFileName);
 			}
 		}
 		break;
@@ -5317,58 +4950,10 @@ void Cheat::Main() {
 				Cheat::GUI::MainTitleRect.b = 0;
 				Cheat::GUI::MainTitleRect.a = 255;
 			}
-			if (Cheat::Int("Red", Cheat::GUI::MainTitleRect.r, 0, 255, 1, ""))
-			{
-				if (GetAsyncKeyState(VK_NUMPAD5) || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
-					int KeyBoardInput = NumberKeyboard();
-					if (KeyBoardInput <= 255 && KeyBoardInput >= 0) {
-						Cheat::GUI::MainTitleRect.r = KeyBoardInput;
-					}
-					else
-					{
-						if (KeyBoardInput != 0) { Cheat::GameFunctions::MinimapNotification("~r~The value must be between 0 and 255"); }
-					}
-				}
-			}
-			if (Cheat::Int("Green", Cheat::GUI::MainTitleRect.g, 0, 255, 1, ""))
-			{
-				if (GetAsyncKeyState(VK_NUMPAD5) || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
-					int KeyBoardInput = NumberKeyboard();
-					if (KeyBoardInput <= 255 && KeyBoardInput >= 0) {
-						Cheat::GUI::MainTitleRect.g = KeyBoardInput;
-					}
-					else
-					{
-						if (KeyBoardInput != 0) { Cheat::GameFunctions::MinimapNotification("~r~The value must be between 0 and 255"); }
-					}
-				}
-			}
-			if (Cheat::Int("Blue", Cheat::GUI::MainTitleRect.b, 0, 255, 1, ""))
-			{
-				if (GetAsyncKeyState(VK_NUMPAD5) || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
-					int KeyBoardInput = NumberKeyboard();
-					if (KeyBoardInput <= 255 && KeyBoardInput >= 0) {
-						Cheat::GUI::MainTitleRect.b = KeyBoardInput;
-					}
-					else
-					{
-						if (KeyBoardInput != 0) { Cheat::GameFunctions::MinimapNotification("~r~The value must be between 0 and 255"); }
-					}
-				}
-			}
-			if (Cheat::Int("Opacity", Cheat::GUI::MainTitleRect.a, 0, 255, 1, ""))
-			{
-				if (GetAsyncKeyState(VK_NUMPAD5) || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
-					int KeyBoardInput = NumberKeyboard();
-					if (KeyBoardInput <= 255 && KeyBoardInput >= 0) {
-						Cheat::GUI::MainTitleRect.a = KeyBoardInput;
-					}
-					else
-					{
-						if (KeyBoardInput != 0) { Cheat::GameFunctions::MinimapNotification("~r~The value must be between 0 and 255"); }
-					}
-				}
-			}
+			Cheat::Int("Red", Cheat::GUI::MainTitleRect.r, 0, 255, 1);
+			Cheat::Int("Green", Cheat::GUI::MainTitleRect.g, 0, 255, 1);
+			Cheat::Int("Blue", Cheat::GUI::MainTitleRect.b, 0, 255, 1);
+			Cheat::Int("Opacity", Cheat::GUI::MainTitleRect.a, 0, 255, 1);
 		}
 		break;
 		case settingsoptiontext:
@@ -5381,58 +4966,10 @@ void Cheat::Main() {
 				Cheat::GUI::optionText.b = 255;
 				Cheat::GUI::optionText.a = 255;
 			}
-			if (Cheat::Int("Red", Cheat::GUI::optionText.r, 0, 255, 1, ""))
-			{
-				if (GetAsyncKeyState(VK_NUMPAD5) || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
-					int KeyBoardInput = NumberKeyboard();
-					if (KeyBoardInput <= 255 && KeyBoardInput >= 0) {
-						Cheat::GUI::optionText.r = KeyBoardInput;
-					}
-					else
-					{
-						if (KeyBoardInput != 0) { Cheat::GameFunctions::MinimapNotification("~r~The value must be between 0 and 255"); }
-					}
-				}
-			}
-			if (Cheat::Int("Green", Cheat::GUI::optionText.g, 0, 255, 1, ""))
-			{
-				if (GetAsyncKeyState(VK_NUMPAD5) || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
-					int KeyBoardInput = NumberKeyboard();
-					if (KeyBoardInput <= 255 && KeyBoardInput >= 0) {
-						Cheat::GUI::optionText.g = KeyBoardInput;
-					}
-					else
-					{
-						if (KeyBoardInput != 0) { Cheat::GameFunctions::MinimapNotification("~r~The value must be between 0 and 255"); }
-					}
-				}
-			}
-			if (Cheat::Int("Blue", Cheat::GUI::optionText.b, 0, 255, 1, ""))
-			{
-				if (GetAsyncKeyState(VK_NUMPAD5) || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
-					int KeyBoardInput = NumberKeyboard();
-					if (KeyBoardInput <= 255 && KeyBoardInput >= 0) {
-						Cheat::GUI::optionText.b = KeyBoardInput;
-					}
-					else
-					{
-						if (KeyBoardInput != 0) { Cheat::GameFunctions::MinimapNotification("~r~The value must be between 0 and 255"); }
-					}
-				}
-			}
-			if (Cheat::Int("Opacity", Cheat::GUI::optionText.a, 0, 255, 1, ""))
-			{
-				if (GetAsyncKeyState(VK_NUMPAD5) || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
-					int KeyBoardInput = NumberKeyboard();
-					if (KeyBoardInput <= 255 && KeyBoardInput >= 0) {
-						Cheat::GUI::optionText.a = KeyBoardInput;
-					}
-					else
-					{
-						if (KeyBoardInput != 0) { Cheat::GameFunctions::MinimapNotification("~r~The value must be between 0 and 255"); }
-					}
-				}
-			}
+			Cheat::Int("Red", Cheat::GUI::optionText.r, 0, 255, 1);
+			Cheat::Int("Green", Cheat::GUI::optionText.g, 0, 255, 1);
+			Cheat::Int("Blue", Cheat::GUI::optionText.b, 0, 255, 1);
+			Cheat::Int("Opacity", Cheat::GUI::optionText.a, 0, 255, 1);
 		}
 		break;
 		case settingsscroller:
@@ -5445,58 +4982,10 @@ void Cheat::Main() {
 				Cheat::GUI::scroller.b = 255;
 				Cheat::GUI::scroller.a = 255;
 			}
-			if (Cheat::Int("Red", Cheat::GUI::scroller.r, 0, 255, 1, ""))
-			{
-				if (GetAsyncKeyState(VK_NUMPAD5) || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
-					int KeyBoardInput = NumberKeyboard();
-					if (KeyBoardInput <= 255 && KeyBoardInput >= 0) {
-						Cheat::GUI::scroller.r = KeyBoardInput;
-					}
-					else
-					{
-						if (KeyBoardInput != 0) { Cheat::GameFunctions::MinimapNotification("~r~The value must be between 0 and 255"); }
-					}
-				}
-			}
-			if (Cheat::Int("Green", Cheat::GUI::scroller.g, 0, 255, 1, ""))
-			{
-				if (GetAsyncKeyState(VK_NUMPAD5) || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
-					int KeyBoardInput = NumberKeyboard();
-					if (KeyBoardInput <= 255 && KeyBoardInput >= 0) {
-						Cheat::GUI::scroller.g = KeyBoardInput;
-					}
-					else
-					{
-						if (KeyBoardInput != 0) { Cheat::GameFunctions::MinimapNotification("~r~The value must be between 0 and 255"); }
-					}
-				}
-			}
-			if (Cheat::Int("Blue", Cheat::GUI::scroller.b, 0, 255, 1, ""))
-			{
-				if (GetAsyncKeyState(VK_NUMPAD5) || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
-					int KeyBoardInput = NumberKeyboard();
-					if (KeyBoardInput <= 255 && KeyBoardInput >= 0) {
-						Cheat::GUI::scroller.b = KeyBoardInput;
-					}
-					else
-					{
-						if (KeyBoardInput != 0) { Cheat::GameFunctions::MinimapNotification("~r~The value must be between 0 and 255"); }
-					}
-				}
-			}
-			if (Cheat::Int("Opacity", Cheat::GUI::scroller.a, 0, 255, 1, ""))
-			{
-				if (GetAsyncKeyState(VK_NUMPAD5) || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
-					int KeyBoardInput = NumberKeyboard();
-					if (KeyBoardInput <= 255 && KeyBoardInput >= 0) {
-						Cheat::GUI::scroller.a = KeyBoardInput;
-					}
-					else
-					{
-						if (KeyBoardInput != 0) { Cheat::GameFunctions::MinimapNotification("~r~The value must be between 0 and 255"); }
-					}
-				}
-			}
+			Cheat::Int("Red", Cheat::GUI::scroller.r, 0, 255, 1);
+			Cheat::Int("Green", Cheat::GUI::scroller.g, 0, 255, 1);
+			Cheat::Int("Blue", Cheat::GUI::scroller.b, 0, 255, 1);
+			Cheat::Int("Opacity", Cheat::GUI::scroller.a, 0, 255, 1);
 		}
 		break;
 		}

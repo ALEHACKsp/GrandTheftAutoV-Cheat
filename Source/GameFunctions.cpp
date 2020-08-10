@@ -635,17 +635,17 @@ void Cheat::GameFunctions::LoadPlayerInformation(char* playerName, Player p)
 		RequestControlOfEnt(SelectedPlayerPed);
 
 		//Draw Title and Background
-		if (Cheat::Settings::menuX < 0.54f)
+		if (Cheat::CheatFeatures::guiX < 0.54f)
 		{
-			Drawing::Rect(Settings::scroller, { Settings::menuX + 0.266f, 0.31f }, { 0.32f, 0.31f }); //Main Background Rect
-			Drawing::Text(xorstr_("Player Information"), { Settings::titleText }, { Settings::menuX + 0.260f, 0.130f }, { 0.50f, 0.35f }, true);
-			Drawing::Rect(Settings::MainTitleRect, { Settings::menuX + 0.266f, 0.146f }, { 0.32f, 0.023f });
+			Drawing::Rect(GUI::scroller, { Cheat::CheatFeatures::guiX + 0.266f, 0.31f }, { 0.32f, 0.31f }); //Main Background Rect
+			Drawing::Text(xorstr_("Player Information"), { GUI::titleText }, { Cheat::CheatFeatures::guiX + 0.260f, 0.130f }, { 0.50f, 0.35f }, true);
+			Drawing::Rect(GUI::MainTitleRect, { Cheat::CheatFeatures::guiX + 0.266f, 0.146f }, { 0.32f, 0.023f });
 		}
 		else
 		{
-			Drawing::Rect(Settings::scroller, { Settings::menuX - 0.266f, 0.31f }, { 0.32f, 0.31f }); //Main Background Rect
-			Drawing::Text(xorstr_("Player Information"), { Settings::titleText }, { Settings::menuX - 0.260f, 0.130f }, { 0.50f, 0.35f }, true);
-			Drawing::Rect(Settings::MainTitleRect, { Settings::menuX - 0.266f, 0.146f }, { 0.32f, 0.023f });
+			Drawing::Rect(GUI::scroller, { Cheat::CheatFeatures::guiX - 0.266f, 0.31f }, { 0.32f, 0.31f }); //Main Background Rect
+			Drawing::Text(xorstr_("Player Information"), { GUI::titleText }, { Cheat::CheatFeatures::guiX - 0.260f, 0.130f }, { 0.50f, 0.35f }, true);
+			Drawing::Rect(GUI::MainTitleRect, { Cheat::CheatFeatures::guiX - 0.266f, 0.146f }, { 0.32f, 0.023f });
 		}
 
 		//Text Entry's

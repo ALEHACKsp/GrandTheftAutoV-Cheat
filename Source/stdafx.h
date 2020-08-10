@@ -100,16 +100,25 @@ public:
 
 
 
-namespace Cheat {
+namespace Cheat 
+{
 	void Main();
-	namespace Drawing {
+	namespace Drawing 
+	{
 		void Text(const char* text, RGBAF rgbaf, VECTOR2 position, VECTOR2_2 size, bool center);
 		void Rect(RGBA rgba, VECTOR2 position, VECTOR2_2 size);
 		void Spriter(std::string Streamedtexture, std::string textureName, float x, float y, float width, float height, float rotation, int r, int g, int b, int a);
-		void YTD();
+		void InitTextureFile();
 		void DrawScaleform(const float x, const float y, const float sx, const float sy, const int r, const int g, const int b);
 	}
-	namespace Settings {
+	namespace GUI 
+	{
+		extern char* ThemeFilesArray[1000];
+		extern bool ShowHeaderBackground;
+		extern bool ShowHeaderGUI;
+		extern bool ShowHeaderGlare;
+		extern bool CheatGUIHasBeenOpened;
+		extern char* CurrentTheme;
 		extern bool selectPressed;
 		extern bool leftPressed;
 		extern bool rightPressed;
@@ -130,7 +139,6 @@ namespace Cheat {
 		extern SubMenus PreviousMenu;
 		extern int optionsArray[1000];
 		extern SubMenus menusArray[1000];
-		extern float menuX;
 		extern RGBAF count;
 		extern RGBAF titleText;
 		extern RGBA titleRect;
@@ -163,15 +171,18 @@ namespace Cheat {
 		extern int leftpress;
 		extern int rightpress;
 	}
-	namespace MenuLevelHandler {
+	namespace MenuLevelHandler 
+	{
 		void MoveMenu(SubMenus menu);
 		void BackMenu();
 		void CloseMenu();
 	}
-	namespace Checks {
+	namespace Checks 
+	{
 		void Controls();
 	}
-	namespace Files {
+	namespace Files 
+	{
 		void WriteStringToIni(std::string string, std::string file, std::string app, std::string key);
 		std::string ReadStringFromIni(std::string file, std::string app, std::string key);
 		void WriteIntToIni(int intValue, std::string file, std::string app, std::string key);
@@ -181,7 +192,10 @@ namespace Cheat {
 		void WriteBoolToIni(bool b00l, std::string file, std::string app, std::string key);
 		bool ReadBoolFromIni(std::string file, std::string app, std::string key);
 	}
-	namespace CheatFeatures {
+	namespace CheatFeatures 
+	{
+		extern float guiX;
+		extern int BoolOptionVectorPosition;
 		extern int SpeedometerVectorPosition;
 		extern int selectedPlayer;
 		extern int PlayerOpacityInt;
@@ -191,6 +205,7 @@ namespace Cheat {
 		extern bool ShowBlockedScriptEventNotifications;
 		extern bool ShowPlayerTagsPlayerList;
 		extern bool AutoSaveSettings;
+		extern bool ShowVehicleInfoAndPreview;
 		extern std::chrono::steady_clock::time_point PostInitScaleFormStart;
 
 		void Looped();
@@ -354,7 +369,8 @@ namespace Cheat {
 		extern bool CartoonGunBool;
 		void CartoonGun();
 	}
-	namespace CheatFunctions {
+	namespace CheatFunctions 
+	{
 		std::string ReturnCheatBuildAsString();
 		const std::string ReturnConfigFilePath();
 		void LoadSettings(bool StartUp);
@@ -379,7 +395,8 @@ namespace Cheat {
 		std::string VirtualKeyCodeToString(UCHAR virtualKey);
 		void CreateConsole();
 	}
-	namespace GameFunctions {
+	namespace GameFunctions 
+	{
 		float GetGameFramesPerSecond();
 		void DrawGameFramesPerSecond();
 		void GiveAllWeaponsToPlayer(Ped Player);
@@ -447,13 +464,15 @@ namespace Cheat {
 		void ChangeEntityInvincibilityState(Entity EntityHandle, bool Enable);
 		char* ReturnOnlinePlayerPictureString(Player PlayerHandle);
 	}
-	namespace LogFunctions {
+	namespace LogFunctions 
+	{
 		void Init();
 		void Message(char* Message);
 		void Error(char* Message);
 		void DebugMessage(char* Message);
 	}
-	namespace GameArrays {
+	namespace GameArrays 
+	{
 		extern int RankPointsArray[8000];
 		extern const std::vector<std::string> PedModels;
 		extern const std::vector<std::string> BoatModels;
@@ -510,26 +529,17 @@ namespace Cheat {
 	void AddPlayerInfoBoxTextEntry(char* text, int Row1 = NULL, int Row2 = NULL, int Row3 = NULL, int Row4 = NULL);
 	bool Break(const char* option, bool TextCentered);
 	bool Option(const char* option, const char* InformationText, bool PlayerList = false);
-	//bool Option(const char* option, const char* InformationText, std::function<void()> function);
 	bool VehicleOption(const char* option, std::string ModelName);
-	//bool VehicleOption(const char* option, std::string ModelName, std::function<void()> function);
 	bool MenuOption(const char* option, SubMenus newSub);
-	//bool MenuOption(const char* option, SubMenus newSub, std::function<void()> function);
 	bool MenuOptionPlayerList(const char* option, SubMenus newSub, Player PlayerHandle);
 	bool Toggle(const char* option, bool& b00l, const char* InformationText);
 	bool ToggleCheckMark(const char* option, bool& b00l);
-	//bool Toggle(const char* option, bool& b00l, const char* InformationText, std::function<void()> function);
 	bool IntNoControl(const char* option, int& _int, int min, int max, const char* InformationText);
 	bool Int(const char* option, int& _int, int min, int max, int step, const char* InformationText);
-	//bool Int(const char* option, int& _int, int min, int max, int step, const char* InformationText, std::function<void()> function);
 	bool Float(const char* option, float& _float, float min, float max, float steps, bool ReturnTrueWithValueChange, const char* InformationText);
-	//bool Float(const char* option, float& _float, float min, float max, float steps, bool ReturnTrueWithValueChange, const char* InformationText, std::function<void()> function);
 	bool IntVector(const char* option, std::vector<int> Vector, int& position);
-	//bool IntVector(const char* option, std::vector<int> Vector, int& position, std::function<void()> function);
 	bool FloatVector(const char* option, std::vector<float> Vector, int& position);
-	//bool FloatVector(const char* option, std::vector<float> Vector, int& position, std::function<void()> function);
 	bool StringVector(const char* option, std::vector<std::string> Vector, int& position, const char* InformationText);
-	//bool StringVector(const char* option, std::vector<std::string> Vector, int& position, const char* InformationText, std::function<void()> function);
 	void End();
 	void LoadThemeFilesLooped();
 	void LoadTheme(char* ThemeFileName, bool StartUp);
@@ -545,6 +555,4 @@ extern bool spawnvehiclewithgodmode;
 extern bool spawnmaxupgraded;
 extern bool show_joining_players_notification;
 extern bool ShowPlayerInformationPlayerList;
-extern bool CheatGUIHasBeenOpened;
-extern bool ShowHeaderGlare;
 extern HMODULE CheatModuleHandle;

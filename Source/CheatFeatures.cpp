@@ -1,5 +1,7 @@
 #include "stdafx.h"
 
+float Cheat::CheatFeatures::guiX = 0.11f;
+int Cheat::CheatFeatures::BoolOptionVectorPosition = 0; //0: Shop Box. 1: Circle
 int Cheat::CheatFeatures::SpeedometerVectorPosition = 0;
 int Cheat::CheatFeatures::PlayerOpacityInt = 250;
 bool Cheat::CheatFeatures::HotkeyToggleBool = true;
@@ -8,6 +10,7 @@ bool Cheat::CheatFeatures::BlockScriptEvents = true;
 bool Cheat::CheatFeatures::ShowBlockedScriptEventNotifications = true;
 bool Cheat::CheatFeatures::ShowPlayerTagsPlayerList = true;
 bool Cheat::CheatFeatures::AutoSaveSettings = false;
+bool Cheat::CheatFeatures::ShowVehicleInfoAndPreview = true;
 std::chrono::steady_clock::time_point Cheat::CheatFeatures::PostInitScaleFormStart;
 
 
@@ -15,7 +18,7 @@ std::chrono::steady_clock::time_point AutoSaveSettingsStart = std::chrono::high_
 void Cheat::CheatFeatures::Looped()
 {
 	//Post Init Scaleform Banner Notification - Show for 10 seconds or until cheat GUI is opened
-	if (!CheatGUIHasBeenOpened && !(std::chrono::duration_cast<std::chrono::seconds>(std::chrono::high_resolution_clock::now() - PostInitScaleFormStart).count() > 10))
+	if (!Cheat::GUI::CheatGUIHasBeenOpened && !(std::chrono::duration_cast<std::chrono::seconds>(std::chrono::high_resolution_clock::now() - PostInitScaleFormStart).count() > 10))
 	{ 
 		auto ScaleformHandle = GRAPHICS::REQUEST_SCALEFORM_MOVIE(xorstr_("mp_big_message_freemode"));
 		while (!GRAPHICS::HAS_SCALEFORM_MOVIE_LOADED(ScaleformHandle)) { WAIT(0, false); }
@@ -28,9 +31,9 @@ void Cheat::CheatFeatures::Looped()
 	}
 
 	//Key Instructions, Cheat GUI
-	if (!CheatGUIHasBeenOpened)
+	if (!Cheat::GUI::CheatGUIHasBeenOpened)
 	{
-		std::string OpenGUIString = xorstr_("Press ") + Cheat::CheatFunctions::VirtualKeyCodeToString(Cheat::Settings::openKey) + xorstr_(" to open GUI");
+		std::string OpenGUIString = xorstr_("Press ") + Cheat::CheatFunctions::VirtualKeyCodeToString(Cheat::GUI::openKey) + xorstr_(" to open GUI");
 		Cheat::GameFunctions::InstructionsInit();
 		Cheat::GameFunctions::InstructionsAdd((char*)OpenGUIString.c_str(), 80);
 		Cheat::GameFunctions::InstructionsEnd();
@@ -685,7 +688,7 @@ void Cheat::CheatFeatures::NoClip()
 		ENTITY::SET_ENTITY_COORDS_NO_OFFSET(currentCar, Pos.x, Pos.y, Pos.z, 0, 0, 0);
 		if (ENTITY::DOES_ENTITY_EXIST(currentCar) && ENTITY::IS_ENTITY_A_VEHICLE(currentCar))
 		{
-			if (GetAsyncKeyState(0x57) && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, 232) && Cheat::Settings::ControllerInput)
+			if (GetAsyncKeyState(0x57) && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, 232) && Cheat::GUI::ControllerInput)
 			{
 				ENTITY::SET_ENTITY_COLLISION(currentCar, false, false);
 				ENTITY::SET_ENTITY_COORDS_NO_OFFSET(currentCar, Pos.x + (x * d), Pos.y + (y * d), Pos.z + (z * d), 0, 0, 0);
@@ -700,7 +703,7 @@ void Cheat::CheatFeatures::NoClip()
 		ENTITY::SET_ENTITY_COLLISION(PlayerPedID, true, true);
 		ENTITY::SET_ENTITY_ROTATION(PlayerPedID, rotation.x, rotation.y, rotation.z, 2, 1);
 		ENTITY::SET_ENTITY_COORDS_NO_OFFSET(PlayerPedID, Pos.x, Pos.y, Pos.z, 0, 0, 0);
-		if (GetAsyncKeyState(0x57) && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, 232) && Cheat::Settings::ControllerInput)
+		if (GetAsyncKeyState(0x57) && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, 232) && Cheat::GUI::ControllerInput)
 		{
 			ENTITY::SET_ENTITY_COLLISION(PlayerPedID, false, false);
 			ENTITY::SET_ENTITY_COORDS_NO_OFFSET(PlayerPedID, Pos.x + (x * d), Pos.y + (y * d), Pos.z + (z * d), 0, 0, 0);
@@ -1348,11 +1351,11 @@ void Cheat::CheatFeatures::ShowSessionInformation()
 	std::string yMsg = xorstr_(" Y ") + std::to_string(playerCoord.y);
 	std::string zMsg = xorstr_(" Z ") + std::to_string(playerCoord.z);
 
-	Cheat::Drawing::Text(xorstr_("Local Player Coords"), Cheat::Settings::optionText, { 0.162, 0.8100f }, { 0.25f, 0.25f }, false);
-	Cheat::Drawing::Text(xMsg.c_str(), Cheat::Settings::optionText, { 0.16, 0.8225f }, { 0.25f, 0.25f }, false);
-	Cheat::Drawing::Text(yMsg.c_str(), Cheat::Settings::optionText, { 0.16, 0.8350f }, { 0.25f, 0.25f }, false);
-	Cheat::Drawing::Text(zMsg.c_str(), Cheat::Settings::optionText, { 0.16, 0.8475f }, { 0.25f, 0.25f }, false);
-	if (NETWORK::NETWORK_IS_SESSION_STARTED()) { Cheat::Drawing::Text(NumbConnectedPlayers.c_str(), Cheat::Settings::optionText, { 0.1615, 0.8650f }, { 0.25f, 0.25f }, false); }
+	Cheat::Drawing::Text(xorstr_("Local Player Coords"), Cheat::GUI::optionText, { 0.162, 0.8100f }, { 0.25f, 0.25f }, false);
+	Cheat::Drawing::Text(xMsg.c_str(), Cheat::GUI::optionText, { 0.16, 0.8225f }, { 0.25f, 0.25f }, false);
+	Cheat::Drawing::Text(yMsg.c_str(), Cheat::GUI::optionText, { 0.16, 0.8350f }, { 0.25f, 0.25f }, false);
+	Cheat::Drawing::Text(zMsg.c_str(), Cheat::GUI::optionText, { 0.16, 0.8475f }, { 0.25f, 0.25f }, false);
+	if (NETWORK::NETWORK_IS_SESSION_STARTED()) { Cheat::Drawing::Text(NumbConnectedPlayers.c_str(), Cheat::GUI::optionText, { 0.1615, 0.8650f }, { 0.25f, 0.25f }, false); }
 }
 
 

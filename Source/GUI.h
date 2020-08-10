@@ -5,11 +5,11 @@ enum SubMenus
 	NOMENU,
 	MainMenu,
 	SelfOptionsMenu,
-	settings,
-	settingstheme,
-	themeloader,
-	themefiles,
-	settingstitlerect,
+	SettingsMenu,
+	GUIColorsMenu,
+	ThemeLoaderMenu,
+	ThemeFilesMenu,
+	GUITitleBackgroundColorMenu,
 	settingsheaderbackground,
 	settingssmalltitlebackground,
 	settingsscroller,
@@ -21,7 +21,7 @@ enum SubMenus
 	SelectedPlayerMenu,
 	teleportmenu,
 	weaponmenu,
-	vehicle_lsc_color_options_custom_color,
+	VehicleCustomizerColorMenu,
 	miscmenu,
 	worldmenu,
 	vehiclemenu,
@@ -129,25 +129,23 @@ enum SubMenus
 };
 extern enum SubMenus;
 
-typedef struct VECTOR2 {
+typedef struct VECTOR2 
+{
 	float x, y;
 };
-typedef struct VECTOR2_2 {
+typedef struct VECTOR2_2 
+{
 	float w, h;
 };
-typedef struct RGBAF {
+typedef struct RGBAF 
+{
 	int r, g, b, a, f;
 };
-typedef struct RGBA {
+typedef struct RGBA 
+{
 	int r, g, b, a;
 };
-typedef struct RGB {
+typedef struct RGB 
+{
 	int r, g, b;
 };
-
-extern int BoolOptionVectorPosition;
-extern bool show_header_background;
-extern bool show_header_gui;
-extern char* ThemeFilesArray[100];
-extern char* CurrentTheme;
-extern bool ShowVehicleInfoAndPreview;

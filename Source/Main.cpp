@@ -49,7 +49,7 @@ void Cheat::Main() {
 		Cheat::Checks::Controls();
 		Cheat::CheatFunctions::CheatThreadLoopFunctions();
 
-		switch (Cheat::Settings::currentMenu) {
+		switch (Cheat::GUI::currentMenu) {
 		case MainMenu:
 		{
 			Cheat::Title(xorstr_("Main Menu"));
@@ -60,7 +60,7 @@ void Cheat::Main() {
 			Cheat::MenuOption(xorstr_("Teleport Options >"), teleportmenu);
 			Cheat::MenuOption(xorstr_("World Options >"), worldmenu);
 			Cheat::MenuOption(xorstr_("Misc Options >"), miscmenu);
-			Cheat::MenuOption(xorstr_("Settings >"), settings);
+			Cheat::MenuOption(xorstr_("Settings >"), SettingsMenu);
 		}
 		break;
 		case allplayers:
@@ -1735,7 +1735,7 @@ void Cheat::Main() {
 				if (!GAMEPLAY::GET_ONSCREEN_KEYBOARD_RESULT()) { break; }
 				Cheat::GameFunctions::SpawnVehicle(SpawnVehicle);
 			}
-			Cheat::Toggle("Show Vehicle Info & Preview", ShowVehicleInfoAndPreview, "Shows selected vehicle info & picture");
+			Cheat::Toggle("Show Vehicle Info & Preview", Cheat::CheatFeatures::ShowVehicleInfoAndPreview, "Shows selected vehicle info & picture");
 			Cheat::Break("Categories", true);
 			Cheat::MenuOption("DLC Vehicles >", DLCVehiclesMenu);
 			Cheat::MenuOption("Super >", Super);
@@ -2304,12 +2304,12 @@ void Cheat::Main() {
 					Cheat::GameFunctions::MinimapNotification("~r~Player isn't in a vehicle");
 				}
 			}
-			Cheat::MenuOption("Color Options >", vehicle_lsc_color_options);
+			Cheat::MenuOption("Color Options >", VehicleCustomizerColorMenu);
 			Cheat::MenuOption("Neon Options >", vehicle_lsc_neon_options);
 			Cheat::MenuOption("Multipliers >", vehiclemultipliersmenus);
 		}
 		break;
-		case vehicle_lsc_color_options_custom_color:
+		case VehicleCustomizerColorMenu:
 		{
 			Cheat::Title("Custom Color");
 			if (Cheat::Int("Primary Color: Red", VehiclePrimaryColorRed, 0, 255, 1, "")) {
@@ -2373,7 +2373,7 @@ void Cheat::Main() {
 				if (VEHICLE::GET_IS_VEHICLE_SECONDARY_COLOUR_CUSTOM(veh))
 					VEHICLE::SET_VEHICLE_CUSTOM_SECONDARY_COLOUR(veh, rand() % 255, rand() % 255, rand() % 255);
 			}
-			Cheat::MenuOption("Custom Color >", vehicle_lsc_color_options_custom_color);
+			Cheat::MenuOption("Custom Color >", VehicleCustomizerColorMenu);
 			Cheat::Break("~bold~Color Presets", true);
 			if (Cheat::Option("Chrome", "")) {
 				Vehicle veh = PED::GET_VEHICLE_PED_IS_IN(PlayerPedID, 0);
@@ -4360,7 +4360,7 @@ void Cheat::Main() {
 						if (PlayerID == i) { PlayernameString.append(" ~g~[You]"); }
 					}
 					Cheat::MenuOptionPlayerList((char*)PlayernameString.c_str(), SelectedPlayerMenu, i) ? Cheat::CheatFeatures::selectedPlayer = i : NULL;
-					if (Cheat::Settings::currentOption == Cheat::Settings::optionCount) 
+					if (Cheat::GUI::currentOption == Cheat::GUI::optionCount) 
 					{
 						Cheat::GameFunctions::LoadPlayerInformation(PLAYER::GET_PLAYER_NAME(i), i); 
 					}
@@ -4833,7 +4833,7 @@ void Cheat::Main() {
 			}
 		}
 		break; 
-		case settings:
+		case SettingsMenu:
 		{
 			Cheat::Title("Settings");
 			Cheat::MenuOption("GUI Settings >", guisettings);
@@ -4848,7 +4848,7 @@ void Cheat::Main() {
 		case menusettingsmenu:
 		{
 			Cheat::Title("Cheat Settings");
-			Cheat::Toggle("Controller Support", Cheat::Settings::ControllerInput, "Enables Cheat GUI Controller Support");
+			Cheat::Toggle("Controller Support", Cheat::GUI::ControllerInput, "Enables Cheat GUI Controller Support");
 			Cheat::Break("~bold~Player List", true);
 			Cheat::Toggle("Show Player Information", ShowPlayerInformationPlayerList, "Toggle Player Information Box");
 			Cheat::Toggle("Show Player Tags", Cheat::CheatFeatures::ShowPlayerTagsPlayerList, "Toggle Player Tags");
@@ -4862,26 +4862,26 @@ void Cheat::Main() {
 		case guisettings:
 		{
 			Cheat::Title("GUI Settings");
-			Cheat::MenuOption("Colors >", settingstheme);
+			Cheat::MenuOption("Colors >", GUIColorsMenu);
 			Cheat::MenuOption("Header Options >", headeroptionsmenu);
-			Cheat::StringVector("Toggles", { "Shop Box", "Circle" }, BoolOptionVectorPosition, "Select Boolean Toggle");
-			Cheat::Int("Max Visible Menu Options", Cheat::Settings::maxVisOptions, 5, 16, 1, "Set Max Visible Menu Options");
-			Cheat::Toggle("Restore To Previous Submenu", Cheat::Settings::RestorePreviousSubmenu, "When opening restores previous submenu");
-			Cheat::Float("MenuX Position", Cheat::Settings::menuX, 0.11f, 0.86f, 0.01, true, "Changes GUI X-Axis Position");
-			std::string OpenKeyString = "Open Key: ~c~" + Cheat::CheatFunctions::VirtualKeyCodeToString(Cheat::Settings::openKey);
+			Cheat::StringVector("Toggles", { "Shop Box", "Circle" }, Cheat::CheatFeatures::BoolOptionVectorPosition, "Select Boolean Toggle");
+			Cheat::Int("Max Visible Menu Options", Cheat::GUI::maxVisOptions, 5, 16, 1, "Set Max Visible Menu Options");
+			Cheat::Toggle("Restore To Previous Submenu", Cheat::GUI::RestorePreviousSubmenu, "When opening restores previous submenu");
+			Cheat::Float("MenuX Position", Cheat::CheatFeatures::guiX, 0.11f, 0.86f, 0.01, true, "Changes GUI X-Axis Position");
+			std::string OpenKeyString = "Open Key: ~c~" + Cheat::CheatFunctions::VirtualKeyCodeToString(Cheat::GUI::openKey);
 			if (Cheat::Option(OpenKeyString.c_str(), "Select to change"))
 			{
 				int PressedKey;
 				while (!Cheat::CheatFunctions::ReturnPressedKey(PressedKey)) { Cheat::Drawing::Text("~bold~Press any key to set Open Key, press Escape to cancel", { 255, 255, 255, 255 }, { 0.525f, 0.400f }, { 0.900f, 0.900f }, true); WAIT(0, false); }
 				if (PressedKey == 27) { Cheat::GameFunctions::MinimapNotification("Canceled Setting Open Key"); break; }
-				if (PressedKey != 0) { Cheat::Settings::openKey = PressedKey; Cheat::GameFunctions::MinimapNotification("Open Key has been set"); }
+				if (PressedKey != 0) { Cheat::GUI::openKey = PressedKey; Cheat::GameFunctions::MinimapNotification("Open Key has been set"); }
 			}
-			if (Cheat::Int("Scroll Delay", Cheat::Settings::keyPressDelay2, 1, 200, 1, ""))
+			if (Cheat::Int("Scroll Delay", Cheat::GUI::keyPressDelay2, 1, 200, 1, ""))
 			{
 				if (GetAsyncKeyState(VK_NUMPAD5) && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
 					int ScrollDelayInt = NumberKeyboard();
 					if (ScrollDelayInt <= 200 && ScrollDelayInt >= 1) {
-						Cheat::Settings::keyPressDelay2 = ScrollDelayInt;
+						Cheat::GUI::keyPressDelay2 = ScrollDelayInt;
 					}
 					else
 					{
@@ -4889,13 +4889,13 @@ void Cheat::Main() {
 					}
 				}
 			}
-			if (Cheat::Int("Int Delay", Cheat::Settings::keyPressDelay3, 1, 200, 1, ""))
+			if (Cheat::Int("Int Delay", Cheat::GUI::keyPressDelay3, 1, 200, 1, ""))
 			{
 				if (GetAsyncKeyState(VK_NUMPAD5) && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) 
 				{
 					int IntDelayInt = NumberKeyboard();
 					if (IntDelayInt <= 200 && IntDelayInt >= 1) {
-						Cheat::Settings::keyPressDelay3 = IntDelayInt;
+						Cheat::GUI::keyPressDelay3 = IntDelayInt;
 					}
 					else
 					{			
@@ -4903,21 +4903,21 @@ void Cheat::Main() {
 					}
 				}
 			}
-			Cheat::MenuOption("Theme Loader >", themeloader);
+			Cheat::MenuOption("Theme Loader >", ThemeLoaderMenu);
 		}
 		break; 
 		case headeroptionsmenu:
 		{
 			Cheat::Title("Header Options");
-			Cheat::Toggle("Show Header GUI", show_header_gui, "Toggle Header GUI");
-			Cheat::Toggle("Show Header Background", show_header_background, "Toggle Header Background");
-			Cheat::Toggle("Show Header Glare", ShowHeaderGlare, "Show GTAO Interaction Menu Glare");
+			Cheat::Toggle("Show Header GUI", Cheat::GUI::ShowHeaderGUI, "Toggle Header GUI");
+			Cheat::Toggle("Show Header Background", Cheat::GUI::ShowHeaderBackground, "Toggle Header Background");
+			Cheat::Toggle("Show Header Glare", Cheat::GUI::ShowHeaderGlare, "Show GTAO Interaction Menu Glare");
 		}
 		break;
-		case settingstheme:
+		case GUIColorsMenu:
 		{
 			Cheat::Title("Colors");
-			Cheat::MenuOption("Title Background >", settingstitlerect);
+			Cheat::MenuOption("Title Background >", GUITitleBackgroundColorMenu);
 			Cheat::MenuOption("Header Background >", settingsheaderbackground);
 			Cheat::MenuOption("Menu Background >", settingsmenubackground);
 			Cheat::MenuOption("Menu Bottom Background >", settingsmenubottombackground);
@@ -4932,17 +4932,17 @@ void Cheat::Main() {
 			Cheat::Title("Menu Bottom Background");
 			if (Cheat::Option("Set Default", ""))
 			{
-				Cheat::Settings::MenuBottomRect.r = 0;
-				Cheat::Settings::MenuBottomRect.g = 0;
-				Cheat::Settings::MenuBottomRect.b = 0;
-				Cheat::Settings::MenuBottomRect.a = 255;
+				Cheat::GUI::MenuBottomRect.r = 0;
+				Cheat::GUI::MenuBottomRect.g = 0;
+				Cheat::GUI::MenuBottomRect.b = 0;
+				Cheat::GUI::MenuBottomRect.a = 255;
 			}
-			if (Cheat::Int("Red", Cheat::Settings::MenuBottomRect.r, 0, 255, 1, ""))
+			if (Cheat::Int("Red", Cheat::GUI::MenuBottomRect.r, 0, 255, 1, ""))
 			{
 				if (GetAsyncKeyState(VK_NUMPAD5) && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
 					int KeyBoardInput = NumberKeyboard();
 					if (KeyBoardInput <= 255 && KeyBoardInput >= 0) {
-						Cheat::Settings::MenuBottomRect.r = KeyBoardInput;
+						Cheat::GUI::MenuBottomRect.r = KeyBoardInput;
 					}
 					else
 					{
@@ -4950,12 +4950,12 @@ void Cheat::Main() {
 					}
 				}
 			}
-			if (Cheat::Int("Green", Cheat::Settings::MenuBottomRect.g, 0, 255, 1, ""))
+			if (Cheat::Int("Green", Cheat::GUI::MenuBottomRect.g, 0, 255, 1, ""))
 			{
 				if (GetAsyncKeyState(VK_NUMPAD5) && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
 					int KeyBoardInput = NumberKeyboard();
 					if (KeyBoardInput <= 255 && KeyBoardInput >= 0) {
-						Cheat::Settings::MenuBottomRect.g = KeyBoardInput;
+						Cheat::GUI::MenuBottomRect.g = KeyBoardInput;
 					}
 					else
 					{
@@ -4963,12 +4963,12 @@ void Cheat::Main() {
 					}
 				}
 			}
-			if (Cheat::Int("Blue", Cheat::Settings::MenuBottomRect.b, 0, 255, 1, ""))
+			if (Cheat::Int("Blue", Cheat::GUI::MenuBottomRect.b, 0, 255, 1, ""))
 			{
 				if (GetAsyncKeyState(VK_NUMPAD5) && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
 					int KeyBoardInput = NumberKeyboard();
 					if (KeyBoardInput <= 255 && KeyBoardInput >= 0) {
-						Cheat::Settings::MenuBottomRect.b = KeyBoardInput;
+						Cheat::GUI::MenuBottomRect.b = KeyBoardInput;
 					}
 					else
 					{
@@ -4976,12 +4976,12 @@ void Cheat::Main() {
 					}
 				}
 			}
-			if (Cheat::Int("Opacity", Cheat::Settings::MenuBottomRect.a, 0, 255, 1, ""))
+			if (Cheat::Int("Opacity", Cheat::GUI::MenuBottomRect.a, 0, 255, 1, ""))
 			{
 				if (GetAsyncKeyState(VK_NUMPAD5) && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
 					int KeyBoardInput = NumberKeyboard();
 					if (KeyBoardInput <= 255 && KeyBoardInput >= 0) {
-						Cheat::Settings::MenuBottomRect.a = KeyBoardInput;
+						Cheat::GUI::MenuBottomRect.a = KeyBoardInput;
 					}
 					else
 					{
@@ -4996,17 +4996,17 @@ void Cheat::Main() {
 			Cheat::Title("Menu Background");
 			if (Cheat::Option("Set Default", ""))
 			{
-				Cheat::Settings::MenuBackgroundRect.r = 0;
-				Cheat::Settings::MenuBackgroundRect.g = 0;
-				Cheat::Settings::MenuBackgroundRect.b = 0;
-				Cheat::Settings::MenuBackgroundRect.a = 220;
+				Cheat::GUI::MenuBackgroundRect.r = 0;
+				Cheat::GUI::MenuBackgroundRect.g = 0;
+				Cheat::GUI::MenuBackgroundRect.b = 0;
+				Cheat::GUI::MenuBackgroundRect.a = 220;
 			}
-			if (Cheat::Int("Red", Cheat::Settings::MenuBackgroundRect.r, 0, 255, 1, ""))
+			if (Cheat::Int("Red", Cheat::GUI::MenuBackgroundRect.r, 0, 255, 1, ""))
 			{
 				if (GetAsyncKeyState(VK_NUMPAD5) && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
 					int KeyBoardInput = NumberKeyboard();
 					if (KeyBoardInput <= 255 && KeyBoardInput >= 0) {
-						Cheat::Settings::MenuBackgroundRect.r = KeyBoardInput;
+						Cheat::GUI::MenuBackgroundRect.r = KeyBoardInput;
 					}
 					else
 					{
@@ -5014,12 +5014,12 @@ void Cheat::Main() {
 					}
 				}
 			}
-			if (Cheat::Int("Green", Cheat::Settings::MenuBackgroundRect.g, 0, 255, 1, ""))
+			if (Cheat::Int("Green", Cheat::GUI::MenuBackgroundRect.g, 0, 255, 1, ""))
 			{
 				if (GetAsyncKeyState(VK_NUMPAD5) && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
 					int KeyBoardInput = NumberKeyboard();
 					if (KeyBoardInput <= 255 && KeyBoardInput >= 0) {
-						Cheat::Settings::MenuBackgroundRect.g = KeyBoardInput;
+						Cheat::GUI::MenuBackgroundRect.g = KeyBoardInput;
 					}
 					else
 					{
@@ -5027,12 +5027,12 @@ void Cheat::Main() {
 					}
 				}
 			}
-			if (Cheat::Int("Blue", Cheat::Settings::MenuBackgroundRect.b, 0, 255, 1, ""))
+			if (Cheat::Int("Blue", Cheat::GUI::MenuBackgroundRect.b, 0, 255, 1, ""))
 			{
 				if (GetAsyncKeyState(VK_NUMPAD5) && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
 					int KeyBoardInput = NumberKeyboard();
 					if (KeyBoardInput <= 255 && KeyBoardInput >= 0) {
-						Cheat::Settings::MenuBackgroundRect.b = KeyBoardInput;
+						Cheat::GUI::MenuBackgroundRect.b = KeyBoardInput;
 					}
 					else
 					{
@@ -5040,12 +5040,12 @@ void Cheat::Main() {
 					}
 				}
 			}
-			if (Cheat::Int("Opacity", Cheat::Settings::MenuBackgroundRect.a, 0, 255, 1, ""))
+			if (Cheat::Int("Opacity", Cheat::GUI::MenuBackgroundRect.a, 0, 255, 1, ""))
 			{
 				if (GetAsyncKeyState(VK_NUMPAD5) && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
 					int KeyBoardInput = NumberKeyboard();
 					if (KeyBoardInput <= 255 && KeyBoardInput >= 0) {
-						Cheat::Settings::MenuBackgroundRect.a = KeyBoardInput;
+						Cheat::GUI::MenuBackgroundRect.a = KeyBoardInput;
 					}
 					else
 					{
@@ -5060,17 +5060,17 @@ void Cheat::Main() {
 			Cheat::Title("Small Title Background");
 			if (Cheat::Option("Set Default", ""))
 			{
-				Cheat::Settings::titleRect.r = 0;
-				Cheat::Settings::titleRect.g = 0;
-				Cheat::Settings::titleRect.b = 255;
-				Cheat::Settings::titleRect.a = 255;
+				Cheat::GUI::titleRect.r = 0;
+				Cheat::GUI::titleRect.g = 0;
+				Cheat::GUI::titleRect.b = 255;
+				Cheat::GUI::titleRect.a = 255;
 			}
-			if (Cheat::Int("Red", Cheat::Settings::titleRect.r, 0, 255, 1, ""))
+			if (Cheat::Int("Red", Cheat::GUI::titleRect.r, 0, 255, 1, ""))
 			{
 				if (GetAsyncKeyState(VK_NUMPAD5) && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
 					int KeyBoardInput = NumberKeyboard();
 					if (KeyBoardInput <= 255 && KeyBoardInput >= 0) {
-						Cheat::Settings::titleRect.r = KeyBoardInput;
+						Cheat::GUI::titleRect.r = KeyBoardInput;
 					}
 					else
 					{
@@ -5078,12 +5078,12 @@ void Cheat::Main() {
 					}
 				}
 			}
-			if (Cheat::Int("Green", Cheat::Settings::titleRect.g, 0, 255, 1, ""))
+			if (Cheat::Int("Green", Cheat::GUI::titleRect.g, 0, 255, 1, ""))
 			{
 				if (GetAsyncKeyState(VK_NUMPAD5) && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
 					int KeyBoardInput = NumberKeyboard();
 					if (KeyBoardInput <= 255 && KeyBoardInput >= 0) {
-						Cheat::Settings::titleRect.g = KeyBoardInput;
+						Cheat::GUI::titleRect.g = KeyBoardInput;
 					}
 					else
 					{
@@ -5091,12 +5091,12 @@ void Cheat::Main() {
 					}
 				}
 			}
-			if (Cheat::Int("Blue", Cheat::Settings::titleRect.b, 0, 255, 1, ""))
+			if (Cheat::Int("Blue", Cheat::GUI::titleRect.b, 0, 255, 1, ""))
 			{
 				if (GetAsyncKeyState(VK_NUMPAD5) && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
 					int KeyBoardInput = NumberKeyboard();
 					if (KeyBoardInput <= 255 && KeyBoardInput >= 0) {
-						Cheat::Settings::titleRect.b = KeyBoardInput;
+						Cheat::GUI::titleRect.b = KeyBoardInput;
 					}
 					else
 					{
@@ -5104,12 +5104,12 @@ void Cheat::Main() {
 					}
 				}
 			}
-			if (Cheat::Int("Opacity", Cheat::Settings::titleRect.a, 0, 255, 1, ""))
+			if (Cheat::Int("Opacity", Cheat::GUI::titleRect.a, 0, 255, 1, ""))
 			{
 				if (GetAsyncKeyState(VK_NUMPAD5) && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
 					int KeyBoardInput = NumberKeyboard();
 					if (KeyBoardInput <= 255 && KeyBoardInput >= 0) {
-						Cheat::Settings::titleRect.a = KeyBoardInput;
+						Cheat::GUI::titleRect.a = KeyBoardInput;
 					}
 					else
 					{
@@ -5124,17 +5124,17 @@ void Cheat::Main() {
 			Cheat::Title("Line And Arrow");
 			if (Cheat::Option("Set Default", ""))
 			{
-				Cheat::Settings::line.r = 0;
-				Cheat::Settings::line.g = 0;
-				Cheat::Settings::line.b = 255;
-				Cheat::Settings::line.a = 255;
+				Cheat::GUI::line.r = 0;
+				Cheat::GUI::line.g = 0;
+				Cheat::GUI::line.b = 255;
+				Cheat::GUI::line.a = 255;
 			}
-			if (Cheat::Int("Red", Cheat::Settings::line.r, 0, 255, 1, ""))
+			if (Cheat::Int("Red", Cheat::GUI::line.r, 0, 255, 1, ""))
 			{
 				if (GetAsyncKeyState(VK_NUMPAD5) && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
 					int KeyBoardInput = NumberKeyboard();
 					if (KeyBoardInput <= 255 && KeyBoardInput >= 0) {
-						Cheat::Settings::line.r = KeyBoardInput;
+						Cheat::GUI::line.r = KeyBoardInput;
 					}
 					else
 					{
@@ -5142,12 +5142,12 @@ void Cheat::Main() {
 					}
 				}
 			}
-			if (Cheat::Int("Green", Cheat::Settings::line.g, 0, 255, 1, ""))
+			if (Cheat::Int("Green", Cheat::GUI::line.g, 0, 255, 1, ""))
 			{
 				if (GetAsyncKeyState(VK_NUMPAD5) && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
 					int KeyBoardInput = NumberKeyboard();
 					if (KeyBoardInput <= 255 && KeyBoardInput >= 0) {
-						Cheat::Settings::line.g = KeyBoardInput;
+						Cheat::GUI::line.g = KeyBoardInput;
 					}
 					else
 					{
@@ -5155,12 +5155,12 @@ void Cheat::Main() {
 					}
 				}
 			}
-			if (Cheat::Int("Blue", Cheat::Settings::line.b, 0, 255, 1, ""))
+			if (Cheat::Int("Blue", Cheat::GUI::line.b, 0, 255, 1, ""))
 			{
 				if (GetAsyncKeyState(VK_NUMPAD5) && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
 					int KeyBoardInput = NumberKeyboard();
 					if (KeyBoardInput <= 255 && KeyBoardInput >= 0) {
-						Cheat::Settings::line.b = KeyBoardInput;
+						Cheat::GUI::line.b = KeyBoardInput;
 					}
 					else
 					{
@@ -5168,12 +5168,12 @@ void Cheat::Main() {
 					}
 				}
 			}
-			if (Cheat::Int("Opacity", Cheat::Settings::line.a, 0, 255, 1, ""))
+			if (Cheat::Int("Opacity", Cheat::GUI::line.a, 0, 255, 1, ""))
 			{
 				if (GetAsyncKeyState(VK_NUMPAD5) && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
 					int KeyBoardInput = NumberKeyboard();
 					if (KeyBoardInput <= 255 && KeyBoardInput >= 0) {
-						Cheat::Settings::line.a = KeyBoardInput;
+						Cheat::GUI::line.a = KeyBoardInput;
 					}
 					else
 					{
@@ -5188,17 +5188,17 @@ void Cheat::Main() {
 			Cheat::Title("Header Background");
 			if (Cheat::Option("Set Default", ""))
 			{
-				Cheat::Settings::headerRect.r = 0;
-				Cheat::Settings::headerRect.g = 0;
-				Cheat::Settings::headerRect.b = 255;
-				Cheat::Settings::headerRect.a = 200;
+				Cheat::GUI::headerRect.r = 0;
+				Cheat::GUI::headerRect.g = 0;
+				Cheat::GUI::headerRect.b = 255;
+				Cheat::GUI::headerRect.a = 200;
 			}
-			if (Cheat::Int("Red", Cheat::Settings::headerRect.r, 0, 255, 1, ""))
+			if (Cheat::Int("Red", Cheat::GUI::headerRect.r, 0, 255, 1, ""))
 			{
 				if (GetAsyncKeyState(VK_NUMPAD5) && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
 					int KeyBoardInput = NumberKeyboard();
 					if (KeyBoardInput <= 255 && KeyBoardInput >= 0) {
-						Cheat::Settings::headerRect.r = KeyBoardInput;
+						Cheat::GUI::headerRect.r = KeyBoardInput;
 					}
 					else
 					{
@@ -5206,12 +5206,12 @@ void Cheat::Main() {
 					}
 				}
 			}
-			if (Cheat::Int("Green", Cheat::Settings::headerRect.g, 0, 255, 1, ""))
+			if (Cheat::Int("Green", Cheat::GUI::headerRect.g, 0, 255, 1, ""))
 			{
 				if (GetAsyncKeyState(VK_NUMPAD5) && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
 					int KeyBoardInput = NumberKeyboard();
 					if (KeyBoardInput <= 255 && KeyBoardInput >= 0) {
-						Cheat::Settings::headerRect.g = KeyBoardInput;
+						Cheat::GUI::headerRect.g = KeyBoardInput;
 					}
 					else
 					{
@@ -5219,12 +5219,12 @@ void Cheat::Main() {
 					}
 				}
 			}
-			if (Cheat::Int("Blue", Cheat::Settings::headerRect.b, 0, 255, 1, ""))
+			if (Cheat::Int("Blue", Cheat::GUI::headerRect.b, 0, 255, 1, ""))
 			{
 				if (GetAsyncKeyState(VK_NUMPAD5) && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
 					int KeyBoardInput = NumberKeyboard();
 					if (KeyBoardInput <= 255 && KeyBoardInput >= 0) {
-						Cheat::Settings::headerRect.b = KeyBoardInput;
+						Cheat::GUI::headerRect.b = KeyBoardInput;
 					}
 					else
 					{
@@ -5232,12 +5232,12 @@ void Cheat::Main() {
 					}
 				}
 			}
-			if (Cheat::Int("Opacity", Cheat::Settings::headerRect.a, 0, 255, 1, ""))
+			if (Cheat::Int("Opacity", Cheat::GUI::headerRect.a, 0, 255, 1, ""))
 			{
 				if (GetAsyncKeyState(VK_NUMPAD5) && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
 					int KeyBoardInput = NumberKeyboard();
 					if (KeyBoardInput <= 255 && KeyBoardInput >= 0) {
-						Cheat::Settings::headerRect.a = KeyBoardInput;
+						Cheat::GUI::headerRect.a = KeyBoardInput;
 					}
 					else
 					{
@@ -5247,31 +5247,31 @@ void Cheat::Main() {
 			}
 		}
 		break;
-		case themeloader:
+		case ThemeLoaderMenu:
 		{
 			Cheat::Title("Theme Loader");
-			Cheat::MenuOption("Theme Files >", themefiles);
-			if (CurrentTheme != NULL)
+			Cheat::MenuOption("Theme Files >", ThemeFilesMenu);
+			if (Cheat::GUI::CurrentTheme != NULL)
 			{
-				Cheat::Break(Cheat::CheatFunctions::CombineTwoStrings("Active Theme: ~c~", CurrentTheme), false);
+				Cheat::Break(Cheat::CheatFunctions::CombineTwoStrings("Active Theme: ~c~", Cheat::GUI::CurrentTheme), false);
 			}
 			else
 			{
 				Cheat::Break("Active Theme: ~c~None", false);
 			}
-			if (CurrentTheme != NULL)
+			if (Cheat::GUI::CurrentTheme != NULL)
 			{
 				if (Cheat::Option("Save To Current Theme", ""))
 				{
-					Cheat::SaveTheme(CurrentTheme);
+					Cheat::SaveTheme(Cheat::GUI::CurrentTheme);
 				}
 			}
-			if (CurrentTheme != NULL)
+			if (Cheat::GUI::CurrentTheme != NULL)
 			{
 				if (Cheat::Option("Delete Current Theme", "Delete active theme"))
 				{
-					std::string ThemeFilePath = Cheat::CheatFunctions::ReturnCheatModuleDirectoryPath() + (std::string)"\\gtav\\Themes\\" + CurrentTheme + ".ini";
-					if (remove(ThemeFilePath.c_str()) != 0) { Cheat::GameFunctions::MinimapNotification("~r~Failed To Delete Theme File"); } else { CurrentTheme = NULL; Cheat::GameFunctions::MinimapNotification("Theme File Removed"); }
+					std::string ThemeFilePath = Cheat::CheatFunctions::ReturnCheatModuleDirectoryPath() + (std::string)"\\gtav\\Themes\\" + Cheat::GUI::CurrentTheme + ".ini";
+					if (remove(ThemeFilePath.c_str()) != 0) { Cheat::GameFunctions::MinimapNotification("~r~Failed To Delete Theme File"); } else { Cheat::GUI::CurrentTheme = NULL; Cheat::GameFunctions::MinimapNotification("Theme File Removed"); }
 				}
 			}
 			if (Cheat::Option("Save To New", "Save current GUI to new theme file"))
@@ -5288,41 +5288,41 @@ void Cheat::Main() {
 			}
 		}
 		break;
-		case themefiles:
+		case ThemeFilesMenu:
 		{
 			Cheat::Title("Theme Files");
 			Cheat::LoadThemeFilesLooped();
 			Cheat::Break("All theme files below - select to load", true);
-			for (int i = 0; i < sizeof(ThemeFilesArray) / sizeof(char*); i++)
+			for (int i = 0; i < sizeof(Cheat::GUI::ThemeFilesArray) / sizeof(char*); i++)
 			{
-				if (ThemeFilesArray[i] != NULL)
+				if (Cheat::GUI::ThemeFilesArray[i] != NULL)
 				{
-					if (Cheat::Option(ThemeFilesArray[i], ""))
+					if (Cheat::Option(Cheat::GUI::ThemeFilesArray[i], ""))
 					{
-						std::string ThemeFilePathMenuList = Cheat::CheatFunctions::ReturnCheatModuleDirectoryPath() + (std::string)"\\gtav\\Themes\\" + ThemeFilesArray[i] + ".ini";
+						std::string ThemeFilePathMenuList = Cheat::CheatFunctions::ReturnCheatModuleDirectoryPath() + (std::string)"\\gtav\\Themes\\" + Cheat::GUI::ThemeFilesArray[i] + ".ini";
 						if (!Cheat::CheatFunctions::DoesFileExists(ThemeFilePathMenuList)) { Cheat::GameFunctions::MinimapNotification("~r~Unable to locate theme file"); break; }
-						Cheat::LoadTheme(ThemeFilesArray[i], false);
+						Cheat::LoadTheme(Cheat::GUI::ThemeFilesArray[i], false);
 					}
 				}
 			}
 		}
 		break;
-		case settingstitlerect:
+		case GUITitleBackgroundColorMenu:
 		{
 			Cheat::Title("Title Background");
 			if (Cheat::Option("Set Default", ""))
 			{
-				Cheat::Settings::MainTitleRect.r = 0;
-				Cheat::Settings::MainTitleRect.g = 0;
-				Cheat::Settings::MainTitleRect.b = 0;
-				Cheat::Settings::MainTitleRect.a = 255;
+				Cheat::GUI::MainTitleRect.r = 0;
+				Cheat::GUI::MainTitleRect.g = 0;
+				Cheat::GUI::MainTitleRect.b = 0;
+				Cheat::GUI::MainTitleRect.a = 255;
 			}
-			if (Cheat::Int("Red", Cheat::Settings::MainTitleRect.r, 0, 255, 1, ""))
+			if (Cheat::Int("Red", Cheat::GUI::MainTitleRect.r, 0, 255, 1, ""))
 			{
 				if (GetAsyncKeyState(VK_NUMPAD5) || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
 					int KeyBoardInput = NumberKeyboard();
 					if (KeyBoardInput <= 255 && KeyBoardInput >= 0) {
-						Cheat::Settings::MainTitleRect.r = KeyBoardInput;
+						Cheat::GUI::MainTitleRect.r = KeyBoardInput;
 					}
 					else
 					{
@@ -5330,12 +5330,12 @@ void Cheat::Main() {
 					}
 				}
 			}
-			if (Cheat::Int("Green", Cheat::Settings::MainTitleRect.g, 0, 255, 1, ""))
+			if (Cheat::Int("Green", Cheat::GUI::MainTitleRect.g, 0, 255, 1, ""))
 			{
 				if (GetAsyncKeyState(VK_NUMPAD5) || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
 					int KeyBoardInput = NumberKeyboard();
 					if (KeyBoardInput <= 255 && KeyBoardInput >= 0) {
-						Cheat::Settings::MainTitleRect.g = KeyBoardInput;
+						Cheat::GUI::MainTitleRect.g = KeyBoardInput;
 					}
 					else
 					{
@@ -5343,12 +5343,12 @@ void Cheat::Main() {
 					}
 				}
 			}
-			if (Cheat::Int("Blue", Cheat::Settings::MainTitleRect.b, 0, 255, 1, ""))
+			if (Cheat::Int("Blue", Cheat::GUI::MainTitleRect.b, 0, 255, 1, ""))
 			{
 				if (GetAsyncKeyState(VK_NUMPAD5) || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
 					int KeyBoardInput = NumberKeyboard();
 					if (KeyBoardInput <= 255 && KeyBoardInput >= 0) {
-						Cheat::Settings::MainTitleRect.b = KeyBoardInput;
+						Cheat::GUI::MainTitleRect.b = KeyBoardInput;
 					}
 					else
 					{
@@ -5356,12 +5356,12 @@ void Cheat::Main() {
 					}
 				}
 			}
-			if (Cheat::Int("Opacity", Cheat::Settings::MainTitleRect.a, 0, 255, 1, ""))
+			if (Cheat::Int("Opacity", Cheat::GUI::MainTitleRect.a, 0, 255, 1, ""))
 			{
 				if (GetAsyncKeyState(VK_NUMPAD5) || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
 					int KeyBoardInput = NumberKeyboard();
 					if (KeyBoardInput <= 255 && KeyBoardInput >= 0) {
-						Cheat::Settings::MainTitleRect.a = KeyBoardInput;
+						Cheat::GUI::MainTitleRect.a = KeyBoardInput;
 					}
 					else
 					{
@@ -5376,17 +5376,17 @@ void Cheat::Main() {
 			Cheat::Title("Option Text");
 			if (Cheat::Option("Set Default", ""))
 			{
-				Cheat::Settings::optionText.r = 255;
-				Cheat::Settings::optionText.g = 255;
-				Cheat::Settings::optionText.b = 255;
-				Cheat::Settings::optionText.a = 255;
+				Cheat::GUI::optionText.r = 255;
+				Cheat::GUI::optionText.g = 255;
+				Cheat::GUI::optionText.b = 255;
+				Cheat::GUI::optionText.a = 255;
 			}
-			if (Cheat::Int("Red", Cheat::Settings::optionText.r, 0, 255, 1, ""))
+			if (Cheat::Int("Red", Cheat::GUI::optionText.r, 0, 255, 1, ""))
 			{
 				if (GetAsyncKeyState(VK_NUMPAD5) || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
 					int KeyBoardInput = NumberKeyboard();
 					if (KeyBoardInput <= 255 && KeyBoardInput >= 0) {
-						Cheat::Settings::optionText.r = KeyBoardInput;
+						Cheat::GUI::optionText.r = KeyBoardInput;
 					}
 					else
 					{
@@ -5394,12 +5394,12 @@ void Cheat::Main() {
 					}
 				}
 			}
-			if (Cheat::Int("Green", Cheat::Settings::optionText.g, 0, 255, 1, ""))
+			if (Cheat::Int("Green", Cheat::GUI::optionText.g, 0, 255, 1, ""))
 			{
 				if (GetAsyncKeyState(VK_NUMPAD5) || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
 					int KeyBoardInput = NumberKeyboard();
 					if (KeyBoardInput <= 255 && KeyBoardInput >= 0) {
-						Cheat::Settings::optionText.g = KeyBoardInput;
+						Cheat::GUI::optionText.g = KeyBoardInput;
 					}
 					else
 					{
@@ -5407,12 +5407,12 @@ void Cheat::Main() {
 					}
 				}
 			}
-			if (Cheat::Int("Blue", Cheat::Settings::optionText.b, 0, 255, 1, ""))
+			if (Cheat::Int("Blue", Cheat::GUI::optionText.b, 0, 255, 1, ""))
 			{
 				if (GetAsyncKeyState(VK_NUMPAD5) || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
 					int KeyBoardInput = NumberKeyboard();
 					if (KeyBoardInput <= 255 && KeyBoardInput >= 0) {
-						Cheat::Settings::optionText.b = KeyBoardInput;
+						Cheat::GUI::optionText.b = KeyBoardInput;
 					}
 					else
 					{
@@ -5420,12 +5420,12 @@ void Cheat::Main() {
 					}
 				}
 			}
-			if (Cheat::Int("Opacity", Cheat::Settings::optionText.a, 0, 255, 1, ""))
+			if (Cheat::Int("Opacity", Cheat::GUI::optionText.a, 0, 255, 1, ""))
 			{
 				if (GetAsyncKeyState(VK_NUMPAD5) || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
 					int KeyBoardInput = NumberKeyboard();
 					if (KeyBoardInput <= 255 && KeyBoardInput >= 0) {
-						Cheat::Settings::optionText.a = KeyBoardInput;
+						Cheat::GUI::optionText.a = KeyBoardInput;
 					}
 					else
 					{
@@ -5440,17 +5440,17 @@ void Cheat::Main() {
 			Cheat::Title("Selection Box");
 			if (Cheat::Option("Set Default", ""))
 			{
-				Cheat::Settings::scroller.r = 0;
-				Cheat::Settings::scroller.g = 0;
-				Cheat::Settings::scroller.b = 255;
-				Cheat::Settings::scroller.a = 255;
+				Cheat::GUI::scroller.r = 0;
+				Cheat::GUI::scroller.g = 0;
+				Cheat::GUI::scroller.b = 255;
+				Cheat::GUI::scroller.a = 255;
 			}
-			if (Cheat::Int("Red", Cheat::Settings::scroller.r, 0, 255, 1, ""))
+			if (Cheat::Int("Red", Cheat::GUI::scroller.r, 0, 255, 1, ""))
 			{
 				if (GetAsyncKeyState(VK_NUMPAD5) || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
 					int KeyBoardInput = NumberKeyboard();
 					if (KeyBoardInput <= 255 && KeyBoardInput >= 0) {
-						Cheat::Settings::scroller.r = KeyBoardInput;
+						Cheat::GUI::scroller.r = KeyBoardInput;
 					}
 					else
 					{
@@ -5458,12 +5458,12 @@ void Cheat::Main() {
 					}
 				}
 			}
-			if (Cheat::Int("Green", Cheat::Settings::scroller.g, 0, 255, 1, ""))
+			if (Cheat::Int("Green", Cheat::GUI::scroller.g, 0, 255, 1, ""))
 			{
 				if (GetAsyncKeyState(VK_NUMPAD5) || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
 					int KeyBoardInput = NumberKeyboard();
 					if (KeyBoardInput <= 255 && KeyBoardInput >= 0) {
-						Cheat::Settings::scroller.g = KeyBoardInput;
+						Cheat::GUI::scroller.g = KeyBoardInput;
 					}
 					else
 					{
@@ -5471,12 +5471,12 @@ void Cheat::Main() {
 					}
 				}
 			}
-			if (Cheat::Int("Blue", Cheat::Settings::scroller.b, 0, 255, 1, ""))
+			if (Cheat::Int("Blue", Cheat::GUI::scroller.b, 0, 255, 1, ""))
 			{
 				if (GetAsyncKeyState(VK_NUMPAD5) || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
 					int KeyBoardInput = NumberKeyboard();
 					if (KeyBoardInput <= 255 && KeyBoardInput >= 0) {
-						Cheat::Settings::scroller.b = KeyBoardInput;
+						Cheat::GUI::scroller.b = KeyBoardInput;
 					}
 					else
 					{
@@ -5484,12 +5484,12 @@ void Cheat::Main() {
 					}
 				}
 			}
-			if (Cheat::Int("Opacity", Cheat::Settings::scroller.a, 0, 255, 1, ""))
+			if (Cheat::Int("Opacity", Cheat::GUI::scroller.a, 0, 255, 1, ""))
 			{
 				if (GetAsyncKeyState(VK_NUMPAD5) || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept)) {
 					int KeyBoardInput = NumberKeyboard();
 					if (KeyBoardInput <= 255 && KeyBoardInput >= 0) {
-						Cheat::Settings::scroller.a = KeyBoardInput;
+						Cheat::GUI::scroller.a = KeyBoardInput;
 					}
 					else
 					{

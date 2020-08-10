@@ -1,17 +1,64 @@
 #include "stdafx.h"
 
-static fpFileRegister file_register = (fpFileRegister)(Memory::pattern("48 89 5C 24 ? 48 89 6C 24 ? 48 89 7C 24 ? 41 54 41 56 41 57 48 83 EC 50 48 8B EA 4C 8B FA 48 8B D9 4D 85 C9").count(1).get(0).get<decltype(file_register)>());
+bool Cheat::GUI::selectPressed			= false;
+bool Cheat::GUI::leftPressed			= false;
+bool Cheat::GUI::rightPressed			= false;
+bool Cheat::GUI::ShowHeaderBackground	= true;
+bool Cheat::GUI::ShowHeaderGUI			= true;
+bool Cheat::GUI::ShowHeaderGlare		= true;
+bool Cheat::GUI::CheatGUIHasBeenOpened	= false;
+const char* OptionInformationText;
+char* Cheat::GUI::CurrentTheme			= NULL;
+int Cheat::GUI::maxVisOptions			= 10;
+int Cheat::GUI::currentOption			= 0;
+int Cheat::GUI::currentOptionMenuBottom = 0;
+int Cheat::GUI::previousOption			= 0;
+int Cheat::GUI::optionCount				= 0;
+int Cheat::GUI::optionCountMenuBottom	= 0;
+int Cheat::GUI::TotalOptionsCount		= 0;
+int Cheat::GUI::menuLevel				= 0;
+SubMenus Cheat::GUI::PreviousMenu		= NOMENU;
+SubMenus Cheat::GUI::currentMenu;
+int Cheat::GUI::PreviousMenuLevel;
+int Cheat::GUI::optionsArray			[1000];
+SubMenus Cheat::GUI::menusArray			[1000];
+char* Cheat::GUI::ThemeFilesArray		[1000];
 
-void Cheat::Drawing::YTD()
+RGBAF Cheat::GUI::count				{ 255, 255, 255, 255, 0 };
+RGBAF Cheat::GUI::titleText			{ 255, 255, 255, 255, 0 };
+RGBA Cheat::GUI::titleRect			{ 0, 0, 255, 255 };
+RGBA Cheat::GUI::MainTitleRect		{ 0, 0, 0, 255 };
+RGBA Cheat::GUI::headerRect			{ 0, 0, 255, 200 };
+RGBAF Cheat::GUI::optionText		{ 255, 255, 255, 255, 0 };
+RGBAF Cheat::GUI::breakText			{ 255, 255, 255, 255, 0 };
+RGBAF Cheat::GUI::arrow				{ 255, 255, 255, 255, 3 };                          
+RGBA Cheat::GUI::optionRect			{ 0, 0, 0, 255 }; 
+RGBA Cheat::GUI::MenuBackgroundRect	{ 0, 0, 0, 220 }; 
+RGBA Cheat::GUI::MenuBottomRect		{ 0, 0, 0, 255 };
+RGBA Cheat::GUI::scroller			{ 0, 0, 255, 255 };
+RGBAF Cheat::GUI::integre			{ 255, 255, 255, 255, 2 };
+RGBA Cheat::GUI::line				{ 0, 0, 255, 255 };
+
+
+
+static fpFileRegister file_register = (fpFileRegister)(Memory::pattern("48 89 5C 24 ? 48 89 6C 24 ? 48 89 7C 24 ? 41 54 41 56 41 57 48 83 EC 50 48 8B EA 4C 8B FA 48 8B D9 4D 85 C9").count(1).get(0).get<decltype(file_register)>());
+void Cheat::Drawing::InitTextureFile()
 {
-	Cheat::LogFunctions::Message(xorstr_("Loading GUI"));
+	Cheat::LogFunctions::Message(xorstr_("Loading Texture File"));
 	int textureID;
-	if (Cheat::CheatFunctions::DoesFileExists(Cheat::CheatFunctions::TextureFilePath())) { file_register(&textureID, Cheat::CheatFunctions::TextureFilePath().c_str(), true, xorstr_("Textures.ytd"), false); }
-	else { Cheat::GameFunctions::MinimapNotification(xorstr_("~r~Failed to load GUI")); }
+	if (Cheat::CheatFunctions::DoesFileExists(Cheat::CheatFunctions::TextureFilePath())) 
+	{
+		file_register(&textureID, Cheat::CheatFunctions::TextureFilePath().c_str(), true, xorstr_("Textures.ytd"), false); 
+	}
+	else 
+	{ 
+		Cheat::GameFunctions::MinimapNotification(xorstr_("~r~Failed to load Texture")); 
+		Cheat::LogFunctions::DebugMessage(xorstr_("Failed to load Textures.ytd"));
+	}
 }
 
 
-void Cheat::Drawing::Text(const char * text, RGBAF rgbaf, VECTOR2 position, VECTOR2_2 size, bool center)
+void Cheat::Drawing::Text(const char* text, RGBAF rgbaf, VECTOR2 position, VECTOR2_2 size, bool center)
 {
 	UI::SET_TEXT_CENTRE(center);
 	UI::SET_TEXT_COLOUR(rgbaf.r, rgbaf.g, rgbaf.b, rgbaf.a);
@@ -46,58 +93,16 @@ void Cheat::Drawing::DrawScaleform(const float x, const float y, const float sx,
 }
 
 
-float Cheat::Settings::menuX = 0.11f;
-const char* OptionInformationText;
-bool ShowVehicleInfoAndPreview = true;
-bool Cheat::Settings::selectPressed = false;
-bool Cheat::Settings::leftPressed = false;
-bool Cheat::Settings::rightPressed = false;
-bool show_header_background = true;
-bool show_header_gui = true;
-bool ShowHeaderGlare = true;
-bool CheatGUIHasBeenOpened = false;
-int BoolOptionVectorPosition = 0; //0: Shop Box. 1: Circle
-char* CurrentTheme;
-int Cheat::Settings::maxVisOptions = 10;
-int Cheat::Settings::currentOption = 0;
-int Cheat::Settings::currentOptionMenuBottom = 0;
-int Cheat::Settings::previousOption = 0;
-int Cheat::Settings::optionCount = 0;
-int Cheat::Settings::optionCountMenuBottom = 0;
-int Cheat::Settings::TotalOptionsCount = 0; // unlike OptionCount this will always contain total and can be called in the option functions
-SubMenus Cheat::Settings::currentMenu;
-int Cheat::Settings::menuLevel = 0;
-SubMenus Cheat::Settings::PreviousMenu = NOMENU;
-int Cheat::Settings::PreviousMenuLevel;
-int Cheat::Settings::optionsArray[1000];
-SubMenus Cheat::Settings::menusArray[1000];
-
-RGBAF Cheat::Settings::count				{ 255, 255, 255, 255, 0 };
-RGBAF Cheat::Settings::titleText			{ 255, 255, 255, 255, 0 };
-RGBA Cheat::Settings::titleRect				{ 0, 0, 255, 255 };
-RGBA Cheat::Settings::MainTitleRect			{ 0, 0, 0, 255 };
-RGBA Cheat::Settings::headerRect			{ 0, 0, 255, 200 };
-RGBAF Cheat::Settings::optionText			{ 255, 255, 255, 255, 0 };
-RGBAF Cheat::Settings::breakText			{ 255, 255, 255, 255, 0 };
-RGBAF Cheat::Settings::arrow				{ 255, 255, 255, 255, 3 };                          
-RGBA Cheat::Settings::optionRect			{ 0, 0, 0, 255 }; 
-RGBA Cheat::Settings::MenuBackgroundRect	{ 0, 0, 0, 220 }; 
-RGBA Cheat::Settings::MenuBottomRect		{ 0, 0, 0, 255 };
-RGBA Cheat::Settings::scroller				{ 0, 0, 255, 255 };
-RGBAF Cheat::Settings::integre				{ 255, 255, 255, 255, 2 };
-RGBA Cheat::Settings::line					{ 0, 0, 255, 255 };
-
-
 void Cheat::Title(const char * title)
 {
-	Drawing::Text(title, { Settings::titleText }, { Settings::menuX, 0.130f }, { 0.50f, 0.35f }, true);
-	if (show_header_background) { Drawing::Rect(Settings::headerRect, { Settings::menuX, 0.092f }, { 0.21f, 0.084f });  } // Header Rect
-	if (ShowHeaderGlare) { Drawing::DrawScaleform(Settings::menuX + .330f, 0.462f, 1.0f, 0.912f, 255, 255, 255); } // Header Glare
-	if (show_header_gui) { Cheat::Drawing::Spriter(xorstr_("Textures"), xorstr_("HeaderDefaultTransparent"), Cheat::Settings::menuX, 0.092f, 0.21f, 0.084f, 0, 255, 255, 255, 255); }
-	Drawing::Rect(Settings::MainTitleRect, { Settings::menuX, 0.146f }, { 0.21f, 0.023f }); // Title Rect
-	Drawing::Rect(Settings::line, { Settings::menuX, 0.158f }, { 0.21f, 0.002f });
+	Drawing::Text(title, { GUI::titleText }, { Cheat::CheatFeatures::guiX, 0.130f }, { 0.50f, 0.35f }, true);
+	if (Cheat::GUI::ShowHeaderBackground) { Drawing::Rect(GUI::headerRect, { Cheat::CheatFeatures::guiX, 0.092f }, { 0.21f, 0.084f });  } // Header Rect
+	if (GUI::ShowHeaderGlare) { Drawing::DrawScaleform(Cheat::CheatFeatures::guiX + .330f, 0.462f, 1.0f, 0.912f, 255, 255, 255); } // Header Glare
+	if (Cheat::GUI::ShowHeaderGUI) { Cheat::Drawing::Spriter(xorstr_("Textures"), xorstr_("HeaderDefaultTransparent"), Cheat::CheatFeatures::guiX, 0.092f, 0.21f, 0.084f, 0, 255, 255, 255, 255); }
+	Drawing::Rect(GUI::MainTitleRect, { Cheat::CheatFeatures::guiX, 0.146f }, { 0.21f, 0.023f }); // Title Rect
+	Drawing::Rect(GUI::line, { Cheat::CheatFeatures::guiX, 0.158f }, { 0.21f, 0.002f });
 
-	CheatGUIHasBeenOpened = true;
+	Cheat::GUI::CheatGUIHasBeenOpened = true;
 	UI::HIDE_HELP_TEXT_THIS_FRAME();
 	CAM::SET_CINEMATIC_BUTTON_ACTIVE(0);
 	UI::HIDE_HUD_COMPONENT_THIS_FRAME(10);
@@ -116,7 +121,7 @@ void Cheat::Title(const char * title)
 	CONTROLS::DISABLE_CONTROL_ACTION(2, INPUT_VEH_HEADLIGHT, true);
 
 	//Control Buttons
-	std::string CloseGUIString = xorstr_("Press ") + Cheat::CheatFunctions::VirtualKeyCodeToString(Cheat::Settings::openKey) + xorstr_(" to close GUI");
+	std::string CloseGUIString = xorstr_("Press ") + Cheat::CheatFunctions::VirtualKeyCodeToString(Cheat::GUI::openKey) + xorstr_(" to close GUI");
 	Cheat::GameFunctions::InstructionsInit();
 	Cheat::GameFunctions::InstructionsAdd((char*)CloseGUIString.c_str(), 80);
 	Cheat::GameFunctions::InstructionsAdd(xorstr_("Back"), 136);
@@ -129,42 +134,42 @@ void Cheat::Title(const char * title)
 
 bool Cheat::Option(const char * option, const char* InformationText, bool PlayerList)
 {
-	Settings::optionCount++;
-	Settings::optionCountMenuBottom++;
-	bool onThis = Settings::currentOption == Settings::optionCount ? true : false;
-	int OptionCountDifference = Settings::optionCount - Settings::optionCountMenuBottom;
-	if (onThis) { Settings::currentOptionMenuBottom = Settings::optionCount - OptionCountDifference; }
-	if (Settings::currentOption <= Settings::maxVisOptions && Settings::optionCount <= Settings::maxVisOptions)
+	GUI::optionCount++;
+	GUI::optionCountMenuBottom++;
+	bool onThis = GUI::currentOption == GUI::optionCount ? true : false;
+	int OptionCountDifference = GUI::optionCount - GUI::optionCountMenuBottom;
+	if (onThis) { GUI::currentOptionMenuBottom = GUI::optionCount - OptionCountDifference; }
+	if (GUI::currentOption <= GUI::maxVisOptions && GUI::optionCount <= GUI::maxVisOptions)
 	{
 		if (PlayerList)
 		{
-			Drawing::Text(option, Settings::optionText, { Settings::menuX - 0.080f, (Settings::optionCount) * 0.035f + 0.125f }, { 0.35f, 0.35f }, false);
+			Drawing::Text(option, GUI::optionText, { Cheat::CheatFeatures::guiX - 0.080f, (GUI::optionCount) * 0.035f + 0.125f }, { 0.35f, 0.35f }, false);
 		}
 		else
 		{
-			Drawing::Text(option, Settings::optionText, { Settings::menuX - 0.100f, (Settings::optionCount) * 0.035f + 0.125f }, { 0.35f, 0.35f }, false);
+			Drawing::Text(option, GUI::optionText, { Cheat::CheatFeatures::guiX - 0.100f, (GUI::optionCount) * 0.035f + 0.125f }, { 0.35f, 0.35f }, false);
 		}
-		Drawing::Rect(Settings::MenuBackgroundRect, { Settings::menuX, (Settings::optionCount)*0.035f + 0.1415f }, { 0.21f, 0.035f });
-		onThis ? Drawing::Rect(Settings::scroller, { Settings::menuX, (Settings::optionCount)*0.035f + 0.1415f }, { 0.21f, 0.035f }) : NULL;
+		Drawing::Rect(GUI::MenuBackgroundRect, { Cheat::CheatFeatures::guiX, (GUI::optionCount)*0.035f + 0.1415f }, { 0.21f, 0.035f });
+		onThis ? Drawing::Rect(GUI::scroller, { Cheat::CheatFeatures::guiX, (GUI::optionCount)*0.035f + 0.1415f }, { 0.21f, 0.035f }) : NULL;
 	}
-	else if (Settings::optionCount > (Settings::currentOption - Settings::maxVisOptions) && Settings::optionCount <= Settings::currentOption)
+	else if (GUI::optionCount > (GUI::currentOption - GUI::maxVisOptions) && GUI::optionCount <= GUI::currentOption)
 	{
 		if (PlayerList)
 		{
-			Drawing::Text(option, Settings::optionText, { Settings::menuX - 0.080f, (Settings::optionCount - (Settings::currentOption - Settings::maxVisOptions)) * 0.035f + 0.125f }, { 0.35f, 0.35f }, false);
+			Drawing::Text(option, GUI::optionText, { Cheat::CheatFeatures::guiX - 0.080f, (GUI::optionCount - (GUI::currentOption - GUI::maxVisOptions)) * 0.035f + 0.125f }, { 0.35f, 0.35f }, false);
 		}
 		else
 		{
-			Drawing::Text(option, Settings::optionText, { Settings::menuX - 0.100f, (Settings::optionCount - (Settings::currentOption - Settings::maxVisOptions)) * 0.035f + 0.125f }, { 0.35f, 0.35f }, false);
+			Drawing::Text(option, GUI::optionText, { Cheat::CheatFeatures::guiX - 0.100f, (GUI::optionCount - (GUI::currentOption - GUI::maxVisOptions)) * 0.035f + 0.125f }, { 0.35f, 0.35f }, false);
 		}
-		Drawing::Rect(Settings::MenuBackgroundRect, { Settings::menuX,  (Settings::optionCount - (Settings::currentOption - Settings::maxVisOptions))*0.035f + 0.1415f }, { 0.21f, 0.035f });
-		onThis ? Drawing::Rect(Settings::scroller, { Settings::menuX,  (Settings::optionCount - (Settings::currentOption - Settings::maxVisOptions))*0.035f + 0.1415f }, { 0.21f, 0.035f }) : NULL;
+		Drawing::Rect(GUI::MenuBackgroundRect, { Cheat::CheatFeatures::guiX,  (GUI::optionCount - (GUI::currentOption - GUI::maxVisOptions))*0.035f + 0.1415f }, { 0.21f, 0.035f });
+		onThis ? Drawing::Rect(GUI::scroller, { Cheat::CheatFeatures::guiX,  (GUI::optionCount - (GUI::currentOption - GUI::maxVisOptions))*0.035f + 0.1415f }, { 0.21f, 0.035f }) : NULL;
 	}
-	if (Settings::currentOption == Settings::optionCount)
+	if (GUI::currentOption == GUI::optionCount)
 	{
 		OptionInformationText = InformationText;
-		Settings::previousOption = Settings::currentOption;
-		if (Settings::selectPressed)
+		GUI::previousOption = GUI::currentOption;
+		if (GUI::selectPressed)
 		{
 			return true;
 		}
@@ -175,24 +180,24 @@ char* VehiclePreviewDictName;
 char* VehiclePreviewName;
 bool Cheat::VehicleOption(const char* option, std::string ModelName)
 {
-	Settings::optionCount++;
-	Settings::optionCountMenuBottom++;
-	bool onThis = Settings::currentOption == Settings::optionCount ? true : false;
-	int OptionCountDifference = Settings::optionCount - Settings::optionCountMenuBottom;
-	if (onThis) { Settings::currentOptionMenuBottom = Settings::optionCount - OptionCountDifference; }
-	if (Settings::currentOption <= Settings::maxVisOptions && Settings::optionCount <= Settings::maxVisOptions)
+	GUI::optionCount++;
+	GUI::optionCountMenuBottom++;
+	bool onThis = GUI::currentOption == GUI::optionCount ? true : false;
+	int OptionCountDifference = GUI::optionCount - GUI::optionCountMenuBottom;
+	if (onThis) { GUI::currentOptionMenuBottom = GUI::optionCount - OptionCountDifference; }
+	if (GUI::currentOption <= GUI::maxVisOptions && GUI::optionCount <= GUI::maxVisOptions)
 	{
-		Drawing::Text(option, Settings::optionText, { Settings::menuX - 0.100f, (Settings::optionCount) * 0.035f + 0.125f }, { 0.35f, 0.35f }, false);
-		Drawing::Rect(Settings::MenuBackgroundRect, { Settings::menuX, (Settings::optionCount) * 0.035f + 0.1415f }, { 0.21f, 0.035f });
-		onThis ? Drawing::Rect(Settings::scroller, { Settings::menuX, (Settings::optionCount) * 0.035f + 0.1415f }, { 0.21f, 0.035f }) : NULL;
+		Drawing::Text(option, GUI::optionText, { Cheat::CheatFeatures::guiX - 0.100f, (GUI::optionCount) * 0.035f + 0.125f }, { 0.35f, 0.35f }, false);
+		Drawing::Rect(GUI::MenuBackgroundRect, { Cheat::CheatFeatures::guiX, (GUI::optionCount) * 0.035f + 0.1415f }, { 0.21f, 0.035f });
+		onThis ? Drawing::Rect(GUI::scroller, { Cheat::CheatFeatures::guiX, (GUI::optionCount) * 0.035f + 0.1415f }, { 0.21f, 0.035f }) : NULL;
 	}
-	else if (Settings::optionCount > (Settings::currentOption - Settings::maxVisOptions) && Settings::optionCount <= Settings::currentOption)
+	else if (GUI::optionCount > (GUI::currentOption - GUI::maxVisOptions) && GUI::optionCount <= GUI::currentOption)
 	{
-		Drawing::Text(option, Settings::optionText, { Settings::menuX - 0.100f, (Settings::optionCount - (Settings::currentOption - Settings::maxVisOptions)) * 0.035f + 0.125f }, { 0.35f, 0.35f }, false); // 0.45 0.45
-		Drawing::Rect(Settings::MenuBackgroundRect, { Settings::menuX,  (Settings::optionCount - (Settings::currentOption - Settings::maxVisOptions)) * 0.035f + 0.1415f }, { 0.21f, 0.035f });
-		onThis ? Drawing::Rect(Settings::scroller, { Settings::menuX,  (Settings::optionCount - (Settings::currentOption - Settings::maxVisOptions)) * 0.035f + 0.1415f }, { 0.21f, 0.035f }) : NULL;
+		Drawing::Text(option, GUI::optionText, { Cheat::CheatFeatures::guiX - 0.100f, (GUI::optionCount - (GUI::currentOption - GUI::maxVisOptions)) * 0.035f + 0.125f }, { 0.35f, 0.35f }, false); // 0.45 0.45
+		Drawing::Rect(GUI::MenuBackgroundRect, { Cheat::CheatFeatures::guiX,  (GUI::optionCount - (GUI::currentOption - GUI::maxVisOptions)) * 0.035f + 0.1415f }, { 0.21f, 0.035f });
+		onThis ? Drawing::Rect(GUI::scroller, { Cheat::CheatFeatures::guiX,  (GUI::optionCount - (GUI::currentOption - GUI::maxVisOptions)) * 0.035f + 0.1415f }, { 0.21f, 0.035f }) : NULL;
 	}
-	if (Settings::currentOption == Settings::optionCount)
+	if (GUI::currentOption == GUI::optionCount)
 	{
 		VehiclePreviewDictName = "Textures";
 		VehiclePreviewName = "NoVehiclePreviewAvailable";
@@ -2953,7 +2958,7 @@ bool Cheat::VehicleOption(const char* option, std::string ModelName)
 			 VehiclePreviewName = "tug";
 		 }
 		
-		 if (ShowVehicleInfoAndPreview)
+		 if (Cheat::CheatFeatures::ShowVehicleInfoAndPreview)
 		 {
 			 std::transform(ModelName.begin(), ModelName.end(), ModelName.begin(), ::tolower);
 			 std::string ModelNameDrawingText = xorstr_("Model Name: ") + ModelName;
@@ -2968,24 +2973,24 @@ bool Cheat::VehicleOption(const char* option, std::string ModelName)
 				 ModelMaxSpeed << xorstr_("Max Speed: ") << Cheat::GameFunctions::MSToMPH(VEHICLE::GET_VEHICLE_MODEL_ESTIMATED_MAX_SPEED(GAMEPLAY::GET_HASH_KEY((char*)ModelName.c_str()))) << xorstr_(" MP/H");
 			 }
 
-			 if (Cheat::Settings::menuX < 0.71f) 
+			 if (Cheat::CheatFeatures::guiX < 0.71f) 
 			 {
-				 Drawing::Text(xorstr_("Vehicle Info & Preview"), Settings::count, { Settings::menuX + 0.187f, 0.132f }, { 0.50f, 0.35f }, true);
-				 Drawing::Text(ModelNameDrawingText.c_str(), Settings::count, { Settings::menuX + 0.111f, 0.308f }, { 0.45f, 0.30f }, false);
-				 Drawing::Text(ModelMaxSpeed.str().c_str(), Settings::count, { Settings::menuX + 0.111f, 0.326f }, { 0.45f, 0.30f }, false);
-				 Drawing::Rect(Settings::MenuBackgroundRect, { Settings::menuX + 0.187f, 0.244f }, { 0.16f, 0.22f });
-				 Drawing::Spriter(VehiclePreviewDictName, VehiclePreviewName, Settings::menuX + 0.187f, 0.232f, 0.15, 0.15, 0, 255, 255, 255, 255);
+				 Drawing::Text(xorstr_("Vehicle Info & Preview"), GUI::count, { Cheat::CheatFeatures::guiX + 0.187f, 0.132f }, { 0.50f, 0.35f }, true);
+				 Drawing::Text(ModelNameDrawingText.c_str(), GUI::count, { Cheat::CheatFeatures::guiX + 0.111f, 0.308f }, { 0.45f, 0.30f }, false);
+				 Drawing::Text(ModelMaxSpeed.str().c_str(), GUI::count, { Cheat::CheatFeatures::guiX + 0.111f, 0.326f }, { 0.45f, 0.30f }, false);
+				 Drawing::Rect(GUI::MenuBackgroundRect, { Cheat::CheatFeatures::guiX + 0.187f, 0.244f }, { 0.16f, 0.22f });
+				 Drawing::Spriter(VehiclePreviewDictName, VehiclePreviewName, Cheat::CheatFeatures::guiX + 0.187f, 0.232f, 0.15, 0.15, 0, 255, 255, 255, 255);
 			 }
 			 else
 			 {
-				 Drawing::Text(xorstr_("Vehicle Info & Preview"), Settings::count, { Settings::menuX - 0.187f, 0.132f }, { 0.50f, 0.35f }, true);
-				 Drawing::Text(ModelNameDrawingText.c_str(), Settings::count, { Settings::menuX - 0.262f, 0.308f }, { 0.45f, 0.30f }, false);
-				 Drawing::Text(ModelMaxSpeed.str().c_str(), Settings::count, { Settings::menuX - 0.262f, 0.326f }, { 0.45f, 0.30f }, false);
-				 Drawing::Rect(Settings::MenuBackgroundRect, { Settings::menuX - 0.187f, 0.244f }, { 0.16f, 0.22f });
-				 Drawing::Spriter(VehiclePreviewDictName, VehiclePreviewName, Settings::menuX - 0.187f, 0.232f, 0.15, 0.15, 0, 255, 255, 255, 255);
+				 Drawing::Text(xorstr_("Vehicle Info & Preview"), GUI::count, { Cheat::CheatFeatures::guiX - 0.187f, 0.132f }, { 0.50f, 0.35f }, true);
+				 Drawing::Text(ModelNameDrawingText.c_str(), GUI::count, { Cheat::CheatFeatures::guiX - 0.262f, 0.308f }, { 0.45f, 0.30f }, false);
+				 Drawing::Text(ModelMaxSpeed.str().c_str(), GUI::count, { Cheat::CheatFeatures::guiX - 0.262f, 0.326f }, { 0.45f, 0.30f }, false);
+				 Drawing::Rect(GUI::MenuBackgroundRect, { Cheat::CheatFeatures::guiX - 0.187f, 0.244f }, { 0.16f, 0.22f });
+				 Drawing::Spriter(VehiclePreviewDictName, VehiclePreviewName, Cheat::CheatFeatures::guiX - 0.187f, 0.232f, 0.15, 0.15, 0, 255, 255, 255, 255);
 			 }
 		 }
-		if (Settings::selectPressed)
+		if (GUI::selectPressed)
 		{
 			return true;
 		}
@@ -2994,41 +2999,41 @@ bool Cheat::VehicleOption(const char* option, std::string ModelName)
 }
 bool Cheat::Break(const char * option, bool TextCentered)
 {
-	Settings::optionCount++;
+	GUI::optionCount++;
 
-	if (Settings::optionCount == Settings::currentOption) 
+	if (GUI::optionCount == GUI::currentOption) 
 	{ 
 		OptionInformationText = "";
-		if (Settings::previousOption < Settings::currentOption && Settings::optionCount > 1)
+		if (GUI::previousOption < GUI::currentOption && GUI::optionCount > 1)
 		{
-			Settings::currentOption++;
-			if (Settings::TotalOptionsCount < Settings::currentOption)
+			GUI::currentOption++;
+			if (GUI::TotalOptionsCount < GUI::currentOption)
 			{
-				Settings::currentOption = 1;
+				GUI::currentOption = 1;
 			}
 		}
-		else if (Settings::previousOption > Settings::currentOption && Settings::optionCount > 1)
+		else if (GUI::previousOption > GUI::currentOption && GUI::optionCount > 1)
 		{
-			Settings::currentOption--;
-			if (Settings::TotalOptionsCount < 1)
+			GUI::currentOption--;
+			if (GUI::TotalOptionsCount < 1)
 			{
-				Settings::currentOption = Settings::optionCount;
+				GUI::currentOption = GUI::optionCount;
 			}
 		}
 	}
 
-	bool onThis = Settings::currentOption == Settings::optionCount ? true : false;
-	if (Settings::currentOption <= Settings::maxVisOptions && Settings::optionCount <= Settings::maxVisOptions)
+	bool onThis = GUI::currentOption == GUI::optionCount ? true : false;
+	if (GUI::currentOption <= GUI::maxVisOptions && GUI::optionCount <= GUI::maxVisOptions)
 	{
-		if (TextCentered) { Drawing::Text(option, Settings::breakText, { Settings::menuX, (Settings::optionCount) * 0.035f + 0.125f }, { 0.35f, 0.35f }, TextCentered); }
-		else { Drawing::Text(option, Settings::breakText, { Settings::menuX - 0.100f, (Settings::optionCount) * 0.035f + 0.125f }, { 0.35f, 0.35f }, TextCentered); }
-		Drawing::Rect(Settings::MenuBackgroundRect, { Settings::menuX, (Settings::optionCount)*0.035f + 0.1415f }, { 0.21f, 0.035f });
+		if (TextCentered) { Drawing::Text(option, GUI::breakText, { Cheat::CheatFeatures::guiX, (GUI::optionCount) * 0.035f + 0.125f }, { 0.35f, 0.35f }, TextCentered); }
+		else { Drawing::Text(option, GUI::breakText, { Cheat::CheatFeatures::guiX - 0.100f, (GUI::optionCount) * 0.035f + 0.125f }, { 0.35f, 0.35f }, TextCentered); }
+		Drawing::Rect(GUI::MenuBackgroundRect, { Cheat::CheatFeatures::guiX, (GUI::optionCount)*0.035f + 0.1415f }, { 0.21f, 0.035f });
 	}
-	else if (Settings::optionCount > (Settings::currentOption - Settings::maxVisOptions) && Settings::optionCount <= Settings::currentOption)
+	else if (GUI::optionCount > (GUI::currentOption - GUI::maxVisOptions) && GUI::optionCount <= GUI::currentOption)
 	{
-		if (TextCentered) { Drawing::Text(option, Settings::breakText, { Settings::menuX, (Settings::optionCount - (Settings::currentOption - Settings::maxVisOptions)) * 0.035f + 0.125f }, { 0.35f, 0.35f }, TextCentered); }
-		else { Drawing::Text(option, Settings::breakText, { Settings::menuX - 0.100f, (Settings::optionCount - (Settings::currentOption - Settings::maxVisOptions)) * 0.035f + 0.125f }, { 0.35f, 0.35f }, TextCentered); }
-		Drawing::Rect(Settings::MenuBackgroundRect, { Settings::menuX,  (Settings::optionCount - (Settings::currentOption - Settings::maxVisOptions))*0.035f + 0.1415f }, { 0.21f, 0.035f });
+		if (TextCentered) { Drawing::Text(option, GUI::breakText, { Cheat::CheatFeatures::guiX, (GUI::optionCount - (GUI::currentOption - GUI::maxVisOptions)) * 0.035f + 0.125f }, { 0.35f, 0.35f }, TextCentered); }
+		else { Drawing::Text(option, GUI::breakText, { Cheat::CheatFeatures::guiX - 0.100f, (GUI::optionCount - (GUI::currentOption - GUI::maxVisOptions)) * 0.035f + 0.125f }, { 0.35f, 0.35f }, TextCentered); }
+		Drawing::Rect(GUI::MenuBackgroundRect, { Cheat::CheatFeatures::guiX,  (GUI::optionCount - (GUI::currentOption - GUI::maxVisOptions))*0.035f + 0.1415f }, { 0.21f, 0.035f });
 	}
 	return false;
 }
@@ -3036,9 +3041,9 @@ bool Cheat::MenuOption(const char * option, SubMenus newSub)
 {
 	Option(option, "");
 
-	if (Settings::optionCount == Settings::currentOption) 
+	if (GUI::optionCount == GUI::currentOption) 
 	{
-		if (Settings::selectPressed) 
+		if (GUI::selectPressed) 
 		{
 			MenuLevelHandler::MoveMenu(newSub);
 			return true;
@@ -3052,18 +3057,18 @@ bool Cheat::MenuOptionPlayerList(const char* option, SubMenus newSub, Player Pla
 
 	char* CurrentOnlinePlayerPictureName = Cheat::GameFunctions::ReturnOnlinePlayerPictureString(PlayerHandle);
 
-	if (Settings::currentOption <= Settings::maxVisOptions && Settings::optionCount <= Settings::maxVisOptions)
+	if (GUI::currentOption <= GUI::maxVisOptions && GUI::optionCount <= GUI::maxVisOptions)
 	{
-		Drawing::Spriter(CurrentOnlinePlayerPictureName, CurrentOnlinePlayerPictureName, Settings::menuX - 0.093f, (Settings::optionCount * 0.035f + 0.140f), 0.02f, 0.03f, 0, 255, 255, 255, 255);
+		Drawing::Spriter(CurrentOnlinePlayerPictureName, CurrentOnlinePlayerPictureName, Cheat::CheatFeatures::guiX - 0.093f, (GUI::optionCount * 0.035f + 0.140f), 0.02f, 0.03f, 0, 255, 255, 255, 255);
 	}
-	else if (Settings::optionCount > Settings::currentOption - Settings::maxVisOptions && Settings::optionCount <= Settings::currentOption)
+	else if (GUI::optionCount > GUI::currentOption - GUI::maxVisOptions && GUI::optionCount <= GUI::currentOption)
 	{
-		Drawing::Spriter(CurrentOnlinePlayerPictureName, CurrentOnlinePlayerPictureName, Settings::menuX - 0.093f, (Settings::optionCount - (Settings::currentOption - Settings::maxVisOptions)) * 0.035f + 0.140f, 0.02f, 0.03f, 0, 255, 255, 255, 255);
+		Drawing::Spriter(CurrentOnlinePlayerPictureName, CurrentOnlinePlayerPictureName, Cheat::CheatFeatures::guiX - 0.093f, (GUI::optionCount - (GUI::currentOption - GUI::maxVisOptions)) * 0.035f + 0.140f, 0.02f, 0.03f, 0, 255, 255, 255, 255);
 	}
 
-	if (Settings::optionCount == Settings::currentOption) 
+	if (GUI::optionCount == GUI::currentOption) 
 	{
-		if (Settings::selectPressed) 
+		if (GUI::selectPressed) 
 		{
 			MenuLevelHandler::MoveMenu(newSub);
 			return true;
@@ -3076,54 +3081,54 @@ bool Cheat::Toggle(const char * option, bool & b00l, const char* InformationText
 	Option(option, "");
 	if (b00l)
 	{
-		if (BoolOptionVectorPosition == 0) {
-			if (Settings::currentOption <= Settings::maxVisOptions && Settings::optionCount <= Settings::maxVisOptions)
+		if (Cheat::CheatFeatures::BoolOptionVectorPosition == 0) {
+			if (GUI::currentOption <= GUI::maxVisOptions && GUI::optionCount <= GUI::maxVisOptions)
 			{
-				Drawing::Spriter("commonmenu", "shop_box_tick", Settings::menuX + 0.090f, (Settings::optionCount * 0.035f + 0.140f), 0.03f, 0.05f, 0, 255, 255, 255, 255);
+				Drawing::Spriter("commonmenu", "shop_box_tick", Cheat::CheatFeatures::guiX + 0.090f, (GUI::optionCount * 0.035f + 0.140f), 0.03f, 0.05f, 0, 255, 255, 255, 255);
 			}
-			else if ((Settings::optionCount > (Settings::currentOption - Settings::maxVisOptions)) && Settings::optionCount <= Settings::currentOption)
+			else if ((GUI::optionCount > (GUI::currentOption - GUI::maxVisOptions)) && GUI::optionCount <= GUI::currentOption)
 			{
-				Drawing::Spriter("commonmenu", "shop_box_tick", Settings::menuX + 0.090f, (Settings::optionCount - (Settings::currentOption - Settings::maxVisOptions))*0.035f + 0.140f, 0.03f, 0.05f, 0, 255, 255, 255, 255);
+				Drawing::Spriter("commonmenu", "shop_box_tick", Cheat::CheatFeatures::guiX + 0.090f, (GUI::optionCount - (GUI::currentOption - GUI::maxVisOptions))*0.035f + 0.140f, 0.03f, 0.05f, 0, 255, 255, 255, 255);
 			}
 		}
-		else if (BoolOptionVectorPosition == 1) {
-			if (Settings::currentOption <= Settings::maxVisOptions && Settings::optionCount <= Settings::maxVisOptions)
+		else if (Cheat::CheatFeatures::BoolOptionVectorPosition == 1) {
+			if (GUI::currentOption <= GUI::maxVisOptions && GUI::optionCount <= GUI::maxVisOptions)
 			{
-				Drawing::Spriter("commonmenu", "common_medal", Settings::menuX + 0.090f, (Settings::optionCount * 0.035f + 0.140f), 0.02f, 0.03f, 0, 43, 255, 0, 255);
+				Drawing::Spriter("commonmenu", "common_medal", Cheat::CheatFeatures::guiX + 0.090f, (GUI::optionCount * 0.035f + 0.140f), 0.02f, 0.03f, 0, 43, 255, 0, 255);
 			}
-			else if ((Settings::optionCount > (Settings::currentOption - Settings::maxVisOptions)) && Settings::optionCount <= Settings::currentOption)
+			else if ((GUI::optionCount > (GUI::currentOption - GUI::maxVisOptions)) && GUI::optionCount <= GUI::currentOption)
 			{
-				Drawing::Spriter("commonmenu", "common_medal", Settings::menuX + 0.090f, (Settings::optionCount - (Settings::currentOption - Settings::maxVisOptions))*0.035f + 0.140f, 0.02f, 0.03f, 0, 43, 255, 0, 255);
+				Drawing::Spriter("commonmenu", "common_medal", Cheat::CheatFeatures::guiX + 0.090f, (GUI::optionCount - (GUI::currentOption - GUI::maxVisOptions))*0.035f + 0.140f, 0.02f, 0.03f, 0, 43, 255, 0, 255);
 			}
 		}
 	}
 	else
 	{
-		if (BoolOptionVectorPosition == 0) {
-			if (Settings::currentOption <= Settings::maxVisOptions && Settings::optionCount <= Settings::maxVisOptions)
+		if (Cheat::CheatFeatures::BoolOptionVectorPosition == 0) {
+			if (GUI::currentOption <= GUI::maxVisOptions && GUI::optionCount <= GUI::maxVisOptions)
 			{
-				Drawing::Spriter("commonmenu", "shop_box_blank", Settings::menuX + 0.090f, (Settings::optionCount * 0.035f + 0.140f), 0.03f, 0.05f, 0, 255, 255, 255, 255);
+				Drawing::Spriter("commonmenu", "shop_box_blank", Cheat::CheatFeatures::guiX + 0.090f, (GUI::optionCount * 0.035f + 0.140f), 0.03f, 0.05f, 0, 255, 255, 255, 255);
 			}
-			else if ((Settings::optionCount > (Settings::currentOption - Settings::maxVisOptions)) && Settings::optionCount <= Settings::currentOption)
+			else if ((GUI::optionCount > (GUI::currentOption - GUI::maxVisOptions)) && GUI::optionCount <= GUI::currentOption)
 			{
-				Drawing::Spriter("commonmenu", "shop_box_blank", Settings::menuX + 0.090f, (Settings::optionCount - (Settings::currentOption - Settings::maxVisOptions))*0.035f + 0.140f, 0.03f, 0.05f, 0, 255, 255, 255, 255);
+				Drawing::Spriter("commonmenu", "shop_box_blank", Cheat::CheatFeatures::guiX + 0.090f, (GUI::optionCount - (GUI::currentOption - GUI::maxVisOptions))*0.035f + 0.140f, 0.03f, 0.05f, 0, 255, 255, 255, 255);
 			}
 		}
-		else if (BoolOptionVectorPosition == 1) {
-			if (Settings::currentOption <= Settings::maxVisOptions && Settings::optionCount <= Settings::maxVisOptions)
+		else if (Cheat::CheatFeatures::BoolOptionVectorPosition == 1) {
+			if (GUI::currentOption <= GUI::maxVisOptions && GUI::optionCount <= GUI::maxVisOptions)
 			{
-				Drawing::Spriter("commonmenu", "common_medal", Settings::menuX + 0.090f, (Settings::optionCount * 0.035f + 0.140f), 0.02f, 0.03f, 0, 255, 0, 0, 255);
+				Drawing::Spriter("commonmenu", "common_medal", Cheat::CheatFeatures::guiX + 0.090f, (GUI::optionCount * 0.035f + 0.140f), 0.02f, 0.03f, 0, 255, 0, 0, 255);
 			}
-			else if ((Settings::optionCount > (Settings::currentOption - Settings::maxVisOptions)) && Settings::optionCount <= Settings::currentOption)
+			else if ((GUI::optionCount > (GUI::currentOption - GUI::maxVisOptions)) && GUI::optionCount <= GUI::currentOption)
 			{
-				Drawing::Spriter("commonmenu", "common_medal", Settings::menuX + 0.090f, (Settings::optionCount - (Settings::currentOption - Settings::maxVisOptions))*0.035f + 0.140f, 0.02f, 0.03f, 0, 255, 0, 0, 255);
+				Drawing::Spriter("commonmenu", "common_medal", Cheat::CheatFeatures::guiX + 0.090f, (GUI::optionCount - (GUI::currentOption - GUI::maxVisOptions))*0.035f + 0.140f, 0.02f, 0.03f, 0, 255, 0, 0, 255);
 			}
 		}
 	}
-	if (Settings::optionCount == Settings::currentOption) {
+	if (GUI::optionCount == GUI::currentOption) {
 		OptionInformationText = InformationText;
 
-		if (Settings::selectPressed)
+		if (GUI::selectPressed)
 		{
 			b00l ^= 1;
 			return true;
@@ -3136,9 +3141,9 @@ bool Cheat::Toggle(const char * option, bool & b00l, const char* InformationText
 bool Cheat::ToggleCheckMark(const char * option, bool & b00l) 
 {
 	Option(option, "");
-	if (b00l) { Drawing::Spriter("commonmenu", "shop_tick_icon", Settings::menuX + 0.090f, (Settings::optionCount * 0.035f + 0.140f), 0.03f, 0.05f, 0, 255, 255, 255, 255); }
+	if (b00l) { Drawing::Spriter("commonmenu", "shop_tick_icon", Cheat::CheatFeatures::guiX + 0.090f, (GUI::optionCount * 0.035f + 0.140f), 0.03f, 0.05f, 0, 255, 255, 255, 255); }
 
-	if (Settings::optionCount == Settings::currentOption && Settings::selectPressed) {
+	if (GUI::optionCount == GUI::currentOption && GUI::selectPressed) {
 		b00l ^= 1;
 		return true;
 	}
@@ -3150,31 +3155,31 @@ bool Cheat::IntNoControl(const char* option, int& _int, int min, int max, const 
 {
 	Option(option, "");
 
-	if (Settings::currentOption <= Settings::maxVisOptions && Settings::optionCount <= Settings::maxVisOptions)
+	if (GUI::currentOption <= GUI::maxVisOptions && GUI::optionCount <= GUI::maxVisOptions)
 	{
-		Drawing::Text(Cheat::CheatFunctions::StringToChar(" " + std::to_string(_int) + " "), Settings::optionText, { Settings::menuX + 0.080f, Settings::optionCount * 0.035f + 0.125f }, { 0.35f, 0.35f }, true);
+		Drawing::Text(Cheat::CheatFunctions::StringToChar(" " + std::to_string(_int) + " "), GUI::optionText, { Cheat::CheatFeatures::guiX + 0.080f, GUI::optionCount * 0.035f + 0.125f }, { 0.35f, 0.35f }, true);
 	}
-	else if (Settings::optionCount > Settings::currentOption - Settings::maxVisOptions && Settings::optionCount <= Settings::currentOption)
+	else if (GUI::optionCount > GUI::currentOption - GUI::maxVisOptions && GUI::optionCount <= GUI::currentOption)
 	{
-		Drawing::Text(Cheat::CheatFunctions::StringToChar(" " + std::to_string(_int) + " "), Settings::optionText, { Settings::menuX + 0.080f, (Settings::optionCount - (Settings::currentOption - Settings::maxVisOptions)) * 0.035f + 0.125f }, { 0.35f, 0.35f }, true);
+		Drawing::Text(Cheat::CheatFunctions::StringToChar(" " + std::to_string(_int) + " "), GUI::optionText, { Cheat::CheatFeatures::guiX + 0.080f, (GUI::optionCount - (GUI::currentOption - GUI::maxVisOptions)) * 0.035f + 0.125f }, { 0.35f, 0.35f }, true);
 	}
 
-	if (Settings::optionCount == Settings::currentOption)
+	if (GUI::optionCount == GUI::currentOption)
 	{
 		OptionInformationText = InformationText;
 	}
 
-	if (Settings::optionCount == Settings::currentOption && Settings::selectPressed) return true;
-	else if (Settings::optionCount == Settings::currentOption && Settings::leftPressed) return true;
-	else if (Settings::optionCount == Settings::currentOption && Settings::rightPressed) return true;
+	if (GUI::optionCount == GUI::currentOption && GUI::selectPressed) return true;
+	else if (GUI::optionCount == GUI::currentOption && GUI::leftPressed) return true;
+	else if (GUI::optionCount == GUI::currentOption && GUI::rightPressed) return true;
 	return false;
 }
 bool Cheat::Int(const char * option, int & _int, int min, int max, int step, const char* InformationText)
 {
 	Option(option, "");
 
-	if (Settings::optionCount == Settings::currentOption) {
-		if (Settings::leftPressed) {
+	if (GUI::optionCount == GUI::currentOption) {
+		if (GUI::leftPressed) {
 			if (_int < max)
 			{
 				if (step == 1) { _int++; }
@@ -3184,7 +3189,7 @@ bool Cheat::Int(const char * option, int & _int, int min, int max, int step, con
 				}
 			}
 		}
-		if (Settings::rightPressed) {
+		if (GUI::rightPressed) {
 			if (_int > min)
 			{
 				if (step == 1) { _int--; }
@@ -3197,58 +3202,58 @@ bool Cheat::Int(const char * option, int & _int, int min, int max, int step, con
 	}
 
 
-	if (Settings::optionCount == Settings::currentOption)
+	if (GUI::optionCount == GUI::currentOption)
 	{
 		OptionInformationText = InformationText;
 	}
 
-	if (Settings::currentOption <= Settings::maxVisOptions && Settings::optionCount <= Settings::maxVisOptions)
+	if (GUI::currentOption <= GUI::maxVisOptions && GUI::optionCount <= GUI::maxVisOptions)
 	{
 		if (_int < 100)
 		{
-			Drawing::Text(Cheat::CheatFunctions::StringToChar("< " + std::to_string(_int) + " >"), Settings::optionText, { Settings::menuX + 0.075f, Settings::optionCount * 0.035f + 0.125f }, { 0.32f, 0.32f }, false);
+			Drawing::Text(Cheat::CheatFunctions::StringToChar("< " + std::to_string(_int) + " >"), GUI::optionText, { Cheat::CheatFeatures::guiX + 0.075f, GUI::optionCount * 0.035f + 0.125f }, { 0.32f, 0.32f }, false);
 		}
 		else if (_int < 999)
 		{
-			Drawing::Text(Cheat::CheatFunctions::StringToChar("< " + std::to_string(_int) + " >"), Settings::optionText, { Settings::menuX + 0.07f, Settings::optionCount * 0.035f + 0.125f }, { 0.32f, 0.32f }, false);
+			Drawing::Text(Cheat::CheatFunctions::StringToChar("< " + std::to_string(_int) + " >"), GUI::optionText, { Cheat::CheatFeatures::guiX + 0.07f, GUI::optionCount * 0.035f + 0.125f }, { 0.32f, 0.32f }, false);
 		}
 		else
 		{
-			Drawing::Text(Cheat::CheatFunctions::StringToChar("< " + std::to_string(_int) + " >"), Settings::optionText, { Settings::menuX + 0.06f, Settings::optionCount * 0.035f + 0.125f }, { 0.32f, 0.32f }, false);
+			Drawing::Text(Cheat::CheatFunctions::StringToChar("< " + std::to_string(_int) + " >"), GUI::optionText, { Cheat::CheatFeatures::guiX + 0.06f, GUI::optionCount * 0.035f + 0.125f }, { 0.32f, 0.32f }, false);
 		}
 	}
-	else if ((Settings::optionCount > (Settings::currentOption - Settings::maxVisOptions)) && Settings::optionCount <= Settings::currentOption)
+	else if ((GUI::optionCount > (GUI::currentOption - GUI::maxVisOptions)) && GUI::optionCount <= GUI::currentOption)
 	{
 		if (_int < 100)
 		{
-			Drawing::Text(Cheat::CheatFunctions::StringToChar("< " + std::to_string(_int) + " >"), Settings::optionText, { Settings::menuX + 0.075f, (Settings::optionCount - (Settings::currentOption - Settings::maxVisOptions)) * 0.035f + 0.125f }, { 0.32f, 0.32f }, false);
+			Drawing::Text(Cheat::CheatFunctions::StringToChar("< " + std::to_string(_int) + " >"), GUI::optionText, { Cheat::CheatFeatures::guiX + 0.075f, (GUI::optionCount - (GUI::currentOption - GUI::maxVisOptions)) * 0.035f + 0.125f }, { 0.32f, 0.32f }, false);
 		}
 		else if (_int < 999)
 		{
-			Drawing::Text(Cheat::CheatFunctions::StringToChar("< " + std::to_string(_int) + " >"), Settings::optionText, { Settings::menuX + 0.07f, (Settings::optionCount - (Settings::currentOption - Settings::maxVisOptions)) * 0.035f + 0.125f }, { 0.32f, 0.32f }, false);
+			Drawing::Text(Cheat::CheatFunctions::StringToChar("< " + std::to_string(_int) + " >"), GUI::optionText, { Cheat::CheatFeatures::guiX + 0.07f, (GUI::optionCount - (GUI::currentOption - GUI::maxVisOptions)) * 0.035f + 0.125f }, { 0.32f, 0.32f }, false);
 		}
 		else
 		{
-			Drawing::Text(Cheat::CheatFunctions::StringToChar("< " + std::to_string(_int) + " >"), Settings::optionText, { Settings::menuX + 0.06f, (Settings::optionCount - (Settings::currentOption - Settings::maxVisOptions)) * 0.035f + 0.125f }, { 0.32f, 0.32f }, false);
+			Drawing::Text(Cheat::CheatFunctions::StringToChar("< " + std::to_string(_int) + " >"), GUI::optionText, { Cheat::CheatFeatures::guiX + 0.06f, (GUI::optionCount - (GUI::currentOption - GUI::maxVisOptions)) * 0.035f + 0.125f }, { 0.32f, 0.32f }, false);
 		}
 	}
-	if (Settings::optionCount == Settings::currentOption && Settings::selectPressed) return true;
-	else if (Settings::optionCount == Settings::currentOption && Settings::leftPressed) return true;
-	else if (Settings::optionCount == Settings::currentOption && Settings::rightPressed) return true;
+	if (GUI::optionCount == GUI::currentOption && GUI::selectPressed) return true;
+	else if (GUI::optionCount == GUI::currentOption && GUI::leftPressed) return true;
+	else if (GUI::optionCount == GUI::currentOption && GUI::rightPressed) return true;
 	return false;
 }
 
 bool Cheat::Float(const char * option, float & _float, float min, float max, float steps, bool ReturnTrueWithValueChange, const char* InformationText)
 {
 	Option(option, "");
-	if (Settings::optionCount == Settings::currentOption) {	
-		if (Settings::leftPressed) {
+	if (GUI::optionCount == GUI::currentOption) {	
+		if (GUI::leftPressed) {
 			if (_float < max)
 			{
 				_float += steps;
 			}
 		}
-		if (Settings::rightPressed) {
+		if (GUI::rightPressed) {
 			if (_float > min)
 			{
 				_float -= steps;
@@ -3256,19 +3261,19 @@ bool Cheat::Float(const char * option, float & _float, float min, float max, flo
 		}
 	}
 
-	if (Settings::optionCount == Settings::currentOption)
+	if (GUI::optionCount == GUI::currentOption)
 	{
 		OptionInformationText = InformationText;
 	}
 
-	if (Settings::currentOption <= Settings::maxVisOptions && Settings::optionCount <= Settings::maxVisOptions)
-		Drawing::Text(Cheat::CheatFunctions::StringToChar(std::to_string(_float)), Settings::optionText, { Settings::menuX + 0.08f, Settings::optionCount * 0.035f + 0.128f }, { 0.32f, 0.32f }, true);
-	else if (Settings::optionCount > Settings::currentOption - Settings::maxVisOptions && Settings::optionCount <= Settings::currentOption)
-		Drawing::Text(Cheat::CheatFunctions::StringToChar(std::to_string(_float)), Settings::optionText, { Settings::menuX + 0.08f, (Settings::optionCount - (Settings::currentOption - Settings::maxVisOptions))*0.035f + 0.12f }, { 0.32f, 0.32f }, true);
+	if (GUI::currentOption <= GUI::maxVisOptions && GUI::optionCount <= GUI::maxVisOptions)
+		Drawing::Text(Cheat::CheatFunctions::StringToChar(std::to_string(_float)), GUI::optionText, { Cheat::CheatFeatures::guiX + 0.08f, GUI::optionCount * 0.035f + 0.128f }, { 0.32f, 0.32f }, true);
+	else if (GUI::optionCount > GUI::currentOption - GUI::maxVisOptions && GUI::optionCount <= GUI::currentOption)
+		Drawing::Text(Cheat::CheatFunctions::StringToChar(std::to_string(_float)), GUI::optionText, { Cheat::CheatFeatures::guiX + 0.08f, (GUI::optionCount - (GUI::currentOption - GUI::maxVisOptions))*0.035f + 0.12f }, { 0.32f, 0.32f }, true);
 
-	if (Settings::optionCount == Settings::currentOption && Settings::selectPressed) return true;
-	else if (Settings::optionCount == Settings::currentOption && Settings::leftPressed && ReturnTrueWithValueChange) return true;
-	else if (Settings::optionCount == Settings::currentOption && Settings::rightPressed && ReturnTrueWithValueChange) return true;
+	if (GUI::optionCount == GUI::currentOption && GUI::selectPressed) return true;
+	else if (GUI::optionCount == GUI::currentOption && GUI::leftPressed && ReturnTrueWithValueChange) return true;
+	else if (GUI::optionCount == GUI::currentOption && GUI::rightPressed && ReturnTrueWithValueChange) return true;
 	return false;
 }
 #pragma warning(disable: 4267)
@@ -3276,115 +3281,117 @@ bool Cheat::IntVector(const char * option, std::vector<int> Vector, int & positi
 {
 	Option(option, "");
 
-	if (Settings::optionCount == Settings::currentOption) {
+	if (GUI::optionCount == GUI::currentOption) {
 		int max = Vector.size() - 1;
 		int min = 0;
-		if (Settings::leftPressed) {
+		if (GUI::leftPressed) {
 			position >= 1 ? position-- : position = max;
 		}
-		if (Settings::rightPressed) {
+		if (GUI::rightPressed) {
 			position < max ? position++ : position = min;
 		}
 	}
 
-	if (Settings::currentOption <= Settings::maxVisOptions && Settings::optionCount <= Settings::maxVisOptions)
-		Drawing::Text(Cheat::CheatFunctions::StringToChar(std::to_string(Vector[position])), Settings::optionText, { Settings::menuX + 0.068f, Settings::optionCount * 0.035f + 0.125f }, { 0.5f, 0.5f }, true);
-	else if (Settings::optionCount > Settings::currentOption - Settings::maxVisOptions && Settings::optionCount <= Settings::currentOption)
-		Drawing::Text(Cheat::CheatFunctions::StringToChar(std::to_string(Vector[position])), Settings::optionText, { Settings::menuX + 0.068f, (Settings::optionCount - (Settings::currentOption - Settings::maxVisOptions))*0.035f + 0.12f }, { 0.5f, 0.5f }, true);
+	if (GUI::currentOption <= GUI::maxVisOptions && GUI::optionCount <= GUI::maxVisOptions)
+		Drawing::Text(Cheat::CheatFunctions::StringToChar(std::to_string(Vector[position])), GUI::optionText, { Cheat::CheatFeatures::guiX + 0.068f, GUI::optionCount * 0.035f + 0.125f }, { 0.5f, 0.5f }, true);
+	else if (GUI::optionCount > GUI::currentOption - GUI::maxVisOptions && GUI::optionCount <= GUI::currentOption)
+		Drawing::Text(Cheat::CheatFunctions::StringToChar(std::to_string(Vector[position])), GUI::optionText, { Cheat::CheatFeatures::guiX + 0.068f, (GUI::optionCount - (GUI::currentOption - GUI::maxVisOptions))*0.035f + 0.12f }, { 0.5f, 0.5f }, true);
 
-	if (Settings::optionCount == Settings::currentOption && Settings::selectPressed) return true;
-	else if (Settings::optionCount == Settings::currentOption && Settings::leftPressed) return true;
-	else if (Settings::optionCount == Settings::currentOption && Settings::rightPressed) return true;
+	if (GUI::optionCount == GUI::currentOption && GUI::selectPressed) return true;
+	else if (GUI::optionCount == GUI::currentOption && GUI::leftPressed) return true;
+	else if (GUI::optionCount == GUI::currentOption && GUI::rightPressed) return true;
 	return false;
 }
 bool Cheat::FloatVector(const char * option, std::vector<float> Vector, int & position)
 {
 	Option(option, "");
 
-	if (Settings::optionCount == Settings::currentOption) {
+	if (GUI::optionCount == GUI::currentOption) {
 		size_t max = Vector.size() - 1;
 		int min = 0;
-		if (Settings::leftPressed) {
+		if (GUI::leftPressed) {
 			position >= 1 ? position-- : position = max;
 		}
-		if (Settings::rightPressed) {
+		if (GUI::rightPressed) {
 			position < max ? position++ : position = min;
 		}
 	}
 
-	if (Settings::currentOption <= Settings::maxVisOptions && Settings::optionCount <= Settings::maxVisOptions)
-		Drawing::Text(Cheat::CheatFunctions::StringToChar(std::to_string(Vector[position])), Settings::optionText, { Settings::menuX + 0.068f, Settings::optionCount * 0.035f + 0.125f }, { 0.5f, 0.5f }, true);
-	else if (Settings::optionCount > Settings::currentOption - Settings::maxVisOptions && Settings::optionCount <= Settings::currentOption)
-		Drawing::Text(Cheat::CheatFunctions::StringToChar(std::to_string(Vector[position])), Settings::optionText, { Settings::menuX + 0.068f, (Settings::optionCount - (Settings::currentOption - Settings::maxVisOptions))*0.035f + 0.12f }, { 0.5f, 0.5f }, true);
+	if (GUI::currentOption <= GUI::maxVisOptions && GUI::optionCount <= GUI::maxVisOptions)
+		Drawing::Text(Cheat::CheatFunctions::StringToChar(std::to_string(Vector[position])), GUI::optionText, { Cheat::CheatFeatures::guiX + 0.068f, GUI::optionCount * 0.035f + 0.125f }, { 0.5f, 0.5f }, true);
+	else if (GUI::optionCount > GUI::currentOption - GUI::maxVisOptions && GUI::optionCount <= GUI::currentOption)
+		Drawing::Text(Cheat::CheatFunctions::StringToChar(std::to_string(Vector[position])), GUI::optionText, { Cheat::CheatFeatures::guiX + 0.068f, (GUI::optionCount - (GUI::currentOption - GUI::maxVisOptions))*0.035f + 0.12f }, { 0.5f, 0.5f }, true);
 
-	if (Settings::optionCount == Settings::currentOption && Settings::selectPressed) return true;
-	else if (Settings::optionCount == Settings::currentOption && Settings::leftPressed) return true;
-	else if (Settings::optionCount == Settings::currentOption && Settings::rightPressed) return true;
+	if (GUI::optionCount == GUI::currentOption && GUI::selectPressed) return true;
+	else if (GUI::optionCount == GUI::currentOption && GUI::leftPressed) return true;
+	else if (GUI::optionCount == GUI::currentOption && GUI::rightPressed) return true;
 	return false;
 }
 bool Cheat::StringVector(const char * option, std::vector<std::string> Vector, int & position, const char* InformationText)
 {
 	Option(option, "");
 
-	if (Settings::optionCount == Settings::currentOption) {
+	if (GUI::optionCount == GUI::currentOption) {
 		size_t max = Vector.size() - 1;
 		int min = 0;
-		if (Settings::leftPressed) {
+		if (GUI::leftPressed) {
 			position >= 1 ? position-- : position = max;
 		}
-		if (Settings::rightPressed) {
+		if (GUI::rightPressed) {
 			position < max ? position++ : position = min;
 		}
 	}
 
-	if (Settings::optionCount == Settings::currentOption)
+	if (GUI::optionCount == GUI::currentOption)
 	{
 		OptionInformationText = InformationText;
 	}
 
-	if (Settings::currentOption <= Settings::maxVisOptions && Settings::optionCount <= Settings::maxVisOptions) {
-		Drawing::Text(Cheat::CheatFunctions::StringToChar("< " + (Vector[position]) + " >"), Settings::optionText, { Settings::menuX + 0.055f, Settings::optionCount * 0.035f + 0.125f }, { 0.35f, 0.35f }, true);
+	if (GUI::currentOption <= GUI::maxVisOptions && GUI::optionCount <= GUI::maxVisOptions) {
+		Drawing::Text(Cheat::CheatFunctions::StringToChar("< " + (Vector[position]) + " >"), GUI::optionText, { Cheat::CheatFeatures::guiX + 0.055f, GUI::optionCount * 0.035f + 0.125f }, { 0.35f, 0.35f }, true);
 	}
-	else if (Settings::optionCount > Settings::currentOption - Settings::maxVisOptions && Settings::optionCount <= Settings::currentOption) {
-		Drawing::Text(Cheat::CheatFunctions::StringToChar("< " + (Vector[position]) + " >"), Settings::optionText, { Settings::menuX + 0.055f, (Settings::optionCount - (Settings::currentOption - Settings::maxVisOptions)) * 0.035f + 0.125f }, { 0.35f, 0.35f }, true);
+	else if (GUI::optionCount > GUI::currentOption - GUI::maxVisOptions && GUI::optionCount <= GUI::currentOption) {
+		Drawing::Text(Cheat::CheatFunctions::StringToChar("< " + (Vector[position]) + " >"), GUI::optionText, { Cheat::CheatFeatures::guiX + 0.055f, (GUI::optionCount - (GUI::currentOption - GUI::maxVisOptions)) * 0.035f + 0.125f }, { 0.35f, 0.35f }, true);
 	}
-	if (Settings::optionCount == Settings::currentOption && Settings::selectPressed) return true;
-	else if (Settings::optionCount == Settings::currentOption && Settings::leftPressed) return true;
-	else if (Settings::optionCount == Settings::currentOption && Settings::rightPressed) return true;
+	if (GUI::optionCount == GUI::currentOption && GUI::selectPressed) return true;
+	else if (GUI::optionCount == GUI::currentOption && GUI::leftPressed) return true;
+	else if (GUI::optionCount == GUI::currentOption && GUI::rightPressed) return true;
 	return false;
 }
 #pragma warning(default: 4267)
 void Cheat::End()
 {
-	Settings::TotalOptionsCount = Settings::optionCount;
-	int opcount = Settings::optionCount;
-	int currop = Settings::currentOption;
-	if (opcount >= Settings::maxVisOptions)
+	GUI::TotalOptionsCount = GUI::optionCount;
+	int opcount = GUI::optionCount;
+	int currop = GUI::currentOption;
+	if (opcount >= GUI::maxVisOptions)
 	{
-		Drawing::Text(Cheat::CheatFunctions::StringToChar(std::to_string(Settings::currentOptionMenuBottom) + " / " + std::to_string(Settings::optionCountMenuBottom)), Settings::count, { Settings::menuX - 0.085f, ((Settings::maxVisOptions + 1) * 0.035f + 0.128f) }, { 0.30f, 0.30f }, true);
-		Drawing::Text(Cheat::CheatFunctions::ReturnCheatBuildAsString().c_str(), Settings::count, { Settings::menuX + 0.085f, ((Settings::maxVisOptions + 1) * 0.035f + 0.128f) }, { 0.30f, 0.30f }, true);
-		Drawing::Rect(Settings::MenuBottomRect, { Settings::menuX, ((Settings::maxVisOptions + 1) * 0.035f + 0.1415f) }, { 0.21f, 0.035f });
-		Drawing::Rect(Settings::line, { Settings::menuX, ((Settings::maxVisOptions + 1) * 0.035f + 0.1235f) }, { 0.21f, 0.002f });
-		Drawing::Spriter("commonmenu", "shop_arrows_upanddown", Settings::menuX, ((Settings::maxVisOptions + 1) * 0.035f + 0.140f), 0.020f, 0.035f, 180, Settings::line.r, Settings::line.g, Settings::line.b, Settings::line.a);
+		Drawing::Text(Cheat::CheatFunctions::StringToChar(std::to_string(GUI::currentOptionMenuBottom) + " / " + std::to_string(GUI::optionCountMenuBottom)), GUI::count, { Cheat::CheatFeatures::guiX - 0.085f, ((GUI::maxVisOptions + 1) * 0.035f + 0.128f) }, { 0.30f, 0.30f }, true);
+		Drawing::Text(Cheat::CheatFunctions::ReturnCheatBuildAsString().c_str(), GUI::count, { Cheat::CheatFeatures::guiX + 0.085f, ((GUI::maxVisOptions + 1) * 0.035f + 0.128f) }, { 0.30f, 0.30f }, true);
+		Drawing::Rect(GUI::MenuBottomRect, { Cheat::CheatFeatures::guiX, ((GUI::maxVisOptions + 1) * 0.035f + 0.1415f) }, { 0.21f, 0.035f });
+		Drawing::Rect(GUI::line, { Cheat::CheatFeatures::guiX, ((GUI::maxVisOptions + 1) * 0.035f + 0.1235f) }, { 0.21f, 0.002f });
+		Drawing::Spriter("commonmenu", "shop_arrows_upanddown", Cheat::CheatFeatures::guiX, ((GUI::maxVisOptions + 1) * 0.035f + 0.140f), 0.020f, 0.035f, 180, GUI::line.r, GUI::line.g, GUI::line.b, GUI::line.a);
 
-		if (OptionInformationText != "") {
-			Drawing::Rect(Settings::MenuBottomRect, { Settings::menuX, ((Settings::maxVisOptions + 2) * 0.035f + 0.1390f) }, { 0.21f, 0.030f }); // Option Info Rect
-			Drawing::Spriter("shared", "info_icon_32", { Settings::menuX - 0.095f }, ((Settings::maxVisOptions + 2) * 0.035f + 0.1320f), 0.020f, 0.035f, 0, 255, 255, 255, 255); // Option Info Info Spriter
-			Drawing::Text(OptionInformationText, Settings::count, { Settings::menuX - 0.085f, ((Settings::maxVisOptions + 2) * 0.035f + 0.1210f) }, { 0.30f, 0.30f }, false); // Option Info Text
+		if (OptionInformationText != "") 
+		{
+			Drawing::Rect(GUI::MenuBottomRect, { Cheat::CheatFeatures::guiX, ((GUI::maxVisOptions + 2) * 0.035f + 0.1390f) }, { 0.21f, 0.030f }); // Option Info Rect
+			Drawing::Spriter("shared", "info_icon_32", { Cheat::CheatFeatures::guiX - 0.095f }, ((GUI::maxVisOptions + 2) * 0.035f + 0.1320f), 0.020f, 0.035f, 0, 255, 255, 255, 255); // Option Info Info Spriter
+			Drawing::Text(OptionInformationText, GUI::count, { Cheat::CheatFeatures::guiX - 0.085f, ((GUI::maxVisOptions + 2) * 0.035f + 0.1210f) }, { 0.30f, 0.30f }, false); // Option Info Text
 		}
 	}
 	else if (opcount > 0)
 	{
-		Drawing::Text(Cheat::CheatFunctions::StringToChar(std::to_string(Settings::currentOptionMenuBottom) + " / " + std::to_string(Settings::optionCountMenuBottom)), Settings::count, { Settings::menuX - 0.085f, (Settings::optionCount + 1) * 0.035f + 0.128f }, { 0.30f, 0.30f }, true);
-		Drawing::Text(Cheat::CheatFunctions::ReturnCheatBuildAsString().c_str(), Settings::count, { Settings::menuX + 0.085f, (Settings::optionCount + 1) * 0.035f + 0.128f }, { 0.30f, 0.30f }, true);
-		Drawing::Rect(Settings::MenuBottomRect, { Settings::menuX, (Settings::optionCount + 1) * 0.035f + 0.1415f }, { 0.21f, 0.035f });
-		Drawing::Rect(Settings::line, { Settings::menuX, (Settings::optionCount + 1) * 0.035f + 0.1235f }, { 0.21f, 0.002f });
-		Drawing::Spriter("commonmenu", "shop_arrows_upanddown", Settings::menuX, ((Settings::optionCount + 1) * 0.035f + 0.140f), 0.020f, 0.035f, 180, Settings::line.r, Settings::line.g, Settings::line.b, Settings::line.a);
+		Drawing::Text(Cheat::CheatFunctions::StringToChar(std::to_string(GUI::currentOptionMenuBottom) + " / " + std::to_string(GUI::optionCountMenuBottom)), GUI::count, { Cheat::CheatFeatures::guiX - 0.085f, (GUI::optionCount + 1) * 0.035f + 0.128f }, { 0.30f, 0.30f }, true);
+		Drawing::Text(Cheat::CheatFunctions::ReturnCheatBuildAsString().c_str(), GUI::count, { Cheat::CheatFeatures::guiX + 0.085f, (GUI::optionCount + 1) * 0.035f + 0.128f }, { 0.30f, 0.30f }, true);
+		Drawing::Rect(GUI::MenuBottomRect, { Cheat::CheatFeatures::guiX, (GUI::optionCount + 1) * 0.035f + 0.1415f }, { 0.21f, 0.035f });
+		Drawing::Rect(GUI::line, { Cheat::CheatFeatures::guiX, (GUI::optionCount + 1) * 0.035f + 0.1235f }, { 0.21f, 0.002f });
+		Drawing::Spriter("commonmenu", "shop_arrows_upanddown", Cheat::CheatFeatures::guiX, ((GUI::optionCount + 1) * 0.035f + 0.140f), 0.020f, 0.035f, 180, GUI::line.r, GUI::line.g, GUI::line.b, GUI::line.a);
 
-		if (OptionInformationText != "") {
-			Drawing::Rect(Settings::MenuBottomRect, { Settings::menuX, (Settings::optionCount + 2) * 0.035f + 0.1390f }, { 0.21f, 0.030f }); // Option Info Rect
-			Drawing::Spriter("shared", "info_icon_32", { Settings::menuX - 0.095f }, ((Settings::optionCount + 2) * 0.035f + 0.1320), 0.020f, 0.035f, 0, 255, 255, 255, 255); // Option Info Info Spriter
-			Drawing::Text(OptionInformationText, Settings::count, { Settings::menuX - 0.085f, (Settings::optionCount + 2) * 0.035f + 0.1210f }, { 0.30f, 0.30f }, false); // Option Info Text
+		if (OptionInformationText != "") 
+		{
+			Drawing::Rect(GUI::MenuBottomRect, { Cheat::CheatFeatures::guiX, (GUI::optionCount + 2) * 0.035f + 0.1390f }, { 0.21f, 0.030f }); // Option Info Rect
+			Drawing::Spriter("shared", "info_icon_32", { Cheat::CheatFeatures::guiX - 0.095f }, ((GUI::optionCount + 2) * 0.035f + 0.1320), 0.020f, 0.035f, 0, 255, 255, 255, 255); // Option Info Info Spriter
+			Drawing::Text(OptionInformationText, GUI::count, { Cheat::CheatFeatures::guiX - 0.085f, (GUI::optionCount + 2) * 0.035f + 0.1210f }, { 0.30f, 0.30f }, false); // Option Info Text
 		}
 	}
 }
@@ -3394,30 +3401,30 @@ void PlaySoundFrontend_default(char* sound_name)
 	AUDIO::PLAY_SOUND_FRONTEND(-1, sound_name, xorstr_("HUD_FRONTEND_DEFAULT_SOUNDSET"), 0);
 }
 
-int Cheat::Settings::keyPressDelay = 200;
-int Cheat::Settings::keyPressPreviousTick = GetTickCount();
-int Cheat::Settings::keyPressDelay2 = 100;
-int Cheat::Settings::keyPressPreviousTick2 = GetTickCount();
-int Cheat::Settings::keyPressDelay3 = 140;
-int Cheat::Settings::keyPressPreviousTick3 = GetTickCount();
-int Cheat::Settings::openKey = VK_F4;
-bool Cheat::Settings::ControllerInput = true;
-bool Cheat::Settings::RestorePreviousSubmenu = true;
+int Cheat::GUI::keyPressDelay = 200;
+int Cheat::GUI::keyPressPreviousTick = GetTickCount();
+int Cheat::GUI::keyPressDelay2 = 100;
+int Cheat::GUI::keyPressPreviousTick2 = GetTickCount();
+int Cheat::GUI::keyPressDelay3 = 140;
+int Cheat::GUI::keyPressPreviousTick3 = GetTickCount();
+int Cheat::GUI::openKey = VK_F4;
+bool Cheat::GUI::ControllerInput = true;
+bool Cheat::GUI::RestorePreviousSubmenu = true;
 
 void Cheat::Checks::Controls()
 {
-	Settings::selectPressed = false;
-	Settings::leftPressed = false;
-	Settings::rightPressed = false;
+	GUI::selectPressed = false;
+	GUI::leftPressed = false;
+	GUI::rightPressed = false;
 
-	if (GetTickCount64() - Settings::keyPressPreviousTick > Settings::keyPressDelay) {
-	if (GetTickCount64() - Settings::keyPressPreviousTick2 > Settings::keyPressDelay2) {
-		if (GetTickCount64() - Settings::keyPressPreviousTick3 > Settings::keyPressDelay3) {
-			if (GetAsyncKeyState(Settings::openKey) & 1 && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlScriptRB) && CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendX) && Settings::ControllerInput)
+	if (GetTickCount64() - GUI::keyPressPreviousTick > GUI::keyPressDelay) {
+	if (GetTickCount64() - GUI::keyPressPreviousTick2 > GUI::keyPressDelay2) {
+		if (GetTickCount64() - GUI::keyPressPreviousTick3 > GUI::keyPressDelay3) {
+			if (GetAsyncKeyState(GUI::openKey) & 1 && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlScriptRB) && CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendX) && GUI::ControllerInput)
 			{								
-				if (Settings::menuLevel == 0)
+				if (GUI::menuLevel == 0)
 				{
-					if (Settings::PreviousMenu != NOMENU && Cheat::Settings::RestorePreviousSubmenu) { MenuLevelHandler::MoveMenu(Settings::PreviousMenu); Settings::menuLevel = Settings::PreviousMenuLevel; Settings::currentOption = Settings::previousOption; }
+					if (GUI::PreviousMenu != NOMENU && Cheat::GUI::RestorePreviousSubmenu) { MenuLevelHandler::MoveMenu(GUI::PreviousMenu); GUI::menuLevel = GUI::PreviousMenuLevel; GUI::currentOption = GUI::previousOption; }
 					else { MenuLevelHandler::MoveMenu(SubMenus::MainMenu);  }
 				}
 				else
@@ -3426,82 +3433,82 @@ void Cheat::Checks::Controls()
 				}
 		
 				PlaySoundFrontend_default("SELECT");
-				Settings::keyPressPreviousTick = GetTickCount64();
+				GUI::keyPressPreviousTick = GetTickCount64();
 			}
-			else if (GetAsyncKeyState(VK_NUMPAD0) & 1 && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendCancel) && Settings::ControllerInput) {
-				if (Settings::menuLevel > 0) { MenuLevelHandler::BackMenu(); PlaySoundFrontend_default("BACK"); }
+			else if (GetAsyncKeyState(VK_NUMPAD0) & 1 && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendCancel) && GUI::ControllerInput) {
+				if (GUI::menuLevel > 0) { MenuLevelHandler::BackMenu(); PlaySoundFrontend_default("BACK"); }
 
-				Settings::keyPressPreviousTick = GetTickCount64();
+				GUI::keyPressPreviousTick = GetTickCount64();
 			}
-			else if (GetAsyncKeyState(VK_NUMPAD8) & 1 && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendUp) && Settings::ControllerInput) {
-				Settings::currentOption > 1 ? Settings::currentOption-- : Settings::currentOption = Settings::optionCount;
-				if (Settings::menuLevel > 0)
+			else if (GetAsyncKeyState(VK_NUMPAD8) & 1 && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendUp) && GUI::ControllerInput) {
+				GUI::currentOption > 1 ? GUI::currentOption-- : GUI::currentOption = GUI::optionCount;
+				if (GUI::menuLevel > 0)
 					PlaySoundFrontend_default("NAV_UP_DOWN");
 
-				Settings::keyPressPreviousTick2 = GetTickCount64();
+				GUI::keyPressPreviousTick2 = GetTickCount64();
 			}
-			else if (GetAsyncKeyState(VK_NUMPAD2) & 1 && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendDown) && Settings::ControllerInput) {
-				Settings::currentOption < Settings::optionCount ? Settings::currentOption++ : Settings::currentOption = 1;
-				if (Settings::menuLevel > 0)
+			else if (GetAsyncKeyState(VK_NUMPAD2) & 1 && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendDown) && GUI::ControllerInput) {
+				GUI::currentOption < GUI::optionCount ? GUI::currentOption++ : GUI::currentOption = 1;
+				if (GUI::menuLevel > 0)
 					PlaySoundFrontend_default("NAV_UP_DOWN");
 
-				Settings::keyPressPreviousTick2 = GetTickCount64();
+				GUI::keyPressPreviousTick2 = GetTickCount64();
 			}
-			else if (GetAsyncKeyState(VK_NUMPAD6) & 1 && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlPhoneRight) && Settings::ControllerInput) {
-				Settings::leftPressed = true;
-				if (Settings::menuLevel > 0)
+			else if (GetAsyncKeyState(VK_NUMPAD6) & 1 && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlPhoneRight) && GUI::ControllerInput) {
+				GUI::leftPressed = true;
+				if (GUI::menuLevel > 0)
 					PlaySoundFrontend_default("NAV_UP_DOWN");
 
-				Settings::keyPressPreviousTick3 = GetTickCount64();
+				GUI::keyPressPreviousTick3 = GetTickCount64();
 			}
-			else if (GetAsyncKeyState(VK_NUMPAD4) & 1 && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlPhoneLeft) && Settings::ControllerInput) {
-				Settings::rightPressed = true;
-				if (Settings::menuLevel > 0)
+			else if (GetAsyncKeyState(VK_NUMPAD4) & 1 && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlPhoneLeft) && GUI::ControllerInput) {
+				GUI::rightPressed = true;
+				if (GUI::menuLevel > 0)
 					PlaySoundFrontend_default("NAV_UP_DOWN");
 
-				Settings::keyPressPreviousTick3 = GetTickCount64();
+				GUI::keyPressPreviousTick3 = GetTickCount64();
 			}
-			else if (GetAsyncKeyState(VK_NUMPAD5) & 1 && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept) && Settings::ControllerInput) {
-				Settings::selectPressed = true;
-				if (Settings::menuLevel > 0)
+			else if (GetAsyncKeyState(VK_NUMPAD5) & 1 && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept) && GUI::ControllerInput) {
+				GUI::selectPressed = true;
+				if (GUI::menuLevel > 0)
 					PlaySoundFrontend_default("SELECT");
 
-				Settings::keyPressPreviousTick = GetTickCount64();
+				GUI::keyPressPreviousTick = GetTickCount64();
 			}
 		}
 	}
 	}
-	Settings::optionCount = 0;
-	Settings::optionCountMenuBottom = 0;
+	GUI::optionCount = 0;
+	GUI::optionCountMenuBottom = 0;
 }
 #pragma warning(default : 4018)
 void Cheat::MenuLevelHandler::MoveMenu(SubMenus menu)
 {
-	Settings::menusArray[Settings::menuLevel] = Settings::currentMenu;
-	Settings::optionsArray[Settings::menuLevel] = Settings::currentOption;
-	Settings::menuLevel++;
-	Settings::currentMenu = menu;
-	Settings::currentOption = 1;
+	GUI::menusArray[GUI::menuLevel] = GUI::currentMenu;
+	GUI::optionsArray[GUI::menuLevel] = GUI::currentOption;
+	GUI::menuLevel++;
+	GUI::currentMenu = menu;
+	GUI::currentOption = 1;
 }
 
 void Cheat::MenuLevelHandler::CloseMenu()
 {
-	Settings::PreviousMenu = Cheat::Settings::currentMenu;
-	Settings::PreviousMenuLevel = Settings::menuLevel;
-	Settings::previousOption = Settings::currentOption;
-	Settings::menuLevel = 0;
-	Settings::currentMenu = Settings::menusArray[Settings::menuLevel];
-	Settings::currentOption = Settings::optionsArray[Settings::menuLevel];
+	GUI::PreviousMenu = Cheat::GUI::currentMenu;
+	GUI::PreviousMenuLevel = GUI::menuLevel;
+	GUI::previousOption = GUI::currentOption;
+	GUI::menuLevel = 0;
+	GUI::currentMenu = GUI::menusArray[GUI::menuLevel];
+	GUI::currentOption = GUI::optionsArray[GUI::menuLevel];
 }
 
 void Cheat::MenuLevelHandler::BackMenu()
 {
-	Settings::PreviousMenu = Settings::currentMenu;
-	Settings::PreviousMenuLevel = Settings::menuLevel;
-	Settings::previousOption = Settings::currentOption;
-	Settings::menuLevel--;
-	Settings::currentMenu = Settings::menusArray[Settings::menuLevel];
-	Settings::currentOption = Settings::optionsArray[Settings::menuLevel];
+	GUI::PreviousMenu = GUI::currentMenu;
+	GUI::PreviousMenuLevel = GUI::menuLevel;
+	GUI::previousOption = GUI::currentOption;
+	GUI::menuLevel--;
+	GUI::currentMenu = GUI::menusArray[GUI::menuLevel];
+	GUI::currentOption = GUI::optionsArray[GUI::menuLevel];
 }
 
 
@@ -3567,50 +3574,49 @@ void Cheat::fps(char* text)
 }
 void Cheat::AddPlayerInfoBoxTextEntry(char* text, int Row1, int Row2, int Row3, int Row4)
 {
-	if (Cheat::Settings::menuX < 0.54f)
+	if (Cheat::CheatFeatures::guiX < 0.54f)
 	{		
 		if (Row1 != NULL)
 		{
-			Drawing::Text(text, Settings::count, { Settings::menuX + 0.110f, (Row1 * 0.020f) + 0.140f }, { 0.30f, 0.30f }, false);
+			Drawing::Text(text, GUI::count, { Cheat::CheatFeatures::guiX + 0.110f, (Row1 * 0.020f) + 0.140f }, { 0.30f, 0.30f }, false);
 		}
 		else if (Row2 != NULL)
 		{
-			Drawing::Text(text, Settings::count, { Settings::menuX + 0.210f, (Row2 * 0.020f) + 0.140f }, { 0.30f, 0.30f }, false);
+			Drawing::Text(text, GUI::count, { Cheat::CheatFeatures::guiX + 0.210f, (Row2 * 0.020f) + 0.140f }, { 0.30f, 0.30f }, false);
 		}
 		else if (Row3 != NULL)
 		{
-			Drawing::Text(text, Settings::count, { Settings::menuX + 0.310f, (Row3 * 0.020f) + 0.140f }, { 0.30f, 0.30f }, false);
+			Drawing::Text(text, GUI::count, { Cheat::CheatFeatures::guiX + 0.310f, (Row3 * 0.020f) + 0.140f }, { 0.30f, 0.30f }, false);
 		}
 		else if (Row4 != NULL)
 		{
-			Drawing::Text(text, Settings::count, { Settings::menuX + 0.385f, (Row4 * 0.020f) + 0.140f }, { 0.30f, 0.30f }, false);
+			Drawing::Text(text, GUI::count, { Cheat::CheatFeatures::guiX + 0.385f, (Row4 * 0.020f) + 0.140f }, { 0.30f, 0.30f }, false);
 		}
 	}
 	else
 	{
 		if (Row1 != NULL)
 		{
-			Drawing::Text(text, Settings::count, { Settings::menuX - 0.420f, (Row1 * 0.020f) + 0.140f }, { 0.30f, 0.30f }, false);
+			Drawing::Text(text, GUI::count, { Cheat::CheatFeatures::guiX - 0.420f, (Row1 * 0.020f) + 0.140f }, { 0.30f, 0.30f }, false);
 		}
 		else if (Row2 != NULL)
 		{
-			Drawing::Text(text, Settings::count, { Settings::menuX - 0.340f, (Row2 * 0.020f) + 0.140f }, { 0.30f, 0.30f }, false);
+			Drawing::Text(text, GUI::count, { Cheat::CheatFeatures::guiX - 0.340f, (Row2 * 0.020f) + 0.140f }, { 0.30f, 0.30f }, false);
 		}
 		else if (Row3 != NULL)
 		{
-			Drawing::Text(text, Settings::count, { Settings::menuX - 0.260f, (Row3 * 0.020f) + 0.140f }, { 0.30f, 0.30f }, false);
+			Drawing::Text(text, GUI::count, { Cheat::CheatFeatures::guiX - 0.260f, (Row3 * 0.020f) + 0.140f }, { 0.30f, 0.30f }, false);
 		}
 		else if (Row4 != NULL)
 		{
-			Drawing::Text(text, Settings::count, { Settings::menuX - 0.160f, (Row4 * 0.020f) + 0.140f }, { 0.30f, 0.30f }, false);
+			Drawing::Text(text, GUI::count, { Cheat::CheatFeatures::guiX - 0.160f, (Row4 * 0.020f) + 0.140f }, { 0.30f, 0.30f }, false);
 		}
 	}
 }
 
-char* ThemeFilesArray[100] = {};
 void Cheat::LoadThemeFilesLooped()
 {
-	memset(ThemeFilesArray, 0, sizeof ThemeFilesArray);
+	memset(GUI::ThemeFilesArray, 0, sizeof(GUI::ThemeFilesArray));
 	std::string ThemeFolderPath = Cheat::CheatFunctions::ReturnCheatModuleDirectoryPath() + (std::string)"\\gtav\\Themes";
 	std::string GTAVCheatFolderPath = Cheat::CheatFunctions::ReturnCheatModuleDirectoryPath() + (std::string)xorstr_("\\gtav");
 
@@ -3621,8 +3627,8 @@ void Cheat::LoadThemeFilesLooped()
 	for (const auto & file : std::filesystem::directory_iterator(ThemeFolderPath.c_str())) {
 		if (file.path().extension() == ".ini")
 		{
-			ThemeFilesArray[i] = new char[file.path().stem().string().length() + 1];
-			strcpy(ThemeFilesArray[i], file.path().stem().string().c_str());
+			GUI::ThemeFilesArray[i] = new char[file.path().stem().string().length() + 1];
+			strcpy(GUI::ThemeFilesArray[i], file.path().stem().string().c_str());
 			++i;
 		}
 	}
@@ -3635,7 +3641,7 @@ void Cheat::LoadTheme(char* ThemeFileName, bool StartUp)
 
 	if (!Cheat::CheatFunctions::DoesFileExists(ThemeFilePath)) { Cheat::GameFunctions::MinimapNotification("~r~Failed to load theme: theme file does not exist"); return; }
 
-	CurrentTheme = ThemeFileName;
+	Cheat::GUI::CurrentTheme = ThemeFileName;
 
 	std::string ThemeLoaderVersionCheck = Cheat::Files::ReadStringFromIni(ThemeFilePath, "THEME", "theme_loader_version");
 	if (ThemeLoaderVersionCheck != xorstr_("1.3")) { Cheat::GameFunctions::MinimapNotification("~o~Loaded theme file is outdated"); Cheat::GameFunctions::MinimapNotification("~o~Some theme settings might not have loaded correctly"); }
@@ -3681,53 +3687,53 @@ void Cheat::LoadTheme(char* ThemeFileName, bool StartUp)
 	std::string MenuBottomBackgroundOpacity = Cheat::Files::ReadStringFromIni(ThemeFilePath, "THEME", "menu_bottom_background_opacity");
 
 	
-	if (SmallTitleBackgroundRed != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(SmallTitleBackgroundRed)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(SmallTitleBackgroundRed))) { Cheat::Settings::titleRect.r = std::stoi(SmallTitleBackgroundRed); } } }
-	if (SmallTitleBackgroundGreen != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(SmallTitleBackgroundGreen)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(SmallTitleBackgroundGreen))) { Cheat::Settings::titleRect.g = std::stoi(SmallTitleBackgroundGreen); } } }
-	if (SmallTitleBackgroundBlue != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(SmallTitleBackgroundBlue)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(SmallTitleBackgroundBlue))) { Cheat::Settings::titleRect.b = std::stoi(SmallTitleBackgroundBlue); } } }
-	if (SmallTitleBackgroundOpacity != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(SmallTitleBackgroundOpacity)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(SmallTitleBackgroundOpacity))) { Cheat::Settings::titleRect.a = std::stoi(SmallTitleBackgroundOpacity); } } }
-	if (HeaderBackgroundRed != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(HeaderBackgroundRed)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(HeaderBackgroundRed))) { Cheat::Settings::headerRect.r = std::stoi(HeaderBackgroundRed); } } }
-	if (HeaderBackgroundGreen != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(HeaderBackgroundGreen)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(HeaderBackgroundGreen))) { Cheat::Settings::headerRect.g = std::stoi(HeaderBackgroundGreen); } } }
-	if (HeaderBackgroundBlue != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(HeaderBackgroundBlue)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(HeaderBackgroundBlue))) { Cheat::Settings::headerRect.b = std::stoi(HeaderBackgroundBlue); } } }
-	if (HeaderBackgroundOpacity != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(HeaderBackgroundOpacity)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(HeaderBackgroundOpacity))) { Cheat::Settings::headerRect.a = std::stoi(HeaderBackgroundOpacity); } } }
-	if (BottomLineRed != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(BottomLineRed)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(BottomLineRed))) { Cheat::Settings::line.r = std::stoi(BottomLineRed); } } }
-	if (BottomLineGreen != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(BottomLineGreen)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(BottomLineGreen))) { Cheat::Settings::line.g = std::stoi(BottomLineGreen); } } }
-	if (BottomLineBlue != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(BottomLineBlue)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(BottomLineBlue))) { Cheat::Settings::line.b = std::stoi(BottomLineBlue); } } }
-	if (BottomLineOpacity != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(BottomLineOpacity)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(BottomLineOpacity))) { Cheat::Settings::line.a = std::stoi(BottomLineOpacity); } } }
-	if (TitleBackgroundRed != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(TitleBackgroundRed)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(TitleBackgroundRed))) { Cheat::Settings::MainTitleRect.r = std::stoi(TitleBackgroundRed); } } }
-	if (TitleBackgroundGreen != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(TitleBackgroundGreen)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(TitleBackgroundGreen))) { Cheat::Settings::MainTitleRect.g = std::stoi(TitleBackgroundGreen); } } }
-	if (TitleBackgroundBlue != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(TitleBackgroundBlue)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(TitleBackgroundBlue))) { Cheat::Settings::MainTitleRect.b = std::stoi(TitleBackgroundBlue); } } }
-	if (TitleBackgroundOpacity != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(TitleBackgroundOpacity)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(TitleBackgroundOpacity))) { Cheat::Settings::MainTitleRect.a = std::stoi(TitleBackgroundOpacity); } } }
-	if (OptionTextRed != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(OptionTextRed)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(OptionTextRed))) { Cheat::Settings::optionText.r = std::stoi(OptionTextRed); } } }
-	if (OptionTextGreen != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(OptionTextGreen)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(OptionTextGreen))) { Cheat::Settings::optionText.g = std::stoi(OptionTextGreen); } } }
-	if (OptionTextBlue != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(OptionTextBlue)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(OptionTextBlue))) { Cheat::Settings::optionText.b = std::stoi(OptionTextBlue); } } }
-	if (OptionTextOpacity != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(OptionTextOpacity)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(OptionTextOpacity))) { Cheat::Settings::optionText.a = std::stoi(OptionTextOpacity); } } }
-	if (TitleBackgroundOpacity != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(TitleBackgroundOpacity)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(TitleBackgroundOpacity))) { Cheat::Settings::MainTitleRect.a = std::stoi(TitleBackgroundOpacity); } } }
-	if (SelectionBoxRed != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(SelectionBoxRed)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(SelectionBoxRed))) { Cheat::Settings::scroller.r = std::stoi(SelectionBoxRed); } } }
-	if (SelectionBoxGreen != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(SelectionBoxGreen)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(SelectionBoxGreen))) { Cheat::Settings::scroller.g = std::stoi(SelectionBoxGreen); } } }
-	if (SelectionBoxBlue != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(SelectionBoxBlue)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(SelectionBoxBlue))) { Cheat::Settings::scroller.b = std::stoi(SelectionBoxBlue); } } }
-	if (SelectionBoxOpacity != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(SelectionBoxOpacity)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(SelectionBoxOpacity))) { Cheat::Settings::scroller.a = std::stoi(SelectionBoxOpacity); } } }
-	if (SelectionBoxBackgroundRed != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(SelectionBoxBackgroundRed)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(SelectionBoxBackgroundRed))) { Cheat::Settings::MenuBackgroundRect.r = std::stoi(SelectionBoxBackgroundRed); } } }
-	if (SelectionBoxBackgroundGreen != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(SelectionBoxBackgroundGreen)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(SelectionBoxBackgroundGreen))) { Cheat::Settings::MenuBackgroundRect.g = std::stoi(SelectionBoxBackgroundGreen); } } }
-	if (SelectionBoxBackgroundBlue != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(SelectionBoxBackgroundBlue)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(SelectionBoxBackgroundBlue))) { Cheat::Settings::MenuBackgroundRect.b = std::stoi(SelectionBoxBackgroundBlue); } } }
-	if (SelectionBoxBackgroundOpacity != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(SelectionBoxBackgroundOpacity)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(SelectionBoxBackgroundOpacity))) { Cheat::Settings::MenuBackgroundRect.a = std::stoi(SelectionBoxBackgroundOpacity); } } }
-	if (MenuBottomBackgroundRed != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(MenuBottomBackgroundRed)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(MenuBottomBackgroundRed))) { Cheat::Settings::MenuBottomRect.r = std::stoi(MenuBottomBackgroundRed); } } }
-	if (MenuBottomBackgroundGreen != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(MenuBottomBackgroundGreen)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(MenuBottomBackgroundGreen))) { Cheat::Settings::MenuBottomRect.g = std::stoi(MenuBottomBackgroundGreen); } } }
-	if (MenuBottomBackgroundBlue != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(MenuBottomBackgroundBlue)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(MenuBottomBackgroundBlue))) { Cheat::Settings::MenuBottomRect.b = std::stoi(MenuBottomBackgroundBlue); } } }
-	if (MenuBottomBackgroundOpacity != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(MenuBottomBackgroundOpacity)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(MenuBottomBackgroundOpacity))) { Cheat::Settings::MenuBottomRect.a = std::stoi(MenuBottomBackgroundOpacity); } } }
+	if (SmallTitleBackgroundRed != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(SmallTitleBackgroundRed)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(SmallTitleBackgroundRed))) { Cheat::GUI::titleRect.r = std::stoi(SmallTitleBackgroundRed); } } }
+	if (SmallTitleBackgroundGreen != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(SmallTitleBackgroundGreen)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(SmallTitleBackgroundGreen))) { Cheat::GUI::titleRect.g = std::stoi(SmallTitleBackgroundGreen); } } }
+	if (SmallTitleBackgroundBlue != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(SmallTitleBackgroundBlue)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(SmallTitleBackgroundBlue))) { Cheat::GUI::titleRect.b = std::stoi(SmallTitleBackgroundBlue); } } }
+	if (SmallTitleBackgroundOpacity != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(SmallTitleBackgroundOpacity)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(SmallTitleBackgroundOpacity))) { Cheat::GUI::titleRect.a = std::stoi(SmallTitleBackgroundOpacity); } } }
+	if (HeaderBackgroundRed != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(HeaderBackgroundRed)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(HeaderBackgroundRed))) { Cheat::GUI::headerRect.r = std::stoi(HeaderBackgroundRed); } } }
+	if (HeaderBackgroundGreen != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(HeaderBackgroundGreen)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(HeaderBackgroundGreen))) { Cheat::GUI::headerRect.g = std::stoi(HeaderBackgroundGreen); } } }
+	if (HeaderBackgroundBlue != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(HeaderBackgroundBlue)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(HeaderBackgroundBlue))) { Cheat::GUI::headerRect.b = std::stoi(HeaderBackgroundBlue); } } }
+	if (HeaderBackgroundOpacity != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(HeaderBackgroundOpacity)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(HeaderBackgroundOpacity))) { Cheat::GUI::headerRect.a = std::stoi(HeaderBackgroundOpacity); } } }
+	if (BottomLineRed != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(BottomLineRed)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(BottomLineRed))) { Cheat::GUI::line.r = std::stoi(BottomLineRed); } } }
+	if (BottomLineGreen != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(BottomLineGreen)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(BottomLineGreen))) { Cheat::GUI::line.g = std::stoi(BottomLineGreen); } } }
+	if (BottomLineBlue != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(BottomLineBlue)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(BottomLineBlue))) { Cheat::GUI::line.b = std::stoi(BottomLineBlue); } } }
+	if (BottomLineOpacity != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(BottomLineOpacity)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(BottomLineOpacity))) { Cheat::GUI::line.a = std::stoi(BottomLineOpacity); } } }
+	if (TitleBackgroundRed != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(TitleBackgroundRed)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(TitleBackgroundRed))) { Cheat::GUI::MainTitleRect.r = std::stoi(TitleBackgroundRed); } } }
+	if (TitleBackgroundGreen != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(TitleBackgroundGreen)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(TitleBackgroundGreen))) { Cheat::GUI::MainTitleRect.g = std::stoi(TitleBackgroundGreen); } } }
+	if (TitleBackgroundBlue != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(TitleBackgroundBlue)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(TitleBackgroundBlue))) { Cheat::GUI::MainTitleRect.b = std::stoi(TitleBackgroundBlue); } } }
+	if (TitleBackgroundOpacity != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(TitleBackgroundOpacity)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(TitleBackgroundOpacity))) { Cheat::GUI::MainTitleRect.a = std::stoi(TitleBackgroundOpacity); } } }
+	if (OptionTextRed != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(OptionTextRed)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(OptionTextRed))) { Cheat::GUI::optionText.r = std::stoi(OptionTextRed); } } }
+	if (OptionTextGreen != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(OptionTextGreen)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(OptionTextGreen))) { Cheat::GUI::optionText.g = std::stoi(OptionTextGreen); } } }
+	if (OptionTextBlue != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(OptionTextBlue)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(OptionTextBlue))) { Cheat::GUI::optionText.b = std::stoi(OptionTextBlue); } } }
+	if (OptionTextOpacity != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(OptionTextOpacity)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(OptionTextOpacity))) { Cheat::GUI::optionText.a = std::stoi(OptionTextOpacity); } } }
+	if (TitleBackgroundOpacity != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(TitleBackgroundOpacity)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(TitleBackgroundOpacity))) { Cheat::GUI::MainTitleRect.a = std::stoi(TitleBackgroundOpacity); } } }
+	if (SelectionBoxRed != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(SelectionBoxRed)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(SelectionBoxRed))) { Cheat::GUI::scroller.r = std::stoi(SelectionBoxRed); } } }
+	if (SelectionBoxGreen != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(SelectionBoxGreen)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(SelectionBoxGreen))) { Cheat::GUI::scroller.g = std::stoi(SelectionBoxGreen); } } }
+	if (SelectionBoxBlue != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(SelectionBoxBlue)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(SelectionBoxBlue))) { Cheat::GUI::scroller.b = std::stoi(SelectionBoxBlue); } } }
+	if (SelectionBoxOpacity != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(SelectionBoxOpacity)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(SelectionBoxOpacity))) { Cheat::GUI::scroller.a = std::stoi(SelectionBoxOpacity); } } }
+	if (SelectionBoxBackgroundRed != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(SelectionBoxBackgroundRed)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(SelectionBoxBackgroundRed))) { Cheat::GUI::MenuBackgroundRect.r = std::stoi(SelectionBoxBackgroundRed); } } }
+	if (SelectionBoxBackgroundGreen != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(SelectionBoxBackgroundGreen)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(SelectionBoxBackgroundGreen))) { Cheat::GUI::MenuBackgroundRect.g = std::stoi(SelectionBoxBackgroundGreen); } } }
+	if (SelectionBoxBackgroundBlue != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(SelectionBoxBackgroundBlue)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(SelectionBoxBackgroundBlue))) { Cheat::GUI::MenuBackgroundRect.b = std::stoi(SelectionBoxBackgroundBlue); } } }
+	if (SelectionBoxBackgroundOpacity != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(SelectionBoxBackgroundOpacity)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(SelectionBoxBackgroundOpacity))) { Cheat::GUI::MenuBackgroundRect.a = std::stoi(SelectionBoxBackgroundOpacity); } } }
+	if (MenuBottomBackgroundRed != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(MenuBottomBackgroundRed)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(MenuBottomBackgroundRed))) { Cheat::GUI::MenuBottomRect.r = std::stoi(MenuBottomBackgroundRed); } } }
+	if (MenuBottomBackgroundGreen != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(MenuBottomBackgroundGreen)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(MenuBottomBackgroundGreen))) { Cheat::GUI::MenuBottomRect.g = std::stoi(MenuBottomBackgroundGreen); } } }
+	if (MenuBottomBackgroundBlue != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(MenuBottomBackgroundBlue)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(MenuBottomBackgroundBlue))) { Cheat::GUI::MenuBottomRect.b = std::stoi(MenuBottomBackgroundBlue); } } }
+	if (MenuBottomBackgroundOpacity != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(MenuBottomBackgroundOpacity)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(MenuBottomBackgroundOpacity))) { Cheat::GUI::MenuBottomRect.a = std::stoi(MenuBottomBackgroundOpacity); } } }
 
-	std::string MenuXSetting = Cheat::Files::ReadStringFromIni(ThemeFilePath, "THEME", "menu_x"); if (Cheat::CheatFunctions::IsIntegerInRange(0.170000, 0.820000, std::stod(MenuXSetting))) { double MenuXDouble = std::stod(MenuXSetting);  Cheat::Settings::menuX = MenuXDouble; }
-	std::string ScrollDelaySetting = Cheat::Files::ReadStringFromIni(ThemeFilePath, "THEME", "scroll_delay"); if (Cheat::CheatFunctions::StringIsInteger(ScrollDelaySetting)) { if (Cheat::CheatFunctions::IsIntegerInRange(1, 200, std::stoi(ScrollDelaySetting))) { Cheat::Settings::keyPressDelay2 = std::stoi(ScrollDelaySetting.c_str()); } }
-	std::string IntDelaySetting = Cheat::Files::ReadStringFromIni(ThemeFilePath, "THEME", "int_delay"); if (Cheat::CheatFunctions::StringIsInteger(IntDelaySetting)) { if (Cheat::CheatFunctions::IsIntegerInRange(1, 200, std::stoi(IntDelaySetting))) { Cheat::Settings::keyPressDelay3 = std::stoi(IntDelaySetting.c_str()); } }
-	std::string BooleanToggleSetting = Cheat::Files::ReadStringFromIni(ThemeFilePath, xorstr_("CHEAT"), xorstr_("boolean_toggle")); if (Cheat::CheatFunctions::StringIsInteger(BooleanToggleSetting)) { BoolOptionVectorPosition = std::stoi(BooleanToggleSetting.c_str()); }
-	if (Cheat::Files::ReadStringFromIni(ThemeFilePath, "THEME", "show_header_background") == "true") { show_header_background = true; }
-	if (Cheat::Files::ReadStringFromIni(ThemeFilePath, "THEME", "show_header_gui") == "true") { show_header_gui = true; }
-	if (Cheat::Files::ReadStringFromIni(ThemeFilePath, "THEME", "restore_previous_submenu") == "false") { Cheat::Settings::RestorePreviousSubmenu = false; } else { Cheat::Settings::RestorePreviousSubmenu = true; }
-	if (Cheat::Files::ReadStringFromIni(ThemeFilePath, "THEME", "show_header_glare") == "false") { ShowHeaderGlare = false; } else { ShowHeaderGlare = true; }
+	std::string MenuXSetting = Cheat::Files::ReadStringFromIni(ThemeFilePath, "THEME", "menu_x"); if (Cheat::CheatFunctions::IsIntegerInRange(0.170000, 0.820000, std::stod(MenuXSetting))) { double MenuXDouble = std::stod(MenuXSetting);  Cheat::CheatFeatures::guiX = MenuXDouble; }
+	std::string ScrollDelaySetting = Cheat::Files::ReadStringFromIni(ThemeFilePath, "THEME", "scroll_delay"); if (Cheat::CheatFunctions::StringIsInteger(ScrollDelaySetting)) { if (Cheat::CheatFunctions::IsIntegerInRange(1, 200, std::stoi(ScrollDelaySetting))) { Cheat::GUI::keyPressDelay2 = std::stoi(ScrollDelaySetting.c_str()); } }
+	std::string IntDelaySetting = Cheat::Files::ReadStringFromIni(ThemeFilePath, "THEME", "int_delay"); if (Cheat::CheatFunctions::StringIsInteger(IntDelaySetting)) { if (Cheat::CheatFunctions::IsIntegerInRange(1, 200, std::stoi(IntDelaySetting))) { Cheat::GUI::keyPressDelay3 = std::stoi(IntDelaySetting.c_str()); } }
+	std::string BooleanToggleSetting = Cheat::Files::ReadStringFromIni(ThemeFilePath, xorstr_("CHEAT"), xorstr_("boolean_toggle")); if (Cheat::CheatFunctions::StringIsInteger(BooleanToggleSetting)) { Cheat::CheatFeatures::BoolOptionVectorPosition = std::stoi(BooleanToggleSetting.c_str()); }
+	if (Cheat::Files::ReadStringFromIni(ThemeFilePath, "THEME", "show_header_background") == "true") { Cheat::GUI::ShowHeaderBackground = true; }
+	if (Cheat::Files::ReadStringFromIni(ThemeFilePath, "THEME", "show_header_gui") == "true") { Cheat::GUI::ShowHeaderGUI = true; }
+	if (Cheat::Files::ReadStringFromIni(ThemeFilePath, "THEME", "restore_previous_submenu") == "false") { Cheat::GUI::RestorePreviousSubmenu = false; } else { Cheat::GUI::RestorePreviousSubmenu = true; }
+	if (Cheat::Files::ReadStringFromIni(ThemeFilePath, "THEME", "show_header_glare") == "false") { Cheat::GUI::ShowHeaderGlare = false; } else { Cheat::GUI::ShowHeaderGlare = true; }
 
-	Cheat::Settings::maxVisOptions = Cheat::Files::ReadIntFromIni(ThemeFilePath, "THEME", "max_vis_options");
+	Cheat::GUI::maxVisOptions = Cheat::Files::ReadIntFromIni(ThemeFilePath, "THEME", "max_vis_options");
 	if (Cheat::Files::ReadIntFromIni(ThemeFilePath, "THEME", "open_key") != 0)
 	{
-		Cheat::Settings::openKey = Cheat::Files::ReadIntFromIni(ThemeFilePath, "THEME", "open_key");
+		Cheat::GUI::openKey = Cheat::Files::ReadIntFromIni(ThemeFilePath, "THEME", "open_key");
 	}
 	if (!StartUp) { Cheat::GameFunctions::MinimapNotification("Theme Loaded"); }
 }
@@ -3740,56 +3746,56 @@ void Cheat::SaveTheme(char* ThemeFileName)
 	if (!Cheat::CheatFunctions::DoesDirectoryExists(Cheat::CheatFunctions::ReturnCheatModuleDirectoryPath() + (std::string)"\\gtav\\Themes")) { Cheat::CheatFunctions::CreateNewDirectory(ThemeFolderPath); }
 
 	Cheat::Files::WriteStringToIni(xorstr_("1.3"), ThemeFilePath, "THEME", "theme_loader_version");
-	Cheat::Files::WriteBoolToIni(show_header_background, ThemeFilePath, "THEME", "show_header_background");
-	Cheat::Files::WriteBoolToIni(show_header_gui, ThemeFilePath, "THEME", "show_header_gui");
-	Cheat::Files::WriteBoolToIni(Cheat::Settings::RestorePreviousSubmenu, ThemeFilePath, "THEME", "restore_previous_submenu");
-	Cheat::Files::WriteBoolToIni(ShowHeaderGlare, ThemeFilePath, "THEME", "show_header_glare");
-	Cheat::Files::WriteFloatToIni(Cheat::Settings::menuX, ThemeFilePath, "THEME", "menu_x");
-	Cheat::Files::WriteIntToIni(Cheat::Settings::keyPressDelay2, ThemeFilePath, "THEME", "scroll_delay");
-	Cheat::Files::WriteIntToIni(Cheat::Settings::keyPressDelay3, ThemeFilePath, "THEME", "int_delay");
-	Cheat::Files::WriteIntToIni(Cheat::Settings::maxVisOptions, ThemeFilePath, "THEME", "max_vis_options");
-	Cheat::Files::WriteIntToIni(Cheat::Settings::openKey, ThemeFilePath, "THEME", "open_key");
-	Cheat::Files::WriteIntToIni(BoolOptionVectorPosition, ThemeFilePath, xorstr_("CHEAT"), xorstr_("boolean_toggle"));
+	Cheat::Files::WriteBoolToIni(Cheat::GUI::ShowHeaderBackground, ThemeFilePath, "THEME", "show_header_background");
+	Cheat::Files::WriteBoolToIni(Cheat::GUI::ShowHeaderGUI, ThemeFilePath, "THEME", "show_header_gui");
+	Cheat::Files::WriteBoolToIni(Cheat::GUI::RestorePreviousSubmenu, ThemeFilePath, "THEME", "restore_previous_submenu");
+	Cheat::Files::WriteBoolToIni(Cheat::GUI::ShowHeaderGlare, ThemeFilePath, "THEME", "show_header_glare");
+	Cheat::Files::WriteFloatToIni(Cheat::CheatFeatures::guiX, ThemeFilePath, "THEME", "menu_x");
+	Cheat::Files::WriteIntToIni(Cheat::GUI::keyPressDelay2, ThemeFilePath, "THEME", "scroll_delay");
+	Cheat::Files::WriteIntToIni(Cheat::GUI::keyPressDelay3, ThemeFilePath, "THEME", "int_delay");
+	Cheat::Files::WriteIntToIni(Cheat::GUI::maxVisOptions, ThemeFilePath, "THEME", "max_vis_options");
+	Cheat::Files::WriteIntToIni(Cheat::GUI::openKey, ThemeFilePath, "THEME", "open_key");
+	Cheat::Files::WriteIntToIni(Cheat::CheatFeatures::BoolOptionVectorPosition, ThemeFilePath, xorstr_("CHEAT"), xorstr_("boolean_toggle"));
 
-	Cheat::Files::WriteIntToIni(Cheat::Settings::MainTitleRect.r, ThemeFilePath, "THEME", "title_background_red");
-	Cheat::Files::WriteIntToIni(Cheat::Settings::MainTitleRect.g, ThemeFilePath, "THEME", "title_background_green");
-	Cheat::Files::WriteIntToIni(Cheat::Settings::MainTitleRect.b, ThemeFilePath, "THEME", "title_background_blue");
-	Cheat::Files::WriteIntToIni(Cheat::Settings::MainTitleRect.a, ThemeFilePath, "THEME", "title_background_opacity");
+	Cheat::Files::WriteIntToIni(Cheat::GUI::MainTitleRect.r, ThemeFilePath, "THEME", "title_background_red");
+	Cheat::Files::WriteIntToIni(Cheat::GUI::MainTitleRect.g, ThemeFilePath, "THEME", "title_background_green");
+	Cheat::Files::WriteIntToIni(Cheat::GUI::MainTitleRect.b, ThemeFilePath, "THEME", "title_background_blue");
+	Cheat::Files::WriteIntToIni(Cheat::GUI::MainTitleRect.a, ThemeFilePath, "THEME", "title_background_opacity");
 
-	Cheat::Files::WriteIntToIni(Cheat::Settings::headerRect.r, ThemeFilePath, "THEME", "header_background_red");
-	Cheat::Files::WriteIntToIni(Cheat::Settings::headerRect.g, ThemeFilePath, "THEME", "header_background_green");
-	Cheat::Files::WriteIntToIni(Cheat::Settings::headerRect.b, ThemeFilePath, "THEME", "header_background_blue");
-	Cheat::Files::WriteIntToIni(Cheat::Settings::headerRect.a, ThemeFilePath, "THEME", "header_background_opacity");
+	Cheat::Files::WriteIntToIni(Cheat::GUI::headerRect.r, ThemeFilePath, "THEME", "header_background_red");
+	Cheat::Files::WriteIntToIni(Cheat::GUI::headerRect.g, ThemeFilePath, "THEME", "header_background_green");
+	Cheat::Files::WriteIntToIni(Cheat::GUI::headerRect.b, ThemeFilePath, "THEME", "header_background_blue");
+	Cheat::Files::WriteIntToIni(Cheat::GUI::headerRect.a, ThemeFilePath, "THEME", "header_background_opacity");
 
-	Cheat::Files::WriteIntToIni(Cheat::Settings::titleRect.r, ThemeFilePath, "THEME", "small_title_background_red");
-	Cheat::Files::WriteIntToIni(Cheat::Settings::titleRect.g, ThemeFilePath, "THEME", "small_title_background_green");
-	Cheat::Files::WriteIntToIni(Cheat::Settings::titleRect.b, ThemeFilePath, "THEME", "small_title_background_blue");
-	Cheat::Files::WriteIntToIni(Cheat::Settings::titleRect.a, ThemeFilePath, "THEME", "small_title_background_opacity");
+	Cheat::Files::WriteIntToIni(Cheat::GUI::titleRect.r, ThemeFilePath, "THEME", "small_title_background_red");
+	Cheat::Files::WriteIntToIni(Cheat::GUI::titleRect.g, ThemeFilePath, "THEME", "small_title_background_green");
+	Cheat::Files::WriteIntToIni(Cheat::GUI::titleRect.b, ThemeFilePath, "THEME", "small_title_background_blue");
+	Cheat::Files::WriteIntToIni(Cheat::GUI::titleRect.a, ThemeFilePath, "THEME", "small_title_background_opacity");
 
-	Cheat::Files::WriteIntToIni(Cheat::Settings::optionText.r, ThemeFilePath, "THEME", "option_text_red");
-	Cheat::Files::WriteIntToIni(Cheat::Settings::optionText.g, ThemeFilePath, "THEME", "option_text_green");
-	Cheat::Files::WriteIntToIni(Cheat::Settings::optionText.b, ThemeFilePath, "THEME", "option_text_blue");
-	Cheat::Files::WriteIntToIni(Cheat::Settings::optionText.a, ThemeFilePath, "THEME", "option_text_opacity");
+	Cheat::Files::WriteIntToIni(Cheat::GUI::optionText.r, ThemeFilePath, "THEME", "option_text_red");
+	Cheat::Files::WriteIntToIni(Cheat::GUI::optionText.g, ThemeFilePath, "THEME", "option_text_green");
+	Cheat::Files::WriteIntToIni(Cheat::GUI::optionText.b, ThemeFilePath, "THEME", "option_text_blue");
+	Cheat::Files::WriteIntToIni(Cheat::GUI::optionText.a, ThemeFilePath, "THEME", "option_text_opacity");
 
-	Cheat::Files::WriteIntToIni(Cheat::Settings::scroller.r, ThemeFilePath, "THEME", "selection_box_red");
-	Cheat::Files::WriteIntToIni(Cheat::Settings::scroller.g, ThemeFilePath, "THEME", "selection_box_green");
-	Cheat::Files::WriteIntToIni(Cheat::Settings::scroller.b, ThemeFilePath, "THEME", "selection_box_blue");
-	Cheat::Files::WriteIntToIni(Cheat::Settings::scroller.a, ThemeFilePath, "THEME", "selection_box_opacity");
+	Cheat::Files::WriteIntToIni(Cheat::GUI::scroller.r, ThemeFilePath, "THEME", "selection_box_red");
+	Cheat::Files::WriteIntToIni(Cheat::GUI::scroller.g, ThemeFilePath, "THEME", "selection_box_green");
+	Cheat::Files::WriteIntToIni(Cheat::GUI::scroller.b, ThemeFilePath, "THEME", "selection_box_blue");
+	Cheat::Files::WriteIntToIni(Cheat::GUI::scroller.a, ThemeFilePath, "THEME", "selection_box_opacity");
 
-	Cheat::Files::WriteIntToIni(Cheat::Settings::MenuBackgroundRect.r, ThemeFilePath, "THEME", "selection_box_background_red");
-	Cheat::Files::WriteIntToIni(Cheat::Settings::MenuBackgroundRect.g, ThemeFilePath, "THEME", "selection_box_background_green");
-	Cheat::Files::WriteIntToIni(Cheat::Settings::MenuBackgroundRect.b, ThemeFilePath, "THEME", "selection_box_background_blue");
-	Cheat::Files::WriteIntToIni(Cheat::Settings::MenuBackgroundRect.a, ThemeFilePath, "THEME", "selection_box_background_opacity");
+	Cheat::Files::WriteIntToIni(Cheat::GUI::MenuBackgroundRect.r, ThemeFilePath, "THEME", "selection_box_background_red");
+	Cheat::Files::WriteIntToIni(Cheat::GUI::MenuBackgroundRect.g, ThemeFilePath, "THEME", "selection_box_background_green");
+	Cheat::Files::WriteIntToIni(Cheat::GUI::MenuBackgroundRect.b, ThemeFilePath, "THEME", "selection_box_background_blue");
+	Cheat::Files::WriteIntToIni(Cheat::GUI::MenuBackgroundRect.a, ThemeFilePath, "THEME", "selection_box_background_opacity");
 
-	Cheat::Files::WriteIntToIni(Cheat::Settings::line.r, ThemeFilePath, "THEME", "bottom_line_red");
-	Cheat::Files::WriteIntToIni(Cheat::Settings::line.g, ThemeFilePath, "THEME", "bottom_line_green");
-	Cheat::Files::WriteIntToIni(Cheat::Settings::line.b, ThemeFilePath, "THEME", "bottom_line_blue");
-	Cheat::Files::WriteIntToIni(Cheat::Settings::line.a, ThemeFilePath, "THEME", "bottom_line_opacity");
+	Cheat::Files::WriteIntToIni(Cheat::GUI::line.r, ThemeFilePath, "THEME", "bottom_line_red");
+	Cheat::Files::WriteIntToIni(Cheat::GUI::line.g, ThemeFilePath, "THEME", "bottom_line_green");
+	Cheat::Files::WriteIntToIni(Cheat::GUI::line.b, ThemeFilePath, "THEME", "bottom_line_blue");
+	Cheat::Files::WriteIntToIni(Cheat::GUI::line.a, ThemeFilePath, "THEME", "bottom_line_opacity");
 
-	Cheat::Files::WriteIntToIni(Cheat::Settings::MenuBottomRect.r, ThemeFilePath, "THEME", "menu_bottom_background_red");
-	Cheat::Files::WriteIntToIni(Cheat::Settings::MenuBottomRect.g, ThemeFilePath, "THEME", "menu_bottom_background_green");
-	Cheat::Files::WriteIntToIni(Cheat::Settings::MenuBottomRect.b, ThemeFilePath, "THEME", "menu_bottom_background_blue");
-	Cheat::Files::WriteIntToIni(Cheat::Settings::MenuBottomRect.a, ThemeFilePath, "THEME", "menu_bottom_background_opacity");
+	Cheat::Files::WriteIntToIni(Cheat::GUI::MenuBottomRect.r, ThemeFilePath, "THEME", "menu_bottom_background_red");
+	Cheat::Files::WriteIntToIni(Cheat::GUI::MenuBottomRect.g, ThemeFilePath, "THEME", "menu_bottom_background_green");
+	Cheat::Files::WriteIntToIni(Cheat::GUI::MenuBottomRect.b, ThemeFilePath, "THEME", "menu_bottom_background_blue");
+	Cheat::Files::WriteIntToIni(Cheat::GUI::MenuBottomRect.a, ThemeFilePath, "THEME", "menu_bottom_background_opacity");
 
 	Cheat::GameFunctions::MinimapNotification(xorstr_("Theme Saved"));
 }

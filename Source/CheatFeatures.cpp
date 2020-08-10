@@ -1217,13 +1217,13 @@ void Cheat::CheatFeatures::MoneyGun()
 	if (PED::IS_PED_SHOOTING(PlayerPedID))
 	{
 		Vector3 coords;
-		WEAPON::GET_PED_LAST_WEAPON_IMPACT_COORD(PlayerPedID, &coords);
-		if (coords.x != 0 || coords.y != 0 || coords.z != 0) {
+		if (WEAPON::GET_PED_LAST_WEAPON_IMPACT_COORD(PlayerPedID, &coords))
+		{
 			Hash PolyBag = GAMEPLAY::GET_HASH_KEY(xorstr_("p_poly_bag_01_s"));
 			STREAMING::REQUEST_MODEL(PolyBag);
-			while (!STREAMING::HAS_MODEL_LOADED(PolyBag)) { WAIT(0); }
-			if (STREAMING::HAS_MODEL_LOADED(PolyBag)) { OBJECT::CREATE_AMBIENT_PICKUP(0xCE6FDD6B, coords.x, coords.y, coords.z, 0, 2500, PolyBag, false, true); STREAMING::SET_MODEL_AS_NO_LONGER_NEEDED(PolyBag); }
-		}
+			while (!STREAMING::HAS_MODEL_LOADED(PolyBag)) { WAIT(0, false); }
+			if (STREAMING::HAS_MODEL_LOADED(PolyBag)) { OBJECT::CREATE_AMBIENT_PICKUP(0xCE6FDD6B, coords.x, coords.y, coords.z + 1.f, 0, 2500, PolyBag, false, true); STREAMING::SET_MODEL_AS_NO_LONGER_NEEDED(PolyBag); }
+		}	
 	}
 }
 

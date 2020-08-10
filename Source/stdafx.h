@@ -444,6 +444,7 @@ namespace Cheat {
 		bool DeleteVehicle(Vehicle Vehicle);
 		float MSToKMH(float MS);
 		float MSToMPH(float MS);
+		void ChangeEntityInvincibilityState(Entity EntityHandle, bool Enable);
 	}
 	namespace LogFunctions {
 		void Init();

@@ -2658,7 +2658,7 @@ void Cheat::Main() {
 		{
 			Cheat::Title("Vehicle Spawn Settings");
 			Cheat::Toggle("Spawn Inside Vehicle", VehicleSpawnerSpawnInsideVehicle, "");
-			Cheat::Toggle("Spawn With Godmode", spawnvehiclewithgodmode, "Enables Vehicle Godmode if disabled");
+			Cheat::Toggle("Spawn With Godmode", spawnvehiclewithgodmode, "Enables Vehicle Godmode");
 			Cheat::Toggle("Spawn Max Upgraded", spawnmaxupgraded, "");
 			Cheat::Toggle("Delete Old Vehicle", VehicleSpawnerDeleteOldVehicle, "");
 			Cheat::Toggle("Spawn With Blip", VehicleSpawnerSpawnWithBlip, "");

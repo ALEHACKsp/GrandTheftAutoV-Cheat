@@ -588,17 +588,11 @@ void Cheat::CheatFeatures::VehicleGodmode(bool toggle)
 	Vehicle veh = PED::GET_VEHICLE_PED_IS_USING(PlayerPedID);
 	if (toggle)
 	{
-		ENTITY::SET_ENTITY_INVINCIBLE(veh, TRUE);
-		ENTITY::SET_ENTITY_PROOFS(veh, 0, 0, 0, 0, 0, 0, 0, 0);
-		VEHICLE::SET_VEHICLE_TYRES_CAN_BURST(veh, 0);
-		VEHICLE::SET_VEHICLE_WHEELS_CAN_BREAK(veh, 0);
-		VEHICLE::SET_VEHICLE_CAN_BE_VISIBLY_DAMAGED(veh, false);
+		GameFunctions::ChangeEntityInvincibilityState(veh, true);
 	}
 	else
 	{
-		ENTITY::SET_ENTITY_INVINCIBLE(veh, FALSE);
-		ENTITY::SET_ENTITY_PROOFS(veh, 0, 0, 0, 0, 0, 0, 0, 0);
-		VEHICLE::SET_VEHICLE_CAN_BE_VISIBLY_DAMAGED(veh, 1);
+		GameFunctions::ChangeEntityInvincibilityState(veh, false);
 	}
 }
 

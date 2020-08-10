@@ -1245,9 +1245,9 @@ void Cheat::GameFunctions::SpawnVehicle(char* ModelHash)
 	auto veh = VEHICLE::CREATE_VEHICLE(GAMEPLAY::GET_HASH_KEY(ModelHash), pos.x, pos.y, pos.z, ENTITY::GET_ENTITY_HEADING(PlayerPedID), 1, 1);
 	if (veh != 0)
 	{
-		NETWORK::NETWORK_FADE_OUT_ENTITY(veh, false, true);
+		NETWORK::NETWORK_FADE_OUT_ENTITY(veh, true, false);
 		if (VehicleSpawnerSpawnInsideVehicle) { PED::SET_PED_INTO_VEHICLE(PlayerPedID, veh, -1); }
-		if (spawnvehiclewithgodmode) { Cheat::CheatFeatures::VehicleGodmodeBool = true; }
+		if (spawnvehiclewithgodmode) { if (VehicleSpawnerSpawnInsideVehicle) { Cheat::CheatFeatures::VehicleGodmodeBool = true; } else { GameFunctions::ChangeEntityInvincibilityState(veh, true); } }
 		if (spawnmaxupgraded) { MaxUpgradeVehicle(veh); }
 		if (VehicleSpawnerSpawnWithBlip) { Cheat::GameFunctions::AddBlipToVehicle(veh); }
 		VEHICLE::SET_VEHICLE_NUMBER_PLATE_TEXT(veh, "Vehicle");
@@ -1440,4 +1440,22 @@ float Cheat::GameFunctions::MSToKMH(float MS)
 float Cheat::GameFunctions::MSToMPH(float MS)
 {
 	return roundf(MS * 2.2);
+}
+
+void Cheat::GameFunctions::ChangeEntityInvincibilityState(Entity EntityHandle, bool Enable)
+{
+	if (Enable)
+	{
+		ENTITY::SET_ENTITY_INVINCIBLE(EntityHandle, true);
+		ENTITY::SET_ENTITY_PROOFS(EntityHandle, 0, 0, 0, 0, 0, 0, 0, 0);
+		VEHICLE::SET_VEHICLE_TYRES_CAN_BURST(EntityHandle, 0);
+		VEHICLE::SET_VEHICLE_WHEELS_CAN_BREAK(EntityHandle, 0);
+		VEHICLE::SET_VEHICLE_CAN_BE_VISIBLY_DAMAGED(EntityHandle, false);
+	}
+	else
+	{
+		ENTITY::SET_ENTITY_INVINCIBLE(EntityHandle, false);
+		ENTITY::SET_ENTITY_PROOFS(EntityHandle, 0, 0, 0, 0, 0, 0, 0, 0);
+		VEHICLE::SET_VEHICLE_CAN_BE_VISIBLY_DAMAGED(EntityHandle, 1);
+	}
 }

@@ -272,6 +272,8 @@ namespace Cheat {
 		void TeleportGun();
 		extern bool DeleteGunBool;
 		void DeleteGun();
+		extern bool EntityInformationGunBool;
+		void EntityInformationGun();
 		extern bool UnlimitedSpecialAbilityBool;
 		void UnlimitedSpecialAbility();
 		extern bool SpectatePlayerBool;

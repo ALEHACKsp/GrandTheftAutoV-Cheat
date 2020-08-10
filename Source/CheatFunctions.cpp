@@ -309,6 +309,7 @@ void Cheat::CheatFunctions::SaveSettings()
 	Cheat::Files::WriteBoolToIni(Cheat::CheatFeatures::MobileRadioBool, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("mobile_radio"));
 	Cheat::Files::WriteBoolToIni(Cheat::CheatFeatures::PlayerIgnoredBool, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("ignored"));
 	Cheat::Files::WriteBoolToIni(Cheat::CheatFeatures::TeleportGunBool, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("teleportgun"));
+	Cheat::Files::WriteBoolToIni(Cheat::CheatFeatures::EntityInformationGunBool, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("entity_information_gun"));
 	Cheat::Files::WriteBoolToIni(Cheat::CheatFeatures::NoRagdollAndSeatbeltBool, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("noragdollandseatbelt"));
 	Cheat::Files::WriteBoolToIni(Cheat::CheatFeatures::TriggerBotBool, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("triggerbot"));
 	Cheat::Files::WriteBoolToIni(Cheat::CheatFeatures::TriggerBot_ShootNPCBool, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("triggerbot_shootnpc"));
@@ -398,6 +399,7 @@ void Cheat::CheatFunctions::LoadSettings(bool StartUp)
 	if (Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("ignored")) == xorstr_("true")) { Cheat::CheatFeatures::PlayerIgnoredBool = true; }
 	if (Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("controllerinput")) == xorstr_("true")) { Cheat::Settings::ControllerInput = true; }
 	if (Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("teleportgun")) == xorstr_("true")) { Cheat::CheatFeatures::TeleportGunBool = true; }
+	if (Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("entity_information_gun")) == xorstr_("true")) { Cheat::CheatFeatures::EntityInformationGunBool = true; }
 	if (Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("noragdollandseatbelt")) == xorstr_("true")) { Cheat::CheatFeatures::NoRagdollAndSeatbeltBool = true; }
 	if (Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("triggerbot")) == xorstr_("true")) { Cheat::CheatFeatures::TriggerBotBool = true; }
 	if (Cheat::Files::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("triggerbot_shootnpc")) == xorstr_("true")) { Cheat::CheatFeatures::TriggerBot_ShootNPCBool = true; }

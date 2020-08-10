@@ -170,6 +170,7 @@ void Cheat::CheatFeatures::Looped()
 	AutoGiveAllWeaponsBool ? AutoGiveAllWeapons() : NULL;
 	FreeCamBool ? FreeCam(true) : FreeCam(false);
 	CartoonGunBool ? CartoonGun() : NULL;
+	EntityInformationGunBool ? EntityInformationGun() : NULL;
 }
 
 bool Cheat::CheatFeatures::GodmodeBool = false;
@@ -735,8 +736,30 @@ void Cheat::CheatFeatures::TeleportGun()
 		if (WEAPON::GET_PED_LAST_WEAPON_IMPACT_COORD(PlayerPedID, &iCoord))
 		{
 			ENTITY::SET_ENTITY_COORDS(PlayerPedID, iCoord.x, iCoord.y, iCoord.z + 1, 0, 0, 1, 1);
-			WAIT(0);
+			WAIT(0, false);
 		}
+	}
+}
+
+bool Cheat::CheatFeatures::EntityInformationGunBool = false;
+void Cheat::CheatFeatures::EntityInformationGun()
+{
+	Entity AimedEntityHandle;
+	if (PLAYER::GET_ENTITY_PLAYER_IS_FREE_AIMING_AT(PlayerID, &AimedEntityHandle))
+	{
+		Vector3 AimedEntityCoords = ENTITY::GET_ENTITY_COORDS(AimedEntityHandle, false);
+		std::string AimedEntityHealth = xorstr_("Entity Health: ") + std::to_string(ENTITY::GET_ENTITY_HEALTH(AimedEntityHandle));
+		std::string AimedEntityHash = xorstr_("Entity Hash: ") + std::to_string(ENTITY::GET_ENTITY_MODEL(AimedEntityHandle));
+		Cheat::Drawing::Text(xorstr_("~bold~Aimed Entity Information"), { 255, 255, 255, 255, 0 }, { 0.500f, 0.380f }, { 0.35f, 0.35f }, false);
+		Cheat::Drawing::Text(AimedEntityHash.c_str(), { 255, 255, 255, 255, 0 }, { 0.500f, 0.400f }, { 0.35f, 0.35f }, false);
+		Cheat::Drawing::Text(AimedEntityHealth.c_str(), { 255, 255, 255, 255, 0 }, { 0.500f, 0.420f }, { 0.35f, 0.35f }, false);
+
+		std::string EntityTypeMessageString;
+		if (ENTITY::IS_ENTITY_A_PED(AimedEntityHandle)) { EntityTypeMessageString = xorstr_("Entity Type: Ped"); }
+		else if (ENTITY::IS_ENTITY_A_VEHICLE(AimedEntityHandle)) { EntityTypeMessageString = xorstr_("Entity Type: Vehicle"); }
+		else if (ENTITY::IS_ENTITY_AN_OBJECT(AimedEntityHandle)) { EntityTypeMessageString = xorstr_("Entity Type: Object"); }
+		else { EntityTypeMessageString = xorstr_("Entity Type: Generic"); }
+		Cheat::Drawing::Text(EntityTypeMessageString.c_str(), { 255, 255, 255, 255, 0 }, { 0.500f, 0.440f }, { 0.35f, 0.35f }, false);
 	}
 }
 
@@ -947,8 +970,6 @@ void Cheat::CheatFeatures::PlayerNameESP()
 				float x1;
 				float y1;
 
-				BOOL screenCoords = GRAPHICS::GET_SCREEN_COORD_FROM_WORLD_COORD(handleCoords.x, handleCoords.y, handleCoords.z, &x1, &y1);
-
 				std::string playerName = PLAYER::GET_PLAYER_NAME(PLAYER::INT_TO_PLAYERINDEX(i));
 
 				std::string nameSetupRed = xorstr_("~HUD_COLOUR_RED~") + playerName;
@@ -994,24 +1015,24 @@ void Cheat::CheatFeatures::PlayerESP()
 				Vector3 bottom3world = { entitylocation.x + 0.3f, NULL, entitylocation.y - 0.3f, NULL, entitylocation.z - .8f, NULL };
 				Vector3 bottom4world = { entitylocation.x - 0.3f, NULL, entitylocation.y - 0.3f, NULL, entitylocation.z - .8f, NULL };
 
-				GRAPHICS::DRAW_LINE(top1world.x, top1world.y, top1world.z, top2world.x, top2world.y, top2world.z, 178, 92, 24, 255);
-				GRAPHICS::DRAW_LINE(top2world.x, top2world.y, top2world.z, top4world.x, top4world.y, top4world.z, 178, 92, 24, 255);
-				GRAPHICS::DRAW_LINE(top4world.x, top4world.y, top4world.z, top3world.x, top3world.y, top3world.z, 178, 92, 24, 255);
-				GRAPHICS::DRAW_LINE(top1world.x, top1world.y, top1world.z, top3world.x, top3world.y, top3world.z, 178, 92, 24, 255);
+				GRAPHICS::DRAW_LINE(top1world.x, top1world.y, top1world.z, top2world.x, top2world.y, top2world.z, 0, 0, 255, 255);
+				GRAPHICS::DRAW_LINE(top2world.x, top2world.y, top2world.z, top4world.x, top4world.y, top4world.z, 0, 0, 255, 255);
+				GRAPHICS::DRAW_LINE(top4world.x, top4world.y, top4world.z, top3world.x, top3world.y, top3world.z, 0, 0, 255, 255);
+				GRAPHICS::DRAW_LINE(top1world.x, top1world.y, top1world.z, top3world.x, top3world.y, top3world.z, 0, 0, 255, 255);
 
-				GRAPHICS::DRAW_LINE(bottom1world.x, bottom1world.y, bottom1world.z, bottom2world.x, bottom2world.y, bottom2world.z, 178, 92, 24, 255);
-				GRAPHICS::DRAW_LINE(bottom2world.x, bottom2world.y, bottom2world.z, bottom4world.x, bottom4world.y, bottom4world.z, 178, 92, 24, 255);
-				GRAPHICS::DRAW_LINE(bottom3world.x, bottom3world.y, bottom3world.z, bottom4world.x, bottom4world.y, bottom4world.z, 178, 92, 24, 255);
-				GRAPHICS::DRAW_LINE(bottom3world.x, bottom3world.y, bottom3world.z, bottom1world.x, bottom1world.y, bottom1world.z, 178, 92, 24, 255);
+				GRAPHICS::DRAW_LINE(bottom1world.x, bottom1world.y, bottom1world.z, bottom2world.x, bottom2world.y, bottom2world.z, 0, 0, 255, 255);
+				GRAPHICS::DRAW_LINE(bottom2world.x, bottom2world.y, bottom2world.z, bottom4world.x, bottom4world.y, bottom4world.z, 0, 0, 255, 255);
+				GRAPHICS::DRAW_LINE(bottom3world.x, bottom3world.y, bottom3world.z, bottom4world.x, bottom4world.y, bottom4world.z, 0, 0, 255, 255);
+				GRAPHICS::DRAW_LINE(bottom3world.x, bottom3world.y, bottom3world.z, bottom1world.x, bottom1world.y, bottom1world.z, 0, 0, 255, 255);
 
-				GRAPHICS::DRAW_LINE(top1world.x, top1world.y, top1world.z, bottom1world.x, bottom1world.y, bottom1world.z, 178, 92, 24, 255);
-				GRAPHICS::DRAW_LINE(top2world.x, top2world.y, top2world.z, bottom2world.x, bottom2world.y, bottom2world.z, 178, 92, 24, 255);
-				GRAPHICS::DRAW_LINE(top3world.x, top3world.y, top3world.z, bottom3world.x, bottom3world.y, bottom3world.z, 178, 92, 24, 255);
-				GRAPHICS::DRAW_LINE(top4world.x, top4world.y, top4world.z, bottom4world.x, bottom4world.y, bottom4world.z, 178, 92, 24, 255);
+				GRAPHICS::DRAW_LINE(top1world.x, top1world.y, top1world.z, bottom1world.x, bottom1world.y, bottom1world.z, 0, 0, 255, 255);
+				GRAPHICS::DRAW_LINE(top2world.x, top2world.y, top2world.z, bottom2world.x, bottom2world.y, bottom2world.z, 0, 0, 255, 255);
+				GRAPHICS::DRAW_LINE(top3world.x, top3world.y, top3world.z, bottom3world.x, bottom3world.y, bottom3world.z, 0, 0, 255, 255);
+				GRAPHICS::DRAW_LINE(top4world.x, top4world.y, top4world.z, bottom4world.x, bottom4world.y, bottom4world.z, 0, 0, 255, 255);
 
 				Vector3 locationOne = ENTITY::GET_ENTITY_COORDS(PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(i), false);
 				Vector3 locationTwo = ENTITY::GET_ENTITY_COORDS(PlayerPedID, false);
-				GRAPHICS::DRAW_LINE(locationOne.x, locationOne.y, locationOne.z, locationTwo.x, locationTwo.y, locationTwo.z, 178, 92, 24, 255);
+				GRAPHICS::DRAW_LINE(locationOne.x, locationOne.y, locationOne.z, locationTwo.x, locationTwo.y, locationTwo.z, 0, 0, 255, 255);
 			}
 		}
 	}

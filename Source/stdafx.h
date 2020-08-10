@@ -507,7 +507,6 @@ namespace Cheat {
 	void Title(const char* title);
 	void Speedometer(char* text);
 	void fps(char* text);
-	void AddSmallTitle(char* text);
 	void AddPlayerInfoBoxTextEntry(char* text, int Row1 = NULL, int Row2 = NULL, int Row3 = NULL, int Row4 = NULL);
 	bool Break(const char* option, bool TextCentered);
 	bool Option(const char* option, const char* InformationText, bool PlayerList = false);

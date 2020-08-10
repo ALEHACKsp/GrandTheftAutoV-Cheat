@@ -1069,7 +1069,7 @@ void Cheat::GameFunctions::LoadPlayerInformation(char* playerName, Player p)
 		//Modded Model
 		Hash SelectedPlayerPedModel = ENTITY::GET_ENTITY_MODEL(SelectedPlayerPed);
 		Cheat::AddPlayerInfoBoxTextEntry(xorstr_("Modded Model"), NULL, NULL, 2);
-		if (SelectedPlayerPedModel != GAMEPLAY::GET_HASH_KEY(xorstr_("mp_m_freemode_01")) || SelectedPlayerPedModel != GAMEPLAY::GET_HASH_KEY(xorstr_("mp_f_freemode_01")))
+		if (NETWORK::NETWORK_IS_SESSION_STARTED() && SelectedPlayerPedModel != GAMEPLAY::GET_HASH_KEY(xorstr_("mp_m_freemode_01")) && SelectedPlayerPedModel != GAMEPLAY::GET_HASH_KEY(xorstr_("mp_f_freemode_01")))
 		{
 			Cheat::AddPlayerInfoBoxTextEntry(xorstr_("Yes"), NULL, NULL, NULL, 2);
 		}

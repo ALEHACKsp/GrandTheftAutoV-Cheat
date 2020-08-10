@@ -191,6 +191,7 @@ namespace Cheat {
 		extern bool ShowBlockedScriptEventNotifications;
 		extern bool ShowPlayerTagsPlayerList;
 		extern bool AutoSaveSettings;
+		extern std::chrono::steady_clock::time_point PostInitScaleFormStart;
 
 		void Looped();
 		extern bool GodmodeBool;

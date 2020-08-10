@@ -8,13 +8,14 @@ bool Cheat::CheatFeatures::BlockScriptEvents = true;
 bool Cheat::CheatFeatures::ShowBlockedScriptEventNotifications = true;
 bool Cheat::CheatFeatures::ShowPlayerTagsPlayerList = true;
 bool Cheat::CheatFeatures::AutoSaveSettings = false;
+std::chrono::steady_clock::time_point Cheat::CheatFeatures::PostInitScaleFormStart;
 
-auto PostInitScaleFormStart = std::chrono::high_resolution_clock::now();
-auto AutoSaveSettingsStart = std::chrono::high_resolution_clock::now();
+
+std::chrono::steady_clock::time_point AutoSaveSettingsStart = std::chrono::high_resolution_clock::now();
 void Cheat::CheatFeatures::Looped()
 {
-	//Post Init Scaleform Banner Notification - Show for 15 seconds or until cheat GUI is opened
-	if (!CheatGUIHasBeenOpened && !(std::chrono::duration_cast<std::chrono::seconds>(std::chrono::high_resolution_clock::now() - PostInitScaleFormStart).count() > 15))
+	//Post Init Scaleform Banner Notification - Show for 10 seconds or until cheat GUI is opened
+	if (!CheatGUIHasBeenOpened && !(std::chrono::duration_cast<std::chrono::seconds>(std::chrono::high_resolution_clock::now() - PostInitScaleFormStart).count() > 10))
 	{ 
 		auto ScaleformHandle = GRAPHICS::REQUEST_SCALEFORM_MOVIE(xorstr_("mp_big_message_freemode"));
 		while (!GRAPHICS::HAS_SCALEFORM_MOVIE_LOADED(ScaleformHandle)) { WAIT(0); }

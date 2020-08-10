@@ -466,6 +466,7 @@ void Cheat::CheatFunctions::PostInitCheat()
 	Cheat::Drawing::YTD(); // Load Textures
 	Cheat::CheatFunctions::LoadSettings(true); // Load config.ini
 	Cheat::LogFunctions::Message(xorstr_("GTAV Cheat Initialization Completed"));
+	Cheat::CheatFeatures::PostInitScaleFormStart = std::chrono::high_resolution_clock::now();
 }
 
 char* Cheat::CheatFunctions::StringToChar(std::string string)

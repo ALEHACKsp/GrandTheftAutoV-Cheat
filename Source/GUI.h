@@ -1,6 +1,7 @@
 #pragma once
 
-enum SubMenus {
+enum SubMenus 
+{
 	NOMENU,
 	MainMenu,
 	SelfOptionsMenu,

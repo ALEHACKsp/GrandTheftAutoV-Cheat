@@ -3619,89 +3619,6 @@ void Cheat::AddPlayerInfoBoxTextEntry(char* text, int Row1, int Row2, int Row3, 
 		}
 	}
 }
-void Cheat::AddSmallInfo(char* text, short line)
-{
-	if (Cheat::Settings::menuX < 0.78f)
-	{
-		if (line == 1) {
-			Drawing::Rect(Settings::optionRect, { Settings::menuX + 0.175f, ((16 * 0.035f) / 2.0f) + 0.159f - 0.135f }, { 0.115f, 16 * 0.035f + -0.193f });
-		}
-		Drawing::Text(text, Settings::count, { Settings::menuX + 0.120f, (line * 0.020f) + 0.123f }, { 0.375f, 0.375f }, false);
-	}
-	else
-	{
-		if (line == 1) {
-			Drawing::Rect(Settings::optionRect, { Settings::menuX - 0.175f, ((16 * 0.035f) / 2.0f) + 0.159f - 0.135f }, { 0.115f, 16 * 0.035f + -0.193f });
-		}
-		Drawing::Text(text, Settings::count, { Settings::menuX - 0.228f, (line * 0.020f) + 0.123f }, { 0.375f, 0.375f }, false);
-	}
-}
-void Cheat::AddSmallTitle2(char* text)
-{
-	if (Cheat::Settings::menuX < 0.78f)
-	{
-		Drawing::Text(text, Settings::titleText, { Settings::menuX + 0.175f, 0.090f }, { 0.425f, 0.425f }, true);
-		Drawing::Spriter("CommonMenu", "", Settings::menuX + 0.175f, 0.1175f - 0.019f, 0.115f, 0.045f, 180, Settings::titleRect.r, Settings::titleRect.g, Settings::titleRect.b, Settings::titleRect.a);
-	}
-	else
-	{
-		Drawing::Text(text, Settings::titleText, { Settings::menuX - 0.175f, 0.090f }, { 0.425f, 0.425f }, true);
-		Drawing::Spriter("CommonMenu", "", Settings::menuX - 0.175f, 0.1175f - 0.019f, 0.115f, 0.045f, 180, Settings::titleRect.r, Settings::titleRect.g, Settings::titleRect.b, Settings::titleRect.a);
-	}
-}
-
-void Cheat::AddSmallInfo2(char* text, short line)
-{
-	if (Cheat::Settings::menuX < 0.78f)
-	{
-		if (line == 1) {
-			Drawing::Rect(Settings::optionRect, { Settings::menuX + 0.175f, ((13 * 0.035f) / 2.0f) + 0.159f - 0.135f }, { 0.115f, 13 * 0.035f + -0.193f });
-		}
-		Drawing::Text(text, Settings::count, { Settings::menuX + 0.120f, (line * 0.020f) + 0.123f }, { 0.375f, 0.375f }, false);
-	}
-	else
-	{
-		if (line == 1) {
-			Drawing::Rect(Settings::optionRect, { Settings::menuX - 0.175f, ((13 * 0.035f) / 2.0f) + 0.159f - 0.135f }, { 0.115f, 13 * 0.035f + -0.193f });
-		}
-		Drawing::Text(text, Settings::count, { Settings::menuX - 0.228f, (line * 0.020f) + 0.123f }, { 0.375f, 0.375f }, false);
-	}
-}
-
-void Cheat::AddSmallTitle3(char* text)
-{
-	if (Cheat::Settings::menuX < 0.78f)
-	{
-		Drawing::Text(text, Settings::titleText, { Settings::menuX + 0.175f, 0.090f }, { 0.425f, 0.425f }, true);
-		Drawing::Spriter("CommonMenu", "", Settings::menuX + 0.175f, 0.1175f - 0.019f, 0.115f, 0.045f, 180, Settings::titleRect.r, Settings::titleRect.g, Settings::titleRect.b, Settings::titleRect.a);
-	}
-	else
-	{
-		Drawing::Text(text, Settings::titleText, { Settings::menuX - 0.175f, 0.090f }, { 0.425f, 0.425f }, true);
-		Drawing::Spriter("CommonMenu", "", Settings::menuX - 0.175f, 0.1175f - 0.019f, 0.115f, 0.045f, 180, Settings::titleRect.r, Settings::titleRect.g, Settings::titleRect.b, Settings::titleRect.a);
-	}
-}
-
-void Cheat::AddSmallInfo3(char* text, short line)
-{
-	if (Cheat::Settings::menuX < 0.78f)
-	{
-		if (line == 1) {
-			Drawing::Rect(Settings::optionRect, { Settings::menuX + 0.175f, ((11 * 0.035f) / 2.0f) + 0.159f - 0.135f }, { 0.115f, 11 * 0.035f + -0.193f });
-		}
-		Drawing::Text(text, Settings::count, { Settings::menuX + 0.120f, (line * 0.020f) + 0.123f }, { 0.375f, 0.375f }, false);
-	}
-	else
-	{
-		if (line == 1) {
-			Drawing::Rect(Settings::optionRect, { Settings::menuX - 0.175f, ((11 * 0.035f) / 2.0f) + 0.159f - 0.135f }, { 0.115f, 11 * 0.035f + -0.193f });
-		}
-		Drawing::Text(text, Settings::count, { Settings::menuX - 0.228f, (line * 0.020f) + 0.123f }, { 0.375f, 0.375f }, false);
-	}
-}
-
-
-
 
 char* ThemeFilesArray[100] = {};
 void Cheat::LoadThemeFilesLooped()
@@ -3723,7 +3640,6 @@ void Cheat::LoadThemeFilesLooped()
 		}
 	}
 }
-
 
 void Cheat::LoadTheme(char* ThemeFileName, bool StartUp)
 {

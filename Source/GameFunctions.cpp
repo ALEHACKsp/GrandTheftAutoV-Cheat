@@ -1464,7 +1464,7 @@ char* Cheat::GameFunctions::ReturnOnlinePlayerPictureString(Player PlayerHandle)
 {
 	if (NETWORK::NETWORK_IS_SESSION_STARTED())
 	{
-		int Index = 1385294 + 2; //This index changes with each patch
+		int Index = 1385294 + 2; //This index changes with each major patch
 		for (int x = 0; x <= 150; x += 5)
 		{
 			int playerId = globalHandle(Index).At(x).As<int>();

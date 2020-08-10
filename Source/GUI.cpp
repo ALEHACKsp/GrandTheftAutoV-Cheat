@@ -2939,17 +2939,26 @@ bool Cheat::VehicleOption(const char* option, std::string ModelName)
 			 VehiclePreviewName = "tug";
 		 }
 		
-		 //TODO: Show speed in MPHP/KMH depending on state of UseKMH -> Make GameFunctions functions
 		 if (ShowVehicleInfoAndPreview)
 		 {
 			 std::transform(ModelName.begin(), ModelName.end(), ModelName.begin(), ::tolower);
 			 std::string ModelNameDrawingText = xorstr_("Model Name: ") + ModelName;
-			 std::string ModelMaxSpeed = xorstr_("Max Speed (M/S): ") + std::to_string(VEHICLE::GET_VEHICLE_MODEL_ESTIMATED_MAX_SPEED(GAMEPLAY::GET_HASH_KEY((char*)ModelName.c_str()))); while (ModelMaxSpeed.size() > ModelMaxSpeed.find(".")) { ModelMaxSpeed.pop_back(); }
+
+			 std::ostringstream ModelMaxSpeed;
+			 if (Cheat::CheatFeatures::UseKMH)
+			 {
+				 ModelMaxSpeed << xorstr_("Max Speed: ") << Cheat::GameFunctions::MSToKMH(VEHICLE::GET_VEHICLE_MODEL_ESTIMATED_MAX_SPEED(GAMEPLAY::GET_HASH_KEY((char*)ModelName.c_str()))) << xorstr_(" KM/H"); 
+			 }
+			 else
+			 {
+				 ModelMaxSpeed << xorstr_("Max Speed: ") << Cheat::GameFunctions::MSToMPH(VEHICLE::GET_VEHICLE_MODEL_ESTIMATED_MAX_SPEED(GAMEPLAY::GET_HASH_KEY((char*)ModelName.c_str()))) << xorstr_(" MP/H");
+			 }
+
 			 if (Cheat::Settings::menuX < 0.71f) 
 			 {
 				 Drawing::Text(xorstr_("Vehicle Info & Preview"), Settings::count, { Settings::menuX + 0.187f, 0.132f }, { 0.50f, 0.35f }, true);
 				 Drawing::Text(ModelNameDrawingText.c_str(), Settings::count, { Settings::menuX + 0.111f, 0.308f }, { 0.45f, 0.30f }, false);
-				 Drawing::Text(ModelMaxSpeed.c_str(), Settings::count, { Settings::menuX + 0.111f, 0.326f }, { 0.45f, 0.30f }, false);
+				 Drawing::Text(ModelMaxSpeed.str().c_str(), Settings::count, { Settings::menuX + 0.111f, 0.326f }, { 0.45f, 0.30f }, false);
 				 Drawing::Rect(Settings::MenuBackgroundRect, { Settings::menuX + 0.187f, 0.244f }, { 0.16f, 0.22f });
 				 Drawing::Spriter(VehiclePreviewDictName, VehiclePreviewName, Settings::menuX + 0.187f, 0.232f, 0.15, 0.15, 0, 255, 255, 255, 255);
 			 }
@@ -2957,7 +2966,7 @@ bool Cheat::VehicleOption(const char* option, std::string ModelName)
 			 {
 				 Drawing::Text(xorstr_("Vehicle Info & Preview"), Settings::count, { Settings::menuX - 0.187f, 0.132f }, { 0.50f, 0.35f }, true);
 				 Drawing::Text(ModelNameDrawingText.c_str(), Settings::count, { Settings::menuX - 0.262f, 0.308f }, { 0.45f, 0.30f }, false);
-				 Drawing::Text(ModelMaxSpeed.c_str(), Settings::count, { Settings::menuX - 0.262f, 0.326f }, { 0.45f, 0.30f }, false);
+				 Drawing::Text(ModelMaxSpeed.str().c_str(), Settings::count, { Settings::menuX - 0.262f, 0.326f }, { 0.45f, 0.30f }, false);
 				 Drawing::Rect(Settings::MenuBackgroundRect, { Settings::menuX - 0.187f, 0.244f }, { 0.16f, 0.22f });
 				 Drawing::Spriter(VehiclePreviewDictName, VehiclePreviewName, Settings::menuX - 0.187f, 0.232f, 0.15, 0.15, 0, 255, 255, 255, 255);
 			 }

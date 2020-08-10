@@ -1736,8 +1736,8 @@ void Cheat::Main() {
 				Cheat::GameFunctions::SpawnVehicle(SpawnVehicle);
 			}
 			Cheat::Toggle("Show Vehicle Info & Preview", ShowVehicleInfoAndPreview, "Shows selected vehicle info & picture");
-			Cheat::MenuOption("DLC Vehicles >", DLCVehiclesMenu);
 			Cheat::Break("Categories", true);
+			Cheat::MenuOption("DLC Vehicles >", DLCVehiclesMenu);
 			Cheat::MenuOption("Super >", Super);
 			Cheat::MenuOption("Sports >", Sports);
 			Cheat::MenuOption("Sport Classic >", SportClassic);

@@ -205,10 +205,8 @@ void Cheat::CheatFeatures::NoWeaponReload()
 			if (WEAPON::GET_MAX_AMMO(PlayerPedID, cur, &maxAmmo))
 			{
 				WEAPON::SET_PED_AMMO(PlayerPedID, cur, maxAmmo);
-
 				maxAmmo = WEAPON::GET_MAX_AMMO_IN_CLIP(PlayerPedID, cur, 1);
-				if (maxAmmo > 0)
-					WEAPON::SET_AMMO_IN_CLIP(PlayerPedID, cur, maxAmmo);
+				if (maxAmmo > 0) { WEAPON::SET_AMMO_IN_CLIP(PlayerPedID, cur, maxAmmo); }
 			}
 		}
 	}
@@ -1056,8 +1054,8 @@ void Cheat::CheatFeatures::RevealPlayers()
 bool Cheat::CheatFeatures::ExplodeLoopSelectedPlayerBool = false;
 void Cheat::CheatFeatures::ExplodeLoopSelectedPlayer()
 {
-	Vector3 targetCords = ENTITY::GET_ENTITY_COORDS(PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(Cheat::CheatFeatures::selectedPlayer), false);
-	FIRE::ADD_EXPLOSION(targetCords.x, targetCords.y, targetCords.z, 0, 0.0f, true, false, 10.0f);
+	Vector3 SelectedPlayerPedCoords = ENTITY::GET_ENTITY_COORDS(PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(Cheat::CheatFeatures::selectedPlayer), false);
+	FIRE::ADD_EXPLOSION(SelectedPlayerPedCoords.x, SelectedPlayerPedCoords.y, SelectedPlayerPedCoords.z, 0, 0.0f, true, false, 10.0f);
 }
 
 

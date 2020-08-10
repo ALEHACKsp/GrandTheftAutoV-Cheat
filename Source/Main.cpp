@@ -3065,30 +3065,14 @@ void Cheat::Main() {
 			Cheat::Toggle("Auto Teleport To Waypoint", Cheat::CheatFeatures::AutoTeleportToWaypointBool, "");
 			Cheat::Toggle("Force Field", Cheat::CheatFeatures::PlayerForceFieldBool, "Gives your character a force field");
 			Cheat::Toggle("Show Session Information", Cheat::CheatFeatures::ShowSessionInformationBool, "Show session info (next to radar)");
-			Cheat::Toggle("Show FPS", Cheat::CheatFeatures::ShowFPSBool, "Show game FPS (right top)");
+			Cheat::Toggle("Show FPS", Cheat::CheatFeatures::ShowFPSBool, "Show game FPS");
 			Cheat::Toggle("Mobile Radio", Cheat::CheatFeatures::MobileRadioBool, "");
-			if (Cheat::Option("Spawn Hooker", ""))
-			{
-				DWORD hooker = GAMEPLAY::GET_HASH_KEY(xorstr_("s_f_y_hooker_01"));
-				if (STREAMING::IS_MODEL_IN_CDIMAGE(hooker) && STREAMING::IS_MODEL_VALID(hooker)) {
-					STREAMING::REQUEST_MODEL(hooker);
-					while (!STREAMING::HAS_MODEL_LOADED(hooker)) { WAIT(0); }
-					Vector3 pos = ENTITY::GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(PlayerPedID, 0.0, 3.0, 0.0);
-					Ped ped = PED::CREATE_PED(5, hooker, pos.x, pos.y, pos.z, 1, false, true);
-					int groupIndex = PED::GET_PED_GROUP_INDEX(PlayerPedID);
-					PED::SET_PED_AS_GROUP_LEADER(PlayerPedID, groupIndex);
-					PED::SET_PED_AS_GROUP_MEMBER(ped, groupIndex);
-					PED::SET_PED_NEVER_LEAVES_GROUP(ped, true);
-					WAIT(100);
-					STREAMING::SET_MODEL_AS_NO_LONGER_NEEDED(hooker);
-				}
-			}
 			if (Cheat::Option("Drive To Waypoint", "A NPC drives you to waypoint"))
 			{
 				int WaypointHandle = UI::GET_FIRST_BLIP_INFO_ID(8);
 				if (UI::DOES_BLIP_EXIST(WaypointHandle))
 				{
-					Vector3 waypoint1 = UI::GET_BLIP_COORDS(WaypointHandle);
+					Vector3 waypoint1 = UI::GET_BLIP_COORDS(UI::GET_FIRST_BLIP_INFO_ID(8));
 					STREAMING::REQUEST_MODEL(GAMEPLAY::GET_HASH_KEY(xorstr_("marshall")));
 					while (!STREAMING::HAS_MODEL_LOADED(GAMEPLAY::GET_HASH_KEY(xorstr_("marshall")))) WAIT(0);
 					Vector3 pos = ENTITY::GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(PlayerPedID, 0.0, 5.0, 0);
@@ -3099,9 +3083,8 @@ void Cheat::Main() {
 						PED::SET_PED_INTO_VEHICLE(Driver, veh, -1);
 						PED::SET_PED_INTO_VEHICLE(PlayerPedID, veh, 0);
 						AI::TASK_VEHICLE_DRIVE_TO_COORD(Driver, veh, waypoint1.x, waypoint1.y, waypoint1.z, 40, 1, ENTITY::GET_ENTITY_MODEL(veh), 7, 6, -1);
-						char* plateText = ("CRUSADER");
-						VEHICLE::SET_VEHICLE_NUMBER_PLATE_TEXT(veh, plateText);
-						Cheat::GameFunctions::MinimapNotification("NPC Driver Spawned");
+						VEHICLE::SET_VEHICLE_NUMBER_PLATE_TEXT(veh, xorstr_("CRUSADER"));
+						Cheat::GameFunctions::MinimapNotification(xorstr_("NPC Driver Spawned"));
 					}
 				}
 				else { Cheat::GameFunctions::MinimapNotification(xorstr_("Please set a waypoint first to use this feature")); }

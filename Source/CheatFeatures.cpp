@@ -50,19 +50,16 @@ void Cheat::CheatFeatures::Looped()
 	Cheat::GameFunctions::CheckNewSessionMembersLoop();
 
 	//Speedometer
-	if (PED::IS_PED_IN_ANY_VEHICLE(PlayerPedID, 0)) {
+	if (PED::IS_PED_IN_ANY_VEHICLE(PlayerPedID, 0)) 
+	{
 		std::ostringstream Speed;
-		float vehSpeed = ENTITY::GET_ENTITY_SPEED(PED::GET_VEHICLE_PED_IS_IN(PlayerPedID, 0));
-		float vehSpeedConverted;
 		if (UseKMH)
 		{
-			vehSpeedConverted = roundf(vehSpeed * 3.6);
-			Speed << vehSpeedConverted << xorstr_(" KM/H");
+			Speed << Cheat::GameFunctions::MSToKMH(ENTITY::GET_ENTITY_SPEED(PED::GET_VEHICLE_PED_IS_IN(PlayerPedID, 0))) << xorstr_(" KM/H");
 		}
 		else
 		{
-			vehSpeedConverted = roundf(vehSpeed * 2.2369);
-			Speed << vehSpeedConverted << xorstr_(" MP/H");
+			Speed << Cheat::GameFunctions::MSToMPH(ENTITY::GET_ENTITY_SPEED(PED::GET_VEHICLE_PED_IS_IN(PlayerPedID, 0))) << xorstr_(" MP/H");
 		}
 		if (SpeedometerVectorPosition == 1 || SpeedometerVectorPosition == 3) { Cheat::Speedometer((char*)Speed.str().c_str()); }
 		if (SpeedometerVectorPosition == 2 || SpeedometerVectorPosition == 3) { VEHICLE::SET_VEHICLE_NUMBER_PLATE_TEXT(PED::GET_VEHICLE_PED_IS_IN(PlayerPedID, 0), (char*)Speed.str().c_str()); }

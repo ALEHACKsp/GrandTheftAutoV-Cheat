@@ -439,6 +439,8 @@ namespace Cheat {
 		void AdvancedMinimapNotification(char* Message, char* PicName1, char* PicName2, bool Flash, int IconType, char* Sender, char* Subject, float Duration, char* ClanTag);
 		void AddBlipToVehicle(Vehicle Vehicle);
 		bool DeleteVehicle(Vehicle Vehicle);
+		float MSToKMH(float MS);
+		float MSToMPH(float MS);
 	}
 	namespace LogFunctions {
 		void Init();

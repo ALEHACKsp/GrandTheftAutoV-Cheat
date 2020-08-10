@@ -737,7 +737,14 @@ void Cheat::GameFunctions::LoadPlayerInformation(char* playerName, Player p)
 		{
 			Cheat::AddPlayerInfoBoxTextEntry(xorstr_("Vehicle Speed"), 8);
 			float VehicleSpeed = round(ENTITY::GET_ENTITY_SPEED(PED::GET_VEHICLE_PED_IS_IN(SelectedPlayerPed, false)) * 100) / 100;
-			Speed << round(VehicleSpeed * 3.6) << xorstr_(" KM/H");
+			if (CheatFeatures::UseKMH)
+			{
+				Speed << MSToKMH(VehicleSpeed) << xorstr_(" KM/H");
+			}
+			else
+			{
+				Speed << MSToMPH(VehicleSpeed) << xorstr_(" MP/H");
+			}
 			Cheat::AddPlayerInfoBoxTextEntry((char*)Speed.str().c_str(), NULL, 8);
 		}
 		else
@@ -1424,4 +1431,13 @@ bool Cheat::GameFunctions::DeleteVehicle(Vehicle Vehicle)
 		return true;
 	}
 	return false;
+}
+
+float Cheat::GameFunctions::MSToKMH(float MS)
+{
+	return roundf(MS * 3.6);
+}
+float Cheat::GameFunctions::MSToMPH(float MS)
+{
+	return roundf(MS * 2.2);
 }

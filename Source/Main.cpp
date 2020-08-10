@@ -148,7 +148,7 @@ void Cheat::Main() {
 		case networkoptions:
 		{
 			Cheat::Title("Network Options");
-			Cheat::MenuOption("Player List >", plist);	
+			Cheat::MenuOption("Player List >", PlayerListMenu);
 			if (!NETWORK::NETWORK_IS_SESSION_STARTED()) 
 			{
 				Cheat::Break("Join GTA Online to see all options", true); 
@@ -2658,7 +2658,7 @@ void Cheat::Main() {
 		{
 			Cheat::Title("Vehicle Spawn Settings");
 			Cheat::Toggle("Spawn Inside Vehicle", VehicleSpawnerSpawnInsideVehicle, "");
-			Cheat::Toggle("Spawn With Godmode", spawnvehiclewithgodmode, "Enables Vehicle Godmode");
+			Cheat::Toggle("Spawn With Godmode", spawnvehiclewithgodmode, "");
 			Cheat::Toggle("Spawn Max Upgraded", spawnmaxupgraded, "");
 			Cheat::Toggle("Delete Old Vehicle", VehicleSpawnerDeleteOldVehicle, "");
 			Cheat::Toggle("Spawn With Blip", VehicleSpawnerSpawnWithBlip, "");
@@ -4345,7 +4345,7 @@ void Cheat::Main() {
 			}		
 		}
 		break;
-		case plist:
+		case PlayerListMenu:
 		{
 			Cheat::Title("Player List");
 			for (int i = 0; i < 32; ++i) {
@@ -4359,13 +4359,16 @@ void Cheat::Main() {
 						if (Cheat::GameFunctions::IsEntityInInterior(PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(i))) { PlayernameString.append(" ~p~[Interior]"); }
 						if (PlayerID == i) { PlayernameString.append(" ~g~[You]"); }
 					}
-					Cheat::MenuOption((char*)PlayernameString.c_str(), pmenu) ? Cheat::CheatFeatures::selectedPlayer = i : NULL;
-					if (Cheat::Settings::currentOption == Cheat::Settings::optionCount) { Cheat::GameFunctions::LoadPlayerInformation(PLAYER::GET_PLAYER_NAME(i), i); }
+					Cheat::MenuOptionPlayerList((char*)PlayernameString.c_str(), SelectedPlayerMenu, i) ? Cheat::CheatFeatures::selectedPlayer = i : NULL;
+					if (Cheat::Settings::currentOption == Cheat::Settings::optionCount) 
+					{
+						Cheat::GameFunctions::LoadPlayerInformation(PLAYER::GET_PLAYER_NAME(i), i); 
+					}
 				}
 			}
 		}
 		break;
-		case pmenu:
+		case SelectedPlayerMenu:
 		{
 			Cheat::GameFunctions::DrawMarkerAbovePlayer(2, Cheat::CheatFeatures::selectedPlayer, { 0, 0, 255, 255 });
 			Cheat::GameFunctions::LoadPlayerInformation(PLAYER::GET_PLAYER_NAME(Cheat::CheatFeatures::selectedPlayer), Cheat::CheatFeatures::selectedPlayer);

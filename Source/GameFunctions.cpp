@@ -1459,3 +1459,24 @@ void Cheat::GameFunctions::ChangeEntityInvincibilityState(Entity EntityHandle, b
 		VEHICLE::SET_VEHICLE_CAN_BE_VISIBLY_DAMAGED(EntityHandle, 1);
 	}
 }
+
+char* Cheat::GameFunctions::ReturnOnlinePlayerPictureString(Player PlayerHandle)
+{
+	if (NETWORK::NETWORK_IS_SESSION_STARTED())
+	{
+		int Index = 1385294 + 2; //This index changes with each patch
+		for (int x = 0; x <= 150; x += 5)
+		{
+			int playerId = globalHandle(Index).At(x).As<int>();
+			if (playerId == PlayerHandle)
+			{
+				return PED::GET_PEDHEADSHOT_TXD_STRING(globalHandle(Index).At(x).At(1).As<int>());
+			}
+			if (playerId == -1)
+			{
+				break;
+			}
+		}
+	}
+	return "CHAR_DEFAULT";
+}

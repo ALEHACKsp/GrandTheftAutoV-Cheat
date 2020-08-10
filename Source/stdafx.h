@@ -445,6 +445,7 @@ namespace Cheat {
 		float MSToKMH(float MS);
 		float MSToMPH(float MS);
 		void ChangeEntityInvincibilityState(Entity EntityHandle, bool Enable);
+		char* ReturnOnlinePlayerPictureString(Player PlayerHandle);
 	}
 	namespace LogFunctions {
 		void Init();
@@ -514,12 +515,13 @@ namespace Cheat {
 	void AddSmallTitle3(char* text);
 	void AddSmallInfo3(char* text, short line);
 	bool Break(const char* option, bool TextCentered);
-	bool Option(const char* option, const char* InformationText);
-	bool Option(const char* option, const char* InformationText, std::function<void()> function);
+	bool Option(const char* option, const char* InformationText, bool PlayerList = false);
+	//bool Option(const char* option, const char* InformationText, std::function<void()> function);
 	bool VehicleOption(const char* option, std::string ModelName);
 	bool VehicleOption(const char* option, std::string ModelName, std::function<void()> function);
 	bool MenuOption(const char* option, SubMenus newSub);
-	bool MenuOption(const char* option, SubMenus newSub, std::function<void()> function);
+	//bool MenuOption(const char* option, SubMenus newSub, std::function<void()> function);
+	bool MenuOptionPlayerList(const char* option, SubMenus newSub, Player PlayerHandle);
 	bool Toggle(const char* option, bool& b00l, const char* InformationText);
 	bool ToggleCheckMark(const char* option, bool& b00l);
 	bool Toggle(const char* option, bool& b00l, const char* InformationText, std::function<void()> function);

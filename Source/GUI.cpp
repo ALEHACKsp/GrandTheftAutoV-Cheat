@@ -127,7 +127,7 @@ void Cheat::Title(const char * title)
 }
 
 
-bool Cheat::Option(const char * option, const char* InformationText)
+bool Cheat::Option(const char * option, const char* InformationText, bool PlayerList)
 {
 	Settings::optionCount++;
 	Settings::optionCountMenuBottom++;
@@ -136,13 +136,27 @@ bool Cheat::Option(const char * option, const char* InformationText)
 	if (onThis) { Settings::currentOptionMenuBottom = Settings::optionCount - OptionCountDifference; }
 	if (Settings::currentOption <= Settings::maxVisOptions && Settings::optionCount <= Settings::maxVisOptions)
 	{
-		Drawing::Text(option, Settings::optionText, { Settings::menuX - 0.100f, (Settings::optionCount)*0.035f + 0.125f }, { 0.35f, 0.35f }, false);
+		if (PlayerList)
+		{
+			Drawing::Text(option, Settings::optionText, { Settings::menuX - 0.080f, (Settings::optionCount) * 0.035f + 0.125f }, { 0.35f, 0.35f }, false);
+		}
+		else
+		{
+			Drawing::Text(option, Settings::optionText, { Settings::menuX - 0.100f, (Settings::optionCount) * 0.035f + 0.125f }, { 0.35f, 0.35f }, false);
+		}
 		Drawing::Rect(Settings::MenuBackgroundRect, { Settings::menuX, (Settings::optionCount)*0.035f + 0.1415f }, { 0.21f, 0.035f });
 		onThis ? Drawing::Rect(Settings::scroller, { Settings::menuX, (Settings::optionCount)*0.035f + 0.1415f }, { 0.21f, 0.035f }) : NULL;
 	}
 	else if (Settings::optionCount > (Settings::currentOption - Settings::maxVisOptions) && Settings::optionCount <= Settings::currentOption)
 	{
-		Drawing::Text(option, Settings::optionText, { Settings::menuX - 0.100f, (Settings::optionCount - (Settings::currentOption - Settings::maxVisOptions))*0.035f + 0.125f }, { 0.35f, 0.35f }, false);
+		if (PlayerList)
+		{
+			Drawing::Text(option, Settings::optionText, { Settings::menuX - 0.080f, (Settings::optionCount - (Settings::currentOption - Settings::maxVisOptions)) * 0.035f + 0.125f }, { 0.35f, 0.35f }, false);
+		}
+		else
+		{
+			Drawing::Text(option, Settings::optionText, { Settings::menuX - 0.100f, (Settings::optionCount - (Settings::currentOption - Settings::maxVisOptions)) * 0.035f + 0.125f }, { 0.35f, 0.35f }, false);
+		}
 		Drawing::Rect(Settings::MenuBackgroundRect, { Settings::menuX,  (Settings::optionCount - (Settings::currentOption - Settings::maxVisOptions))*0.035f + 0.1415f }, { 0.21f, 0.035f });
 		onThis ? Drawing::Rect(Settings::scroller, { Settings::menuX,  (Settings::optionCount - (Settings::currentOption - Settings::maxVisOptions))*0.035f + 0.1415f }, { 0.21f, 0.035f }) : NULL;
 	}
@@ -3018,28 +3032,45 @@ bool Cheat::Break(const char * option, bool TextCentered)
 	}
 	return false;
 }
-
 bool Cheat::MenuOption(const char * option, SubMenus newSub)
 {
 	Option(option, "");
 
-	if (Settings::currentOption <= Settings::maxVisOptions && Settings::optionCount <= Settings::maxVisOptions)
-		Drawing::Text("", Settings::titleText, { Settings::menuX + 0.099f, Settings::optionCount * 0.035f + 0.125f }, { 0.35f, 0.35f }, true);
-	else if (Settings::optionCount > Settings::currentOption - Settings::maxVisOptions && Settings::optionCount <= Settings::currentOption)
-		Drawing::Text("", Settings::titleText, { Settings::menuX + 0.099f, (Settings::optionCount - (Settings::currentOption - Settings::maxVisOptions))*0.035f + 0.12f }, { 0.35f, 0.35f }, true);
-
-	if (Settings::optionCount == Settings::currentOption) {
-		OptionInformationText = "";
-
-		if (Settings::selectPressed) {
+	if (Settings::optionCount == Settings::currentOption) 
+	{
+		if (Settings::selectPressed) 
+		{
 			MenuLevelHandler::MoveMenu(newSub);
 			return true;
 		}
 	}
 	return false;
 }
+bool Cheat::MenuOptionPlayerList(const char* option, SubMenus newSub, Player PlayerHandle)
+{
+	Option(option, "", true);
 
+	char* CurrentOnlinePlayerPictureName = Cheat::GameFunctions::ReturnOnlinePlayerPictureString(PlayerHandle);
 
+	if (Settings::currentOption <= Settings::maxVisOptions && Settings::optionCount <= Settings::maxVisOptions)
+	{
+		Drawing::Spriter(CurrentOnlinePlayerPictureName, CurrentOnlinePlayerPictureName, Settings::menuX - 0.093f, (Settings::optionCount * 0.035f + 0.140f), 0.02f, 0.03f, 0, 255, 255, 255, 255);
+	}
+	else if (Settings::optionCount > Settings::currentOption - Settings::maxVisOptions && Settings::optionCount <= Settings::currentOption)
+	{
+		Drawing::Spriter(CurrentOnlinePlayerPictureName, CurrentOnlinePlayerPictureName, Settings::menuX - 0.093f, (Settings::optionCount - (Settings::currentOption - Settings::maxVisOptions)) * 0.035f + 0.140f, 0.02f, 0.03f, 0, 255, 255, 255, 255);
+	}
+
+	if (Settings::optionCount == Settings::currentOption) 
+	{
+		if (Settings::selectPressed) 
+		{
+			MenuLevelHandler::MoveMenu(newSub);
+			return true;
+		}
+	}
+	return false;
+}
 bool Cheat::Toggle(const char * option, bool & b00l, const char* InformationText)
 {
 	Option(option, "");

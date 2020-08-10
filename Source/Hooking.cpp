@@ -558,7 +558,7 @@ uint64_t Hooking::getWorldPtr()
 }
 void WAIT(DWORD ms, bool ShowMessage)
 {
-	if (ShowMessage) { Cheat::Drawing::Text(xorstr_("One moment please"), { 255, 255, 255, 255 }, { 0.525f, 0.400f }, { 2.f, 2.f }, true); }
+	if (ShowMessage) { Cheat::Drawing::Text(xorstr_("One moment please"), { 255, 255, 255, 255 }, { 0.525f, 0.400f }, { 1.5f, 1.5f }, true); }
 	wakeAt = timeGetTime() + ms;
 	SwitchToFiber(mainFiber);
 }

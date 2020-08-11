@@ -42,6 +42,7 @@
 #pragma comment(lib,"ThirdParty/MinHook/libMinHook-x64-v141-md.lib")
 #include "ThirdParty/MinHook/MinHook.h"
 
+
 // Additional Header Files
 #include "Memory.h"
 #include "types.h"
@@ -176,22 +177,11 @@ namespace Cheat
 	{
 		void MoveMenu(SubMenus menu);
 		void BackMenu();
-		void CloseMenu();
+		void CloseGUI();
 	}
 	namespace Checks 
 	{
 		void Controls();
-	}
-	namespace Files 
-	{
-		void WriteStringToIni(std::string string, std::string file, std::string app, std::string key);
-		std::string ReadStringFromIni(std::string file, std::string app, std::string key);
-		void WriteIntToIni(int intValue, std::string file, std::string app, std::string key);
-		int ReadIntFromIni(std::string file, std::string app, std::string key);
-		void WriteFloatToIni(float floatValue, std::string file, std::string app, std::string key);
-		float ReadFloatFromIni(std::string file, std::string app, std::string key);
-		void WriteBoolToIni(bool b00l, std::string file, std::string app, std::string key);
-		bool ReadBoolFromIni(std::string file, std::string app, std::string key);
 	}
 	namespace CheatFeatures 
 	{
@@ -396,6 +386,10 @@ namespace Cheat
 		std::string VirtualKeyCodeToString(UCHAR virtualKey);
 		void CreateConsole();
 		int ReturnNumberOfDigitsInValue(double Number);
+		void WriteStringToIni(std::string string, std::string file, std::string app, std::string key);
+		std::string ReadStringFromIni(std::string file, std::string app, std::string key);
+		void WriteBoolToIni(bool b00l, std::string file, std::string app, std::string key);
+		bool ReadBoolFromIni(std::string file, std::string app, std::string key);
 	}
 	namespace GameFunctions 
 	{

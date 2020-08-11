@@ -4776,7 +4776,7 @@ void Cheat::Main() {
 			Cheat::MenuOption("Colors >", GUIColorsMenu);
 			Cheat::MenuOption("Header Options >", headeroptionsmenu);
 			Cheat::StringVector("Toggles", { "Shop Box", "Circle" }, Cheat::CheatFeatures::BoolOptionVectorPosition, "Select Boolean Toggle");
-			Cheat::Int("Max Visible Menu Options", Cheat::GUI::maxVisOptions, 5, 16, 1, "Set Max Visible Menu Options");
+			Cheat::Int("Max Visible Menu Options", Cheat::GUI::maxVisOptions, 5, 16, 1);
 			Cheat::Toggle("Restore To Previous Submenu", Cheat::GUI::RestorePreviousSubmenu, "When opening restores previous submenu");
 			Cheat::Float("MenuX Position", Cheat::CheatFeatures::guiX, 0.11f, 0.86f, 0.01, true, "Changes GUI X-Axis Position");
 			std::string OpenKeyString = "Open Key: ~c~" + Cheat::CheatFunctions::VirtualKeyCodeToString(Cheat::GUI::openKey);
@@ -4974,7 +4974,7 @@ void Cheat::Main() {
 		break;
 		case settingsscroller:
 		{
-			Cheat::Title("Selection Box");
+			Cheat::Title("Options Scroller");
 			if (Cheat::Option("Set Default", ""))
 			{
 				Cheat::GUI::scroller.r = 0;

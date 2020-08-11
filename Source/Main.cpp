@@ -1768,6 +1768,7 @@ void Cheat::Main() {
 				}
 			}
 		}
+		break;
 		case CunningStuntsDLCMenu:
 		{
 			Cheat::Title("Cunning Stunts");

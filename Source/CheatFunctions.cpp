@@ -49,7 +49,7 @@ std::string Cheat::CheatFunctions::ReturnCheatModuleDirectoryPath()
 
 const std::string Cheat::CheatFunctions::ReturnConfigFilePath()
 {
-	return ReturnCheatModuleDirectoryPath() + (std::string)xorstr_("\\gtav\\config.ini");
+	return ReturnCheatModuleDirectoryPath() + (std::string)xorstr_("\\gtav\\Config.ini");
 }
 
 
@@ -290,6 +290,16 @@ bool Cheat::CheatFunctions::ReturnPressedKey(int& PressedKey)
 
 void Cheat::CheatFunctions::SaveSettings()
 {
+	if (Cheat::CheatFunctions::DoesFileExists(Cheat::CheatFunctions::ReturnConfigFilePath())) { remove(Cheat::CheatFunctions::ReturnConfigFilePath().c_str()); }
+	std::ofstream ConfigFileHandle(Cheat::CheatFunctions::ReturnConfigFilePath());
+	ConfigFileHandle << xorstr_(";Initialization file to store generic configuration data") << std::endl;
+	ConfigFileHandle << xorstr_(";GUI related configuration data can be found in the Themes folder") << std::endl;
+	ConfigFileHandle << xorstr_("[FLAGS]") << std::endl;
+	ConfigFileHandle << xorstr_(";debug=true") << std::endl;
+	ConfigFileHandle << std::endl;
+	ConfigFileHandle.close();
+
+	//TODO: This needs to get reworked, it is cluttered and unefficient. Per item bases?
 	Cheat::CheatFunctions::WriteBoolToIni(Cheat::CheatFeatures::GodmodeBool, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("godmode"));
 	Cheat::CheatFunctions::WriteBoolToIni(Cheat::CheatFeatures::SuperJumpBool, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("superjump"));
 	Cheat::CheatFunctions::WriteBoolToIni(Cheat::CheatFeatures::SuperRunBool, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("superrun"));
@@ -372,7 +382,6 @@ void Cheat::CheatFunctions::SaveSettings()
 	else { Cheat::CheatFunctions::WriteStringToIni(xorstr_("NULL"), Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("active_theme")); }
 }
 
-//TODO: Automate config saving on a per item bases
 void Cheat::CheatFunctions::LoadSettings(bool StartUp)
 {
 	if (StartUp) { Cheat::LogFunctions::Message(xorstr_("Loading Config")); }

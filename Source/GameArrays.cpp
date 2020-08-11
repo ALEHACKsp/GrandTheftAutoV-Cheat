@@ -777,3 +777,8 @@ const std::vector<std::string> Cheat::GameArrays::SmugglersRunModels = {
 	"ALPHAZ1", "BOMBUSHKA", "CYCLONE", "HAVOK", "HOWARD", "HUNTER", "MICROLIGHT", "MOGUL",
 	"MOLOTOK", "NOKOTA", "PYRO", "RAPIDGT3","RETINUE", "ROGUE", "SEABREEZE", "STARLING", "TULA", "VIGILANTE", "VISIONE"
 };
+
+const std::vector<std::string> Cheat::GameArrays::SummerSpecialModels = {
+	"PENUMBRA2", "OPENWHEEL2", "OPENWHEEL1", "PEYOTE3", "SEMINOLE2", "TIGON", "YOSEMITE3", "YOUGA3",
+	"MANANA2", "LANDSTALKER2", "GLENDALE2", "GAUNTLET5","DUKES3", "COQUETTE4 ", "CLUB"
+};

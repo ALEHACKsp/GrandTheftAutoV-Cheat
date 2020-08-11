@@ -7,7 +7,6 @@ int torque_multiplier;				//Used by Vehicle Multipliers Options
 int SetTimeHour = 0;				//Used by World Time options
 int SetTimeMinutes = 0;				//Used by World Time options
 int SetTimeSeconds = 0;				//Used by World Time options
-int vehicle_max_speed;				//Used by Vehicle Max Speed feature
 int VehiclePrimaryColorRed;			//Used by Vehicle Color features
 int VehiclePrimaryColorGreen;		//Used by Vehicle Color features
 int VehiclePrimaryColorBlue;		//Used by Vehicle Color features	
@@ -1746,6 +1745,7 @@ void Cheat::Main() {
 		case DLCVehiclesMenu:
 		{
 			Cheat::Title("DLC Vehicles");
+			Cheat::MenuOption("2020 Summer Special >", SummerSpecialDLCMenu);
 			Cheat::MenuOption("The Diamond Casino Heist >", diamondcasinoheist);
 			Cheat::MenuOption("The Diamond Casino & Resort >", casinodlc);
 			Cheat::MenuOption("Arena War >", arenawardlc);
@@ -1757,6 +1757,17 @@ void Cheat::Main() {
 			Cheat::MenuOption("Cunning Stunts >", CunningStuntsDLCMenu);
 		}
 		break;
+		case SummerSpecialDLCMenu:
+		{
+			Cheat::Title("2020 Summer Special");
+			for (auto const& i : Cheat::GameArrays::SummerSpecialModels)
+			{
+				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY((char*)i.c_str()))), i))
+				{
+					Cheat::GameFunctions::SpawnVehicle((char*)i.c_str());
+				}
+			}
+		}
 		case CunningStuntsDLCMenu:
 		{
 			Cheat::Title("Cunning Stunts");

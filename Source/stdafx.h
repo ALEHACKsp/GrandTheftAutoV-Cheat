@@ -8,31 +8,22 @@
 #pragma warning(disable: 6262)
 
 #include <windows.h>
-#include <Mmsystem.h>
 #include <string>
 #include <vector>
 #include <sstream>
 #include <fstream>
 #include <iostream>
 #include <atlstr.h>
-#include <iomanip>
-#include <direct.h>
 #include <map>
 #include <set>
-#include <unordered_map>
-#include <algorithm>
 #include <functional>
-#include <thread>
-#include <Psapi.h>
 #include <winioctl.h>
 #include <timeapi.h>
 #include <time.h>
 #include <conio.h>
 #include <filesystem>
 #include <fcntl.h>
-#include <pathcch.h>
 #include <io.h>
-#include <tlhelp32.h>
 #include <array>
 #pragma comment(lib, "Winmm.lib")
 
@@ -473,6 +464,7 @@ namespace Cheat
 	namespace GameArrays 
 	{
 		extern int RankPointsArray[8000];
+		extern const std::vector<std::string> SummerSpecialModels;
 		extern const std::vector<std::string> PedModels;
 		extern const std::vector<std::string> BoatModels;
 		extern const std::vector<std::string> SmugglersRunModels;

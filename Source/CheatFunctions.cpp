@@ -91,7 +91,7 @@ Ped PlayerPedID;
 void Cheat::CheatFunctions::CheatThreadLoopFunctions()
 {
 	//Load MP vehicles in SP bypass
-	globalHandle(4268190).As<BOOL>() = true;
+	globalHandle(4268340).As<BOOL>() = true;
 
 	//Player ID's and Ped
 	PlayerID = PLAYER::PLAYER_ID();
@@ -372,6 +372,7 @@ void Cheat::CheatFunctions::SaveSettings()
 	else { Cheat::CheatFunctions::WriteStringToIni(xorstr_("NULL"), Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("active_theme")); }
 }
 
+//TODO: Automate config saving on a per item bases
 void Cheat::CheatFunctions::LoadSettings(bool StartUp)
 {
 	if (StartUp) { Cheat::LogFunctions::Message(xorstr_("Loading Config")); }

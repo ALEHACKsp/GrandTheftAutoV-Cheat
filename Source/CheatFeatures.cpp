@@ -1037,8 +1037,8 @@ void Cheat::CheatFeatures::PlayerESP()
 bool Cheat::CheatFeatures::OffRadarBool = false;
 void Cheat::CheatFeatures::OffRadar()
 {
-	globalHandle(2424073).At(1 + (PlayerID * 421)).At(200).As<int>() = 1;
-	globalHandle(2437549).At(70).As<int>() = NETWORK::GET_NETWORK_TIME();
+	globalHandle(2425662).At(1 + (PlayerID * 421)).At(200).As<int>() = 1;
+	globalHandle(2439138).At(70).As<int>() = NETWORK::GET_NETWORK_TIME();
 }
 
 bool Cheat::CheatFeatures::RevealPlayersBool = false;

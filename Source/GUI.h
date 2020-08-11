@@ -70,6 +70,7 @@ enum SubMenus
 	arenawardlc, 
 	casinodlc,
 	diamondcasinoheist,
+	SummerSpecialDLCMenu,
 	networkoptions,
 	animations,
 	timemenu,

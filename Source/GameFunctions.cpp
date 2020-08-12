@@ -660,15 +660,15 @@ void Cheat::GameFunctions::LoadPlayerInformation(char* playerName, Player p)
 		Cheat::AddPlayerInfoBoxTextEntry(PLAYER::GET_PLAYER_NAME(p), NULL, 1);
 
 		Cheat::AddPlayerInfoBoxTextEntry(xorstr_("Rank"), 2);
-		Cheat::AddPlayerInfoBoxTextEntry(xorstr_("Money"), 3);
+		Cheat::AddPlayerInfoBoxTextEntry(xorstr_("Cash"), 3);
 		if (NETWORK::NETWORK_IS_SESSION_STARTED()) 
 		{
 			std::ostringstream PlayerRank;
-			PlayerRank << globalHandle(1590535).At(p, 56).At(211).At(26).As<int>();
+			PlayerRank << globalHandle(1628237).At(p, 615).At(533).At(26).As<int>();
 			Cheat::AddPlayerInfoBoxTextEntry((char*)PlayerRank.str().c_str(), NULL, 2);
 
 			std::ostringstream PlayerMoney;
-			PlayerMoney << globalHandle(1590535).At(p, 56).At(211).At(23).As<int>();
+			PlayerMoney << globalHandle(1628237).At(p, 615).At(533).At(23).As<int>();
 			Cheat::AddPlayerInfoBoxTextEntry((char*)PlayerMoney.str().c_str(), NULL, 3);
 		}
 		else

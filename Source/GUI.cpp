@@ -3680,7 +3680,7 @@ void Cheat::LoadTheme(char* ThemeFileName, bool StartUp)
 	std::string IntDelaySetting = Cheat::CheatFunctions::ReadStringFromIni(ThemeFilePath, "THEME", "int_delay"); if (Cheat::CheatFunctions::StringIsInteger(IntDelaySetting)) { if (Cheat::CheatFunctions::IsIntegerInRange(1, 200, std::stoi(IntDelaySetting))) { Cheat::GUI::keyPressDelay3 = std::stoi(IntDelaySetting.c_str()); } }
 	std::string BooleanToggleSetting = Cheat::CheatFunctions::ReadStringFromIni(ThemeFilePath, xorstr_("CHEAT"), xorstr_("boolean_toggle")); if (Cheat::CheatFunctions::StringIsInteger(BooleanToggleSetting)) { Cheat::CheatFeatures::BoolOptionVectorPosition = std::stoi(BooleanToggleSetting.c_str()); }
 	if (Cheat::CheatFunctions::ReadStringFromIni(ThemeFilePath, "THEME", "show_header_background") == "true") { Cheat::GUI::ShowHeaderBackground = true; }
-	if (Cheat::CheatFunctions::ReadStringFromIni(ThemeFilePath, "THEME", "show_header_gui") == "true") { Cheat::GUI::ShowHeaderGUI = true; }
+	if (Cheat::CheatFunctions::ReadStringFromIni(ThemeFilePath, "THEME", "show_header_gui") == "true") { Cheat::GUI::ShowHeaderGUI = true; } else { Cheat::GUI::ShowHeaderGUI = false; }
 	if (Cheat::CheatFunctions::ReadStringFromIni(ThemeFilePath, "THEME", "restore_previous_submenu") == "false") { Cheat::GUI::RestorePreviousSubmenu = false; } else { Cheat::GUI::RestorePreviousSubmenu = true; }
 	if (Cheat::CheatFunctions::ReadStringFromIni(ThemeFilePath, "THEME", "show_header_glare") == "false") { Cheat::GUI::ShowHeaderGlare = false; } else { Cheat::GUI::ShowHeaderGlare = true; }
 

@@ -1,7 +1,6 @@
 #pragma once
 #include "stdafx.h"
 
-
 using namespace Memory;
 
 ScriptThread*(*GetActiveThread)() = nullptr;
@@ -28,7 +27,7 @@ fpSetSessionTime											Hooking::set_session_time_info;
 fpGetLabelText Hooking::GetLabelText = nullptr;
 fpGetScriptHandlerIfNetworked Hooking::GetScriptHandlerIfNetworked = nullptr;
 fpGetScriptHandler Hooking::GetScriptHandler = nullptr;
-const int EVENT_COUNT = 78; 
+const int EVENT_COUNT = 83;
 static std::vector<void*> EventPtr;
 static char EventRestore[EVENT_COUNT] = {};
 
@@ -474,7 +473,7 @@ void Hooking::DoGameHooking()
 	Cheat::LogFunctions::Message(xorstr_("Game Completed Loading"));
 
 	//Initialize MinHook
-	if (MH_Initialize() != MH_OK) { Cheat::LogFunctions::Error(xorstr_("Failed to initialize MinHook")); }
+	if (MH_Initialize() != MH_OK) { Cheat::LogFunctions::Error(xorstr_("Failed to initialize MinHook")); std::exit(EXIT_SUCCESS); }
 
 	//Hook Game Functions
 	auto status = MH_CreateHook(Hooking::is_DLC_present, HK_IS_DLC_PRESENT, (void**)&OG_IS_DLC_PRESENT);

@@ -1988,4 +1988,3 @@ enum eGameState
 	GameStateMainMenu = 5,
 	GameStateLoadingSP_MP = 6
 };
-

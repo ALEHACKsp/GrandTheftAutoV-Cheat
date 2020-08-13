@@ -3461,7 +3461,7 @@ namespace GRAPHICS
 	static void DRAW_LINE(float x1, float y1, float z1, float x2, float y2, float z2, int red, int green, int blue, int alpha) { invoke<Void>(0x6B7256074AE34680, x1, y1, z1, x2, y2, z2, red, green, blue, alpha); } // 0x6B7256074AE34680 0xB3426BCC
 	static void DRAW_POLY(float x1, float y1, float z1, float x2, float y2, float z2, float x3, float y3, float z3, int red, int green, int blue, int alpha) { invoke<Void>(0xAC26716048436851, x1, y1, z1, x2, y2, z2, x3, y3, z3, red, green, blue, alpha); } // 0xAC26716048436851 0xABD19253
 	static void DRAW_BOX(float x1, float y1, float z1, float x2, float y2, float z2, int red, int green, int blue, int alpha) { invoke<Void>(0xD3A9971CADAC7252, x1, y1, z1, x2, y2, z2, red, green, blue, alpha); } // 0xD3A9971CADAC7252 0xCD4D9DD5
-	static void _0x23BA6B0C2AD7B0D3(BOOL toggle) { invoke<Void>(0x23BA6B0C2AD7B0D3, toggle); } // 0x23BA6B0C2AD7B0D3 0xC44C2F44
+	static void SET_BACKFACECULLING(BOOL toggle) { invoke<Void>(0x23BA6B0C2AD7B0D3, toggle); } // 0x23BA6B0C2AD7B0D3 0xC44C2F44
 	static BOOL _0x1DD2139A9A20DCE8() { return invoke<BOOL>(0x1DD2139A9A20DCE8); } // 0x1DD2139A9A20DCE8 0xBA9AD458
 	static int _0x90A78ECAA4E78453() { return invoke<int>(0x90A78ECAA4E78453); } // 0x90A78ECAA4E78453 0xADBBA287
 	static void _0x0A46AF8A78DC5E0A() { invoke<Void>(0x0A46AF8A78DC5E0A); } // 0x0A46AF8A78DC5E0A 0x9E553002

@@ -50,31 +50,31 @@ typedef struct
 
 struct Blip_t {
 public:
-	__int32 iID; //0x0000 
-	__int8 iID2; //0x0004 
+	__int32 iID;
+	__int8 iID2;
 	char _0x0005[3];
-	BYTE N000010FB; //0x0008 (80 = moves with player, some values will turn icon into map cursor and break it)
+	BYTE N000010FB;
 	char _0x0009[7];
 	Vector3 coords;
 	char _0x001C[6];
-	BYTE bFocused; //0x0022   (Focused? 0100 0000)
+	BYTE bFocused;
 	char _0x0023[5];
-	char* szMessage; //0x0028 If not null, contains the string of whatever the blip says when selected.
+	char* szMessage;
 	char _0x0030[16];
-	int iIcon; //0x0040
+	int iIcon;
 	char _0x0044[4];
-	DWORD dwColor; //0x0048 (Sometimes works?)
+	DWORD dwColor;
 	char _0x004C[4];
-	float fScale; //0x0050 
-	__int16 iRotation; //0x0054 Heading
-	BYTE bInfoIDType; //0x0056 GET_BLIP_INFO_ID_TYPE
-	BYTE bZIndex; //0x0057 
-	BYTE bDisplay; //0x0058  Also Visibility 0010
-	BYTE bAlpha; //0x0059
-};//Size=0x005A
+	float fScale;
+	__int16 iRotation;
+	BYTE bInfoIDType;
+	BYTE bZIndex;
+	BYTE bDisplay;
+	BYTE bAlpha;
+};
 
 struct BlipList {
 public:
-	Blip_t* m_Blips[1500]; //0x0000 
+	Blip_t* m_Blips[1500];
 
-};//Size=0x2F18
+};

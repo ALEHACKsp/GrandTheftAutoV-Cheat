@@ -363,7 +363,7 @@ void Cheat::CheatFeatures::PauseTime(bool toggle)
 bool Cheat::CheatFeatures::ExplosiveMeleeBool = false;
 void Cheat::CheatFeatures::ExplosiveMelee()
 {
-	Memory::set_value<int>({ 0x08, 0x10B8, 0x1F8 }, 0x2000u);
+	Memory::set_value<int>({ 0x08, 0x10C8, 0x1F8 }, 0x2000u);
 }
 
 bool Cheat::CheatFeatures::OrbitalCannonCooldownBypassBool = false;

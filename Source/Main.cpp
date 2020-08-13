@@ -62,7 +62,7 @@ void Cheat::Main() {
 			Cheat::MenuOption(xorstr_("Settings >"), SettingsMenu);
 		}
 		break;
-		case allplayers:
+		case AllPlayersMenu:
 		{
 			Cheat::Title("All Players");
 			Cheat::MenuOption("ESP >", ESPMenu);
@@ -153,7 +153,7 @@ void Cheat::Main() {
 				Cheat::Break("Join GTA Online to see all options", true); 
 			}
 			else {
-				Cheat::MenuOption("All Players >", allplayers);
+				Cheat::MenuOption("All Players >", AllPlayersMenu);
 				Cheat::MenuOption("Protections >", protections); 
 				Cheat::MenuOption("Stats Options >", statsoptionsmenu);
 				Cheat::MenuOption("Session Options >", sessionoptionsmenu);

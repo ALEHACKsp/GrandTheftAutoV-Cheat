@@ -33,7 +33,7 @@ enum SubMenus
 	weathermenu,
 	VehicleSpawnSettings,
 	hotkeys,
-	allplayers,
+	AllPlayersMenu,
 	modelchanger,
 	vehiclespawnermenu,
 	Super,

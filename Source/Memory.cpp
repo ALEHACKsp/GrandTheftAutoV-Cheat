@@ -2,14 +2,13 @@
 
 static std::multimap<uint64_t, uintptr_t> g_hints;
 
-void Memory::executable_meta::EnsureInit() {
-
-	if ( m_begin ) {
+void Memory::executable_meta::EnsureInit() 
+{
+	if ( m_begin ) 
+	{
 		return;
 	}
-	
 	HMODULE gModule = GetModuleHandle( NULL );
-
 	m_begin = reinterpret_cast<uintptr_t>(gModule);
 	const IMAGE_DOS_HEADER * dosHeader = reinterpret_cast<const IMAGE_DOS_HEADER*>(gModule);
 	const IMAGE_NT_HEADERS * ntHeader = reinterpret_cast<const IMAGE_NT_HEADERS64*>( reinterpret_cast<const uint8_t*>(dosHeader)+dosHeader->e_lfanew );
@@ -17,22 +16,27 @@ void Memory::executable_meta::EnsureInit() {
 	m_size = ntHeader->OptionalHeader.SizeOfImage;
 }
 
-void Memory::TransformPattern( const std::string & pattern, std::string & data, std::string & mask ) {
+void Memory::TransformPattern( const std::string & pattern, std::string & data, std::string & mask ) 
+{
 	std::stringstream dataStr;
 	std::stringstream maskStr;
 
 	uint8_t tempDigit = 0;
 	bool tempFlag = false;
 
-	for ( auto & ch : pattern ) {
+	for ( auto & ch : pattern ) 
+	{
 
 		if ( ch == ' ' ) {
 			continue;
-		} else if ( ch == '?' ) {
+		} else if ( ch == '?' ) 
+		{
 
 			dataStr << '\x00';
 			maskStr << '?';
-		} else if ( ( ch >= '0' && ch <= '9' ) || ( ch >= 'A' && ch <= 'F' ) || ( ch >= 'a' && ch <= 'f' ) ) {
+		} 
+		else if ( ( ch >= '0' && ch <= '9' ) || ( ch >= 'A' && ch <= 'F' ) || ( ch >= 'a' && ch <= 'f' ) ) 
+		{
 
 			char str[] = { ch, 0 };
 			int thisDigit = strtol( str, nullptr, 16 );
@@ -56,7 +60,8 @@ void Memory::TransformPattern( const std::string & pattern, std::string & data, 
 	mask = maskStr.str();
 }
 
-void Memory::pattern::Initialize( const char* pattern, size_t length ) {
+void Memory::pattern::Initialize( const char* pattern, size_t length ) 
+{
 	// get the hash for the base pattern
 	std::string baseString( pattern, length );
 	m_hash = fnv_1()( baseString );
@@ -71,14 +76,16 @@ void Memory::pattern::Initialize( const char* pattern, size_t length ) {
 	// if there's hints, try those first
 	auto range = g_hints.equal_range( m_hash );
 
-	if ( range.first != range.second ) {
+	if ( range.first != range.second ) 
+	{
 
 		std::for_each( range.first, range.second, [&]( const std::pair<uint64_t, uintptr_t> & hint ) {
 			ConsiderMatch( hint.second );
 		} );
 
 		// if the hints succeeded, we don't need to do anything more
-		if ( m_matches.size() > 0 ) {
+		if ( m_matches.size() > 0 ) 
+		{
 			m_matched = true;
 			return;
 		}
@@ -160,7 +167,8 @@ std::vector<DWORD64> Memory::get_string_addresses(std::string str)
 
 }
 
-bool Memory::pattern::ConsiderMatch( uintptr_t offset ) {
+bool Memory::pattern::ConsiderMatch( uintptr_t offset ) 
+{
 
 	const char * pattern = m_bytes.c_str();
 	const char * mask = m_mask.c_str();
@@ -183,7 +191,8 @@ bool Memory::pattern::ConsiderMatch( uintptr_t offset ) {
 	return true;
 }
 
-void Memory::pattern::EnsureMatches( int maxCount ) {
+void Memory::pattern::EnsureMatches( int maxCount ) 
+{
 
 	if ( m_matched ) {
 		return;
@@ -233,7 +242,9 @@ void Memory::pattern::EnsureMatches( int maxCount ) {
 				}
 			}
 		}
-	} else {
+	} 
+	else 
+	{
 
 		__declspec( align( 16 ) ) char desiredMask[16] = { 0 };
 
@@ -263,15 +274,16 @@ void Memory::pattern::EnsureMatches( int maxCount ) {
 			}
 		}
 	}
-
 	m_matched = true;
 }
 
-void Memory::pattern::hint( uint64_t hash, uintptr_t address ) {
+void Memory::pattern::hint( uint64_t hash, uintptr_t address ) 
+{
 
 	auto range = g_hints.equal_range( hash );
 
-	for ( auto it = range.first; it != range.second; it++ ) {
+	for ( auto it = range.first; it != range.second; it++ ) 
+	{
 
 		if ( it->second == address ) {
 			return;

@@ -6142,7 +6142,8 @@ void CrossMapping::initNativeMap()
 		uint64_t second;
 	} *p2q;
 
-	if (init) {
+	if (init)
+	{
 		return;
 	}
 

@@ -32,26 +32,6 @@ const int EVENT_COUNT = 78;
 static std::vector<void*> EventPtr;
 static char EventRestore[EVENT_COUNT] = {};
 
-template <typename T>
-bool Native(DWORD64 hash, LPVOID hookFunction, T** trampoline)
-{
-	if (*reinterpret_cast<LPVOID*>(trampoline) != NULL)
-	{
-		return true;
-	}
-	auto originalFunction = Hooking::GetNativeHandler(hash);
-	if (originalFunction != 0) {
-		MH_STATUS createHookStatus = MH_CreateHook(originalFunction, hookFunction, reinterpret_cast<LPVOID*>(trampoline));
-		if (((createHookStatus == MH_OK) || (createHookStatus == MH_ERROR_ALREADY_CREATED)) && (MH_EnableHook(originalFunction) == MH_OK))
-		{
-			m_hookedNative.push_back((LPVOID)originalFunction);
-			Cheat::LogFunctions::DebugMessage(xorstr_("Hooked Native 0x%#p"), hash);
-			return true;
-		}
-	}
-	return false;
-}
-
 
 uint64_t CMetaData::m_begin = 0;
 uint64_t CMetaData::m_end = 0;

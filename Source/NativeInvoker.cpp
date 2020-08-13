@@ -1,29 +1,26 @@
 #include "stdafx.h"
 
 static NativeManagerContext g_context;
-
 static UINT64 g_hash;
-
 void(*scrNativeCallContext::SetVectorResults)(scrNativeCallContext*) = nullptr;
 
-void nativeInit(UINT64 hash) {
-
+void nativeInit(UINT64 hash) 
+{
 	g_context.Reset();
 	g_hash = hash;
 }
 
-void nativePush64(UINT64 value) {
-
+void nativePush64(UINT64 value) 
+{
 	g_context.Push(value);
 }
 
-uint64_t * nativeCall() {
+uint64_t * nativeCall() 
+{
 	auto fn = Hooking::GetNativeHandler(g_hash);
-
-	if (fn != 0) {
-
+	if (fn != 0) 
+	{
 		static void* exceptionAddress;
-
 		__try
 		{
 			fn(&g_context);

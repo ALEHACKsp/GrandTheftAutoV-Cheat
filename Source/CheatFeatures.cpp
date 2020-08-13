@@ -1197,7 +1197,8 @@ void Cheat::CheatFeatures::MoneyDrop()
 bool Cheat::CheatFeatures::MoneyDropAllPlayersBool = false;
 void Cheat::CheatFeatures::MoneyDropAllPlayers()
 {
-	for (int i = 1; i <= 32; i++) {
+	for (int i = 1; i <= 32; i++) 
+	{
 		if (PlayerID != i && !PED::IS_PED_DEAD_OR_DYING(PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(i), 1)) {
 			Hash PolyBag = GAMEPLAY::GET_HASH_KEY(xorstr_("p_poly_bag_01_s"));
 

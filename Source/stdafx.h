@@ -7,6 +7,7 @@
 #pragma warning(disable : 4091)	
 #pragma warning(disable: 6262)
 
+
 #include <windows.h>
 #include <string>
 #include <vector>
@@ -105,6 +106,8 @@ namespace Cheat
 	}
 	namespace GUI 
 	{
+		extern float guiX;
+		extern float guiY;
 		extern char* ThemeFilesArray[1000];
 		extern bool ShowHeaderBackground;
 		extern bool ShowHeaderGUI;
@@ -155,6 +158,7 @@ namespace Cheat
 		extern int keyPressDelay3;
 		extern int keyPressPreviousTick3;
 		extern int openKey;
+		extern int GUINavigationKey;
 		extern int openpress;
 		extern int downpress;
 		extern int uppress;
@@ -176,7 +180,6 @@ namespace Cheat
 	}
 	namespace CheatFeatures 
 	{
-		extern float guiX;
 		extern int BoolOptionVectorPosition;
 		extern int SpeedometerVectorPosition;
 		extern int selectedPlayer;
@@ -188,6 +191,7 @@ namespace Cheat
 		extern bool ShowPlayerTagsPlayerList;
 		extern bool AutoSaveSettings;
 		extern bool ShowVehicleInfoAndPreview;
+		extern bool CursorGUINavigationEnabled;
 		extern std::chrono::steady_clock::time_point PostInitScaleFormStart;
 
 		void Looped();
@@ -322,8 +326,6 @@ namespace Cheat
 		extern int MoneyDropDelay;
 		extern int MoneyDropDelayPreviousTick;
 		void MoneyDrop();
-		extern bool MoneyDropAllPlayersBool;
-		void MoneyDropAllPlayers();
 		extern bool MoneyGunBool;
 		void MoneyGun();
 		extern bool VehicleWeaponsBool;
@@ -388,7 +390,7 @@ namespace Cheat
 		void DrawGameFramesPerSecond();
 		void GiveAllWeaponsToPlayer(Ped Player);
 		void RepairAndCleanVehicle();
-		void notifyBottom(char* Message, int ShowDuration = 4000);
+		void SubtitleNotification(char* Message, int ShowDuration = 4000);
 		void TeleportToObjective();
 		void BurstSelectedPlayerTires(Ped selectedPed);
 		void SetOffAlarmPlayerVehicle(Ped selectedPed);
@@ -453,6 +455,8 @@ namespace Cheat
 		float MPHToMS(float MS);
 		void ChangeEntityInvincibilityState(Entity EntityHandle, bool Enable);
 		char* ReturnOnlinePlayerPictureString(Player PlayerHandle);
+		void CursorGUINavigationLoop();
+		void EnableDisableCursorGUINavigation();
 	}
 	namespace LogFunctions 
 	{

@@ -340,7 +340,7 @@ float Cheat::GameFunctions::GetVectorLength(Vector3* vector) {
 	return(float)sqrt(x * x + y * y + z * z);
 }
 
-void Cheat::GameFunctions::notifyBottom(char* Message, int ShowDuration)
+void Cheat::GameFunctions::SubtitleNotification(char* Message, int ShowDuration)
 {
 	UI::BEGIN_TEXT_COMMAND_PRINT("STRING");
 	UI::ADD_TEXT_COMPONENT_SUBSTRING_PLAYER_NAME(Message);
@@ -642,17 +642,17 @@ void Cheat::GameFunctions::LoadPlayerInformation(char* playerName, Player p)
 		RequestControlOfEnt(SelectedPlayerPed);
 
 		//Draw Title and Background
-		if (Cheat::CheatFeatures::guiX < 0.54f)
+		if (Cheat::GUI::guiX < 0.54f)
 		{
-			Drawing::Rect(GUI::scroller, { Cheat::CheatFeatures::guiX + 0.266f, 0.31f }, { 0.32f, 0.31f }); //Main Background Rect
-			Drawing::Text(xorstr_("Player Information"), { GUI::titleText }, { Cheat::CheatFeatures::guiX + 0.260f, 0.130f }, { 0.50f, 0.35f }, true);
-			Drawing::Rect(GUI::MainTitleRect, { Cheat::CheatFeatures::guiX + 0.266f, 0.146f }, { 0.32f, 0.023f });
+			Drawing::Rect(GUI::scroller, { Cheat::GUI::guiX + 0.266f, GUI::guiY + 0.01f }, { 0.32f, 0.31f }); //Main Background Rect
+			Drawing::Text(xorstr_("Player Information"), { GUI::titleText }, { Cheat::GUI::guiX + 0.260f, GUI::guiY - 0.170f }, { 0.50f, 0.35f }, true);
+			Drawing::Rect(GUI::MainTitleRect, { Cheat::GUI::guiX + 0.266f, GUI::guiY - 0.154f }, { 0.32f, 0.023f });
 		}
 		else
 		{
-			Drawing::Rect(GUI::scroller, { Cheat::CheatFeatures::guiX - 0.266f, 0.31f }, { 0.32f, 0.31f }); //Main Background Rect
-			Drawing::Text(xorstr_("Player Information"), { GUI::titleText }, { Cheat::CheatFeatures::guiX - 0.260f, 0.130f }, { 0.50f, 0.35f }, true);
-			Drawing::Rect(GUI::MainTitleRect, { Cheat::CheatFeatures::guiX - 0.266f, 0.146f }, { 0.32f, 0.023f });
+			Drawing::Rect(GUI::scroller, { Cheat::GUI::guiX - 0.266f, GUI::guiY + 0.01f }, { 0.32f, 0.31f }); //Main Background Rect
+			Drawing::Text(xorstr_("Player Information"), { GUI::titleText }, { Cheat::GUI::guiX - 0.260f, GUI::guiY - 0.170f }, { 0.50f, 0.35f }, true);
+			Drawing::Rect(GUI::MainTitleRect, { Cheat::GUI::guiX - 0.266f, GUI::guiY - 0.154f }, { 0.32f, 0.023f });
 		}
 
 		//Text Entry's
@@ -1495,4 +1495,60 @@ char* Cheat::GameFunctions::ReturnOnlinePlayerPictureString(Player PlayerHandle)
 		}
 	}
 	return "CHAR_DEFAULT";
+}
+
+
+
+
+bool Cheat::CheatFeatures::CursorGUINavigationEnabled = false;
+void Cheat::GameFunctions::CursorGUINavigationLoop()
+{
+	if (GetAsyncKeyState(GUI::GUINavigationKey) & 1)
+	{
+		EnableDisableCursorGUINavigation();
+	}
+
+	if (Cheat::CheatFeatures::CursorGUINavigationEnabled)
+	{
+		PLAYER::SET_PLAYER_CONTROL(PlayerID, false, 0);
+
+		POINT Point;
+		GetCursorPos(&Point);
+		HWND GameWindowHandle = FindWindowA(NULL, xorstr_("Grand Theft Auto V"));
+		if (!ScreenToClient(GameWindowHandle, &Point)) { Cheat::LogFunctions::DebugMessage(xorstr_("EnableDisableCursorGUINavigation() -> ScreenToClient Failed")); return; }
+
+		UI::_SHOW_CURSOR_THIS_FRAME();
+		UI::_SET_CURSOR_SPRITE(1);
+	
+		//Get Screen Coords
+		int ScreenCoordX, ScreenCoordY;
+		GRAPHICS::_GET_ACTIVE_SCREEN_RESOLUTION(&ScreenCoordX, &ScreenCoordY);
+
+		//RAGE Friendly Cursor Positions
+		float CursorPositionX = (float)Point.x / ScreenCoordX;
+		float CursorPositionY = (float)Point.y / ScreenCoordY;
+
+		if (GetAsyncKeyState(VK_LBUTTON) && Cheat::CheatFunctions::IsGameWindowFocussed()) //CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, INPUT_CURSOR_ACCEPT)
+		{
+			UI::_SET_CURSOR_SPRITE(4);
+			Cheat::GUI::guiX = CursorPositionX;
+			Cheat::GUI::guiY= CursorPositionY;
+		}
+	}
+}
+void Cheat::GameFunctions::EnableDisableCursorGUINavigation()
+{
+	if (GUI::menuLevel != 0)
+	{
+		if (Cheat::CheatFeatures::CursorGUINavigationEnabled)
+		{
+			Cheat::CheatFeatures::CursorGUINavigationEnabled = false;
+			PLAYER::SET_PLAYER_CONTROL(PlayerID, true, 0);
+		}
+		else
+		{
+			Cheat::CheatFeatures::CursorGUINavigationEnabled = true;
+			PLAYER::SET_PLAYER_CONTROL(PlayerID, false, 0);
+		}
+	}
 }

@@ -70,11 +70,11 @@ void Cheat::Main() {
 			Cheat::MenuOption("Troll Options >", allplayers_trolloptionsmenu);
 			if (Cheat::Option("Host Kick All Players", "Kick all players from session - Host only")) 
 			{
-				for (int i = 1; i <= 32; i++) {
+				for (int i = 1; i <= 32; i++) 
+				{
 					if (PlayerID != i) { NETWORK::NETWORK_SESSION_KICK_PLAYER(i); }
 				}
 			}
-			//Cheat::Toggle("Drop money on all players", Cheat::CheatFeatures::MoneyDropAllPlayersBool, "Drop money on all players");
 		}
 		break;
 		case allplayers_weaponoptionsmenu:
@@ -86,7 +86,7 @@ void Cheat::Main() {
 				{
 					if (PlayerID != i) 
 					{
-						Cheat::GameFunctions::notifyBottom(xorstr_("Giving all weapons to all players in session, one moment"), 2000);
+						Cheat::GameFunctions::SubtitleNotification(xorstr_("Giving all weapons to all players in session, one moment"), 2000);
 						Cheat::GameFunctions::GiveAllWeaponsToPlayer(PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(i));
 					}
 				}
@@ -4790,7 +4790,8 @@ void Cheat::Main() {
 			Cheat::StringVector("Toggles", { "Shop Box", "Circle" }, Cheat::CheatFeatures::BoolOptionVectorPosition, "Select Boolean Toggle");
 			Cheat::Int("Max Visible Menu Options", Cheat::GUI::maxVisOptions, 5, 16, 1);
 			Cheat::Toggle("Restore To Previous Submenu", Cheat::GUI::RestorePreviousSubmenu, "When opening restores previous submenu");
-			Cheat::Float("MenuX Position", Cheat::CheatFeatures::guiX, 0.11f, 0.86f, 0.01, true, "Changes GUI X-Axis Position");
+			Cheat::Float("X-Axis", Cheat::GUI::guiX, 0.11f, 0.86f, 0.01, true, "");
+			Cheat::Float("Y-Axis", Cheat::GUI::guiY, 0.10f, 0.90f, 0.01, true, "");
 			std::string OpenKeyString = "Open Key: ~c~" + Cheat::CheatFunctions::VirtualKeyCodeToString(Cheat::GUI::openKey);
 			if (Cheat::Option(OpenKeyString.c_str(), "Select to change"))
 			{
@@ -4798,6 +4799,14 @@ void Cheat::Main() {
 				while (!Cheat::CheatFunctions::ReturnPressedKey(PressedKey)) { Cheat::Drawing::Text("~bold~Press any key to set Open Key, press Escape to cancel", { 255, 255, 255, 255 }, { 0.525f, 0.400f }, { 0.900f, 0.900f }, true); WAIT(0, false); }
 				if (PressedKey == 27) { Cheat::GameFunctions::MinimapNotification("Canceled Setting Open Key"); break; }
 				if (PressedKey != 0) { Cheat::GUI::openKey = PressedKey; Cheat::GameFunctions::MinimapNotification("Open Key has been set"); }
+			}
+			std::string GUINavigationKeyString = "Cursor Navigation: ~c~" + Cheat::CheatFunctions::VirtualKeyCodeToString(Cheat::GUI::GUINavigationKey);
+			if (Cheat::Option(GUINavigationKeyString.c_str(), "Select to change"))
+			{
+				int PressedKey;
+				while (!Cheat::CheatFunctions::ReturnPressedKey(PressedKey)) { Cheat::Drawing::Text("~bold~Press any key to set Cursor Navigation Key, press Escape to cancel", { 255, 255, 255, 255 }, { 0.525f, 0.400f }, { 0.900f, 0.900f }, true); WAIT(0, false); }
+				if (PressedKey == 27) { Cheat::GameFunctions::MinimapNotification("Canceled Setting Cursor Navigation Key"); break; }
+				if (PressedKey != 0) { Cheat::GUI::GUINavigationKey = PressedKey; Cheat::GameFunctions::MinimapNotification("Cursor Navigation Key has been set"); }
 			}
 			Cheat::Int("Scroll Delay", Cheat::GUI::keyPressDelay2, 1, 200, 1);
 			Cheat::Int("Int Delay", Cheat::GUI::keyPressDelay3, 1, 200, 1);

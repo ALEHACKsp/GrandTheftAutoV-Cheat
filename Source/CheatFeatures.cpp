@@ -1,6 +1,5 @@
 #include "stdafx.h"
 
-float Cheat::CheatFeatures::guiX = 0.11f;
 int Cheat::CheatFeatures::BoolOptionVectorPosition = 0; //0: Shop Box. 1: Circle
 int Cheat::CheatFeatures::SpeedometerVectorPosition = 0;
 int Cheat::CheatFeatures::PlayerOpacityInt = 250;
@@ -52,6 +51,9 @@ void Cheat::CheatFeatures::Looped()
 
 	//New Session Member Notification Feature
 	Cheat::GameFunctions::CheckNewSessionMembersLoop();
+
+	//Cursor GUI Navigation Feature
+	Cheat::GameFunctions::CursorGUINavigationLoop();
 
 	//Speedometer
 	if (PED::IS_PED_IN_ANY_VEHICLE(PlayerPedID, 0)) 
@@ -163,7 +165,6 @@ void Cheat::CheatFeatures::Looped()
 	NoIdleKickBool ? NoIdleKick() : NULL;
 	BribeAuthoritiesBool ? BribeAuthorities() : NULL;
 	MoneyDropBool ? MoneyDrop() : NULL;
-	MoneyDropAllPlayersBool ? MoneyDropAllPlayers() : NULL;
 	MoneyGunBool ? MoneyGun() : NULL;
 	VehicleWeaponsBool ? VehicleWeapons() : NULL;
 	AirstrikeGunBool ? AirstrikeGun() : NULL;
@@ -175,6 +176,7 @@ void Cheat::CheatFeatures::Looped()
 	CartoonGunBool ? CartoonGun() : NULL;
 	EntityInformationGunBool ? EntityInformationGun() : NULL;
 }
+
 
 bool Cheat::CheatFeatures::GodmodeBool = false;
 void Cheat::CheatFeatures::Godmode(bool toggle)
@@ -808,7 +810,7 @@ void Cheat::CheatFeatures::SpectatePlayer(bool toggle)
 	{
 		NETWORK::NETWORK_SET_IN_SPECTATOR_MODE(PlayerPedID, PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(selectedPlayer));
 		std::string String = xorstr_("Spectating player '") + (std::string)PLAYER::GET_PLAYER_NAME(selectedPlayer) + xorstr_("'");
-		Cheat::GameFunctions::notifyBottom((char*)String.c_str(), 1);
+		Cheat::GameFunctions::SubtitleNotification((char*)String.c_str(), 1);
 	}
 	else
 	{
@@ -900,7 +902,7 @@ void Cheat::CheatFeatures::UnlimitedRocketBoost()
 		VEHICLE::_SET_VEHICLE_ROCKET_BOOST_PERCENTAGE(veh, 100.0f);
 
 		if (VEHICLE::_IS_VEHICLE_ROCKET_BOOST_ACTIVE(veh)) {
-			Cheat::GameFunctions::notifyBottom("~o~PRESS SPACEBAR TO STOP BOOST", 100);
+			Cheat::GameFunctions::SubtitleNotification("~o~PRESS SPACEBAR TO STOP BOOST", 100);
 			if (GetAsyncKeyState(VK_SPACE) && Cheat::CheatFunctions::IsGameWindowFocussed()) {
 				VEHICLE::_SET_VEHICLE_ROCKET_BOOST_ACTIVE(veh, false);
 			}
@@ -1191,27 +1193,6 @@ void Cheat::CheatFeatures::MoneyDrop()
 			STREAMING::SET_MODEL_AS_NO_LONGER_NEEDED(PolyBag);
 		}
 		MoneyDropDelayPreviousTick = GetTickCount64();
-	}
-}
-
-bool Cheat::CheatFeatures::MoneyDropAllPlayersBool = false;
-void Cheat::CheatFeatures::MoneyDropAllPlayers()
-{
-	for (int i = 1; i <= 32; i++) 
-	{
-		if (PlayerID != i && !PED::IS_PED_DEAD_OR_DYING(PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(i), 1)) {
-			Hash PolyBag = GAMEPLAY::GET_HASH_KEY(xorstr_("p_poly_bag_01_s"));
-
-			Vector3 pp = ENTITY::GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(i), 0.0, 0.0, 10.0);
-
-			STREAMING::REQUEST_MODEL(PolyBag);
-			while (!STREAMING::HAS_MODEL_LOADED(PolyBag)) WAIT(0);
-			if (STREAMING::HAS_MODEL_LOADED(PolyBag))
-			{
-				OBJECT::CREATE_AMBIENT_PICKUP(0xCE6FDD6B, pp.x, pp.y, pp.z, 0, 2500, PolyBag, false, true);
-				STREAMING::SET_MODEL_AS_NO_LONGER_NEEDED(PolyBag);
-			}
-		}
 	}
 }
 

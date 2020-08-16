@@ -16,9 +16,6 @@
     <ClCompile Include="CheatFunctions.cpp">
       <Filter>Source Files\Cheat Functions</Filter>
     </ClCompile>
-    <ClCompile Include="Hooking.cpp">
-      <Filter>Source Files\Game Hooking</Filter>
-    </ClCompile>
     <ClCompile Include="LogFunctions.cpp">
       <Filter>Source Files\Cheat Functions</Filter>
     </ClCompile>
@@ -33,6 +30,9 @@
     </ClCompile>
     <ClCompile Include="CheatFeatures.cpp">
       <Filter>Source Files\Game Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="GameHooking.cpp">
+      <Filter>Source Files\Game Hooking</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

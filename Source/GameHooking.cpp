@@ -7,27 +7,27 @@ ScriptThread*(*GetActiveThread)() = nullptr;
 HANDLE mainFiber;
 DWORD wakeAt;
 
-std::vector<LPVOID>		GameHooking::m_hooks;
-uint64_t*				GameHooking::m_frameCount;
-fpIsDLCPresent			GameHooking::is_DLC_present;
-TriggerScriptEvent		GameHooking::trigger_script_event;
-SessionWeather			GameHooking::session_weather;
-GetEventData	        GameHooking::get_event_data;
+std::vector<LPVOID>													GameHooking::m_hooks;
+uint64_t*															GameHooking::m_frameCount;
+fpIsDLCPresent														GameHooking::is_DLC_present;
+TriggerScriptEvent													GameHooking::trigger_script_event;
+SessionWeather														GameHooking::session_weather;
+GetEventData														GameHooking::get_event_data;
+clockTime*															GameHooking::ClockTime;
+fpSetSessionTime													GameHooking::set_session_time_info;
+fpGetLabelText														GameHooking::GetLabelText = nullptr;
+fpGetScriptHandlerIfNetworked										GameHooking::GetScriptHandlerIfNetworked = nullptr;
+fpGetScriptHandler													GameHooking::GetScriptHandler = nullptr;
 
-static eGameState* 											m_gameState;
-static uint64_t												m_worldPtr;
-static BlipList*											m_blipList;
-static GameHooking::NativeRegistrationNew**						m_registrationTable;
-static std::unordered_map<uint64_t, GameHooking::NativeHandler>	m_handlerCache;
-static std::vector<LPVOID>									m_hookedNative;
-static __int64**                                            m_globalPtr;
-clockTime*													GameHooking::ClockTime;
-fpSetSessionTime											GameHooking::set_session_time_info;
+static eGameState* 													m_gameState;
+static uint64_t														m_worldPtr;
+static BlipList*													m_blipList;
+static GameHooking::NativeRegistrationNew**							m_registrationTable;
+static std::unordered_map<uint64_t, GameHooking::NativeHandler>		m_handlerCache;
+static std::vector<LPVOID>											m_hookedNative;
+static __int64**													m_globalPtr;
 
-fpGetLabelText GameHooking::GetLabelText = nullptr;
-fpGetScriptHandlerIfNetworked GameHooking::GetScriptHandlerIfNetworked = nullptr;
-fpGetScriptHandler GameHooking::GetScriptHandler = nullptr;
-const int EVENT_COUNT = 83;
+const int EVENT_COUNT = 85;
 static std::vector<void*> EventPtr;
 static char EventRestore[EVENT_COUNT] = {};
 
@@ -375,14 +375,14 @@ void	setFn
 void GameHooking::DoGameHooking()
 {
 	Cheat::LogFunctions::Message(xorstr_("Hooking Game Functions & Creating Main Fiber"));
-	auto p_activeThread = pattern("E8 ? ? ? ? 48 8B 88 10 01 00 00");
-	auto p_blipList = pattern("4C 8D 05 ? ? ? ? 0F B7 C1");
+	auto p_activeThread		= pattern("E8 ? ? ? ? 48 8B 88 10 01 00 00");
+	auto p_blipList			= pattern("4C 8D 05 ? ? ? ? 0F B7 C1");
 	auto p_fixVector3Result = pattern("83 79 18 00 48 8B D1 74 4A FF 4A 18");
-	auto p_gameState = pattern("83 3D ? ? ? ? ? 8A D9 74 0A");
-	auto p_nativeTable = pattern("76 32 48 8B 53 40 48 8D 0D");
-	auto p_worldPtr = pattern("48 8B 05 ? ? ? ? 45 ? ? ? ? 48 8B 48 08 48 85 C9 74 07");
-	auto p_globalPtr = pattern("4C 8D 05 ? ? ? ? 4D 8B 08 4D 85 C9 74 11");
-	auto p_eventHook = pattern("48 83 EC 28 E8 ? ? ? ? 48 8B 0D ? ? ? ? 4C 8D 0D ? ? ? ? 4C 8D 05 ? ? ? ? BA 03");
+	auto p_gameState		= pattern("83 3D ? ? ? ? ? 8A D9 74 0A");
+	auto p_nativeTable		= pattern("76 32 48 8B 53 40 48 8D 0D");
+	auto p_worldPtr			= pattern("48 8B 05 ? ? ? ? 45 ? ? ? ? 48 8B 48 08 48 85 C9 74 07");
+	auto p_globalPtr		= pattern("4C 8D 05 ? ? ? ? 4D 8B 08 4D 85 C9 74 11");
+	auto p_eventHook		= pattern("48 83 EC 28 E8 ? ? ? ? 48 8B 0D ? ? ? ? 4C 8D 0D ? ? ? ? 4C 8D 05 ? ? ? ? BA 03");
 
 	GameHooking::GetLabelText					= static_cast<fpGetLabelText>(Memory::pattern("48 89 5C 24 ? 57 48 83 EC 20 48 8B DA 48 8B F9 48 85 D2 75 44 E8").count(1).get(0).get<void>(0));
 	GameHooking::GetScriptHandlerIfNetworked	= static_cast<fpGetScriptHandlerIfNetworked>(Memory::pattern("40 53 48 83 EC 20 E8 ? ? ? ? 48 8B D8 48 85 C0 74 12 48 8B 10 48 8B C8").count(1).get(0).get<void>(0));
@@ -431,7 +431,7 @@ void GameHooking::DoGameHooking()
 	m_globalPtr = (__int64**)(patternAddr + *(int*)(patternAddr + 3) + 7);
 
 
-	//Get Event Hook
+	//Get Event Hook -> Used by defuseEvent
 	if ((c_location = p_eventHook.count(1).get(0).get<char>(0)))
 	{
 		int i = 0, j = 0, matches = 0, found = 0;
@@ -459,19 +459,6 @@ void GameHooking::DoGameHooking()
 	//Initialize Natives
 	CrossMapping::initNativeMap();
 
-	bool WaitingGameLoadLogPrinted = false;
-	while (*m_gameState != GameStatePlaying) 
-	{
-		if (!WaitingGameLoadLogPrinted) 
-		{
-			Cheat::LogFunctions::Message(xorstr_("Waiting until the game has finished loading"));
-			WaitingGameLoadLogPrinted = true;
-		}
-		Sleep(200);
-	}
-	
-	Cheat::LogFunctions::Message(xorstr_("Game Completed Loading"));
-
 	//Initialize MinHook
 	if (MH_Initialize() != MH_OK) { Cheat::LogFunctions::Error(xorstr_("Failed to initialize MinHook")); std::exit(EXIT_SUCCESS); }
 
@@ -488,6 +475,20 @@ void GameHooking::DoGameHooking()
 	status = MH_CreateHook(GameHooking::GetLabelText, hkGetLabelText, (void**)&ogGetLabelText);
 	if (status != MH_OK || MH_EnableHook(GameHooking::GetLabelText) != MH_OK)																	{ Cheat::LogFunctions::Error(xorstr_("Failed to hook GET_LABEL_TEXT"));  std::exit(EXIT_SUCCESS); }
 	GameHooking::m_hooks.push_back(GameHooking::GetLabelText);
+
+
+	bool WaitingGameLoadLogPrinted = false;
+	while (*m_gameState != GameStatePlaying)
+	{
+		if (!WaitingGameLoadLogPrinted)
+		{
+			Cheat::LogFunctions::Message(xorstr_("Waiting until the game has finished loading"));
+			WaitingGameLoadLogPrinted = true;
+		}
+		Sleep(100);
+	}
+
+	Cheat::LogFunctions::Message(xorstr_("Game Completed Loading"));
 }
 
 static GameHooking::NativeHandler _Handler(uint64_t origHash)
@@ -534,7 +535,7 @@ void WAIT(DWORD ms, bool ShowMessage)
 	SwitchToFiber(mainFiber);
 }
 
-void GameHooking::defuseEvent(RockstarEvent e, bool toggle)
+void GameHooking::defuseEvent(GameEvents e, bool toggle)
 {
 	static const unsigned char retn = 0xC3;
 	char* p = (char*)EventPtr[e];

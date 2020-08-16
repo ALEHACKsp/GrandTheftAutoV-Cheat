@@ -97,7 +97,7 @@
     <ClCompile Include="CheatFeatures.cpp" />
     <ClCompile Include="GameArrays.cpp" />
     <ClCompile Include="GameFunctions.cpp" />
-    <ClCompile Include="Hooking.cpp" />
+    <ClCompile Include="GameHooking.cpp" />
     <ClCompile Include="LogFunctions.cpp" />
     <ClCompile Include="Memory.cpp" />
     <ClCompile Include="GUI.cpp" />

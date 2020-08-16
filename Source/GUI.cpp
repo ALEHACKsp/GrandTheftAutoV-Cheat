@@ -3052,7 +3052,7 @@ bool Cheat::MenuOption(const char * option, SubMenus newSub)
 	{
 		if (GUI::selectPressed) 
 		{
-			MenuLevelHandler::MoveMenu(newSub);
+			GUI::MoveMenu(newSub);
 			return true;
 		}
 	}
@@ -3077,7 +3077,7 @@ bool Cheat::MenuOptionPlayerList(const char* option, SubMenus newSub, Player Pla
 	{
 		if (GUI::selectPressed) 
 		{
-			MenuLevelHandler::MoveMenu(newSub);
+			GUI::MoveMenu(newSub);
 			return true;
 		}
 	}
@@ -3434,18 +3434,18 @@ void PlaySoundFrontend_default(char* sound_name)
 	AUDIO::PLAY_SOUND_FRONTEND(-1, sound_name, xorstr_("HUD_FRONTEND_DEFAULT_SOUNDSET"), 0);
 }
 
-int Cheat::GUI::keyPressDelay = 200;
-int Cheat::GUI::keyPressPreviousTick = GetTickCount();
-int Cheat::GUI::keyPressDelay2 = 100;
-int Cheat::GUI::keyPressPreviousTick2 = GetTickCount();
-int Cheat::GUI::keyPressDelay3 = 140;
-int Cheat::GUI::keyPressPreviousTick3 = GetTickCount();
-int Cheat::GUI::openKey = VK_F4;
-int Cheat::GUI::GUINavigationKey = VK_F5;
-bool Cheat::GUI::ControllerInput = true;
+int Cheat::GUI::keyPressDelay			= 200;
+int Cheat::GUI::keyPressPreviousTick	= GetTickCount64();
+int Cheat::GUI::keyPressDelay2			= 100;
+int Cheat::GUI::keyPressPreviousTick2	= GetTickCount64();
+int Cheat::GUI::keyPressDelay3			= 140;
+int Cheat::GUI::keyPressPreviousTick3	= GetTickCount64();
+int Cheat::GUI::openKey					= VK_F4;
+int Cheat::GUI::GUINavigationKey		= VK_F5;
+bool Cheat::GUI::ControllerInput		= true;
 bool Cheat::GUI::RestorePreviousSubmenu = true;
 
-void Cheat::Checks::Controls()
+void Cheat::GUI::ControlsLoop()
 {
 	GUI::selectPressed = false;
 	GUI::leftPressed = false;
@@ -3458,51 +3458,65 @@ void Cheat::Checks::Controls()
 			{								
 				if (GUI::menuLevel == 0)
 				{
-					if (GUI::PreviousMenu != NOMENU && Cheat::GUI::RestorePreviousSubmenu) { MenuLevelHandler::MoveMenu(GUI::PreviousMenu); GUI::menuLevel = GUI::PreviousMenuLevel; GUI::currentOption = GUI::previousOption; }
-					else { MenuLevelHandler::MoveMenu(SubMenus::MainMenu);  }
+					if (GUI::PreviousMenu != NOMENU && Cheat::GUI::RestorePreviousSubmenu) 
+					{ 
+						GUI::MoveMenu(GUI::PreviousMenu);
+						GUI::menuLevel = GUI::PreviousMenuLevel; 
+						GUI::currentOption = GUI::previousOption; 
+					}
+					else 
+					{ 
+						GUI::MoveMenu(SubMenus::MainMenu);  
+					}
 				}
 				else
 				{
-					MenuLevelHandler::CloseGUI();
+					GUI::CloseGUI();
 				}
 		
 				PlaySoundFrontend_default("SELECT");
 				GUI::keyPressPreviousTick = GetTickCount64();
 			}
-			else if (GetAsyncKeyState(VK_NUMPAD0) & 1 && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendCancel) && GUI::ControllerInput) {
-				if (GUI::menuLevel > 0) { MenuLevelHandler::BackMenu(); PlaySoundFrontend_default("BACK"); }
+			else if (GetAsyncKeyState(VK_NUMPAD0) & 1 && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendCancel) && GUI::ControllerInput) 
+			{
+				if (GUI::menuLevel > 0) { GUI::BackMenu(); PlaySoundFrontend_default("BACK"); }
 
 				GUI::keyPressPreviousTick = GetTickCount64();
 			}
-			else if (GetAsyncKeyState(VK_NUMPAD8) & 1 && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendUp) && GUI::ControllerInput) {
+			else if (GetAsyncKeyState(VK_NUMPAD8) & 1 && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendUp) && GUI::ControllerInput) 
+			{
 				GUI::currentOption > 1 ? GUI::currentOption-- : GUI::currentOption = GUI::optionCount;
 				if (GUI::menuLevel > 0)
 					PlaySoundFrontend_default("NAV_UP_DOWN");
 
 				GUI::keyPressPreviousTick2 = GetTickCount64();
 			}
-			else if (GetAsyncKeyState(VK_NUMPAD2) & 1 && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendDown) && GUI::ControllerInput) {
+			else if (GetAsyncKeyState(VK_NUMPAD2) & 1 && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendDown) && GUI::ControllerInput) 
+			{
 				GUI::currentOption < GUI::optionCount ? GUI::currentOption++ : GUI::currentOption = 1;
 				if (GUI::menuLevel > 0)
 					PlaySoundFrontend_default("NAV_UP_DOWN");
 
 				GUI::keyPressPreviousTick2 = GetTickCount64();
 			}
-			else if (GetAsyncKeyState(VK_NUMPAD6) & 1 && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlPhoneRight) && GUI::ControllerInput) {
+			else if (GetAsyncKeyState(VK_NUMPAD6) & 1 && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlPhoneRight) && GUI::ControllerInput) 
+			{
 				GUI::leftPressed = true;
 				if (GUI::menuLevel > 0)
 					PlaySoundFrontend_default("NAV_UP_DOWN");
 
 				GUI::keyPressPreviousTick3 = GetTickCount64();
 			}
-			else if (GetAsyncKeyState(VK_NUMPAD4) & 1 && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlPhoneLeft) && GUI::ControllerInput) {
+			else if (GetAsyncKeyState(VK_NUMPAD4) & 1 && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlPhoneLeft) && GUI::ControllerInput) 
+			{
 				GUI::rightPressed = true;
 				if (GUI::menuLevel > 0)
 					PlaySoundFrontend_default("NAV_UP_DOWN");
 
 				GUI::keyPressPreviousTick3 = GetTickCount64();
 			}
-			else if (GetAsyncKeyState(VK_NUMPAD5) & 1 && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept) && GUI::ControllerInput) {
+			else if (GetAsyncKeyState(VK_NUMPAD5) & 1 && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept) && GUI::ControllerInput) 
+			{
 				GUI::selectPressed = true;
 				if (GUI::menuLevel > 0)
 					PlaySoundFrontend_default("SELECT");
@@ -3515,7 +3529,7 @@ void Cheat::Checks::Controls()
 	GUI::optionCount = 0;
 	GUI::optionCountMenuBottom = 0;
 }
-void Cheat::MenuLevelHandler::MoveMenu(SubMenus menu)
+void Cheat::GUI::MoveMenu(SubMenus menu)
 {
 	GUI::menusArray[GUI::menuLevel] = GUI::currentMenu;
 	GUI::optionsArray[GUI::menuLevel] = GUI::currentOption;
@@ -3524,7 +3538,7 @@ void Cheat::MenuLevelHandler::MoveMenu(SubMenus menu)
 	GUI::currentOption = 1;
 }
 
-void Cheat::MenuLevelHandler::CloseGUI()
+void Cheat::GUI::CloseGUI()
 {
 	GUI::PreviousMenu = Cheat::GUI::currentMenu;
 	GUI::PreviousMenuLevel = GUI::menuLevel;
@@ -3534,7 +3548,7 @@ void Cheat::MenuLevelHandler::CloseGUI()
 	GUI::currentOption = GUI::optionsArray[GUI::menuLevel];
 }
 
-void Cheat::MenuLevelHandler::BackMenu()
+void Cheat::GUI::BackMenu()
 {
 	GUI::PreviousMenu = GUI::currentMenu;
 	GUI::PreviousMenuLevel = GUI::menuLevel;

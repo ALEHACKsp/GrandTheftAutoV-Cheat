@@ -15,13 +15,13 @@ typedef void(__cdecl* fpSetSessionTime)(int, int);
 class GameHooking
 {
 public:
-	static std::vector<LPVOID>		m_hooks;
-	static uint64_t*				m_frameCount;
-	static fpIsDLCPresent			is_DLC_present;
-	static TriggerScriptEvent		trigger_script_event;
-	static SessionWeather			session_weather;
-	static fpFileRegister           m_fileregister;
-	static GetEventData	            get_event_data;
+	static std::vector<LPVOID>				m_hooks;
+	static uint64_t*						m_frameCount;
+	static fpIsDLCPresent					is_DLC_present;
+	static TriggerScriptEvent				trigger_script_event;
+	static SessionWeather					session_weather;
+	static fpFileRegister					m_fileregister;
+	static GetEventData						get_event_data;
 	static fpGetScriptHandlerIfNetworked	GetScriptHandlerIfNetworked;
 	static fpGetScriptHandler				GetScriptHandler;
 	static fpGetLabelText					GetLabelText;
@@ -32,7 +32,7 @@ public:
 	static uint64_t getWorldPtr();
 	static void onTickInit();
 	static __int64** getGlobalPtr();
-	static void defuseEvent(RockstarEvent e, bool toggle);
+	static void defuseEvent(GameEvents e, bool toggle);
 	typedef void(__cdecl * NativeHandler)(scrNativeCallContext * context);
 	struct NativeRegistrationNew
 	{

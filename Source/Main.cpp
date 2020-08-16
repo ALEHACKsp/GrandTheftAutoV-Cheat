@@ -45,7 +45,7 @@ void Cheat::Main() {
 	Cheat::CheatFunctions::PostInitCheat();
 	while (true) 
 	{
-		Cheat::Checks::Controls();
+		Cheat::GUI::ControlsLoop();
 		Cheat::CheatFunctions::CheatThreadLoopFunctions();
 
 		switch (Cheat::GUI::currentMenu) {

@@ -106,6 +106,7 @@ namespace Cheat
 	}
 	namespace GUI 
 	{
+		extern void ControlsLoop();
 		extern float guiX;
 		extern float guiY;
 		extern char* ThemeFilesArray[1000];
@@ -167,16 +168,9 @@ namespace Cheat
 		extern int leftpress;
 		extern int rightpress;
 		extern void DeleteCurrentTheme();
-	}
-	namespace MenuLevelHandler 
-	{
 		void MoveMenu(SubMenus menu);
 		void BackMenu();
 		void CloseGUI();
-	}
-	namespace Checks 
-	{
-		void Controls();
 	}
 	namespace CheatFeatures 
 	{

@@ -1410,10 +1410,10 @@ void Cheat::GameFunctions::InstructionsEnd()
 }
 
 void Cheat::GameFunctions::SetSessionTime(int h, int m, int s) {
-	Hooking::ClockTime->hour = h;
-	Hooking::ClockTime->minute = h;
-	Hooking::ClockTime->second = s;
-	Hooking::set_session_time_info(4, 0);
+	GameHooking::ClockTime->hour = h;
+	GameHooking::ClockTime->minute = h;
+	GameHooking::ClockTime->second = s;
+	GameHooking::set_session_time_info(4, 0);
 }
 
 

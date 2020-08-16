@@ -57,7 +57,7 @@ private:
 
 public:
 	globalHandle(int index)
-		: _handle(&Hooking::getGlobalPtr()[index >> 18 & 0x3F][index & 0x3FFFF])
+		: _handle(&GameHooking::getGlobalPtr()[index >> 18 & 0x3F][index & 0x3FFFF])
 	{ }
 
 	globalHandle(void* p)

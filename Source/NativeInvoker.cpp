@@ -17,7 +17,7 @@ void nativePush64(UINT64 value)
 
 uint64_t * nativeCall() 
 {
-	auto fn = Hooking::GetNativeHandler(g_hash);
+	auto fn = GameHooking::GetNativeHandler(g_hash);
 	if (fn != 0) 
 	{
 		static void* exceptionAddress;

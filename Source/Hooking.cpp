@@ -7,26 +7,26 @@ ScriptThread*(*GetActiveThread)() = nullptr;
 HANDLE mainFiber;
 DWORD wakeAt;
 
-std::vector<LPVOID>		Hooking::m_hooks;
-uint64_t*				Hooking::m_frameCount;
-fpIsDLCPresent			Hooking::is_DLC_present;
-TriggerScriptEvent		Hooking::trigger_script_event;
-SessionWeather			Hooking::session_weather;
-GetEventData	        Hooking::get_event_data;
+std::vector<LPVOID>		GameHooking::m_hooks;
+uint64_t*				GameHooking::m_frameCount;
+fpIsDLCPresent			GameHooking::is_DLC_present;
+TriggerScriptEvent		GameHooking::trigger_script_event;
+SessionWeather			GameHooking::session_weather;
+GetEventData	        GameHooking::get_event_data;
 
 static eGameState* 											m_gameState;
 static uint64_t												m_worldPtr;
 static BlipList*											m_blipList;
-static Hooking::NativeRegistrationNew**						m_registrationTable;
-static std::unordered_map<uint64_t, Hooking::NativeHandler>	m_handlerCache;
+static GameHooking::NativeRegistrationNew**						m_registrationTable;
+static std::unordered_map<uint64_t, GameHooking::NativeHandler>	m_handlerCache;
 static std::vector<LPVOID>									m_hookedNative;
 static __int64**                                            m_globalPtr;
-clockTime*													Hooking::ClockTime;
-fpSetSessionTime											Hooking::set_session_time_info;
+clockTime*													GameHooking::ClockTime;
+fpSetSessionTime											GameHooking::set_session_time_info;
 
-fpGetLabelText Hooking::GetLabelText = nullptr;
-fpGetScriptHandlerIfNetworked Hooking::GetScriptHandlerIfNetworked = nullptr;
-fpGetScriptHandler Hooking::GetScriptHandler = nullptr;
+fpGetLabelText GameHooking::GetLabelText = nullptr;
+fpGetScriptHandlerIfNetworked GameHooking::GetScriptHandlerIfNetworked = nullptr;
+fpGetScriptHandler GameHooking::GetScriptHandler = nullptr;
 const int EVENT_COUNT = 83;
 static std::vector<void*> EventPtr;
 static char EventRestore[EVENT_COUNT] = {};
@@ -64,11 +64,11 @@ fpIsDLCPresent OG_IS_DLC_PRESENT = nullptr;
 bool HK_IS_DLC_PRESENT(std::uint32_t dlcHash)
 {
 	static uint64_t	last = 0;
-	uint64_t cur = *Hooking::m_frameCount;
+	uint64_t cur = *GameHooking::m_frameCount;
 	if (last != cur)
 	{
 		last = cur;
-		Hooking::onTickInit();
+		GameHooking::onTickInit();
 	}
 	return OG_IS_DLC_PRESENT(dlcHash);
 }
@@ -76,7 +76,7 @@ bool HK_IS_DLC_PRESENT(std::uint32_t dlcHash)
 fpGetScriptHandlerIfNetworked ogGetScriptHandlerIfNetworked = nullptr;
 void* hkGetScriptHandlerIfNetworked()
 {
-	return Hooking::GetScriptHandler();
+	return GameHooking::GetScriptHandler();
 }
 
 fpGetLabelText ogGetLabelText = nullptr;
@@ -148,7 +148,7 @@ void __stdcall ScriptFunction(LPVOID lpParameter)
 }
 
 
-void Hooking::onTickInit()
+void GameHooking::onTickInit()
 {
 	if (mainFiber == nullptr)
 	{
@@ -372,7 +372,7 @@ void	setFn
 }
 
 
-void Hooking::DoGameHooking()
+void GameHooking::DoGameHooking()
 {
 	Cheat::LogFunctions::Message(xorstr_("Hooking Game Functions & Creating Main Fiber"));
 	auto p_activeThread = pattern("E8 ? ? ? ? 48 8B 88 10 01 00 00");
@@ -384,18 +384,18 @@ void Hooking::DoGameHooking()
 	auto p_globalPtr = pattern("4C 8D 05 ? ? ? ? 4D 8B 08 4D 85 C9 74 11");
 	auto p_eventHook = pattern("48 83 EC 28 E8 ? ? ? ? 48 8B 0D ? ? ? ? 4C 8D 0D ? ? ? ? 4C 8D 05 ? ? ? ? BA 03");
 
-	Hooking::GetLabelText					= static_cast<fpGetLabelText>(Memory::pattern("48 89 5C 24 ? 57 48 83 EC 20 48 8B DA 48 8B F9 48 85 D2 75 44 E8").count(1).get(0).get<void>(0));
-	Hooking::GetScriptHandlerIfNetworked	= static_cast<fpGetScriptHandlerIfNetworked>(Memory::pattern("40 53 48 83 EC 20 E8 ? ? ? ? 48 8B D8 48 85 C0 74 12 48 8B 10 48 8B C8").count(1).get(0).get<void>(0));
-	Hooking::GetScriptHandler				= static_cast<fpGetScriptHandler>(Memory::pattern("48 83 EC 28 E8 ? ? ? ? 33 C9 48 85 C0 74 0C E8 ? ? ? ? 48 8B 88 ? ? ? ?").count(1).get(0).get<void>(0));
+	GameHooking::GetLabelText					= static_cast<fpGetLabelText>(Memory::pattern("48 89 5C 24 ? 57 48 83 EC 20 48 8B DA 48 8B F9 48 85 D2 75 44 E8").count(1).get(0).get<void>(0));
+	GameHooking::GetScriptHandlerIfNetworked	= static_cast<fpGetScriptHandlerIfNetworked>(Memory::pattern("40 53 48 83 EC 20 E8 ? ? ? ? 48 8B D8 48 85 C0 74 12 48 8B 10 48 8B C8").count(1).get(0).get<void>(0));
+	GameHooking::GetScriptHandler				= static_cast<fpGetScriptHandler>(Memory::pattern("48 83 EC 28 E8 ? ? ? ? 33 C9 48 85 C0 74 0C E8 ? ? ? ? 48 8B 88 ? ? ? ?").count(1).get(0).get<void>(0));
 	
 	//Set Pattern
-	setPat<uint64_t>(xorstr_("frame count"), xorstr_("\x8B\x15\x00\x00\x00\x00\x41\xFF\xCF"), xorstr_("xx????xxx"), &Hooking::m_frameCount, true, 2); 
-	setFn<fpIsDLCPresent>(xorstr_("is_DLC_present"), xorstr_("\x48\x89\x5C\x24\x00\x57\x48\x83\xEC\x20\x81\xF9\x00\x00\x00\x00"), xorstr_("xxxx?xxxxxxx????"), &Hooking::is_DLC_present);
-	setFn<TriggerScriptEvent>(xorstr_("trigger_script_event"), xorstr_("\x48\x8B\xC4\x48\x89\x58\x08\x48\x89\x68\x10\x48\x89\x70\x18\x48\x89\x78\x20\x41\x56\x48\x81\xEC\x00\x00\x00\x00\x45\x8B\xF0\x41\x8B\xF9"), xorstr_("xxxxxxxxxxxxxxxxxxxxxxxx????xxxxxx"), &Hooking::trigger_script_event);
-	setFn<SessionWeather>(xorstr_("session_weather"), xorstr_("\x48\x89\x5C\x24\x00\x48\x89\x6C\x24\x00\x48\x89\x74\x24\x00\x57\x48\x83\xEC\x30\x40\x8A\xE9"), xorstr_("xxxx?xxxx?xxxx?xxxxxxxx"), &Hooking::session_weather);
-	setFn<GetEventData>(xorstr_("get_event_data"), xorstr_("\x48\x89\x5C\x24\x00\x57\x48\x83\xEC\x20\x49\x8B\xF8\x4C\x8D\x05\x00\x00\x00\x00\x41\x8B\xD9\xE8\x00\x00\x00\x00\x48\x85\xC0\x74\x14\x4C\x8B\x10\x44\x8B\xC3\x48\x8B\xD7\x41\xC1\xE0\x03\x48\x8B\xC8\x41\xFF\x52\x30\x48\x8B\x5C\x24\x00"), xorstr_("xxxx?xxxxxxxxxxx????xxxx????xxxxxxxxxxxxxxxxxxxxxxxxxxxxx?"), &Hooking::get_event_data);
-	setPat<clockTime>(xorstr_("clock_time"), xorstr_("\x48\x8D\x0D\x00\x00\x00\x00\x8B\xFA\xE8\x00\x00\x00\x00\x44\x8D\x0C\x5B"), xorstr_("xxx????xxx????xxxx"), &Hooking::ClockTime, true, 3);
-	setFn<fpSetSessionTime>(xorstr_("session_time_set"), xorstr_("\x48\x89\x5C\x24\x08\x57\x48\x83\xEC\x20\x8B\xF9\x48\x8B\x0D\x00\x00\x00\x00\x48\x8B\xDA\x33\xD2\xE9\x00\x00\x00\x00"), xorstr_("xxxxxxxxxxxxxxx????xxxxxx????"), &Hooking::set_session_time_info);
+	setPat<uint64_t>(xorstr_("frame count"), xorstr_("\x8B\x15\x00\x00\x00\x00\x41\xFF\xCF"), xorstr_("xx????xxx"), &GameHooking::m_frameCount, true, 2); 
+	setFn<fpIsDLCPresent>(xorstr_("is_DLC_present"), xorstr_("\x48\x89\x5C\x24\x00\x57\x48\x83\xEC\x20\x81\xF9\x00\x00\x00\x00"), xorstr_("xxxx?xxxxxxx????"), &GameHooking::is_DLC_present);
+	setFn<TriggerScriptEvent>(xorstr_("trigger_script_event"), xorstr_("\x48\x8B\xC4\x48\x89\x58\x08\x48\x89\x68\x10\x48\x89\x70\x18\x48\x89\x78\x20\x41\x56\x48\x81\xEC\x00\x00\x00\x00\x45\x8B\xF0\x41\x8B\xF9"), xorstr_("xxxxxxxxxxxxxxxxxxxxxxxx????xxxxxx"), &GameHooking::trigger_script_event);
+	setFn<SessionWeather>(xorstr_("session_weather"), xorstr_("\x48\x89\x5C\x24\x00\x48\x89\x6C\x24\x00\x48\x89\x74\x24\x00\x57\x48\x83\xEC\x30\x40\x8A\xE9"), xorstr_("xxxx?xxxx?xxxx?xxxxxxxx"), &GameHooking::session_weather);
+	setFn<GetEventData>(xorstr_("get_event_data"), xorstr_("\x48\x89\x5C\x24\x00\x57\x48\x83\xEC\x20\x49\x8B\xF8\x4C\x8D\x05\x00\x00\x00\x00\x41\x8B\xD9\xE8\x00\x00\x00\x00\x48\x85\xC0\x74\x14\x4C\x8B\x10\x44\x8B\xC3\x48\x8B\xD7\x41\xC1\xE0\x03\x48\x8B\xC8\x41\xFF\x52\x30\x48\x8B\x5C\x24\x00"), xorstr_("xxxx?xxxxxxxxxxx????xxxx????xxxxxxxxxxxxxxxxxxxxxxxxxxxxx?"), &GameHooking::get_event_data);
+	setPat<clockTime>(xorstr_("clock_time"), xorstr_("\x48\x8D\x0D\x00\x00\x00\x00\x8B\xFA\xE8\x00\x00\x00\x00\x44\x8D\x0C\x5B"), xorstr_("xxx????xxx????xxxx"), &GameHooking::ClockTime, true, 3);
+	setFn<fpSetSessionTime>(xorstr_("session_time_set"), xorstr_("\x48\x89\x5C\x24\x08\x57\x48\x83\xEC\x20\x8B\xF9\x48\x8B\x0D\x00\x00\x00\x00\x48\x8B\xDA\x33\xD2\xE9\x00\x00\x00\x00"), xorstr_("xxxxxxxxxxxxxxx????xxxxxx????"), &GameHooking::set_session_time_info);
 	
 
 	//Hook GameState
@@ -476,21 +476,21 @@ void Hooking::DoGameHooking()
 	if (MH_Initialize() != MH_OK) { Cheat::LogFunctions::Error(xorstr_("Failed to initialize MinHook")); std::exit(EXIT_SUCCESS); }
 
 	//Hook Game Functions
-	auto status = MH_CreateHook(Hooking::is_DLC_present, HK_IS_DLC_PRESENT, (void**)&OG_IS_DLC_PRESENT);
-	if ((status != MH_OK && status != MH_ERROR_ALREADY_CREATED) || MH_EnableHook(Hooking::is_DLC_present) != MH_OK) { Cheat::LogFunctions::Error(xorstr_("Failed to hook IS_DLC_PRESENT"));  std::exit(EXIT_SUCCESS); }
-	Hooking::m_hooks.push_back(Hooking::is_DLC_present);
-	status = MH_CreateHook(Hooking::get_event_data, GetEventDataFunc, &m_OriginalGetEventData);
-	if ((status != MH_OK && status != MH_ERROR_ALREADY_CREATED) || MH_EnableHook(Hooking::get_event_data) != MH_OK)							{ Cheat::LogFunctions::Error(xorstr_("Failed to hook GET_EVENT_DATA"));  std::exit(EXIT_SUCCESS); }
-	Hooking::m_hooks.push_back(Hooking::get_event_data);
-	status = MH_CreateHook(Hooking::GetScriptHandlerIfNetworked, hkGetScriptHandlerIfNetworked, (void**)&ogGetScriptHandlerIfNetworked);
-	if (status != MH_OK || MH_EnableHook(Hooking::GetScriptHandlerIfNetworked) != MH_OK)													{ Cheat::LogFunctions::Error(xorstr_("Failed to hook GET_SCRIPT_HANDLER_IF_NETWORKED"));  std::exit(EXIT_SUCCESS); }
-	Hooking::m_hooks.push_back(Hooking::GetScriptHandlerIfNetworked);
-	status = MH_CreateHook(Hooking::GetLabelText, hkGetLabelText, (void**)&ogGetLabelText);
-	if (status != MH_OK || MH_EnableHook(Hooking::GetLabelText) != MH_OK)																	{ Cheat::LogFunctions::Error(xorstr_("Failed to hook GET_LABEL_TEXT"));  std::exit(EXIT_SUCCESS); }
-	Hooking::m_hooks.push_back(Hooking::GetLabelText);
+	auto status = MH_CreateHook(GameHooking::is_DLC_present, HK_IS_DLC_PRESENT, (void**)&OG_IS_DLC_PRESENT);
+	if ((status != MH_OK && status != MH_ERROR_ALREADY_CREATED) || MH_EnableHook(GameHooking::is_DLC_present) != MH_OK) { Cheat::LogFunctions::Error(xorstr_("Failed to hook IS_DLC_PRESENT"));  std::exit(EXIT_SUCCESS); }
+	GameHooking::m_hooks.push_back(GameHooking::is_DLC_present);
+	status = MH_CreateHook(GameHooking::get_event_data, GetEventDataFunc, &m_OriginalGetEventData);
+	if ((status != MH_OK && status != MH_ERROR_ALREADY_CREATED) || MH_EnableHook(GameHooking::get_event_data) != MH_OK)							{ Cheat::LogFunctions::Error(xorstr_("Failed to hook GET_EVENT_DATA"));  std::exit(EXIT_SUCCESS); }
+	GameHooking::m_hooks.push_back(GameHooking::get_event_data);
+	status = MH_CreateHook(GameHooking::GetScriptHandlerIfNetworked, hkGetScriptHandlerIfNetworked, (void**)&ogGetScriptHandlerIfNetworked);
+	if (status != MH_OK || MH_EnableHook(GameHooking::GetScriptHandlerIfNetworked) != MH_OK)													{ Cheat::LogFunctions::Error(xorstr_("Failed to hook GET_SCRIPT_HANDLER_IF_NETWORKED"));  std::exit(EXIT_SUCCESS); }
+	GameHooking::m_hooks.push_back(GameHooking::GetScriptHandlerIfNetworked);
+	status = MH_CreateHook(GameHooking::GetLabelText, hkGetLabelText, (void**)&ogGetLabelText);
+	if (status != MH_OK || MH_EnableHook(GameHooking::GetLabelText) != MH_OK)																	{ Cheat::LogFunctions::Error(xorstr_("Failed to hook GET_LABEL_TEXT"));  std::exit(EXIT_SUCCESS); }
+	GameHooking::m_hooks.push_back(GameHooking::GetLabelText);
 }
 
-static Hooking::NativeHandler _Handler(uint64_t origHash)
+static GameHooking::NativeHandler _Handler(uint64_t origHash)
 {
 	uint64_t newHash = CrossMapping::MapNative(origHash);
 	if (newHash == 0)
@@ -498,7 +498,7 @@ static Hooking::NativeHandler _Handler(uint64_t origHash)
 		return nullptr;
 	}
 
-	Hooking::NativeRegistrationNew * table = m_registrationTable[newHash & 0xFF];
+	GameHooking::NativeRegistrationNew * table = m_registrationTable[newHash & 0xFF];
 
 	for (; table; table = table->getNextRegistration())
 	{
@@ -513,7 +513,7 @@ static Hooking::NativeHandler _Handler(uint64_t origHash)
 	return nullptr;
 }
 
-Hooking::NativeHandler Hooking::GetNativeHandler(uint64_t origHash)
+GameHooking::NativeHandler GameHooking::GetNativeHandler(uint64_t origHash)
 {
 	auto& handler = m_handlerCache[origHash];
 	if (handler == nullptr)
@@ -523,7 +523,7 @@ Hooking::NativeHandler Hooking::GetNativeHandler(uint64_t origHash)
 	return handler;
 }
 
-uint64_t Hooking::getWorldPtr()
+uint64_t GameHooking::getWorldPtr()
 {
 	return m_worldPtr;
 }
@@ -534,7 +534,7 @@ void WAIT(DWORD ms, bool ShowMessage)
 	SwitchToFiber(mainFiber);
 }
 
-void Hooking::defuseEvent(RockstarEvent e, bool toggle)
+void GameHooking::defuseEvent(RockstarEvent e, bool toggle)
 {
 	static const unsigned char retn = 0xC3;
 	char* p = (char*)EventPtr[e];
@@ -551,7 +551,7 @@ void Hooking::defuseEvent(RockstarEvent e, bool toggle)
 	}
 }
 
-__int64** Hooking::getGlobalPtr()
+__int64** GameHooking::getGlobalPtr()
 {
 	return m_globalPtr;
 }

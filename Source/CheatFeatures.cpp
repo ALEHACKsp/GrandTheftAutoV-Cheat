@@ -379,70 +379,70 @@ void Cheat::CheatFeatures::OrbitalCannonCooldownBypass()
 bool Cheat::CheatFeatures::ProtectionVoteKickBool = false;
 void Cheat::CheatFeatures::ProtectionVoteKick(bool toggle)
 {
-	Hooking::defuseEvent(RockstarEvent::KICK_VOTES_EVENT, toggle);
-	Hooking::defuseEvent(RockstarEvent::REMOTE_SCRIPT_LEAVE_EVENT, toggle);
+	GameHooking::defuseEvent(RockstarEvent::KICK_VOTES_EVENT, toggle);
+	GameHooking::defuseEvent(RockstarEvent::REMOTE_SCRIPT_LEAVE_EVENT, toggle);
 }
 
 bool Cheat::CheatFeatures::ProtectionFreezeBool = false;
 void Cheat::CheatFeatures::ProtectionFreeze(bool toggle)
 {
-	Hooking::defuseEvent(RockstarEvent::NETWORK_CLEAR_PED_TASKS_EVENT, toggle);
+	GameHooking::defuseEvent(RockstarEvent::NETWORK_CLEAR_PED_TASKS_EVENT, toggle);
 }
 
 
 bool Cheat::CheatFeatures::ProtectionWorldEventsBool = false;
 void Cheat::CheatFeatures::ProtectionWorldEvents(bool toggle)
 {
-	Hooking::defuseEvent(RockstarEvent::NETWORK_PTFX_EVENT, toggle);
-	Hooking::defuseEvent(RockstarEvent::FIRE_EVENT, toggle);
-	Hooking::defuseEvent(RockstarEvent::EXPLOSION_EVENT, toggle);
-	Hooking::defuseEvent(RockstarEvent::START_PROJECTILE_EVENT, toggle);
-	Hooking::defuseEvent(RockstarEvent::RAGDOLL_REQUEST_EVENT, toggle);
-	Hooking::defuseEvent(RockstarEvent::CLEAR_AREA_EVENT, toggle);
-	Hooking::defuseEvent(RockstarEvent::CLEAR_RECTANGLE_AREA_EVENT, toggle);
-	Hooking::defuseEvent(RockstarEvent::NETWORK_SOUND_CAR_HORN_EVENT, toggle);
-	Hooking::defuseEvent(RockstarEvent::MODIFY_VEHICLE_LOCK_WORD_STATE_DATA, toggle);
-	Hooking::defuseEvent(RockstarEvent::BLOW_UP_VEHICLE_EVENT, toggle);
-	Hooking::defuseEvent(RockstarEvent::INFORM_SILENCED_GUNSHOT_EVENT, toggle);
-	Hooking::defuseEvent(RockstarEvent::PED_PLAY_PAIN_EVENT, toggle);
-	Hooking::defuseEvent(RockstarEvent::REQUEST_DETACHMENT_EVENT, toggle);
-	Hooking::defuseEvent(RockstarEvent::VEHICLE_COMPONENT_CONTROL_EVENT, toggle);
-	Hooking::defuseEvent(RockstarEvent::SCRIPTED_GAME_EVENT, toggle);
+	GameHooking::defuseEvent(RockstarEvent::NETWORK_PTFX_EVENT, toggle);
+	GameHooking::defuseEvent(RockstarEvent::FIRE_EVENT, toggle);
+	GameHooking::defuseEvent(RockstarEvent::EXPLOSION_EVENT, toggle);
+	GameHooking::defuseEvent(RockstarEvent::START_PROJECTILE_EVENT, toggle);
+	GameHooking::defuseEvent(RockstarEvent::RAGDOLL_REQUEST_EVENT, toggle);
+	GameHooking::defuseEvent(RockstarEvent::CLEAR_AREA_EVENT, toggle);
+	GameHooking::defuseEvent(RockstarEvent::CLEAR_RECTANGLE_AREA_EVENT, toggle);
+	GameHooking::defuseEvent(RockstarEvent::NETWORK_SOUND_CAR_HORN_EVENT, toggle);
+	GameHooking::defuseEvent(RockstarEvent::MODIFY_VEHICLE_LOCK_WORD_STATE_DATA, toggle);
+	GameHooking::defuseEvent(RockstarEvent::BLOW_UP_VEHICLE_EVENT, toggle);
+	GameHooking::defuseEvent(RockstarEvent::INFORM_SILENCED_GUNSHOT_EVENT, toggle);
+	GameHooking::defuseEvent(RockstarEvent::PED_PLAY_PAIN_EVENT, toggle);
+	GameHooking::defuseEvent(RockstarEvent::REQUEST_DETACHMENT_EVENT, toggle);
+	GameHooking::defuseEvent(RockstarEvent::VEHICLE_COMPONENT_CONTROL_EVENT, toggle);
+	GameHooking::defuseEvent(RockstarEvent::SCRIPTED_GAME_EVENT, toggle);
 }
 
 bool Cheat::CheatFeatures::ProtectionVehicleBool = false;
 void Cheat::CheatFeatures::ProtectionVehicle(bool toggle)
 {
-	Hooking::defuseEvent(RockstarEvent::VEHICLE_COMPONENT_CONTROL_EVENT, toggle);
-	Hooking::defuseEvent(RockstarEvent::NETWORK_SOUND_CAR_HORN_EVENT, toggle);
-	Hooking::defuseEvent(RockstarEvent::MODIFY_VEHICLE_LOCK_WORD_STATE_DATA, toggle);
-	Hooking::defuseEvent(RockstarEvent::BLOW_UP_VEHICLE_EVENT, toggle);
+	GameHooking::defuseEvent(RockstarEvent::VEHICLE_COMPONENT_CONTROL_EVENT, toggle);
+	GameHooking::defuseEvent(RockstarEvent::NETWORK_SOUND_CAR_HORN_EVENT, toggle);
+	GameHooking::defuseEvent(RockstarEvent::MODIFY_VEHICLE_LOCK_WORD_STATE_DATA, toggle);
+	GameHooking::defuseEvent(RockstarEvent::BLOW_UP_VEHICLE_EVENT, toggle);
 }
 
 bool Cheat::CheatFeatures::ProtectionAlterWantedLevelBool = false;
 void Cheat::CheatFeatures::ProtectionAlterWantedLevel(bool toggle)
 {
-	Hooking::defuseEvent(RockstarEvent::ALTER_WANTED_LEVEL_EVENT, toggle);
+	GameHooking::defuseEvent(RockstarEvent::ALTER_WANTED_LEVEL_EVENT, toggle);
 }
 
 bool Cheat::CheatFeatures::ProtectionSessionTimeBool = false;
 void Cheat::CheatFeatures::ProtectionSessionTime(bool toggle)
 {
-	Hooking::defuseEvent(RockstarEvent::GAME_CLOCK_EVENT, toggle);
+	GameHooking::defuseEvent(RockstarEvent::GAME_CLOCK_EVENT, toggle);
 }
 
 bool Cheat::CheatFeatures::ProtectionGiveRemoveWeaponsBool = false;
 void Cheat::CheatFeatures::ProtectionGiveRemoveWeapons(bool toggle)
 {
-	Hooking::defuseEvent(RockstarEvent::GIVE_WEAPON_EVENT, toggle);
-	Hooking::defuseEvent(RockstarEvent::REMOVE_WEAPON_EVENT, toggle);
-	Hooking::defuseEvent(RockstarEvent::REMOVE_ALL_WEAPONS_EVENT, toggle);
+	GameHooking::defuseEvent(RockstarEvent::GIVE_WEAPON_EVENT, toggle);
+	GameHooking::defuseEvent(RockstarEvent::REMOVE_WEAPON_EVENT, toggle);
+	GameHooking::defuseEvent(RockstarEvent::REMOVE_ALL_WEAPONS_EVENT, toggle);
 }
 
 bool Cheat::CheatFeatures::ProtectionSessionWeatherBool = false;
 void Cheat::CheatFeatures::ProtectionSessionWeather(bool toggle)
 {
-	Hooking::defuseEvent(RockstarEvent::GAME_WEATHER_EVENT, toggle);
+	GameHooking::defuseEvent(RockstarEvent::GAME_WEATHER_EVENT, toggle);
 }
 
 bool Cheat::CheatFeatures::SuperJumpBool = false;

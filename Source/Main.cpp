@@ -184,22 +184,22 @@ void Cheat::Main() {
 		case sessionweathermenu:
 		{
 			Cheat::Title("Session Weather");
-			if (Cheat::Option("Extra Sunny", "")) { Hooking::session_weather(1, 0, 76, 0); }
-			if (Cheat::Option("Clear", "")) { Hooking::session_weather(1, 1, 76, 0); }
-			if (Cheat::Option("Clouds", "")) { Hooking::session_weather(1, 2, 76, 0); }
-			if (Cheat::Option("Smog", "")) { Hooking::session_weather(1, 3, 76, 0); }
-			if (Cheat::Option("Foggy", "")) { Hooking::session_weather(1, 4, 76, 0); }
-			if (Cheat::Option("Overcast", "")) { Hooking::session_weather(1, 5, 76, 0); }
-			if (Cheat::Option("Rain", "")) { Hooking::session_weather(1, 6, 76, 0); }
-			if (Cheat::Option("Thunder", "")) { Hooking::session_weather(1, 7, 76, 0); }
-			if (Cheat::Option("Clearing", "")) { Hooking::session_weather(1, 8, 76, 0); }
-			if (Cheat::Option("Neutral", "")) { Hooking::session_weather(1, 9, 76, 0); }
-			if (Cheat::Option("Snow", "")) { Hooking::session_weather(1, 10, 76, 0); }
-			if (Cheat::Option("Blizzard", "")) { Hooking::session_weather(1, 11, 76, 0); }
-			if (Cheat::Option("Snowlight", "")) { Hooking::session_weather(1, 12, 76, 0); }
-			if (Cheat::Option("Xmas", "")) { Hooking::session_weather(1, 13, 76, 0); }
-			if (Cheat::Option("Halloween", "")) { Hooking::session_weather(1, 14, 76, 0); }
-			if (Cheat::Option("Black Screen", "")) { Hooking::session_weather(1, 15, 76, 0); }
+			if (Cheat::Option("Extra Sunny", ""))	{ Hooking::session_weather(1, 0, 76, 0); }
+			if (Cheat::Option("Clear", ""))			{ Hooking::session_weather(1, 1, 76, 0); }
+			if (Cheat::Option("Clouds", ""))		{ Hooking::session_weather(1, 2, 76, 0); }
+			if (Cheat::Option("Smog", ""))			{ Hooking::session_weather(1, 3, 76, 0); }
+			if (Cheat::Option("Foggy", ""))			{ Hooking::session_weather(1, 4, 76, 0); }
+			if (Cheat::Option("Overcast", ""))		{ Hooking::session_weather(1, 5, 76, 0); }
+			if (Cheat::Option("Rain", ""))			{ Hooking::session_weather(1, 6, 76, 0); }
+			if (Cheat::Option("Thunder", ""))		{ Hooking::session_weather(1, 7, 76, 0); }
+			if (Cheat::Option("Clearing", ""))		{ Hooking::session_weather(1, 8, 76, 0); }
+			if (Cheat::Option("Neutral", ""))		{ Hooking::session_weather(1, 9, 76, 0); }
+			if (Cheat::Option("Snow", ""))			{ Hooking::session_weather(1, 10, 76, 0); }
+			if (Cheat::Option("Blizzard", ""))		{ Hooking::session_weather(1, 11, 76, 0); }
+			if (Cheat::Option("Snowlight", ""))		{ Hooking::session_weather(1, 12, 76, 0); }
+			if (Cheat::Option("Xmas", ""))			{ Hooking::session_weather(1, 13, 76, 0); }
+			if (Cheat::Option("Halloween", ""))		{ Hooking::session_weather(1, 14, 76, 0); }
+			if (Cheat::Option("Black Screen", ""))	{ Hooking::session_weather(1, 15, 76, 0); }
 		}
 		break; 
 		case statsoptionsmenu:

@@ -452,35 +452,14 @@ bool Cheat::ToggleCheckMark(const char * option, bool & b00l)
 }
 
 
-bool Cheat::IntNoControl(const char* option, int& _int, int min, int max, const char* InformationText)
+bool Cheat::Int(const char * option, int & _int, int min, int max, int step, bool DisableControl, const char* InformationText)
 {
 	Option(option, "");
 
-	if (GUI::currentOption <= GUI::maxVisOptions && GUI::optionCount <= GUI::maxVisOptions)
+	if (GUI::optionCount == GUI::currentOption) 
 	{
-		Drawing::Text(Cheat::CheatFunctions::StringToChar(" " + std::to_string(_int) + " "), GUI::optionText, { Cheat::GUI::guiX + 0.080f, GUI::guiY + GUI::optionCount * 0.035f - 0.175f }, { 0.35f, 0.35f }, true);
-	}
-	else if (GUI::optionCount > GUI::currentOption - GUI::maxVisOptions && GUI::optionCount <= GUI::currentOption)
-	{
-		Drawing::Text(Cheat::CheatFunctions::StringToChar(" " + std::to_string(_int) + " "), GUI::optionText, { Cheat::GUI::guiX + 0.080f, GUI::guiY + (GUI::optionCount - (GUI::currentOption - GUI::maxVisOptions)) * 0.035f - 0.175f }, { 0.35f, 0.35f }, true);
-	}
-
-	if (GUI::optionCount == GUI::currentOption)
-	{
-		OptionInformationText = InformationText;
-	}
-
-	if (GUI::optionCount == GUI::currentOption && GUI::selectPressed) return true;
-	else if (GUI::optionCount == GUI::currentOption && GUI::leftPressed) return true;
-	else if (GUI::optionCount == GUI::currentOption && GUI::rightPressed) return true;
-	return false;
-}
-bool Cheat::Int(const char * option, int & _int, int min, int max, int step, const char* InformationText)
-{
-	Option(option, "");
-
-	if (GUI::optionCount == GUI::currentOption) {
-		if (GUI::leftPressed) {
+		if (GUI::leftPressed && !DisableControl) 
+		{
 			if (_int < max)
 			{
 				if (step == 1) { _int++; }
@@ -490,7 +469,8 @@ bool Cheat::Int(const char * option, int & _int, int min, int max, int step, con
 				}
 			}
 		}
-		if (GUI::rightPressed) {
+		if (GUI::rightPressed && !DisableControl) 
+		{
 			if (_int > min)
 			{
 				if (step == 1) { _int--; }
@@ -510,7 +490,11 @@ bool Cheat::Int(const char * option, int & _int, int min, int max, int step, con
 
 	if (GUI::currentOption <= GUI::maxVisOptions && GUI::optionCount <= GUI::maxVisOptions)
 	{
-		if (_int < 100)
+		if (DisableControl)
+		{
+			Drawing::Text(std::to_string(_int).c_str(), GUI::optionText, { Cheat::GUI::guiX + 0.080f, GUI::guiY + GUI::optionCount * 0.035f - 0.175f }, { 0.35f, 0.35f }, true);
+		}
+		else if (_int < 100)
 		{
 			Drawing::Text(Cheat::CheatFunctions::StringToChar("< " + std::to_string(_int) + " >"), GUI::optionText, { Cheat::GUI::guiX + 0.075f, GUI::guiY + GUI::optionCount * 0.035f - 0.175f }, { 0.32f, 0.32f }, false);
 		}
@@ -525,7 +509,11 @@ bool Cheat::Int(const char * option, int & _int, int min, int max, int step, con
 	}
 	else if ((GUI::optionCount > (GUI::currentOption - GUI::maxVisOptions)) && GUI::optionCount <= GUI::currentOption)
 	{
-		if (_int < 100)
+		if (DisableControl)
+		{
+			Drawing::Text(std::to_string(_int).c_str(), GUI::optionText, { Cheat::GUI::guiX + 0.080f, GUI::guiY + (GUI::optionCount - (GUI::currentOption - GUI::maxVisOptions)) * 0.035f - 0.175f }, { 0.35f, 0.35f }, true);
+		}
+		else if (_int < 100)
 		{
 			Drawing::Text(Cheat::CheatFunctions::StringToChar("< " + std::to_string(_int) + " >"), GUI::optionText, { Cheat::GUI::guiX + 0.075f, GUI::guiY + (GUI::optionCount - (GUI::currentOption - GUI::maxVisOptions)) * 0.035f - 0.175f }, { 0.32f, 0.32f }, false);
 		}
@@ -538,7 +526,7 @@ bool Cheat::Int(const char * option, int & _int, int min, int max, int step, con
 			Drawing::Text(Cheat::CheatFunctions::StringToChar("< " + std::to_string(_int) + " >"), GUI::optionText, { Cheat::GUI::guiX + 0.06f, GUI::guiY + (GUI::optionCount - (GUI::currentOption - GUI::maxVisOptions)) * 0.035f - 0.175f }, { 0.32f, 0.32f }, false);
 		}
 	}
-	if (GUI::optionCount == GUI::currentOption && GUI::selectPressed)
+	if (GUI::optionCount == GUI::currentOption && GUI::selectPressed && !DisableControl)
 	{
 		int KeyBoardInput = Cheat::GameFunctions::DisplayKeyboardAndReturnInputInteger(CheatFunctions::ReturnNumberOfDigitsInValue(max));
 		if (KeyBoardInput >= min && KeyBoardInput <= max)
@@ -547,8 +535,8 @@ bool Cheat::Int(const char * option, int & _int, int min, int max, int step, con
 		}
 		return true;
 	}
-	else if (GUI::optionCount == GUI::currentOption && GUI::leftPressed) return true;
-	else if (GUI::optionCount == GUI::currentOption && GUI::rightPressed) return true;
+	else if (GUI::optionCount == GUI::currentOption && GUI::leftPressed && !DisableControl) return true;
+	else if (GUI::optionCount == GUI::currentOption && GUI::rightPressed && !DisableControl) return true;
 	return false;
 }
 

@@ -152,7 +152,8 @@ void Cheat::Main() {
 			{
 				Cheat::Break("Join GTA Online to see all options", true); 
 			}
-			else {
+			else 
+			{
 				Cheat::MenuOption("All Players >", AllPlayersMenu);
 				Cheat::MenuOption("Protections >", protections); 
 				Cheat::MenuOption("Stats Options >", statsoptionsmenu);
@@ -214,39 +215,39 @@ void Cheat::Main() {
 		case reportsmenu_stats:
 		{
 			Cheat::Title("Reports"); 
-			STATS::STAT_GET_INT(GAMEPLAY::GET_HASH_KEY("MPPLY_REPORT_STRENGTH"), &REPORTSTRENGTH, -1);
-			STATS::STAT_GET_INT(GAMEPLAY::GET_HASH_KEY("MPPLY_GAME_EXPLOITS"), &intexploits, -1);
-			STATS::STAT_GET_INT(GAMEPLAY::GET_HASH_KEY("MPPLY_OFFENSIVE_LANGUAGE"), &intoffensive, -1);
+			STATS::STAT_GET_INT(GAMEPLAY::GET_HASH_KEY("MPPLY_REPORT_STRENGTH"),	&REPORTSTRENGTH,	-1);
+			STATS::STAT_GET_INT(GAMEPLAY::GET_HASH_KEY("MPPLY_GAME_EXPLOITS"),		&intexploits,		-1);
+			STATS::STAT_GET_INT(GAMEPLAY::GET_HASH_KEY("MPPLY_OFFENSIVE_LANGUAGE"), &intoffensive,		-1);
 			STATS::STAT_GET_INT(GAMEPLAY::GET_HASH_KEY("MPPLY_OFFENSIVE_TAGPLATE"), &OFFENSIVETAGPLATE, -1);
-			STATS::STAT_GET_INT(GAMEPLAY::GET_HASH_KEY("MPPLY_OFFENSIVE_UGC"), &OFFENSIVEUGC, -1);
-			STATS::STAT_GET_INT(GAMEPLAY::GET_HASH_KEY("MPPLY_EXPLOITS"), &EXPLOITS, -1);
-			STATS::STAT_GET_INT(GAMEPLAY::GET_HASH_KEY("MPPLY_GRIEFING"), &GRIEFING, -1);
-			STATS::STAT_GET_INT(GAMEPLAY::GET_HASH_KEY("MPPLY_COMMEND_STRENGTH"), &COMMENDSTRENGTH, -1);
-			STATS::STAT_GET_INT(GAMEPLAY::GET_HASH_KEY("MPPLY_FRIENDLY"), &FRIENDLY, -1);
-			STATS::STAT_GET_INT(GAMEPLAY::GET_HASH_KEY("MPPLY_HELPFUL"), &HELPFUL, -1);
-			STATS::STAT_GET_INT(GAMEPLAY::GET_HASH_KEY("MPPLY_VC_ANNOYINGME"), &VCANNOYINGME, -1);
-			STATS::STAT_GET_INT(GAMEPLAY::GET_HASH_KEY("MPPLY_VC_HATE"), &VCHATE, -1);
-			STATS::STAT_GET_INT(GAMEPLAY::GET_HASH_KEY("MPPLY_BAD_CREW_NAME"), &BADCREWNAME, -1);
-			STATS::STAT_GET_INT(GAMEPLAY::GET_HASH_KEY("MPPLY_BAD_CREW_MOTTO"), &BADCREWMOTTO, -1);
-			STATS::STAT_GET_INT(GAMEPLAY::GET_HASH_KEY("MPPLY_BAD_CREW_STATUS"), &BADCREWSTATUS, -1);
-			STATS::STAT_GET_INT(GAMEPLAY::GET_HASH_KEY("MPPLY_BAD_CREW_EMBLEM"), &BADCREWEMBLEM, -1);
-			STATS::STAT_GET_INT(GAMEPLAY::GET_HASH_KEY("MPPLY_ISPUNISHED"), &ISPUNISHED, -1);
-			Cheat::IntNoControl("Report Strength", REPORTSTRENGTH, 0, 100, "Report Strength");
-			Cheat::IntNoControl("Game Exploits", intexploits, 0, 100, "Game Exploits Stat");
-			Cheat::IntNoControl("Offensive Language", intoffensive, 0, 100, "Offensive Language Stat");
-			Cheat::IntNoControl("Offensive Tagplate", OFFENSIVETAGPLATE, 0, 100, "Offensive Tagplate Stat");
-			Cheat::IntNoControl("Offensive UGC", OFFENSIVEUGC, 0, 100, "Offensive UGC Stat");
-			Cheat::IntNoControl("Exploits", EXPLOITS, 0, 100, "Exploits Stat");
-			Cheat::IntNoControl("Griefing", GRIEFING, 0, 100, "Griefing Stat");
-			Cheat::IntNoControl("Friendly", FRIENDLY, 0, 100, "Friendly Stat");
-			Cheat::IntNoControl("Helpful", HELPFUL, 0, 100, "Helpful stat");
-			Cheat::IntNoControl("VC Annoying Me", VCANNOYINGME, 0, 100, "VC Annoying Me Stat");
-			Cheat::IntNoControl("Vchate", VCHATE, 0, 100, "Vchate Stat");
-			Cheat::IntNoControl("Bad Crew Name", BADCREWNAME, 0, 100, "Bad Crew Name Stat");
-			Cheat::IntNoControl("Bad Crew Motto", BADCREWMOTTO, 0, 100, "Bad Crew Motto Stat");
-			Cheat::IntNoControl("Bad Crew Status", BADCREWSTATUS, 0, 100, "Bad Crew Status Stat");
-			Cheat::IntNoControl("Bad Crew Emblem", BADCREWEMBLEM, 0, 100, "Bad Crew Emblem Stat");
-			Cheat::IntNoControl("Is Punished", ISPUNISHED, 0, 100, "Is Punished Stat");
+			STATS::STAT_GET_INT(GAMEPLAY::GET_HASH_KEY("MPPLY_OFFENSIVE_UGC"),		&OFFENSIVEUGC,		-1);
+			STATS::STAT_GET_INT(GAMEPLAY::GET_HASH_KEY("MPPLY_EXPLOITS"),			&EXPLOITS,			-1);
+			STATS::STAT_GET_INT(GAMEPLAY::GET_HASH_KEY("MPPLY_GRIEFING"),			&GRIEFING,			-1);
+			STATS::STAT_GET_INT(GAMEPLAY::GET_HASH_KEY("MPPLY_COMMEND_STRENGTH"),	&COMMENDSTRENGTH,	-1);
+			STATS::STAT_GET_INT(GAMEPLAY::GET_HASH_KEY("MPPLY_FRIENDLY"),			&FRIENDLY,			-1);
+			STATS::STAT_GET_INT(GAMEPLAY::GET_HASH_KEY("MPPLY_HELPFUL"),			&HELPFUL,			-1);
+			STATS::STAT_GET_INT(GAMEPLAY::GET_HASH_KEY("MPPLY_VC_ANNOYINGME"),		&VCANNOYINGME,		-1);
+			STATS::STAT_GET_INT(GAMEPLAY::GET_HASH_KEY("MPPLY_VC_HATE"),			&VCHATE,			-1);
+			STATS::STAT_GET_INT(GAMEPLAY::GET_HASH_KEY("MPPLY_BAD_CREW_NAME"),		&BADCREWNAME,		-1);
+			STATS::STAT_GET_INT(GAMEPLAY::GET_HASH_KEY("MPPLY_BAD_CREW_MOTTO"),		&BADCREWMOTTO,		-1);
+			STATS::STAT_GET_INT(GAMEPLAY::GET_HASH_KEY("MPPLY_BAD_CREW_STATUS"),	&BADCREWSTATUS,		-1);
+			STATS::STAT_GET_INT(GAMEPLAY::GET_HASH_KEY("MPPLY_BAD_CREW_EMBLEM"),	&BADCREWEMBLEM,		-1);
+			STATS::STAT_GET_INT(GAMEPLAY::GET_HASH_KEY("MPPLY_ISPUNISHED"),			&ISPUNISHED,		-1);
+			Cheat::Int("Report Strength", REPORTSTRENGTH, 0, 100, true, "");
+			Cheat::Int("Game Exploits", intexploits, 0, 100, true, "");
+			Cheat::Int("Offensive Language", intoffensive, 0, 100, true, "");
+			Cheat::Int("Offensive Tagplate", OFFENSIVETAGPLATE, 0, 100, true, "");
+			Cheat::Int("Offensive UGC", OFFENSIVEUGC, 0, 100, true, "");
+			Cheat::Int("Exploits", EXPLOITS, 0, 100, true, "");
+			Cheat::Int("Griefing", GRIEFING, 0, 100, true, "");
+			Cheat::Int("Friendly", FRIENDLY, 0, 100, true, "");
+			Cheat::Int("Helpful", HELPFUL, 0, 100, true, "");
+			Cheat::Int("VC Annoying Me", VCANNOYINGME, 0, 100, true, "");
+			Cheat::Int("Vchate", VCHATE, 0, 100, true, "");
+			Cheat::Int("Bad Crew Name", BADCREWNAME, 0, 100, true, "");
+			Cheat::Int("Bad Crew Motto", BADCREWMOTTO, 0, 100, true, "");
+			Cheat::Int("Bad Crew Status", BADCREWSTATUS, 0, 100, true, "");
+			Cheat::Int("Bad Crew Emblem", BADCREWEMBLEM, 0, 100, true, "");
+			Cheat::Int("Is Punished", ISPUNISHED, 0, 100, true, "");
 		}
 		break; 
 		case unlocksmenu:

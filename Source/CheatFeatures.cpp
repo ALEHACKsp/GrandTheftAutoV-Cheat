@@ -811,7 +811,7 @@ void Cheat::CheatFeatures::SpectatePlayer(bool toggle)
 	if (toggle)
 	{
 		NETWORK::NETWORK_SET_IN_SPECTATOR_MODE(PlayerPedID, PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(selectedPlayer));
-		std::string String = xorstr_("Spectating player '") + (std::string)PLAYER::GET_PLAYER_NAME(selectedPlayer) + xorstr_("'");
+		std::string String = xorstr_("Spectating '") + (std::string)PLAYER::GET_PLAYER_NAME(selectedPlayer) + xorstr_("'");
 		Cheat::GameFunctions::SubtitleNotification((char*)String.c_str(), 1);
 	}
 	else

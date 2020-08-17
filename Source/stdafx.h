@@ -487,8 +487,7 @@ namespace Cheat
 	bool MenuOptionPlayerList(const char* option, SubMenus newSub, Player PlayerHandle);
 	bool Toggle(const char* option, bool& b00l, const char* InformationText);
 	bool ToggleCheckMark(const char* option, bool& b00l);
-	bool IntNoControl(const char* option, int& _int, int min, int max, const char* InformationText);
-	bool Int(const char* option, int& _int, int min, int max, int step, const char* InformationText = xorstr_("Select to change"));
+	bool Int(const char* option, int& _int, int min, int max, int step, bool DisableControl = false, const char* InformationText = xorstr_("Select to change"));
 	bool Float(const char* option, float& _float, float min, float max, float steps, bool ReturnTrueWithValueChange, const char* InformationText);
 	bool IntVector(const char* option, std::vector<int> Vector, int& position);
 	bool FloatVector(const char* option, std::vector<float> Vector, int& position);

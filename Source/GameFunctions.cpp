@@ -1497,8 +1497,14 @@ char* Cheat::GameFunctions::ReturnOnlinePlayerPictureString(Player PlayerHandle)
 	return "CHAR_DEFAULT";
 }
 
+//https://github.com/MAFINS/MenyooSP/blob/v1.3.0/Solution/source/Menu/Menu.cpp
+bool Cheat::GameFunctions::IsCursorAtXYPosition(VECTOR2 const& boxCentre, VECTOR2 const& boxSize)
+{
+	VECTOR2 CursorPositions = { CONTROLS::GET_DISABLED_CONTROL_NORMAL(2, INPUT_CURSOR_X), CONTROLS::GET_DISABLED_CONTROL_NORMAL(2, INPUT_CURSOR_Y) };
 
-
+	return (CursorPositions.x >= boxCentre.x - boxSize.x / 2 && CursorPositions.x <= boxCentre.x + boxSize.x / 2)
+		&& (CursorPositions.y > boxCentre.y - boxSize.y / 2 && CursorPositions.y < boxCentre.y + boxSize.y / 2);
+}
 
 bool Cheat::CheatFeatures::CursorGUINavigationEnabled = false;
 void Cheat::GameFunctions::CursorGUINavigationLoop()
@@ -1512,27 +1518,23 @@ void Cheat::GameFunctions::CursorGUINavigationLoop()
 	{
 		PLAYER::SET_PLAYER_CONTROL(PlayerID, false, 0);
 
-		POINT Point;
-		GetCursorPos(&Point);
-		HWND GameWindowHandle = FindWindowA(NULL, xorstr_("Grand Theft Auto V"));
-		if (!ScreenToClient(GameWindowHandle, &Point)) { Cheat::LogFunctions::DebugMessage(xorstr_("EnableDisableCursorGUINavigation() -> ScreenToClient Failed")); return; }
-
 		UI::_SHOW_CURSOR_THIS_FRAME();
 		UI::_SET_CURSOR_SPRITE(1);
-	
-		//Get Screen Coords
-		int ScreenCoordX, ScreenCoordY;
-		GRAPHICS::_GET_ACTIVE_SCREEN_RESOLUTION(&ScreenCoordX, &ScreenCoordY);
 
-		//RAGE Friendly Cursor Positions
-		float CursorPositionX = (float)Point.x / ScreenCoordX;
-		float CursorPositionY = (float)Point.y / ScreenCoordY;
+		float CursorPositionX = CONTROLS::GET_DISABLED_CONTROL_NORMAL(2, INPUT_CURSOR_X);
+		float CursorPositionY = CONTROLS::GET_DISABLED_CONTROL_NORMAL(2, INPUT_CURSOR_Y);
 
-		if (GetAsyncKeyState(VK_LBUTTON) && Cheat::CheatFunctions::IsGameWindowFocussed()) //CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, INPUT_CURSOR_ACCEPT)
+		if (IsCursorAtXYPosition({ Cheat::GUI::guiX, GUI::guiY - 0.208f }, { 0.21f, 0.084f })   //The Main Gui can be moved by placing cursor on Header or on the Main Title
+		   || IsCursorAtXYPosition({ Cheat::GUI::guiX, GUI::guiY - 0.154f }, { 0.21f, 0.023f })
+			)
 		{
-			UI::_SET_CURSOR_SPRITE(4);
-			Cheat::GUI::guiX = CursorPositionX;
-			Cheat::GUI::guiY= CursorPositionY;
+			UI::_SET_CURSOR_SPRITE(3);
+			if (CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, INPUT_CURSOR_ACCEPT))
+			{
+				UI::_SET_CURSOR_SPRITE(4);
+				Cheat::GUI::guiX = CursorPositionX;
+				Cheat::GUI::guiY = CursorPositionY + 0.20f;
+			}
 		}
 	}
 }

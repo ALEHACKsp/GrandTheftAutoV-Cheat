@@ -729,56 +729,90 @@ const std::vector<std::string> Cheat::GameArrays::VanModels = {
 };
 const std::vector<std::string> Cheat::GameArrays::SSASSSModels = {
 	"caracara", "cheburek", "dominator3", "ellie", "entity2",
-	"fagaloa", "flashgt", "gb200", "hotring", "issi3",
-	"jester3", "michelli", "seasparrow", "tezeract", "taipan",
+	"fagaloa", "flashgt", "gb200", "hotring", "issi3"
+	"michelli", "seasparrow", "tezeract", "taipan",
 	"tyrant"
 };
 const std::vector<std::string> Cheat::GameArrays::DoomsdayModels = {
-	"autarch", "avenger", "barrage", "chernobog", "comet4", "comet5",
-	"deluxo", "gt500", "hermes", "hustler", "kamacho","khanjali",
-	"neon", "pariah", "raiden", "revolter", "riata", "riot2", "savestra",
-	"sc1", "sentinel3", "streiter", "stromberg", "thruster", "viseris",
-	"volatol", "yosemite", "z190"
+	"AUTARCH", "AVENGER", "BARRAGE", "CHERNOBOG", "COMET4", "COMET5",
+	"DELUXO", "GT500", "HERMES", "HUSTLER", "KAMACHO","KHANJALI",
+	"NEON", "PARIAH", "RAIDEN", "REVOLTER", "RIATA", "RIOT2", "SAVESTRA",
+	"SC1", "SENTINEL3", "STREITER", "STROMBERG", "THRUSTER", "VISERIS",
+	"VOLATOL", "YOSEMITE", "Z190"
 };
 const std::vector<std::string> Cheat::GameArrays::GunrunningModels = {
-	"hauler2", "phantom3", "APC", "Halftrack", "Trailersmall2", "oppressor",
-	"tampa3", "dune3", "insurgent3", "nightshark", "technical3","ardent",
-	"cheetah2", "torero", "vagner", "XA21", "caddy3", "trailerlarge", "trailerS4"
+	"HAULER2",		"PHANTOM3",		"APC",
+	"HALFTRACK",	"TRAILERSMALL12",	"OPPRESSOR",
+	"TAMPA3",		"DUNE3",			"INSURGENT3",
+	"NIGHTSHARK",	"TECHNICAL3",		"ARDENT",
+	"CHEETAH2",	"TORERO",			"VAGNER",
+	"XA21",		"CADDY3",			"TRAILERLARGE",
+	"TRAILERS4"
 };
 const std::vector<std::string> Cheat::GameArrays::AfterHoursModels = {
-	"BLIMP3", "MENACER", "MULE4", "PATRIOT2", "POUNDER2", "STRIKEFORCE",
-	"SCRAMJET", "SPEEDO4", "STAFFORD", "SWINGER", "TERBYTE", "oppressor2", "scramjet", "jester3"
+	"BLIMP3",		"MENACER",		"MULE4",
+	"PATRIOT2",	"POUNDER2",	"STRIKEFORCE",
+	"SCRAMJET",	"SPEEDO4",		"STAFFORD",
+	"SWINGER",		"TERBYTE",		"OPPRESSOR2",
+	"scramjet",	"JESTER3"
 };
 const std::vector<std::string> Cheat::GameArrays::ArenaWarModels = {
-	"BRUISER", "BRUISER2", "BRUISER3", "BRUTUS", "BRUTUS2", "BRUTUS3", "CERBERUS", "CERBERUS2", "CERBERUS3",
-	"CLIQUE", "DEATHBIKE", "DEATHBIKE2", "DEATHBIKE3", "DEVESTE", "DEVIANT","DOMINATOR4", "DOMINATOR5",
-	"DOMINATOR6", "IMPALER","IMPALER2", "IMPALER3","IMPALER4", "IMPERATOR", "IMPERATOR2", "IMPERATOR3", "ISSI4",
-	"ISSI5", "ISSI6", "ITALIGTO", "MONSTER3", "MONSTER4", "MONSTER5", "RCBANDITO", "SCARAB2", "SCARAB3", "SCHLAGEN", "SLAMVAN4",
-	"SLAMVAN5", "SLAMVAN6", "TOROS", "TULIP", "VAMOS", "ZR380", "ZR3802", "ZR3803"
+	"BRUISER",		"BRUISER2",	"BRUISER3",
+	"BRUTUS",		"BRUTUS2",		"BRUTUS3",
+	"CERBERUS",	"CERBERUS2",	"CERBERUS3",
+	"CLIQUE",		"DEATHBIKE",	"DEATHBIKE2",
+	"DEATHBIKE3",	"DEVESTE",		"DEVIANT",
+	"DOMINATOR4",	"DOMINATOR5",	"DOMINATOR6",
+	"IMPALER",		"IMPALER2",	"IMPALER3",
+	"IMPALER4",	"IMPERATOR",	"IMPERATOR2",
+	"IMPERATOR3",	"ISSI4",		"SLAMVAN5",
+	"ISSI5",		"ISSI6",		"ITALIGTO",
+	"MONSTER3",	"MONSTER4",	"MONSTER5",
+	"RCBANDITO",	"SCARAB2",		"SCARAB3",
+	"SCHLAGEN",	"SLAMVAN4",	"SLAMVAN6",
+	"TOROS",		"TULIP",		"VAMOS",
+	"ZR380",		"ZR3802",		"ZR3803"
 };
 
 const std::vector<std::string> Cheat::GameArrays::CasinoDLCModels = {
-	"caracara2", "drafter", "dynasty", "emerus", "gauntlet3", "gauntlet4", "hellion", "issi7", "jugular",
-	"krieger", "locust", "nebula", "neo", "novak", "paragon","paragon2", "peyote2",
-	"rrocket", "s80","thrax", "zion3","zorrusso"
+	"CARACARA2",	"DRAFTER",		"DYNASTY",
+	"EMERUS",		"GAUNTLET3",	"GAUNTLET4",
+	"HELLION",		"ISSI7",		"JUGULAR",
+	"KRIEGER",		"LOCUST",		"NEBULA",
+	"NEO",			"NOVAK",		"PARAGON",
+	"PARAGON2",    "PEYOTE2",		"THRAX",
+	"RROCKET",		"S80",		"ZION3",
+	"zorrusso"
 };
 
 const std::vector<std::string> Cheat::GameArrays::DiamondCasinoHeistDLCModels = {
-	"ASBO", "EVERON", "FORMULA", "formula2", "furia", "imorgon", "jb7002", "kanjo", "komoda",
-	"minitank", "outlaw", "rebla", "retinue2", "stryder", "sugoi","sultan2", "vagrant",
-	"vstr", "yosemite2", "zhaba"
+	"ASBO",		"EVERON",	"FORMULA",
+	"FORMULA2",	"FURIA",   "IMORGON",
+	"JB7002",		"KANJO",	"KOMODA",
+	"MINITANK",	"OUTLAW",	"REBLA",
+	"RETINUE2",	"STRYDER", "SUGOI",
+	"SULTAN2",		"VAGRANT", "VSTR",
+	"YOSEMITE2",   "ZHABA"
 };
 
 const std::vector<std::string> Cheat::GameArrays::CunningStuntsDLCModels = {
-	"gp1", "turismo2", "infernus2", "ruston"
+	"GP1", "TURISMO2", "INFERNUS2", "RUSTON"
 };
 
 const std::vector<std::string> Cheat::GameArrays::SmugglersRunModels = {
-	"ALPHAZ1", "BOMBUSHKA", "CYCLONE", "HAVOK", "HOWARD", "HUNTER", "MICROLIGHT", "MOGUL",
-	"MOLOTOK", "NOKOTA", "PYRO", "RAPIDGT3","RETINUE", "ROGUE", "SEABREEZE", "STARLING", "TULA", "VIGILANTE", "VISIONE"
+	"ALPHAZ1",		"BOMBUSHKA", "CYCLONE",
+	"HAVOK",		"HOWARD",	  "HUNTER",
+	"MICROLIGHT",  "MOGUL",	  "MOLOTOK",
+	"NOKOTA",		"PYRO",	  "RAPIDGT3",
+	"RETINUE",     "ROGUE",     "SEABREEZE",
+	"STARLING",    "TULA",      "VIGILANTE",
+	"VISIONE"
 };
 
 const std::vector<std::string> Cheat::GameArrays::SummerSpecialModels = {
-	"PENUMBRA2", "OPENWHEEL2", "OPENWHEEL1", "PEYOTE3", "SEMINOLE2", "TIGON", "YOSEMITE3", "YOUGA3",
-	"MANANA2", "LANDSTALKER2", "GLENDALE2", "GAUNTLET5","DUKES3", "COQUETTE4 ", "CLUB"
+	"PENUMBRA2",		"OPENWHEEL2",	"OPENWHEEL1",
+	"PEYOTE3",			"SEMINOLE2",   "TIGON",
+	"YOSEMITE3",		"YOUGA3",		"MANANA2",
+	"LANDSTALKER2",	"GLENDALE2",	"GAUNTLET5",
+	"DUKES3",			"COQUETTE4",	"CLUB"
 };

@@ -4388,15 +4388,15 @@ void Cheat::Main() {
 			Cheat::Title("Line And Arrow");
 			if (Cheat::Option("Set Default", ""))
 			{
-				Cheat::GUI::line.r = 0;
-				Cheat::GUI::line.g = 0;
-				Cheat::GUI::line.b = 255;
-				Cheat::GUI::line.a = 255;
+				Cheat::GUI::TopAndBottomLine.r = 0;
+				Cheat::GUI::TopAndBottomLine.g = 0;
+				Cheat::GUI::TopAndBottomLine.b = 255;
+				Cheat::GUI::TopAndBottomLine.a = 255;
 			}
-			Cheat::Int("Red", Cheat::GUI::line.r, 0, 255, 1);
-			Cheat::Int("Green", Cheat::GUI::line.g, 0, 255, 1);
-			Cheat::Int("Blue", Cheat::GUI::line.b, 0, 255, 1);
-			Cheat::Int("Opacity", Cheat::GUI::line.a, 0, 255, 1);
+			Cheat::Int("Red", Cheat::GUI::TopAndBottomLine.r, 0, 255, 1);
+			Cheat::Int("Green", Cheat::GUI::TopAndBottomLine.g, 0, 255, 1);
+			Cheat::Int("Blue", Cheat::GUI::TopAndBottomLine.b, 0, 255, 1);
+			Cheat::Int("Opacity", Cheat::GUI::TopAndBottomLine.a, 0, 255, 1);
 		}
 		break;
 		case settingsheaderbackground:
@@ -4511,7 +4511,7 @@ void Cheat::Main() {
 		}
 		break;
 		}
-		Cheat::End();
+		Cheat::GUI::End();
 		WAIT(0, false);
 	}
 }

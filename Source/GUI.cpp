@@ -27,31 +27,29 @@ SubMenus Cheat::GUI::menusArray			[1000];
 char* Cheat::GUI::ThemeFilesArray		[1000];
 
 
-RGBAF Cheat::GUI::count				{ 255, 255, 255, 255, 0 };
-RGBAF Cheat::GUI::titleText			{ 255, 255, 255, 255, 0 };
+RGBAF Cheat::GUI::count				{ 255, 255, 255, 255, FontChaletLondon };
+RGBAF Cheat::GUI::titleText			{ 255, 255, 255, 255, FontChaletLondon };
+RGBAF Cheat::GUI::optionText		{ 255, 255, 255, 255, FontChaletLondon };
+RGBAF Cheat::GUI::breakText			{ 255, 255, 255, 255, FontChaletLondon };
 RGBA Cheat::GUI::titleRect			{ 0, 0, 255, 255 };
 RGBA Cheat::GUI::MainTitleRect		{ 0, 0, 0, 255 };
-RGBA Cheat::GUI::headerRect			{ 0, 0, 255, 200 };
-RGBAF Cheat::GUI::optionText		{ 255, 255, 255, 255, 0 };
-RGBAF Cheat::GUI::breakText			{ 255, 255, 255, 255, 0 };
-RGBAF Cheat::GUI::arrow				{ 255, 255, 255, 255, 3 };                          
-RGBA Cheat::GUI::optionRect			{ 0, 0, 0, 255 }; 
+RGBA Cheat::GUI::headerRect			{ 0, 0, 255, 200 };                      
+RGBA Cheat::GUI::optionRect			{ 0, 0, 0, 255 };
 RGBA Cheat::GUI::MenuBackgroundRect	{ 0, 0, 0, 220 }; 
 RGBA Cheat::GUI::MenuBottomRect		{ 0, 0, 0, 255 };
 RGBA Cheat::GUI::scroller			{ 0, 0, 255, 255 };
-RGBAF Cheat::GUI::integre			{ 255, 255, 255, 255, 2 };
-RGBA Cheat::GUI::line				{ 0, 0, 255, 255 };
+RGBA Cheat::GUI::TopAndBottomLine	{ 0, 0, 255, 255 };
 
 
 
-static fpFileRegister file_register = (fpFileRegister)(Memory::pattern("48 89 5C 24 ? 48 89 6C 24 ? 48 89 7C 24 ? 41 54 41 56 41 57 48 83 EC 50 48 8B EA 4C 8B FA 48 8B D9 4D 85 C9").count(1).get(0).get<decltype(file_register)>());
+static fpFileRegister RegisterTextureFile = (fpFileRegister)(Memory::pattern("48 89 5C 24 ? 48 89 6C 24 ? 48 89 7C 24 ? 41 54 41 56 41 57 48 83 EC 50 48 8B EA 4C 8B FA 48 8B D9 4D 85 C9").count(1).get(0).get<decltype(RegisterTextureFile)>());
 void Cheat::Drawing::InitTextureFile()
 {
 	Cheat::LogFunctions::Message(xorstr_("Loading Texture File"));
 	int textureID;
 	if (Cheat::CheatFunctions::DoesFileExists(Cheat::CheatFunctions::TextureFilePath())) 
 	{
-		file_register(&textureID, Cheat::CheatFunctions::TextureFilePath().c_str(), true, xorstr_("Textures.ytd"), false); 
+		RegisterTextureFile(&textureID, Cheat::CheatFunctions::TextureFilePath().c_str(), true, xorstr_("Textures.ytd"), false);
 	}
 	else 
 	{ 
@@ -103,7 +101,7 @@ void Cheat::Title(const char * title)
 	if (GUI::ShowHeaderGlare) { Drawing::DrawScaleform(Cheat::GUI::guiX + .330f, GUI::guiY + 0.162f, 1.0f, 0.912f, 255, 255, 255); } // Header Glare
 	if (Cheat::GUI::ShowHeaderGUI) { Cheat::Drawing::Spriter(xorstr_("Textures"), xorstr_("HeaderDefaultTransparent"), Cheat::GUI::guiX, GUI::guiY - 0.208f, 0.21f, 0.084f, 0, 255, 255, 255, 255); }
 	Drawing::Rect(GUI::MainTitleRect, { Cheat::GUI::guiX, GUI::guiY - 0.154f }, { 0.21f, 0.023f }); // Title Rect
-	Drawing::Rect(GUI::line, { Cheat::GUI::guiX, GUI::guiY - 0.142f }, { 0.21f, 0.002f });
+	Drawing::Rect(GUI::TopAndBottomLine, { Cheat::GUI::guiX, GUI::guiY - 0.142f }, { 0.21f, 0.002f });
 
 	Cheat::GUI::CheatGUIHasBeenOpened = true;
 	UI::HIDE_HELP_TEXT_THIS_FRAME();
@@ -148,6 +146,20 @@ bool Cheat::Option(const char * option, const char* InformationText, bool Player
 	if (onThis) { GUI::currentOptionMenuBottom = GUI::optionCount - OptionCountDifference; }
 	if (GUI::currentOption <= GUI::maxVisOptions && GUI::optionCount <= GUI::maxVisOptions)
 	{
+
+		/*
+		TODO
+		if (CheatFeatures::CursorGUINavigationEnabled)
+		{
+			if (Cheat::GameFunctions::IsCursorAtXYPosition({ Cheat::GUI::guiX, GUI::guiY + (GUI::optionCount) * 0.035f - 0.1585f }, { 0.21f, 0.035f })
+				&& CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, INPUT_CURSOR_ACCEPT)
+				)
+			{
+				return true;
+			}
+		}
+		*/
+
 		if (PlayerList)
 		{
 			Drawing::Text(option, GUI::optionText, { Cheat::GUI::guiX - 0.080f, GUI::guiY + (GUI::optionCount) * 0.035f - 0.175f }, { 0.35f, 0.35f }, false);
@@ -157,10 +169,23 @@ bool Cheat::Option(const char * option, const char* InformationText, bool Player
 			Drawing::Text(option, GUI::optionText, { Cheat::GUI::guiX - 0.100f, GUI::guiY + (GUI::optionCount) * 0.035f - 0.175f }, { 0.35f, 0.35f }, false);
 		}
 		Drawing::Rect(GUI::MenuBackgroundRect, { Cheat::GUI::guiX, GUI::guiY + (GUI::optionCount)*0.035f - 0.1585f }, { 0.21f, 0.035f });
-		onThis ? Drawing::Rect(GUI::scroller, { Cheat::GUI::guiX, GUI::guiY + (GUI::optionCount) * 0.035f - 0.1585f }, { 0.21f, 0.035f }) : NULL;
+		onThis ? Drawing::Rect(GUI::scroller, { Cheat::GUI::guiX, GUI::guiY +  (GUI::optionCount)*0.035f - 0.1585f }, { 0.21f, 0.035f }) : NULL;
 	}
 	else if (GUI::optionCount > (GUI::currentOption - GUI::maxVisOptions) && GUI::optionCount <= GUI::currentOption)
 	{
+		/*
+		TODO
+		if (CheatFeatures::CursorGUINavigationEnabled)
+		{
+			if (Cheat::GameFunctions::IsCursorAtXYPosition({ Cheat::GUI::guiX,GUI::guiY + (GUI::optionCount - (GUI::currentOption - GUI::maxVisOptions)) * 0.035f - 0.1585f }, { 0.21f, 0.035f })
+				&& CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, INPUT_CURSOR_ACCEPT)
+				)
+			{
+				return true;
+			}
+		}
+		*/
+
 		if (PlayerList)
 		{
 			Drawing::Text(option, GUI::optionText, { Cheat::GUI::guiX - 0.080f, GUI::guiY + (GUI::optionCount - (GUI::currentOption - GUI::maxVisOptions)) * 0.035f - 0.175f }, { 0.35f, 0.35f }, false);
@@ -169,7 +194,7 @@ bool Cheat::Option(const char * option, const char* InformationText, bool Player
 		{
 			Drawing::Text(option, GUI::optionText, { Cheat::GUI::guiX - 0.100f, GUI::guiY + (GUI::optionCount - (GUI::currentOption - GUI::maxVisOptions)) * 0.035f- 0.175f }, { 0.35f, 0.35f }, false);
 		}
-		Drawing::Rect(GUI::MenuBackgroundRect, { Cheat::GUI::guiX,  GUI::guiY + (GUI::optionCount - (GUI::currentOption - GUI::maxVisOptions))*0.035f - 0.1585f }, { 0.21f, 0.035f });
+		Drawing::Rect(GUI::MenuBackgroundRect, { Cheat::GUI::guiX, GUI::guiY + (GUI::optionCount - (GUI::currentOption - GUI::maxVisOptions))*0.035f - 0.1585f }, { 0.21f, 0.035f });
 		onThis ? Drawing::Rect(GUI::scroller, { Cheat::GUI::guiX, GUI::guiY + (GUI::optionCount - (GUI::currentOption - GUI::maxVisOptions))*0.035f - 0.1585f }, { 0.21f, 0.035f }) : NULL;
 	}
 	if (GUI::currentOption == GUI::optionCount)
@@ -3392,7 +3417,7 @@ bool Cheat::StringVector(const char * option, std::vector<std::string> Vector, i
 	else if (GUI::optionCount == GUI::currentOption && GUI::rightPressed) return true;
 	return false;
 }
-void Cheat::End()
+void Cheat::GUI::End()
 {
 	GUI::TotalOptionsCount = GUI::optionCount;
 	int opcount = GUI::optionCount;
@@ -3402,8 +3427,8 @@ void Cheat::End()
 		Drawing::Text(Cheat::CheatFunctions::StringToChar(std::to_string(GUI::currentOptionMenuBottom) + " / " + std::to_string(GUI::optionCountMenuBottom)), GUI::count, { Cheat::GUI::guiX - 0.085f, GUI::guiY + ((GUI::maxVisOptions + 1) * 0.035f - 0.172f) }, { 0.30f, 0.30f }, true);
 		Drawing::Text(Cheat::CheatFunctions::ReturnCheatBuildAsString().c_str(), GUI::count, { Cheat::GUI::guiX + 0.085f, GUI::guiY + ((GUI::maxVisOptions + 1) * 0.035f - 0.172f) }, { 0.30f, 0.30f }, true);
 		Drawing::Rect(GUI::MenuBottomRect, { Cheat::GUI::guiX, GUI::guiY + ((GUI::maxVisOptions + 1) * 0.035f - 0.1585f) }, { 0.21f, 0.035f });
-		Drawing::Rect(GUI::line, { Cheat::GUI::guiX, GUI::guiY + ((GUI::maxVisOptions + 1) * 0.035f - 0.1765f) }, { 0.21f, 0.002f });
-		Drawing::Spriter("commonmenu", "shop_arrows_upanddown", Cheat::GUI::guiX, GUI::guiY + ((GUI::maxVisOptions + 1) * 0.035f - 0.160f), 0.020f, 0.035f, 180, GUI::line.r, GUI::line.g, GUI::line.b, GUI::line.a);
+		Drawing::Rect(GUI::TopAndBottomLine, { Cheat::GUI::guiX, GUI::guiY + ((GUI::maxVisOptions + 1) * 0.035f - 0.1765f) }, { 0.21f, 0.002f });
+		Drawing::Spriter("commonmenu", "shop_arrows_upanddown", Cheat::GUI::guiX, GUI::guiY + ((GUI::maxVisOptions + 1) * 0.035f - 0.160f), 0.020f, 0.035f, 180, GUI::TopAndBottomLine.r, GUI::TopAndBottomLine.g, GUI::TopAndBottomLine.b, GUI::TopAndBottomLine.a);
 
 		if (OptionInformationText != "") 
 		{
@@ -3417,8 +3442,8 @@ void Cheat::End()
 		Drawing::Text(Cheat::CheatFunctions::StringToChar(std::to_string(GUI::currentOptionMenuBottom) + " / " + std::to_string(GUI::optionCountMenuBottom)), GUI::count, { Cheat::GUI::guiX - 0.085f, GUI::guiY + (GUI::optionCount + 1) * 0.035f - 0.172f }, { 0.30f, 0.30f }, true);
 		Drawing::Text(Cheat::CheatFunctions::ReturnCheatBuildAsString().c_str(), GUI::count, { Cheat::GUI::guiX + 0.085f, GUI::guiY + (GUI::optionCount + 1) * 0.035f - 0.172f }, { 0.30f, 0.30f }, true);
 		Drawing::Rect(GUI::MenuBottomRect, { Cheat::GUI::guiX, GUI::guiY + (GUI::optionCount + 1) * 0.035f - 0.1585f }, { 0.21f, 0.035f });
-		Drawing::Rect(GUI::line, { Cheat::GUI::guiX, GUI::guiY + (GUI::optionCount + 1) * 0.035f - 0.1765f }, { 0.21f, 0.002f });
-		Drawing::Spriter("commonmenu", "shop_arrows_upanddown", Cheat::GUI::guiX, GUI::guiY + ((GUI::optionCount + 1) * 0.035f - 0.160f), 0.020f, 0.035f, 180, GUI::line.r, GUI::line.g, GUI::line.b, GUI::line.a);
+		Drawing::Rect(GUI::TopAndBottomLine, { Cheat::GUI::guiX, GUI::guiY + (GUI::optionCount + 1) * 0.035f - 0.1765f }, { 0.21f, 0.002f });
+		Drawing::Spriter("commonmenu", "shop_arrows_upanddown", Cheat::GUI::guiX, GUI::guiY + ((GUI::optionCount + 1) * 0.035f - 0.160f), 0.020f, 0.035f, 180, GUI::TopAndBottomLine.r, GUI::TopAndBottomLine.g, GUI::TopAndBottomLine.b, GUI::TopAndBottomLine.a);
 
 		if (OptionInformationText != "") 
 		{
@@ -3471,6 +3496,7 @@ void Cheat::GUI::ControlsLoop()
 				}
 				else
 				{
+					if (Cheat::CheatFeatures::CursorGUINavigationEnabled) { Cheat::GameFunctions::EnableDisableCursorGUINavigation(); }
 					GUI::CloseGUI();
 				}
 		
@@ -3686,10 +3712,10 @@ void Cheat::LoadTheme(char* ThemeFileName, bool StartUp)
 	if (HeaderBackgroundGreen != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(HeaderBackgroundGreen)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(HeaderBackgroundGreen))) { Cheat::GUI::headerRect.g = std::stoi(HeaderBackgroundGreen); } } }
 	if (HeaderBackgroundBlue != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(HeaderBackgroundBlue)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(HeaderBackgroundBlue))) { Cheat::GUI::headerRect.b = std::stoi(HeaderBackgroundBlue); } } }
 	if (HeaderBackgroundOpacity != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(HeaderBackgroundOpacity)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(HeaderBackgroundOpacity))) { Cheat::GUI::headerRect.a = std::stoi(HeaderBackgroundOpacity); } } }
-	if (BottomLineRed != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(BottomLineRed)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(BottomLineRed))) { Cheat::GUI::line.r = std::stoi(BottomLineRed); } } }
-	if (BottomLineGreen != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(BottomLineGreen)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(BottomLineGreen))) { Cheat::GUI::line.g = std::stoi(BottomLineGreen); } } }
-	if (BottomLineBlue != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(BottomLineBlue)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(BottomLineBlue))) { Cheat::GUI::line.b = std::stoi(BottomLineBlue); } } }
-	if (BottomLineOpacity != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(BottomLineOpacity)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(BottomLineOpacity))) { Cheat::GUI::line.a = std::stoi(BottomLineOpacity); } } }
+	if (BottomLineRed != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(BottomLineRed)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(BottomLineRed))) { Cheat::GUI::TopAndBottomLine.r = std::stoi(BottomLineRed); } } }
+	if (BottomLineGreen != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(BottomLineGreen)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(BottomLineGreen))) { Cheat::GUI::TopAndBottomLine.g = std::stoi(BottomLineGreen); } } }
+	if (BottomLineBlue != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(BottomLineBlue)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(BottomLineBlue))) { Cheat::GUI::TopAndBottomLine.b = std::stoi(BottomLineBlue); } } }
+	if (BottomLineOpacity != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(BottomLineOpacity)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(BottomLineOpacity))) { Cheat::GUI::TopAndBottomLine.a = std::stoi(BottomLineOpacity); } } }
 	if (TitleBackgroundRed != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(TitleBackgroundRed)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(TitleBackgroundRed))) { Cheat::GUI::MainTitleRect.r = std::stoi(TitleBackgroundRed); } } }
 	if (TitleBackgroundGreen != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(TitleBackgroundGreen)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(TitleBackgroundGreen))) { Cheat::GUI::MainTitleRect.g = std::stoi(TitleBackgroundGreen); } } }
 	if (TitleBackgroundBlue != "NULL") { if (Cheat::CheatFunctions::StringIsInteger(TitleBackgroundBlue)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(TitleBackgroundBlue))) { Cheat::GUI::MainTitleRect.b = std::stoi(TitleBackgroundBlue); } } }
@@ -3825,10 +3851,10 @@ void Cheat::SaveTheme(char* ThemeFileName)
 	Cheat::CheatFunctions::WriteStringToIni(std::to_string(Cheat::GUI::MenuBackgroundRect.b), ThemeFilePath, "THEME", "selection_box_background_blue");
 	Cheat::CheatFunctions::WriteStringToIni(std::to_string(Cheat::GUI::MenuBackgroundRect.a), ThemeFilePath, "THEME", "selection_box_background_opacity");
 
-	Cheat::CheatFunctions::WriteStringToIni(std::to_string(Cheat::GUI::line.r), ThemeFilePath, "THEME", "bottom_line_red");
-	Cheat::CheatFunctions::WriteStringToIni(std::to_string(Cheat::GUI::line.g), ThemeFilePath, "THEME", "bottom_line_green");
-	Cheat::CheatFunctions::WriteStringToIni(std::to_string(Cheat::GUI::line.b), ThemeFilePath, "THEME", "bottom_line_blue");
-	Cheat::CheatFunctions::WriteStringToIni(std::to_string(Cheat::GUI::line.a), ThemeFilePath, "THEME", "bottom_line_opacity");
+	Cheat::CheatFunctions::WriteStringToIni(std::to_string(Cheat::GUI::TopAndBottomLine.r), ThemeFilePath, "THEME", "bottom_line_red");
+	Cheat::CheatFunctions::WriteStringToIni(std::to_string(Cheat::GUI::TopAndBottomLine.g), ThemeFilePath, "THEME", "bottom_line_green");
+	Cheat::CheatFunctions::WriteStringToIni(std::to_string(Cheat::GUI::TopAndBottomLine.b), ThemeFilePath, "THEME", "bottom_line_blue");
+	Cheat::CheatFunctions::WriteStringToIni(std::to_string(Cheat::GUI::TopAndBottomLine.a), ThemeFilePath, "THEME", "bottom_line_opacity");
 
 	Cheat::CheatFunctions::WriteStringToIni(std::to_string(Cheat::GUI::MenuBottomRect.r), ThemeFilePath, "THEME", "menu_bottom_background_red");
 	Cheat::CheatFunctions::WriteStringToIni(std::to_string(Cheat::GUI::MenuBottomRect.g), ThemeFilePath, "THEME", "menu_bottom_background_green");

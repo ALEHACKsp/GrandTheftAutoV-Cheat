@@ -149,7 +149,7 @@ namespace Cheat
 		extern RGBA MenuBackgroundRect;
 		extern RGBA MenuBottomRect;
 		extern RGBA scroller;
-		extern RGBA line;
+		extern RGBA TopAndBottomLine;
 		extern RGBA primary;
 		extern RGBA secondary;
 		extern int keyPressDelay;
@@ -171,6 +171,7 @@ namespace Cheat
 		void MoveMenu(SubMenus menu);
 		void BackMenu();
 		void CloseGUI();
+		void End();
 	}
 	namespace CheatFeatures 
 	{
@@ -451,6 +452,7 @@ namespace Cheat
 		char* ReturnOnlinePlayerPictureString(Player PlayerHandle);
 		void CursorGUINavigationLoop();
 		void EnableDisableCursorGUINavigation();
+		bool IsCursorAtXYPosition(VECTOR2 const& boxCentre, VECTOR2 const& boxSize);
 	}
 	namespace LogFunctions 
 	{
@@ -529,7 +531,6 @@ namespace Cheat
 	bool IntVector(const char* option, std::vector<int> Vector, int& position);
 	bool FloatVector(const char* option, std::vector<float> Vector, int& position);
 	bool StringVector(const char* option, std::vector<std::string> Vector, int& position, const char* InformationText);
-	void End();
 	void LoadThemeFilesLooped();
 	void LoadTheme(char* ThemeFileName, bool StartUp);
 	void SaveTheme(char* ThemeFileName);

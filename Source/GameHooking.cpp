@@ -303,26 +303,9 @@ uint64_t CPattern::virtual_find_pattern(uint64_t address, BYTE *btMask, char *sz
 	return (uint64_t)res;
 }
 
-void failPat(const char* name)
-{
-	char Message[100];
-	snprintf(Message, sizeof(Message), xorstr_("Failed to find game pattern\n\nPattern: %s"), name);
-	Cheat::LogFunctions::Error(Message);
-	std::exit(EXIT_SUCCESS);
-}
 
 template <typename T>
-void	setPat
-(
-	const char*	name,
-	char*		pat,
-	char*		mask,
-	T**			out,
-	bool		rel,
-	int			offset = 0,
-	int			deref = 0,
-	int			skip = 0
-)
+void setPat(std::string	name, char*	pat, char* mask, T** out, bool rel, int offset = 0, int deref = 0, int skip = 0)
 {
 	T*	ptr = nullptr;
 
@@ -336,7 +319,11 @@ void	setPat
 	while (true)
 	{
 		if (ptr == nullptr)
-			failPat(name);
+		{
+			std::string Message = xorstr_("Failed to find '") + name + xorstr_("' pattern");
+			Cheat::LogFunctions::Error((char*)Message.c_str());
+			std::exit(EXIT_SUCCESS);
+		}
 
 		if (deref <= 0)
 			break;
@@ -349,14 +336,7 @@ void	setPat
 }
 
 template <typename T>
-void	setFn
-(
-	const char*	name,
-	char*		pat,
-	char*		mask,
-	T*			out,
-	int			skip = 0
-)
+void setFn(std::string name, char* pat, char* mask, T* out, int skip = 0)
 {
 	char*	ptr = nullptr;
 
@@ -365,7 +345,11 @@ void	setFn
 	ptr = pattern.get(skip).get<char>(0);
 
 	if (ptr == nullptr)
-		failPat(name);
+	{
+		std::string Message = xorstr_("Failed to find '") + name + xorstr_("' pattern");
+		Cheat::LogFunctions::Error((char*)Message.c_str());
+		std::exit(EXIT_SUCCESS);
+	}
 
 	*out = (T)ptr;
 	return;
@@ -462,21 +446,6 @@ void GameHooking::DoGameHooking()
 	//Initialize MinHook
 	if (MH_Initialize() != MH_OK) { Cheat::LogFunctions::Error(xorstr_("Failed to initialize MinHook")); std::exit(EXIT_SUCCESS); }
 
-	//Hook Game Functions
-	auto status = MH_CreateHook(GameHooking::is_DLC_present, HK_IS_DLC_PRESENT, (void**)&OG_IS_DLC_PRESENT);
-	if ((status != MH_OK && status != MH_ERROR_ALREADY_CREATED) || MH_EnableHook(GameHooking::is_DLC_present) != MH_OK) { Cheat::LogFunctions::Error(xorstr_("Failed to hook IS_DLC_PRESENT"));  std::exit(EXIT_SUCCESS); }
-	GameHooking::m_hooks.push_back(GameHooking::is_DLC_present);
-	status = MH_CreateHook(GameHooking::get_event_data, GetEventDataFunc, &m_OriginalGetEventData);
-	if ((status != MH_OK && status != MH_ERROR_ALREADY_CREATED) || MH_EnableHook(GameHooking::get_event_data) != MH_OK)							{ Cheat::LogFunctions::Error(xorstr_("Failed to hook GET_EVENT_DATA"));  std::exit(EXIT_SUCCESS); }
-	GameHooking::m_hooks.push_back(GameHooking::get_event_data);
-	status = MH_CreateHook(GameHooking::GetScriptHandlerIfNetworked, hkGetScriptHandlerIfNetworked, (void**)&ogGetScriptHandlerIfNetworked);
-	if (status != MH_OK || MH_EnableHook(GameHooking::GetScriptHandlerIfNetworked) != MH_OK)													{ Cheat::LogFunctions::Error(xorstr_("Failed to hook GET_SCRIPT_HANDLER_IF_NETWORKED"));  std::exit(EXIT_SUCCESS); }
-	GameHooking::m_hooks.push_back(GameHooking::GetScriptHandlerIfNetworked);
-	status = MH_CreateHook(GameHooking::GetLabelText, hkGetLabelText, (void**)&ogGetLabelText);
-	if (status != MH_OK || MH_EnableHook(GameHooking::GetLabelText) != MH_OK)																	{ Cheat::LogFunctions::Error(xorstr_("Failed to hook GET_LABEL_TEXT"));  std::exit(EXIT_SUCCESS); }
-	GameHooking::m_hooks.push_back(GameHooking::GetLabelText);
-
-
 	bool WaitingGameLoadLogPrinted = false;
 	while (*m_gameState != GameStatePlaying)
 	{
@@ -489,6 +458,21 @@ void GameHooking::DoGameHooking()
 	}
 
 	Cheat::LogFunctions::Message(xorstr_("Game Completed Loading"));
+
+
+	//Hook Game Functions
+	auto status = MH_CreateHook(GameHooking::is_DLC_present, HK_IS_DLC_PRESENT, (void**)&OG_IS_DLC_PRESENT);
+	if ((status != MH_OK && status != MH_ERROR_ALREADY_CREATED) || MH_EnableHook(GameHooking::is_DLC_present) != MH_OK) { Cheat::LogFunctions::Error(xorstr_("Failed to hook IS_DLC_PRESENT"));  std::exit(EXIT_SUCCESS); }
+	GameHooking::m_hooks.push_back(GameHooking::is_DLC_present);
+	status = MH_CreateHook(GameHooking::get_event_data, GetEventDataFunc, &m_OriginalGetEventData);
+	if ((status != MH_OK && status != MH_ERROR_ALREADY_CREATED) || MH_EnableHook(GameHooking::get_event_data) != MH_OK) { Cheat::LogFunctions::Error(xorstr_("Failed to hook GET_EVENT_DATA"));  std::exit(EXIT_SUCCESS); }
+	GameHooking::m_hooks.push_back(GameHooking::get_event_data);
+	status = MH_CreateHook(GameHooking::GetScriptHandlerIfNetworked, hkGetScriptHandlerIfNetworked, (void**)&ogGetScriptHandlerIfNetworked);
+	if (status != MH_OK || MH_EnableHook(GameHooking::GetScriptHandlerIfNetworked) != MH_OK) { Cheat::LogFunctions::Error(xorstr_("Failed to hook GET_SCRIPT_HANDLER_IF_NETWORKED"));  std::exit(EXIT_SUCCESS); }
+	GameHooking::m_hooks.push_back(GameHooking::GetScriptHandlerIfNetworked);
+	status = MH_CreateHook(GameHooking::GetLabelText, hkGetLabelText, (void**)&ogGetLabelText);
+	if (status != MH_OK || MH_EnableHook(GameHooking::GetLabelText) != MH_OK) { Cheat::LogFunctions::Error(xorstr_("Failed to hook GET_LABEL_TEXT"));  std::exit(EXIT_SUCCESS); }
+	GameHooking::m_hooks.push_back(GameHooking::GetLabelText);
 }
 
 static GameHooking::NativeHandler _Handler(uint64_t origHash)

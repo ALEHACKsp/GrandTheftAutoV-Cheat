@@ -122,7 +122,5 @@ public:
 };
 
 void nativeInit(UINT64 hash);
-
 void nativePush64(UINT64 val);
-
 PUINT64 nativeCall();

@@ -80,17 +80,18 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="CrossMapping.h" />
-    <ClInclude Include="enums.h" />
+    <ClInclude Include="Enums.h" />
+    <ClInclude Include="GameArrays.h" />
     <ClInclude Include="GameFunctions.h" />
     <ClInclude Include="Hooking.h" />
     <ClInclude Include="Memory.h" />
     <ClInclude Include="GUI.h" />
-    <ClInclude Include="nativeCaller.h" />
+    <ClInclude Include="NativeCaller.h" />
     <ClInclude Include="NativeInvoker.h" />
-    <ClInclude Include="natives.h" />
+    <ClInclude Include="Natives.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="stdafx.h" />
-    <ClInclude Include="types.h" />
+    <ClInclude Include="Types.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CrossMapping.cpp" />

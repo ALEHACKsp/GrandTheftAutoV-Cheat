@@ -1497,13 +1497,17 @@ char* Cheat::GameFunctions::ReturnOnlinePlayerPictureString(Player PlayerHandle)
 	return "CHAR_DEFAULT";
 }
 
+VECTOR2 Cheat::GameFunctions::ReturnCursorYXCoords()
+{
+	return { CONTROLS::GET_DISABLED_CONTROL_NORMAL(2, INPUT_CURSOR_X), CONTROLS::GET_DISABLED_CONTROL_NORMAL(2, INPUT_CURSOR_Y) };
+}
+
+
 //https://github.com/MAFINS/MenyooSP/blob/v1.3.0/Solution/source/Menu/Menu.cpp
 bool Cheat::GameFunctions::IsCursorAtXYPosition(VECTOR2 const& boxCentre, VECTOR2 const& boxSize)
 {
-	VECTOR2 CursorPositions = { CONTROLS::GET_DISABLED_CONTROL_NORMAL(2, INPUT_CURSOR_X), CONTROLS::GET_DISABLED_CONTROL_NORMAL(2, INPUT_CURSOR_Y) };
-
-	return (CursorPositions.x >= boxCentre.x - boxSize.x / 2 && CursorPositions.x <= boxCentre.x + boxSize.x / 2)
-		&& (CursorPositions.y > boxCentre.y - boxSize.y / 2 && CursorPositions.y < boxCentre.y + boxSize.y / 2);
+	return (ReturnCursorYXCoords().x >= boxCentre.x - boxSize.x / 2 && ReturnCursorYXCoords().x <= boxCentre.x + boxSize.x / 2)
+		&& (ReturnCursorYXCoords().y > boxCentre.y - boxSize.y / 2 && ReturnCursorYXCoords().y < boxCentre.y + boxSize.y / 2);
 }
 
 bool Cheat::CheatFeatures::CursorGUINavigationEnabled = false;
@@ -1519,21 +1523,18 @@ void Cheat::GameFunctions::CursorGUINavigationLoop()
 		PLAYER::SET_PLAYER_CONTROL(PlayerID, false, 0);
 
 		UI::_SHOW_CURSOR_THIS_FRAME();
-		UI::_SET_CURSOR_SPRITE(1);
+		UI::_SET_CURSOR_SPRITE(Normal);
 
-		float CursorPositionX = CONTROLS::GET_DISABLED_CONTROL_NORMAL(2, INPUT_CURSOR_X);
-		float CursorPositionY = CONTROLS::GET_DISABLED_CONTROL_NORMAL(2, INPUT_CURSOR_Y);
-
-		if (IsCursorAtXYPosition({ Cheat::GUI::guiX, GUI::guiY - 0.208f }, { 0.21f, 0.084f })   //The Main Gui can be moved by placing cursor on Header or on the Main Title
-		   || IsCursorAtXYPosition({ Cheat::GUI::guiX, GUI::guiY - 0.154f }, { 0.21f, 0.023f })
+		if (IsCursorAtXYPosition({ Cheat::GUI::guiX, GUI::guiY - 0.208f }, { Cheat::GUI::guiWidth, 0.084f })   //The Main Gui can be moved by placing cursor on Header or on the Main Title
+		   || IsCursorAtXYPosition({ Cheat::GUI::guiX, GUI::guiY - 0.154f }, { Cheat::GUI::guiWidth, 0.023f })
 			)
 		{
-			UI::_SET_CURSOR_SPRITE(3);
+			UI::_SET_CURSOR_SPRITE(PreGrab);
 			if (CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, INPUT_CURSOR_ACCEPT))
 			{
-				UI::_SET_CURSOR_SPRITE(4);
-				Cheat::GUI::guiX = CursorPositionX;
-				Cheat::GUI::guiY = CursorPositionY + 0.20f;
+				UI::_SET_CURSOR_SPRITE(Grab);
+				Cheat::GUI::guiX = ReturnCursorYXCoords().x;
+				Cheat::GUI::guiY = ReturnCursorYXCoords().y + 0.20f;
 			}
 		}
 	}

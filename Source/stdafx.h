@@ -5,7 +5,7 @@
 #pragma warning(disable : 4996)			//			Your code uses a function, class member, variable, or typedef that's marked deprecated.
 #pragma warning(disable : 26495)		//			Variable '%variable%' is uninitialized. Always initialize a member variable.
 #pragma warning(disable : 4091)	
-#pragma warning(disable: 6262)
+#pragma warning(disable : 6262)
 
 
 #include <windows.h>
@@ -28,68 +28,27 @@
 #include <array>
 #pragma comment(lib, "Winmm.lib")
 
-// XORSTR
+//XORSTR
 #include "ThirdParty\XORSTR\xorstr.hpp"
-// MinHook
+//MinHook
 #pragma comment(lib,"ThirdParty/MinHook/libMinHook-x64-v141-md.lib")
 #include "ThirdParty/MinHook/MinHook.h"
 
 
-// Additional Header Files
+//Project Header Files
 #include "Memory.h"
-#include "types.h"
-#include "enums.h"
+#include "Types.h"
+#include "Enums.h"
 #include "CrossMapping.h"
 #include "NativeInvoker.h"
-#include "nativeCaller.h"
-#include "natives.h"
+#include "NativeCaller.h"
+#include "Natives.h"
 #include "Hooking.h"
 #include "GUI.h"
-#include "types.h"
+#include "Types.h"
 #include "GameFunctions.h"
+#include "GameArrays.h"
 
-
-
-class globalHandle
-{
-private:
-	void* _handle;
-
-public:
-	globalHandle(int index)
-		: _handle(&GameHooking::getGlobalPtr()[index >> 18 & 0x3F][index & 0x3FFFF])
-	{ }
-
-	globalHandle(void* p)
-		: _handle(p)
-	{ }
-
-	globalHandle(const globalHandle& copy)
-		: _handle(copy._handle)
-	{ }
-
-	globalHandle At(int index)
-	{
-		return globalHandle(reinterpret_cast<void**>(this->_handle) + (index));
-	}
-
-	globalHandle At(int index, int size)
-	{
-		return this->At(1 + (index * size));
-	}
-
-	template <typename T>
-	T* Get()
-	{
-		return reinterpret_cast<T*>(this->_handle);
-	}
-
-	template <typename T>
-	T& As()
-	{
-		return *this->Get<T>();
-	}
-};
 
 
 
@@ -109,6 +68,7 @@ namespace Cheat
 		extern void ControlsLoop();
 		extern float guiX;
 		extern float guiY;
+		extern float guiWidth;
 		extern char* ThemeFilesArray[1000];
 		extern bool ShowHeaderBackground;
 		extern bool ShowHeaderGUI;
@@ -450,6 +410,7 @@ namespace Cheat
 		float MPHToMS(float MS);
 		void ChangeEntityInvincibilityState(Entity EntityHandle, bool Enable);
 		char* ReturnOnlinePlayerPictureString(Player PlayerHandle);
+		VECTOR2 ReturnCursorYXCoords();
 		void CursorGUINavigationLoop();
 		void EnableDisableCursorGUINavigation();
 		bool IsCursorAtXYPosition(VECTOR2 const& boxCentre, VECTOR2 const& boxSize);
@@ -498,6 +459,7 @@ namespace Cheat
 		extern const std::vector<std::string> CoupesModels;
 		extern const std::vector<std::string> CompactsModels;
 		extern const std::vector<std::string> CommercialModels;
+		extern const std::vector<VehicleModelPicturesStruct> VehicleModelPictures;
 		static Hash WeaponsHashList[] = { 0x92A27487, 0x958A4A8F, 0xF9E6AA4B, 0x84BD7BFD, 0xA2719263,
 		0x8BB05FD7, 0x440E4788, 0x4E875F73, 0xF9DCBF2D, 0xD8DF3C3C, 0x99B507EA, 0xDD5DF8D9,
 		0xDFE37640, 0x678B81B1, 0x19044EE0, 0xCD274149, 0x94117305, 0x3813FC08, 0x1B06D571,

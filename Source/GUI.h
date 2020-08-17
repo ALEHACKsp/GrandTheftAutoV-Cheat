@@ -71,7 +71,7 @@ enum SubMenus
 	casinodlc,
 	diamondcasinoheist,
 	SummerSpecialDLCMenu,
-	networkoptions,
+	OnlineOptionsMenu,
 	animations,
 	timemenu,
 	CommonTeleportLocations,

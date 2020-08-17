@@ -816,3 +816,2763 @@ const std::vector<std::string> Cheat::GameArrays::SummerSpecialModels = {
 	"LANDSTALKER2",	"GLENDALE2",	"GAUNTLET5",
 	"DUKES3",			"COQUETTE4",	"CLUB"
 };
+
+//TODO: Very tedious, WIP
+const std::vector<VehicleModelPicturesStruct> Cheat::GameArrays::VehicleModelPictures = {
+	{ xorstr_("lgm_dlc_specialraces"), xorstr_("ruston") }
+};
+
+
+/*
+if (ModelName == "gp1")
+		{
+			VehiclePreviewDictName = "lgm_dlc_specialraces";
+			VehiclePreviewName = "gp1";
+		}
+		if (ModelName == "turismo2")
+		{
+			VehiclePreviewDictName = "lgm_dlc_specialraces";
+			VehiclePreviewName = "turismo2";
+		}
+
+		 if (ModelName == "infernus2")
+		{
+			VehiclePreviewDictName = "lgm_dlc_specialraces";
+			VehiclePreviewName = "infernus2";
+		}
+		 if (ModelName == "ALPHAZ1")
+		{
+			VehiclePreviewDictName = "elt_dlc_smuggler";
+			VehiclePreviewName = "alphaz1";
+		}
+		 if (ModelName == "BOMBUSHKA")
+		{
+			VehiclePreviewDictName = "candc_smuggler";
+			VehiclePreviewName = "bombushka";
+		}
+		 if (ModelName == "CYCLONE")
+		{
+			VehiclePreviewDictName = "lgm_dlc_smuggler";
+			VehiclePreviewName = "cyclone";
+		}
+		 if (ModelName == "HAVOK")
+		{
+			VehiclePreviewDictName = "elt_dlc_smuggler";
+			VehiclePreviewName = "havok";
+		}
+		 if (ModelName == "HOWARD")
+		{
+			VehiclePreviewDictName = "elt_dlc_smuggler";
+			VehiclePreviewName = "howard";
+		}
+		 if (ModelName == "HUNTER")
+		{
+			VehiclePreviewDictName = "candc_smuggler";
+			VehiclePreviewName = "hunter";
+		}
+		 if (ModelName == "MICROLIGHT")
+		{
+			VehiclePreviewDictName = "elt_dlc_smuggler";
+			VehiclePreviewName = "microlight";
+		}
+		 if (ModelName == "MOGUL")
+		{
+			VehiclePreviewDictName = "candc_smuggler";
+			VehiclePreviewName = "mogul";
+		}
+		 if (ModelName == "MOLOTOK")
+		{
+			VehiclePreviewDictName = "candc_smuggler";
+			VehiclePreviewName = "molotok";
+		}
+		 if (ModelName == "NOKOTA")
+		{
+			VehiclePreviewDictName = "candc_smuggler";
+			VehiclePreviewName = "nokota";
+		}
+		if (ModelName == "PYRO")
+		{
+			VehiclePreviewDictName = "candc_smuggler";
+			VehiclePreviewName = "pyro";
+		}
+		if (ModelName == "RAPIDGT3")
+		{
+			VehiclePreviewDictName = "lgm_dlc_smuggler";
+			VehiclePreviewName = "rapidgt3";
+		}
+		if (ModelName == "RETINUE")
+		{
+			VehiclePreviewDictName = "sssa_dlc_smuggler";
+			VehiclePreviewName = "retinue";
+		}
+		if (ModelName == "ROGUE")
+		{
+			VehiclePreviewDictName = "candc_smuggler";
+			VehiclePreviewName = "rogue";
+		}
+		if (ModelName == "SEABREEZE")
+		{
+			VehiclePreviewDictName = "elt_dlc_smuggler";
+			VehiclePreviewName = "seabreeze";
+		}
+		if (ModelName == "STARLING")
+		{
+			VehiclePreviewDictName = "candc_smuggler";
+			VehiclePreviewName = "starling";
+		}
+		if (ModelName == "TULA")
+		{
+			VehiclePreviewDictName = "candc_smuggler";
+			VehiclePreviewName = "tula";
+		}
+		if (ModelName == "VIGILANTE")
+		{
+			VehiclePreviewDictName = "candc_smuggler";
+			VehiclePreviewName = "vigilante";
+		}
+		 if (ModelName == "VISIONE")
+		{
+		VehiclePreviewDictName = "lgm_dlc_smuggler";
+		VehiclePreviewName = "visione";
+		}
+		 if (ModelName == "ASBO")
+		{
+		VehiclePreviewDictName = "sssa_dlc_casinoheist";
+		VehiclePreviewName = "asbo";
+		}
+		 if (ModelName == "EVERON")
+		{
+		VehiclePreviewDictName = "sssa_dlc_casinoheist";
+		VehiclePreviewName = "everon";
+		}
+		 if (ModelName == "FORMULA")
+		{
+		VehiclePreviewDictName = "lgm_dlc_casinoheist";
+		VehiclePreviewName = "formula";
+		}
+		 if (ModelName == "formula2")
+		{
+		VehiclePreviewDictName = "lgm_dlc_casinoheist";
+		VehiclePreviewName = "formula2";
+		}
+		 if (ModelName == "furia")
+		{
+		VehiclePreviewDictName = "lgm_dlc_casinoheist";
+		VehiclePreviewName = "furia";
+		}
+		 if (ModelName == "imorgon")
+		{
+		VehiclePreviewDictName = "lgm_dlc_casinoheist";
+		VehiclePreviewName = "imorgon";
+		}
+		 if (ModelName == "jb7002")
+		{
+		VehiclePreviewDictName = "candc_casinoheist";
+		VehiclePreviewName = "jb7002";
+		}
+		 if (ModelName == "kanjo")
+		{
+		VehiclePreviewDictName = "sssa_dlc_casinoheist";
+		VehiclePreviewName = "kanjo";
+		}
+		 if (ModelName == "komoda")
+		{
+		VehiclePreviewDictName = "lgm_dlc_casinoheist";
+		VehiclePreviewName = "komoda";
+		}
+		 if (ModelName == "minitank")
+		{
+		VehiclePreviewDictName = "candc_casinoheist";
+		VehiclePreviewName = "minitank";
+		}
+		 if (ModelName == "outlaw")
+		{
+		VehiclePreviewDictName = "sssa_dlc_casinoheist";
+		VehiclePreviewName = "outlaw";
+		}
+		 if (ModelName == "rebla")
+		{
+		VehiclePreviewDictName = "lgm_dlc_casinoheist";
+		VehiclePreviewName = "rebla";
+		}
+		 if (ModelName == "retinue2")
+		{
+		VehiclePreviewDictName = "sssa_dlc_casinoheist";
+		VehiclePreviewName = "retinue2";
+		}
+		 if (ModelName == "stryder")
+		{
+		VehiclePreviewDictName = "lgm_dlc_casinoheist";
+		VehiclePreviewName = "stryder";
+		}
+		 if (ModelName == "sugoi")
+		{
+		VehiclePreviewDictName = "sssa_dlc_casinoheist";
+		VehiclePreviewName = "sugoi";
+		}
+		if (ModelName == "sultan2")
+		{
+			VehiclePreviewDictName = "sssa_dlc_casinoheist";
+			VehiclePreviewName = "sultan2";
+		}
+		if (ModelName == "vagrant")
+		{
+			VehiclePreviewDictName = "sssa_dlc_casinoheist";
+			VehiclePreviewName = "vagrant";
+		}
+		if (ModelName == "vstr")
+		{
+			VehiclePreviewDictName = "lgm_dlc_casinoheist";
+			VehiclePreviewName = "vstr";
+		}
+		if (ModelName == "yousemite2")
+		{
+			VehiclePreviewDictName = "lgm_dlc_specialraces";
+			VehiclePreviewName = "infernus2";
+		}
+		if (ModelName == "zhaba")
+		{
+			VehiclePreviewDictName = "candc_casinoheist";
+			VehiclePreviewName = "zhaba";
+		}
+		if (ModelName == "caracara2")
+		{
+			VehiclePreviewDictName = "sssa_dlc_vinewood";
+			VehiclePreviewName = "caracara2";
+		}
+		if (ModelName == "drafter")
+		{
+			VehiclePreviewDictName = "lgm_dlc_vinewood";
+			VehiclePreviewName = "drafter";
+		}
+		if (ModelName == "dynasty")
+		{
+			VehiclePreviewDictName = "sssa_dlc_vinewood";
+			VehiclePreviewName = "dynasty";
+		}
+		if (ModelName == "emerus")
+		{
+			VehiclePreviewDictName = "lgm_dlc_vinewood";
+			VehiclePreviewName = "emerus";
+		}
+		if (ModelName == "hellion")
+		{
+			VehiclePreviewDictName = "sssa_dlc_vinewood";
+			VehiclePreviewName = "hellion";
+		}
+		if (ModelName == "issi7")
+		{
+			VehiclePreviewDictName = "sssa_dlc_vinewood";
+			VehiclePreviewName = "issi7";
+		}
+		 if (ModelName == "jugular")
+		{
+		VehiclePreviewDictName = "lgm_dlc_vinewood";
+		VehiclePreviewName = "jugular";
+		}
+		 if (ModelName == "krieger")
+		{
+		VehiclePreviewDictName = "lgm_dlc_vinewood";
+		VehiclePreviewName = "krieger";
+		}
+		 if (ModelName == "locust")
+		{
+		VehiclePreviewDictName = "lgm_dlc_vinewood";
+		VehiclePreviewName = "locust";
+		}
+		 if (ModelName == "nebula")
+		{
+		VehiclePreviewDictName = "sssa_dlc_vinewood";
+		VehiclePreviewName = "nebula";
+		}
+		 if (ModelName == "neo")
+		{
+		VehiclePreviewDictName = "lgm_dlc_vinewood";
+		VehiclePreviewName = "neo";
+		}
+		 if (ModelName == "novak")
+		{
+		VehiclePreviewDictName = "lgm_dlc_vinewood";
+		VehiclePreviewName = "novak";
+		}
+		if (ModelName == "paragon")
+		{
+			VehiclePreviewDictName = "lgm_dlc_vinewood";
+			VehiclePreviewName = "paragon";
+		}
+		if (ModelName == "paragon2")
+		{
+			VehiclePreviewDictName = "lgm_dlc_vinewood";
+			VehiclePreviewName = "paragon";
+		}
+		if (ModelName == "peyote2")
+		{
+			VehiclePreviewDictName = "sssa_dlc_vinewood";
+			VehiclePreviewName = "peyote2";
+		}
+		if (ModelName == "rrocket")
+		{
+			VehiclePreviewDictName = "lgm_dlc_vinewood";
+			VehiclePreviewName = "rrocket";
+		}
+		if (ModelName == "s80")
+		{
+			VehiclePreviewDictName = "lgm_dlc_vinewood";
+			VehiclePreviewName = "s80";
+		}
+		if (ModelName == "thrax")
+		{
+			VehiclePreviewDictName = "lgm_dlc_vinewood";
+			VehiclePreviewName = "thrax";
+		}
+		if (ModelName == "zion3")
+		{
+			VehiclePreviewDictName = "sssa_dlc_vinewood";
+			VehiclePreviewName = "zion3";
+		}
+		if (ModelName == "zorrusso")
+		{
+			VehiclePreviewDictName = "lgm_dlc_vinewood";
+			VehiclePreviewName = "zorrusso";
+		}
+		if (ModelName == "BRUISER")
+		{
+			VehiclePreviewDictName = "mba_vehicles";
+			VehiclePreviewName = "bruiser_c_1";
+		}
+		if (ModelName == "BRUISER2")
+		{
+			VehiclePreviewDictName = "mba_vehicles";
+			VehiclePreviewName = "bruiser_c_2";
+		}
+		if (ModelName == "BRUISER3")
+		{
+			VehiclePreviewDictName = "mba_vehicles";
+			VehiclePreviewName = "bruiser_c_3";
+		}
+		if (ModelName == "BRUTUS")
+		{
+			VehiclePreviewDictName = "mba_vehicles";
+			VehiclePreviewName = "brutus1";
+		}
+		 if (ModelName == "BRUTUS2")
+		{
+		VehiclePreviewDictName = "mba_vehicles";
+		VehiclePreviewName = "brutus2";
+		}
+		 if (ModelName == "BRUTUS3")
+		{
+		VehiclePreviewDictName = "mba_vehicles";
+		VehiclePreviewName = "brutus3";
+		}
+		 if (ModelName == "CERBERUS")
+		{
+		VehiclePreviewDictName = "mba_vehicles";
+		VehiclePreviewName = "cerberus1";
+		}
+		 if (ModelName == "CERBERUS2")
+		{
+		VehiclePreviewDictName = "mba_vehicles";
+		VehiclePreviewName = "cerberus2";
+		}
+		 if (ModelName == "CERBERUS3")
+		{
+		VehiclePreviewDictName = "mba_vehicles";
+		VehiclePreviewName = "cerberus3";
+		}
+		 if (ModelName == "CLIQUE")
+		{
+		VehiclePreviewDictName = "lgm_dlc_arena";
+		VehiclePreviewName = "clique";
+		}
+		 if (ModelName == "DEATHBIKE")
+		{
+		VehiclePreviewDictName = "mba_vehicles";
+		VehiclePreviewName = "deathbike_c_1";
+		}
+		 if (ModelName == "DEATHBIKE2")
+		{
+		VehiclePreviewDictName = "mba_vehicles";
+		VehiclePreviewName = "deathbike_c_2";
+		}
+		 if (ModelName == "DEATHBIKE3")
+		{
+		VehiclePreviewDictName = "mba_vehicles";
+		VehiclePreviewName = "deathbike_c_3";
+		}
+		 if (ModelName == "DEVESTE")
+		{
+		VehiclePreviewDictName = "lgm_dlc_arena";
+		VehiclePreviewName = "deveste";
+		}
+		 if (ModelName == "DEVIANT")
+		{
+		VehiclePreviewDictName = "lgm_dlc_arena";
+		VehiclePreviewName = "deviant";
+		}
+		 if (ModelName == "DOMINATOR4")
+		{
+		VehiclePreviewDictName = "mba_vehicles";
+		VehiclePreviewName = "dominato_c_1";
+		}
+		 if (ModelName == "DOMINATOR5")
+		{
+		VehiclePreviewDictName = "mba_vehicles";
+		VehiclePreviewName = "dominato_c_2";
+		}
+		if (ModelName == "DOMINATOR6")
+		{
+			VehiclePreviewDictName = "mba_vehicles";
+			VehiclePreviewName = "dominato_c_3";
+		}
+		if (ModelName == "IMPALER")
+		{
+			VehiclePreviewDictName = "sssa_dlc_vinewood";
+			VehiclePreviewName = "impaler";
+		}
+		if (ModelName == "IMPALER2")
+		{
+			VehiclePreviewDictName = "mba_vehicles";
+			VehiclePreviewName = "impaler_c_2";
+		}
+		if (ModelName == "IMPALER3")
+		{
+			VehiclePreviewDictName = "mba_vehicles";
+			VehiclePreviewName = "impaler_c_2";
+		}
+		if (ModelName == "IMPALER4")
+		{
+			VehiclePreviewDictName = "mba_vehicles";
+			VehiclePreviewName = "impaler_c_3";
+		}
+		if (ModelName == "IMPERATOR")
+		{
+			VehiclePreviewDictName = "mba_vehicles";
+			VehiclePreviewName = "imperator1_c";
+		}
+		if (ModelName == "IMPERATOR2")
+		{
+			VehiclePreviewDictName = "mba_vehicles";
+			VehiclePreviewName = "imperator2_c";
+		}
+		if (ModelName == "IMPERATOR3")
+		{
+			VehiclePreviewDictName = "mba_vehicles";
+			VehiclePreviewName = "imperator3_c";
+		}
+		if (ModelName == "ISSI4")
+		{
+			VehiclePreviewDictName = "mba_vehicles";
+			VehiclePreviewName = "issi3_c_1";
+		}
+		if (ModelName == "ISSI5")
+		{
+			VehiclePreviewDictName = "mba_vehicles";
+			VehiclePreviewName = "issi3_c_2";
+		}
+		if (ModelName == "ISSI6")
+		{
+			VehiclePreviewDictName = "mba_vehicles";
+			VehiclePreviewName = "issi3_c_3";
+		}
+		if (ModelName == "ITALIGTO")
+		{
+			VehiclePreviewDictName = "lgm_dlc_arena";
+			VehiclePreviewName = "italigto";
+		}
+		if (ModelName == "MONSTER3")
+		{
+		VehiclePreviewDictName = "mba_vehicles";
+		VehiclePreviewName = "monster_c_1";
+		}
+		 if (ModelName == "MONSTER4")
+		{
+		VehiclePreviewDictName = "mba_vehicles";
+		VehiclePreviewName = "monster_c_2";
+		}
+		 if (ModelName == "MONSTER5")
+		{
+		VehiclePreviewDictName = "mba_vehicles";
+		VehiclePreviewName = "monster_c_3";
+		}
+		 if (ModelName == "RCBANDITO")
+		{
+		VehiclePreviewDictName = "sssa_dlc_arena";
+		VehiclePreviewName = "rcbandito";
+		}
+		 if (ModelName == "SCARAB2")
+		{
+		VehiclePreviewDictName = "mba_vehicles";
+		VehiclePreviewName = "scarab2_c";
+		}
+		 if (ModelName == "SCARAB3")
+		{
+		VehiclePreviewDictName = "mba_vehicles";
+		VehiclePreviewName = "scarab3_c";
+		}
+		 if (ModelName == "SCHLAGEN")
+		{
+		VehiclePreviewDictName = "lgm_dlc_arena";
+		VehiclePreviewName = "schlagen";
+		}
+		 if (ModelName == "SLAMVAN4")
+		{
+			VehiclePreviewDictName = "mba_vehicles";
+			VehiclePreviewName = "slamvan_c_1";
+		}
+		 if (ModelName == "SLAMVAN5")
+		{
+		VehiclePreviewDictName = "mba_vehicles";
+		VehiclePreviewName = "slamvan_c_2";
+		}
+		 if (ModelName == "SLAMVAN6")
+		{
+		VehiclePreviewDictName = "mba_vehicles";
+		VehiclePreviewName = "slamvan_c_3";
+		}
+		 if (ModelName == "TOROS")
+		{
+		VehiclePreviewDictName = "lgm_dlc_arena";
+		VehiclePreviewName = "toros";
+		}
+		 if (ModelName == "TULIP")
+		{
+		VehiclePreviewDictName = "sssa_dlc_arena";
+		VehiclePreviewName = "tulip";
+		}
+		 if (ModelName == "VAMOS")
+		{
+		VehiclePreviewDictName = "sssa_dlc_arena";
+		VehiclePreviewName = "vamos";
+		}
+		 if (ModelName == "ZR380")
+		{
+		VehiclePreviewDictName = "mba_vehicles";
+		VehiclePreviewName = "zr3801_c";
+		}
+		 if (ModelName == "ZR3802")
+		{
+		VehiclePreviewDictName = "mba_vehicles";
+		VehiclePreviewName = "zr3802_c";
+		}
+		 if (ModelName == "ZR3803")
+		{
+		VehiclePreviewDictName = "mba_vehicles";
+		VehiclePreviewName = "zr3803_c";
+		}
+		 if (ModelName == "BLIMP3")
+		{
+		VehiclePreviewDictName = "elt_dlc_battle";
+		VehiclePreviewName = "blimp3";
+		}
+		 if (ModelName == "MENACER")
+		{
+		VehiclePreviewDictName = "candc_battle";
+		VehiclePreviewName = "menacer";
+		}
+		 if (ModelName == "MULE4")
+		{
+			VehiclePreviewDictName = "candc_battle";
+			VehiclePreviewName = "mule4";
+		}
+		 if (ModelName == "PATRIOT2")
+		{
+			VehiclePreviewDictName = "sssa_dlc_battle";
+			VehiclePreviewName = "patriot2";
+		}
+		 if (ModelName == "POUNDER2")
+		{
+			VehiclePreviewDictName = "candc_battle";
+			VehiclePreviewName = "pounder2";
+		}
+		 if (ModelName == "STRIKEFORCE")
+		{
+			VehiclePreviewDictName = "candc_battle";
+			VehiclePreviewName = "strikeforce";
+		}
+		 if (ModelName == "SCRAMJET")
+		{
+		VehiclePreviewDictName = "candc_battle";
+		VehiclePreviewName = "scramjet";
+		}
+		 if (ModelName == "STAFFORD")
+		{
+		VehiclePreviewDictName = "lgm_dlc_battle";
+		VehiclePreviewName = "stafford";
+		}
+		 if (ModelName == "SWINGER")
+		{
+		VehiclePreviewDictName = "lgm_dlc_battle";
+		VehiclePreviewName = "swinger";
+		}
+		 if (ModelName == "TERBYTE")
+		{
+		VehiclePreviewDictName = "lgm_dlc_specialraces";
+		VehiclePreviewName = "infernus2";
+		}
+		 if (ModelName == "oppressor2")
+		{
+		VehiclePreviewDictName = "candc_battle";
+		VehiclePreviewName = "oppressor2";
+		}
+		 if (ModelName == "scramjet")
+		{
+		VehiclePreviewDictName = "lgm_dlc_specialraces";
+		VehiclePreviewName = "infernus2";
+		}
+		 if (ModelName == "jester3")
+		{
+		VehiclePreviewDictName = "lgm_dlc_specialraces";
+		VehiclePreviewName = "infernus2";
+		}
+		 if (ModelName == "hauler2")
+		{
+		VehiclePreviewDictName = "candc_truck";
+		VehiclePreviewName = "cab_1";
+		}
+		 if (ModelName == "phantom3")
+		{
+		VehiclePreviewDictName = "candc_truck";
+		VehiclePreviewName = "cab_0";
+		}
+		 if (ModelName == "APC")
+		{
+		VehiclePreviewDictName = "candc_gunrunning";
+		VehiclePreviewName = "apc";
+		}
+		 if (ModelName == "Halftrack")
+		{
+		VehiclePreviewDictName = "candc_gunrunning";
+		VehiclePreviewName = "halftrack";
+		}
+		 if (ModelName == "Trailersmall2")
+		{
+		VehiclePreviewDictName = "candc_gunrunning";
+		VehiclePreviewName = "trsmall2";
+		}
+		 if (ModelName == "oppressor")
+		{
+		VehiclePreviewDictName = "candc_gunrunning";
+		VehiclePreviewName = "oppressor";
+		}
+		 if (ModelName == "tampa3")
+		{
+		VehiclePreviewDictName = "candc_gunrunning";
+		VehiclePreviewName = "tampa3";
+		}
+		 if (ModelName == "dune3")
+		{
+		VehiclePreviewDictName = "candc_gunrunning";
+		VehiclePreviewName = "dune3";
+		}
+		 if (ModelName == "nightshark")
+		{
+		VehiclePreviewDictName = "candc_gunrunning";
+		VehiclePreviewName = "nightshark";
+		}
+		 if (ModelName == "ardent")
+		{
+		VehiclePreviewDictName = "candc_gunrunning";
+		VehiclePreviewName = "ardent";
+		}
+		 if (ModelName == "cheetah2")
+		{
+		VehiclePreviewDictName = "lgm_dlc_gunrunning";
+		VehiclePreviewName = "cheetah2";
+		}
+		 if (ModelName == "torero")
+		{
+		VehiclePreviewDictName = "lgm_dlc_gunrunning";
+		VehiclePreviewName = "torero";
+		}
+		 if (ModelName == "vagner")
+		{
+		VehiclePreviewDictName = "lgm_dlc_gunrunning";
+		VehiclePreviewName = "vagner";
+		}
+		 if (ModelName == "XA21")
+		{
+		VehiclePreviewDictName = "lgm_dlc_gunrunning";
+		VehiclePreviewName = "xa21";
+		}
+		 if (ModelName == "caddy3")
+		{
+		VehiclePreviewDictName = "foreclosures_bunker";
+		VehiclePreviewName = "transportation_2";
+		}
+		 if (ModelName == "autarch")
+		{
+		VehiclePreviewDictName = "lgm_dlc_xmas2017";
+		VehiclePreviewName = "autarch";
+		}
+		 if (ModelName == "barrage")
+		{
+		VehiclePreviewDictName = "candc_xmas2017";
+		VehiclePreviewName = "barrage";
+		}
+		 if (ModelName == "chernobog")
+		{
+		VehiclePreviewDictName = "candc_xmas2017";
+		VehiclePreviewName = "chernobog";
+		}
+		 if (ModelName == "comet4")
+		{
+		VehiclePreviewDictName = "lgm_dlc_xmas2017";
+		VehiclePreviewName = "comet4";
+		}
+		 if (ModelName == "comet5")
+		{
+		VehiclePreviewDictName = "lgm_dlc_xmas2017";
+		VehiclePreviewName = "comet5";
+		}
+		 if (ModelName == "deluxo")
+		{
+		VehiclePreviewDictName = "candc_xmas2017";
+		VehiclePreviewName = "deluxo";
+		}
+		 if (ModelName == "gt500")
+		{
+		VehiclePreviewDictName = "lgm_dlc_xmas2017";
+		VehiclePreviewName = "gt500";
+		}
+		 if (ModelName == "hermes")
+		{
+		VehiclePreviewDictName = "sssa_dlc_xmas2017";
+		VehiclePreviewName = "hermes";
+		}
+		 if (ModelName == "hustler")
+		{
+		VehiclePreviewDictName = "lgm_dlc_xmas2017";
+		VehiclePreviewName = "hustler";
+		}
+		 if (ModelName == "kamacho")
+		{
+		VehiclePreviewDictName = "sssa_dlc_xmas2017";
+		VehiclePreviewName = "kamacho";
+		}
+		 if (ModelName == "khanjali")
+		{
+		VehiclePreviewDictName = "candc_xmas2017";
+		VehiclePreviewName = "khanjali";
+		}
+		 if (ModelName == "neon")
+		{
+		VehiclePreviewDictName = "lgm_dlc_xmas2017";
+		VehiclePreviewName = "neon";
+		}
+		 if (ModelName == "pariah")
+		{
+		VehiclePreviewDictName = "lgm_dlc_xmas2017";
+		VehiclePreviewName = "pariah";
+		}
+		 if (ModelName == "raiden")
+		{
+		VehiclePreviewDictName = "lgm_dlc_xmas2017";
+		VehiclePreviewName = "raiden";
+		}
+		 if (ModelName == "revolter")
+		{
+		VehiclePreviewDictName = "lgm_dlc_xmas2017";
+		VehiclePreviewName = "revolter";
+		}
+		 if (ModelName == "riata")
+		{
+		VehiclePreviewDictName = "sssa_dlc_xmas2017";
+		VehiclePreviewName = "riata";
+		}
+		 if (ModelName == "riot2")
+		{
+		VehiclePreviewDictName = "candc_xmas2017";
+		VehiclePreviewName = "riot2";
+		}
+		 if (ModelName == "savestra")
+		{
+		VehiclePreviewDictName = "lgm_dlc_xmas2017";
+		VehiclePreviewName = "savestra";
+		}
+		 if (ModelName == "sc1")
+		{
+		VehiclePreviewDictName = "lgm_dlc_xmas2017";
+		VehiclePreviewName = "sc1";
+		}
+		 if (ModelName == "sentinel3")
+		{
+		VehiclePreviewDictName = "sssa_dlc_xmas2017";
+		VehiclePreviewName = "sentinel3";
+		}
+		 if (ModelName == "streiter")
+		{
+		VehiclePreviewDictName = "lgm_dlc_xmas2017";
+		VehiclePreviewName = "streiter";
+		}
+		 if (ModelName == "stromberg")
+		{
+		VehiclePreviewDictName = "candc_xmas2017";
+		VehiclePreviewName = "stromberg";
+		}
+		 if (ModelName == "thruster")
+		{
+		VehiclePreviewDictName = "candc_xmas2017";
+		VehiclePreviewName = "thruster";
+		}
+		 if (ModelName == "viseris")
+		{
+		VehiclePreviewDictName = "lgm_dlc_xmas2017";
+		VehiclePreviewName = "viseris";
+		}
+		 if (ModelName == "volatol")
+		{
+		VehiclePreviewDictName = "candc_xmas2017";
+		VehiclePreviewName = "volatol";
+		}
+		 if (ModelName == "yosemite2")
+		{
+		VehiclePreviewDictName = "sssa_dlc_casinoheist";
+		VehiclePreviewName = "yosemite2";
+		}
+		 if (ModelName == "z190")
+		{
+		VehiclePreviewDictName = "lgm_dlc_xmas2017";
+		VehiclePreviewName = "z190";
+		}
+		 if (ModelName == "caracara")
+		{
+		VehiclePreviewDictName = "candc_assault";
+		VehiclePreviewName = "caracara";
+		}
+		 if (ModelName == "cheburek")
+		{
+		VehiclePreviewDictName = "sssa_dlc_assault";
+		VehiclePreviewName = "cheburek";
+		}
+		 if (ModelName == "dominator3")
+		{
+		VehiclePreviewDictName = "sssa_dlc_assault";
+		VehiclePreviewName = "dominator3";
+		}
+		 if (ModelName == "ellie")
+		{
+		VehiclePreviewDictName = "sssa_dlc_assault";
+		VehiclePreviewName = "ellie";
+		}
+		 if (ModelName == "entity2")
+		{
+		VehiclePreviewDictName = "lgm_dlc_assault";
+		VehiclePreviewName = "entity2";
+		}
+		 if (ModelName == "fagaloa")
+		{
+		VehiclePreviewDictName = "sssa_dlc_assault";
+		VehiclePreviewName = "fagaloa";
+		}
+		if (ModelName == "flashgt")
+		{
+			VehiclePreviewDictName = "lgm_dlc_assault";
+			VehiclePreviewName = "flashgt";
+		}
+		if (ModelName == "gb200")
+		{
+			VehiclePreviewDictName = "lgm_dlc_assault";
+			VehiclePreviewName = "gb200";
+		}
+		if (ModelName == "hotring")
+		{
+			VehiclePreviewDictName = "sssa_dlc_assault";
+			VehiclePreviewName = "hotring";
+		}
+		if (ModelName == "issi3")
+		{
+			VehiclePreviewDictName = "sssa_dlc_assault";
+			VehiclePreviewName = "issi3";
+		}
+		 if (ModelName == "jester3")
+		{
+		VehiclePreviewDictName = "lgm_dlc_assault";
+		VehiclePreviewName = "jester3";
+		}
+		 if (ModelName == "michelli")
+		{
+		VehiclePreviewDictName = "sssa_dlc_assault";
+		VehiclePreviewName = "michelli";
+		}
+		 if (ModelName == "seasparrow")
+		{
+		VehiclePreviewDictName = "elt_dlc_assault";
+		VehiclePreviewName = "sparrow";
+		}
+		 if (ModelName == "tezeract")
+		{
+		VehiclePreviewDictName = "lgm_dlc_assault";
+		VehiclePreviewName = "tezeract";
+		}
+		 if (ModelName == "taipan")
+		{
+		VehiclePreviewDictName = "lgm_dlc_assault";
+		VehiclePreviewName = "taipan";
+		}
+		 if (ModelName == "tyrant")
+		{
+		VehiclePreviewDictName = "lgm_dlc_assault";
+		VehiclePreviewName = "tyrant";
+		}
+		 if (ModelName == "BISON")
+		{
+		VehiclePreviewDictName = "sssa_default";
+		VehiclePreviewName = "bison";
+		}
+		 if (ModelName == "BOBCATXL")
+		{
+		VehiclePreviewDictName = "sssa_dlc_business";
+		VehiclePreviewName = "bobcatx1";
+		}
+		if (ModelName == "BOXVILLE")
+		{
+			VehiclePreviewDictName = "candc_casinoheist";
+			VehiclePreviewName = "boxville";
+		}
+		if (ModelName == "BOXVILLE4")
+		{
+			VehiclePreviewDictName = "candc_default";
+			VehiclePreviewName = "boxville4";
+		}
+		if (ModelName == "BURRITO")
+		{
+			VehiclePreviewDictName = "sssa_dlc_heist";
+			VehiclePreviewName = "gburrito2";
+		}
+		if (ModelName == "BURRITO2")
+		{
+			VehiclePreviewDictName = "candc_casinoheist";
+			VehiclePreviewName = "burrito2";
+		}
+		 if (ModelName == "GBURRITO")
+		{
+		VehiclePreviewDictName = "sssa_dlc_heist";
+		VehiclePreviewName = "gburrito2";
+		}
+		 if (ModelName == "MINIVAN")
+		{
+		VehiclePreviewDictName = "sssa_dlc_business";
+		VehiclePreviewName = "minivan";
+		}
+		 if (ModelName == "MINIVAN2")
+		{
+		VehiclePreviewDictName = "lsc_lowrider2";
+		VehiclePreviewName = "minivan2";
+		}
+		 if (ModelName == "PARADISE")
+		{
+		VehiclePreviewDictName = "sssa_default";
+		VehiclePreviewName = "paradise";
+		}
+		 if (ModelName == "RUMPO")
+		{
+		VehiclePreviewDictName = "sssa_dlc_heist";
+		VehiclePreviewName = "rumpo";
+		}
+		 if (ModelName == "RUMPO3")
+		{
+		VehiclePreviewDictName = "sssa_dlc_executive_1";
+		VehiclePreviewName = "rumpo3";
+		}
+		 if (ModelName == "SURFER")
+		{
+		VehiclePreviewDictName = "sssa_dlc_hipster";
+		VehiclePreviewName = "surfer";
+		}
+		 if (ModelName == "YOUGA")
+		{
+		VehiclePreviewDictName = "sssa_dlc_hipster";
+		VehiclePreviewName = "youga";
+		}
+		 if (ModelName == "YOUGA2")
+		{
+		VehiclePreviewDictName = "sssa_dlc_biker";
+		VehiclePreviewName = "youga2";
+		}
+		 if (ModelName == "FORKLIFT")
+		{
+		VehiclePreviewDictName = "lgm_dlc_specialraces";
+		VehiclePreviewName = "infernus2";
+		}
+		 if (ModelName == "SADLER")
+		{
+		VehiclePreviewDictName = "sssa_default";
+		VehiclePreviewName = "sadler";
+		}
+		 if (ModelName == "BALLER2")
+		{
+		VehiclePreviewDictName = "sssa_default";
+		VehiclePreviewName = "baller2";
+		}
+		 if (ModelName == "BALLER3")
+		{
+		VehiclePreviewDictName = "lgm_dlc_apartments";
+		VehiclePreviewName = "baller3";
+		}
+		 if (ModelName == "BALLER4")
+		{
+		VehiclePreviewDictName = "lgm_dlc_apartments";
+		VehiclePreviewName = "baller4";
+		}
+		 if (ModelName == "BALLER6")
+		{
+		VehiclePreviewDictName = "lgm_dlc_specialraces";
+		VehiclePreviewName = "infernus2";
+		}
+		 if (ModelName == "BJXL")
+		{
+		VehiclePreviewDictName = "sssa_dlc_battle";
+		VehiclePreviewName = "bjxl";
+		}
+		 if (ModelName == "CAVALCADE")
+		{
+		VehiclePreviewDictName = "sssa_dlc_business";
+		VehiclePreviewName = "cavcade2";
+		}
+		 if (ModelName == "CAVALCADE2")
+		{
+		VehiclePreviewDictName = "sssa_dlc_business";
+		VehiclePreviewName = "cavcade2";
+		}
+		 if (ModelName == "CONTENDER")
+		{
+		VehiclePreviewDictName = "sssa_dlc_stunt";
+		VehiclePreviewName = "contender";
+		}
+		 if (ModelName == "FQ2")
+		{
+		VehiclePreviewDictName = "sssa_dlc_battle";
+		VehiclePreviewName = "fq2";
+		}
+		else if (ModelName == "GRANGER")
+		{
+		VehiclePreviewDictName = "sssa_dlc_business";
+		VehiclePreviewName = "granger";
+		}
+		 if (ModelName == "GRESLEY")
+		{
+		VehiclePreviewDictName = "sssa_dlc_heist";
+		VehiclePreviewName = "gresley";
+		}
+		 if (ModelName == "HABANERO")
+		{
+		VehiclePreviewDictName = "sssa_dlc_battle";
+		VehiclePreviewName = "habanero";
+		}
+		 if (ModelName == "HUNTLEY")
+		{
+		VehiclePreviewDictName = "lgm_dlc_business2";
+		VehiclePreviewName = "huntley";
+		}
+		 if (ModelName == "LANDSTALKER")
+		{
+		VehiclePreviewDictName = "sssa_dlc_heist";
+		VehiclePreviewName = "landstalker";
+		}
+		 if (ModelName == "MESA")
+		{
+		VehiclePreviewDictName = "candc_default";
+		VehiclePreviewName = "mesa";
+		}
+		 if (ModelName == "MESA2")
+		{
+		VehiclePreviewDictName = "candc_default";
+		VehiclePreviewName = "mesa";
+		}
+		 if (ModelName == "PATRIOT")
+		{
+		VehiclePreviewDictName = "sssa_dlc_battle";
+		VehiclePreviewName = "patriot";
+		}
+		 if (ModelName == "RADI")
+		{
+		VehiclePreviewDictName = "sssa_dlc_business";
+		VehiclePreviewName = "radi";
+		}
+		 if (ModelName == "ROCOTO")
+		{
+		VehiclePreviewDictName = "sssa_default";
+		VehiclePreviewName = "rocoto";
+		}
+		 if (ModelName == "SERRANO")
+		{
+		VehiclePreviewDictName = "sssa_dlc_battle";
+		VehiclePreviewName = "serrano";
+		}
+		 if (ModelName == "XLS")
+		{
+		VehiclePreviewDictName = "lgm_dlc_executive1";
+		VehiclePreviewName = "xls";
+		}
+		 if (ModelName == "XLS2")
+		{
+		VehiclePreviewDictName = "lgm_dlc_specialraces";
+		VehiclePreviewName = "infernus2";
+		}
+		 if (ModelName == "ADDER")
+		{
+		VehiclePreviewDictName = "lgm_default";
+		VehiclePreviewName = "adder";
+		}
+		 if (ModelName == "BANSHEE2")
+		{
+		VehiclePreviewDictName = "lsc_jan2016";
+		VehiclePreviewName = "banshee2";
+		}
+		 if (ModelName == "BULLET")
+		{
+		VehiclePreviewDictName = "lgm_default";
+		VehiclePreviewName = "bullet";
+		}
+		 if (ModelName == "CHEETAH")
+		{
+		VehiclePreviewDictName = "lgm_default";
+		VehiclePreviewName = "cheetah";
+		}
+		 if (ModelName == "ENTITYXF")
+		{
+		VehiclePreviewDictName = "lgm_default";
+		VehiclePreviewName = "entityxf";
+		}
+		 if (ModelName == "FMJ")
+		{
+		VehiclePreviewDictName = "lgm_dlc_executive1";
+		VehiclePreviewName = "fmj";
+		}
+		 if (ModelName == "SHEAVA")
+		{
+		VehiclePreviewDictName = "lgm_dlc_stunt";
+		VehiclePreviewName = "sheava";
+		}
+		 if (ModelName == "INFERNUS")
+		{
+		VehiclePreviewDictName = "lgm_default";
+		VehiclePreviewName = "infernus";
+		}
+		 if (ModelName == "NERO")
+		{
+		VehiclePreviewDictName = "lsc_dlc_import_export";
+		VehiclePreviewName = "nero2";
+		}
+		 if (ModelName == "NERO2")
+		{
+		VehiclePreviewDictName = "lsc_dlc_import_export";
+		VehiclePreviewName = "nero2";
+		}
+		 if (ModelName == "OSIRIS")
+		{
+		VehiclePreviewDictName = "lgm_dlc_luxe";
+		VehiclePreviewName = "osiris";
+		}
+		 if (ModelName == "LE7B")
+		{
+		VehiclePreviewDictName = "lgm_dlc_stunt";
+		VehiclePreviewName = "le7b";
+		}
+		 if (ModelName == "ITALIGTB")
+		{
+		VehiclePreviewDictName = "lsc_dlc_import_export";
+		VehiclePreviewName = "italigtb2";
+		}
+		if (ModelName == "ITALIGTB2")
+		{
+			VehiclePreviewDictName = "lsc_dlc_import_export";
+			VehiclePreviewName = "italigtb2";
+		}
+		if (ModelName == "PFISTER811")
+		{
+			VehiclePreviewDictName = "lgm_dlc_executive1";
+			VehiclePreviewName = "pfister811";
+		}
+		if (ModelName == "PROTOTIPO")
+		{
+			VehiclePreviewDictName = "lgm_dlc_executive1";
+			VehiclePreviewName = "prototipo";
+		}
+		if (ModelName == "REAPER")
+		{
+			VehiclePreviewDictName = "lgm_dlc_executive1";
+			VehiclePreviewName = "reaper";
+		}
+		if (ModelName == "T20")
+		{
+			VehiclePreviewDictName = "lgm_dlc_luxe";
+			VehiclePreviewName = "t20";
+		}
+		if (ModelName == "TEMPESTA")
+		{
+			VehiclePreviewDictName = "lgm_dlc_importexport";
+			VehiclePreviewName = "tempesta";
+		}
+		if (ModelName == "TURISMOR")
+		{
+			VehiclePreviewDictName = "lgm_dlc_business";
+			VehiclePreviewName = "turismor";
+		}
+		if (ModelName == "TYRUS")
+		{
+			VehiclePreviewDictName = "lgm_dlc_stunt";
+			VehiclePreviewName = "tyrus";
+		}
+		if (ModelName == "VACCA")
+		{
+			VehiclePreviewDictName = "lgm_default";
+			VehiclePreviewName = "vacca";
+		}
+		if (ModelName == "VOLTIC")
+		{
+			VehiclePreviewDictName = "lgm_default";
+			VehiclePreviewName = "voltic_tless";
+		}
+		if (ModelName == "ZENTORNO")
+		{
+			VehiclePreviewDictName = "lgm_dlc_business2";
+			VehiclePreviewName = "zentorno";
+		}
+		if (ModelName == "VOLTIC2")
+		{
+			VehiclePreviewDictName = "candc_importexport";
+			VehiclePreviewName = "voltic2";
+		}
+		if (ModelName == "PENETRATOR")
+		{
+			VehiclePreviewDictName = "lgm_dlc_importexport";
+			VehiclePreviewName = "penetrator";
+		}
+		if (ModelName == "GP1")
+		{
+			VehiclePreviewDictName = "lgm_dlc_specialraces";
+			VehiclePreviewName = "gp1";
+		}
+		if (ModelName == "BTYPE")
+		{
+			VehiclePreviewDictName = "lgm_dlc_valentines";
+			VehiclePreviewName = "roosevelt";
+		}
+		if (ModelName == "BTYPE2")
+		{
+			VehiclePreviewDictName = "lgm_dlc_valentines";
+			VehiclePreviewName = "roosevelt";
+		}
+		if (ModelName == "BTYPE3")
+		{
+			VehiclePreviewDictName = "lgm_dlc_valentines";
+			VehiclePreviewName = "roosevelt";
+		}
+		 if (ModelName == "CASCO")
+		{
+		VehiclePreviewDictName = "lgm_dlc_heist";
+		VehiclePreviewName = "casco";
+		}
+		 if (ModelName == "COQUETTE2")
+		{
+		VehiclePreviewDictName = "lgm_dlc_pilot";
+		VehiclePreviewName = "coquette2";
+		}
+		 if (ModelName == "FELTZER3")
+		{
+		VehiclePreviewDictName = "lgm_dlc_luxe";
+		VehiclePreviewName = "feltzer3";
+		}
+		 if (ModelName == "JB700")
+		{
+		VehiclePreviewDictName = "lgm_default";
+		VehiclePreviewName = "jb700";
+		}
+		 if (ModelName == "MAMBA")
+		{
+		VehiclePreviewDictName = "lgm_dlc_apartments";
+		VehiclePreviewName = "mamba";
+		}
+		 if (ModelName == "MONROE")
+		{
+		VehiclePreviewDictName = "lgm_default";
+		VehiclePreviewName = "monroe";
+		}
+		 if (ModelName == "PIGALLE")
+		{
+		VehiclePreviewDictName = "sssa_dlc_hipster";
+		VehiclePreviewName = "pigalle";
+		}
+		 if (ModelName == "STINGER")
+		{
+		VehiclePreviewDictName = "lgm_default";
+		VehiclePreviewName = "stinger";
+		}
+		 if (ModelName == "STINGERGT")
+		{
+		VehiclePreviewDictName = "lgm_default";
+		VehiclePreviewName = "stingerg";
+		}
+		 if (ModelName == "TORNADO")
+		{
+		VehiclePreviewDictName = "lsc_lowrider2";
+		VehiclePreviewName = "tornado5";
+		}
+		 if (ModelName == "TORNADO2")
+		{
+		VehiclePreviewDictName = "lsc_lowrider2";
+		VehiclePreviewName = "tornado5";
+		}
+		 if (ModelName == "TORNADO3")
+		{
+		VehiclePreviewDictName = "lsc_lowrider2";
+		VehiclePreviewName = "tornado5";
+		}
+		 if (ModelName == "TORNADO4")
+		{
+		VehiclePreviewDictName = "lsc_lowrider2";
+		VehiclePreviewName = "tornado5";
+		}
+		 if (ModelName == "TORNADO5")
+		{
+		VehiclePreviewDictName = "lsc_lowrider2";
+		VehiclePreviewName = "tornado5";
+		}
+		 if (ModelName == "TORNADO6")
+		{
+		VehiclePreviewDictName = "lsc_lowrider2";
+		VehiclePreviewName = "tornado5";
+		}
+		 if (ModelName == "ZTYPE")
+		{
+		VehiclePreviewDictName = "lgm_default";
+		VehiclePreviewName = "ztype";
+		}
+		 if (ModelName == "INFERNUS2")
+		{
+		VehiclePreviewDictName = "lgm_dlc_specialraces";
+		VehiclePreviewName = "infernus2";
+		}
+		 if (ModelName == "TURISMO2")
+		{
+			 VehiclePreviewDictName = "lgm_dlc_specialraces";
+			 VehiclePreviewName = "turismo2";
+		}
+		 if (ModelName == "ALPHA")
+		{
+		VehiclePreviewDictName = "lgm_dlc_business";
+		VehiclePreviewName = "alpha";
+		}
+		 if (ModelName == "BANSHEE")
+		{
+		VehiclePreviewDictName = "lgm_default";
+		VehiclePreviewName = "banshee";
+		}
+		 if (ModelName == "BESTIAGTS")
+		{
+		VehiclePreviewDictName = "lgm_dlc_executive1";
+		VehiclePreviewName = "bestiagts";
+		}
+		 if (ModelName == "BLISTA2")
+		{
+		VehiclePreviewDictName = "sssa_dlc_mp_to_sp";
+		VehiclePreviewName = "blista2";
+		}
+		 if (ModelName == "BLISTA3")
+		{
+		VehiclePreviewDictName = "sssa_dlc_arena";
+		VehiclePreviewName = "blista3";
+		}
+		 if (ModelName == "BUFFALO")
+		{
+		VehiclePreviewDictName = "sssa_dlc_hipster";
+		VehiclePreviewName = "buffalo";
+		}
+		 if (ModelName == "BUFFALO2")
+		{
+		VehiclePreviewDictName = "sssa_dlc_hipster";
+		VehiclePreviewName = "buffalo2";
+		}
+		 if (ModelName == "BUFFALO3")
+		{
+		VehiclePreviewDictName = "sssa_dlc_mp_to_sp";
+		VehiclePreviewName = "buffalo3";
+		}
+		 if (ModelName == "CARBONIZZARE")
+		{
+		VehiclePreviewDictName = "lgm_default";
+		VehiclePreviewName = "carboniz";
+		}
+		 if (ModelName == "COMET2")
+		{
+		VehiclePreviewDictName = "lgm_default";
+		VehiclePreviewName = "comet2";
+		}
+		 if (ModelName == "COQUETTE")
+		{
+		VehiclePreviewDictName = "lgm_default";
+		VehiclePreviewName = "coquette";
+		}
+		 if (ModelName == "ELEGY")
+		{
+		VehiclePreviewDictName = "lsc_dlc_import_export";
+		VehiclePreviewName = "elegy";
+		}
+		 if (ModelName == "ELEGY2")
+		{
+		VehiclePreviewDictName = "lgm_default";
+		VehiclePreviewName = "elegy2";
+		}
+		 if (ModelName == "FELTZER2")
+		{
+		VehiclePreviewDictName = "lgm_default";
+		VehiclePreviewName = "feltzer";
+		}
+		 if (ModelName == "FUROREGT")
+		{
+		VehiclePreviewDictName = "lgm_dlc_lts_creator";
+		VehiclePreviewName = "furore";
+		}
+		 if (ModelName == "FUSILADE")
+		{
+		VehiclePreviewDictName = "sssa_dlc_business2";
+		VehiclePreviewName = "fusilade";
+		}
+		 if (ModelName == "FUTO")
+		{
+		VehiclePreviewDictName = "sssa_dlc_battle";
+		VehiclePreviewName = "futo";
+		}
+		 if (ModelName == "JESTER")
+		{
+		VehiclePreviewDictName = "lgm_dlc_business";
+		VehiclePreviewName = "jester";
+		}
+		 if (ModelName == "JESTER2")
+		{
+		VehiclePreviewDictName = "sssa_dlc_christmas_2";
+		VehiclePreviewName = "jester2";
+		}
+		 if (ModelName == "KHAMELION")
+		{
+		VehiclePreviewDictName = "lgm_default";
+		VehiclePreviewName = "khamel";
+		}
+		 if (ModelName == "KURUMA")
+		{
+		VehiclePreviewDictName = "sssa_dlc_heist";
+		VehiclePreviewName = "kuruma";
+		}
+		 if (ModelName == "KURUMA2")
+		{
+		VehiclePreviewDictName = "sssa_dlc_heist";
+		VehiclePreviewName = "kuruma2";
+		}
+		 if (ModelName == "LYNX")
+		{
+		VehiclePreviewDictName = "lgm_dlc_stunt";
+		VehiclePreviewName = "lynx";
+		}
+		 if (ModelName == "MASSACRO")
+		{
+		VehiclePreviewDictName = "lgm_dlc_business2";
+		VehiclePreviewName = "massacro";
+		}
+		 if (ModelName == "MASSACRO2")
+		{
+		VehiclePreviewDictName = "sssa_dlc_christmas_2";
+		VehiclePreviewName = "massacro2";
+		}
+		 if (ModelName == "NINEF")
+		{
+		VehiclePreviewDictName = "lgm_default";
+		VehiclePreviewName = "ninef";
+		}
+		 if (ModelName == "NINEF2")
+		{
+		VehiclePreviewDictName = "lgm_default";
+		VehiclePreviewName = "ninef2";
+		}
+		 if (ModelName == "OMNIS")
+		{
+		VehiclePreviewDictName = "sssa_dlc_stunt";
+		VehiclePreviewName = "omnis";
+		}
+		 if (ModelName == "PENUMBRA")
+		{
+		VehiclePreviewDictName = "sssa_dlc_business2";
+		VehiclePreviewName = "penumbra";
+		}
+		 if (ModelName == "RAPIDGT")
+		{
+		VehiclePreviewDictName = "lgm_default";
+		VehiclePreviewName = "rapidgt";
+		}
+		 if (ModelName == "RAPIDGT2")
+		{
+		VehiclePreviewDictName = "lgm_default";
+		VehiclePreviewName = "rapidgt2";
+		}
+		 if (ModelName == "RAPTOR")
+		{
+		VehiclePreviewDictName = "lgm_dlc_biker";
+		VehiclePreviewName = "raptor";
+		}
+		 if (ModelName == "SCHAFTER3")
+		{
+		VehiclePreviewDictName = "lgm_dlc_apartments";
+		VehiclePreviewName = "schafter3";
+		}
+		 if (ModelName == "SCHAFTER4")
+		{
+		VehiclePreviewDictName = "lgm_dlc_apartments";
+		VehiclePreviewName = "schafter4";
+		}
+		 if (ModelName == "SCHWARTZER")
+		{
+		VehiclePreviewDictName = "sssa_default";
+		VehiclePreviewName = "schwarze";
+		}
+		 if (ModelName == "SEVEN70")
+		{
+		VehiclePreviewDictName = "lgm_dlc_executive1";
+		VehiclePreviewName = "seven70";
+		}
+		 if (ModelName == "SULTAN")
+		{
+		VehiclePreviewDictName = "lsc_jan2016";
+		VehiclePreviewName = "sultan2";
+		}
+		if (ModelName == "SURANO")
+		{
+			VehiclePreviewDictName = "lgm_default";
+			VehiclePreviewName = "surano_convertable";
+		}
+		 if (ModelName == "SPECTER")
+		{
+		VehiclePreviewDictName = "lsc_dlc_import_export";
+		VehiclePreviewName = "specter2";
+		}
+		 if (ModelName == "SPECTER2")
+		{
+		VehiclePreviewDictName = "lsc_dlc_import_export";
+		VehiclePreviewName = "specter2_a";
+		}
+		 if (ModelName == "TAMPA2")
+		{
+		VehiclePreviewDictName = "sssa_dlc_stunt";
+		VehiclePreviewName = "tampa2";
+		}
+		 if (ModelName == "TROPOS")
+		{
+		VehiclePreviewDictName = "sssa_dlc_stunt";
+		VehiclePreviewName = "tropos";
+		}
+		 if (ModelName == "VERLIERER2")
+		{
+		VehiclePreviewDictName = "lgm_dlc_apartments";
+		VehiclePreviewName = "verlier";
+		}
+		 if (ModelName == "RUINER2")
+		{
+		VehiclePreviewDictName = "lgm_dlc_specialraces";
+		VehiclePreviewName = "infernus2";
+		}
+		 if (ModelName == "PHANTOM2")
+		{
+		VehiclePreviewDictName = "candc_importexport";
+		VehiclePreviewName = "phantom2";
+		}
+		if (ModelName == "RUSTON")
+		{
+			 VehiclePreviewDictName = "lgm_dlc_specialraces";
+			 VehiclePreviewName = "ruston";
+		}
+		if (ModelName == "AIRBUS")
+		{
+		VehiclePreviewDictName = "candc_default";
+		VehiclePreviewName = "airbus";
+		}
+		 if (ModelName == "BRICKADE")
+		{
+		VehiclePreviewDictName = "candc_executive1";
+		VehiclePreviewName = "brickade";
+		}
+		 if (ModelName == "BUS")
+		{
+		VehiclePreviewDictName = "candc_default";
+		VehiclePreviewName = "bus";
+		}
+		 if (ModelName == "COACH")
+		{
+		VehiclePreviewDictName = "candc_default";
+		VehiclePreviewName = "coach";
+		}
+		 if (ModelName == "RALLYTRUCK")
+		{
+		VehiclePreviewDictName = "sssa_dlc_stunt";
+		VehiclePreviewName = "rallytruck";
+		}
+		 if (ModelName == "RENTALBUS")
+		{
+		VehiclePreviewDictName = "candc_default";
+		VehiclePreviewName = "rentbus";
+		}
+		 if (ModelName == "WASTELANDER")
+		{
+		VehiclePreviewDictName = "candc_importexport";
+		VehiclePreviewName = "wastlndr";
+		}
+		 if (ModelName == "ASEA")
+		{
+		VehiclePreviewDictName = "sssa_dlc_business";
+		VehiclePreviewName = "asea";
+		}
+		 if (ModelName == "ASTEROPE")
+		{
+		VehiclePreviewDictName = "sssa_dlc_business";
+		VehiclePreviewName = "astrope";
+		}
+		 if (ModelName == "COG55")
+		{
+		VehiclePreviewDictName = "lgm_dlc_apartments";
+		VehiclePreviewName = "cog55";
+		}
+		 if (ModelName == "COG552")
+		{
+		VehiclePreviewDictName = "lgm_dlc_apartments";
+		VehiclePreviewName = "cog55";
+		}
+		 if (ModelName == "COGNOSCENTI")
+		{
+		VehiclePreviewDictName = "lgm_dlc_apartments";
+		VehiclePreviewName = "cog55";
+		}
+		 if (ModelName == "COGNOSCENTI2")
+		{
+		VehiclePreviewDictName = "lgm_dlc_apartments";
+		VehiclePreviewName = "cog55";
+		}
+		 if (ModelName == "FUGITIVE")
+		{
+		VehiclePreviewDictName = "sssa_default";
+		VehiclePreviewName = "fugitive";
+		}
+		 if (ModelName == "GLENDALE")
+		{
+		VehiclePreviewDictName = "sssa_dlc_hipster";
+		VehiclePreviewName = "glendale";
+		}
+		 if (ModelName == "INGOT")
+		{
+		VehiclePreviewDictName = "sssa_dlc_business";
+		VehiclePreviewName = "ingot";
+		}
+		 if (ModelName == "INTRUDER")
+		{
+		VehiclePreviewDictName = "sssa_dlc_business";
+		VehiclePreviewName = "intruder";
+		}
+		 if (ModelName == "LIMO2")
+		{
+			VehiclePreviewDictName = "candc_apartments";
+			VehiclePreviewName = "limo2";
+		}
+		if (ModelName == "PREMIER")
+		{
+			VehiclePreviewDictName = "sssa_dlc_business";
+			VehiclePreviewName = "premier";
+		}
+		if (ModelName == "PRIMO")
+		{
+			VehiclePreviewDictName = "sssa_dlc_hipster";
+			VehiclePreviewName = "primo";
+		}
+		if (ModelName == "PRIMO2")
+		{
+			VehiclePreviewDictName = "lsc_default";
+			VehiclePreviewName = "primo2";
+		}
+		if (ModelName == "REGINA")
+		{
+			VehiclePreviewDictName = "sssa_dlc_hipster";
+			VehiclePreviewName = "regina";
+		}
+		if (ModelName == "ROMERO")
+		{
+			VehiclePreviewDictName = "sssa_dlc_battle";
+			VehiclePreviewName = "romero";
+		}
+		if (ModelName == "SCHAFTER2")
+		{
+			VehiclePreviewDictName = "sssa_dlc_heist";
+			VehiclePreviewName = "schafter2";
+		}
+		if (ModelName == "SCHAFTER5")
+		{
+			VehiclePreviewDictName = "sssa_dlc_heist";
+			VehiclePreviewName = "schafter2";
+		}
+		 if (ModelName == "SCHAFTER6")
+		{
+		VehiclePreviewDictName = "sssa_dlc_heist";
+		VehiclePreviewName = "schafter2";
+		}
+		 if (ModelName == "STANIER")
+		{
+		VehiclePreviewDictName = "sssa_dlc_business";
+		VehiclePreviewName = "stanier";
+		}
+		 if (ModelName == "STRATUM")
+		{
+		VehiclePreviewDictName = "sssa_dlc_business";
+		VehiclePreviewName = "stratum";
+		}
+		 if (ModelName == "STRETCH")
+		{
+		VehiclePreviewDictName = "sssa_default";
+		VehiclePreviewName = "stretch";
+		}
+		 if (ModelName == "SUPERD")
+		{
+		VehiclePreviewDictName = "lgm_default";
+		VehiclePreviewName = "superd";
+		}
+		 if (ModelName == "SURGE")
+		{
+		VehiclePreviewDictName = "sssa_dlc_heist";
+		VehiclePreviewName = "surge";
+		}
+		 if (ModelName == "TAILGATER")
+		{
+		VehiclePreviewDictName = "sssa_dlc_hipster";
+		VehiclePreviewName = "tailgater";
+		}
+		 if (ModelName == "WARRENER")
+		{
+		VehiclePreviewDictName = "sssa_dlc_hipster";
+		VehiclePreviewName = "warrener";
+		}
+		 if (ModelName == "WASHINGTON")
+		{
+		VehiclePreviewDictName = "sssa_dlc_business";
+		VehiclePreviewName = "washingt";
+		}
+		 if (ModelName == "BESRA")
+		{
+		VehiclePreviewDictName = "elt_dlc_pilot";
+		VehiclePreviewName = "besra";
+		}
+		 if (ModelName == "CUBAN800")
+		{
+		VehiclePreviewDictName = "elt_default";
+		VehiclePreviewName = "cuban800";
+		}
+		 if (ModelName == "DODO")
+		{
+		VehiclePreviewDictName = "elt_default";
+		VehiclePreviewName = "dodo";
+		}
+		 if (ModelName == "DUSTER")
+		 {
+			 VehiclePreviewDictName = "elt_default";
+			 VehiclePreviewName = "duster";
+		 }
+		 if (ModelName == "HYDRA")
+		 {
+			 VehiclePreviewDictName = "candc_default";
+			 VehiclePreviewName = "hydra";
+		 }
+		 if (ModelName == "LAZER")
+		 {
+			 VehiclePreviewDictName = "candc_smuggler";
+			 VehiclePreviewName = "lazer";
+		 }
+		 if (ModelName == "LUXOR")
+		 {
+			 VehiclePreviewDictName = "elt_default";
+			 VehiclePreviewName = "luxor";
+		 }
+		 if (ModelName == "LUXOR2")
+		 {
+			 VehiclePreviewDictName = "elt_dlc_luxe";
+			 VehiclePreviewName = "luxor2";
+		 }
+		 if (ModelName == "MAMMATUS")
+		 {
+			 VehiclePreviewDictName = "elt_default";
+			 VehiclePreviewName = "mammatus";
+		 }
+		 if (ModelName == "MILJET")
+		 {
+			 VehiclePreviewDictName = "elt_dlc_pilot";
+			 VehiclePreviewName = "miljet";
+		 }
+		 if (ModelName == "NIMBUS")
+		 {
+			 VehiclePreviewDictName = "elt_dlc_executive1";
+			 VehiclePreviewName = "nimbus";
+		 }
+		 if (ModelName == "SHAMAL")
+		 {
+			 VehiclePreviewDictName = "elt_default";
+			 VehiclePreviewName = "shamal";
+		 }
+		 if (ModelName == "STUNT")
+		 {
+			 VehiclePreviewDictName = "elt_default";
+			 VehiclePreviewName = "stunt";
+		 }
+		 if (ModelName == "TITAN")
+		 {
+			 VehiclePreviewDictName = "elt_default";
+			 VehiclePreviewName = "titan";
+		 }
+		 if (ModelName == "VELUM")
+		 {
+			 VehiclePreviewDictName = "elt_default";
+			 VehiclePreviewName = "velum";
+		 }
+		 if (ModelName == "VELUM2")
+		 {
+			 VehiclePreviewDictName = "elt_default";
+			 VehiclePreviewName = "velum2";
+		 }
+		 if (ModelName == "VESTRA")
+		 {
+			 VehiclePreviewDictName = "elt_dlc_business";
+			 VehiclePreviewName = "vestra";
+		 }
+		 if (ModelName == "BFINJECTION")
+		 {
+			 VehiclePreviewDictName = "sssa_default";
+			 VehiclePreviewName = "bfinject";
+		 }
+		 if (ModelName == "BIFTA")
+		 {
+			 VehiclePreviewDictName = "sssa_default";
+			 VehiclePreviewName = "bifta";
+		 }
+		 if (ModelName == "BLAZER")
+		 {
+			 VehiclePreviewDictName = "sssa_default";
+			 VehiclePreviewName = "blazer";
+		 }
+		 if (ModelName == "BLAZER2")
+		 {
+			 VehiclePreviewDictName = "candc_casinoheist";
+			 VehiclePreviewName = "blazer2";
+		 }
+		 if (ModelName == "BLAZER3")
+		 {
+			 VehiclePreviewDictName = "sssa_dlc_hipster";
+			 VehiclePreviewName = "blazer3";
+		 }
+		 if (ModelName == "BLAZER4")
+		 {
+			 VehiclePreviewDictName = "sssa_dlc_biker";
+			 VehiclePreviewName = "blazer4";
+		 }
+		 if (ModelName == "BODHI2")
+		 {
+			 VehiclePreviewDictName = "sssa_default";
+			 VehiclePreviewName = "bodhi2";
+		 }
+		 if (ModelName == "BRAWLER")
+		 {
+			 VehiclePreviewDictName = "lgm_dlc_luxe";
+			 VehiclePreviewName = "brawler";
+		 }
+		 if (ModelName == "DUBSTA3")
+		 {
+			 VehiclePreviewDictName = "candc_default";
+			 VehiclePreviewName = "dubsta3";
+		 }
+		 if (ModelName == "DUNE")
+		 {
+			 VehiclePreviewDictName = "sssa_default";
+			 VehiclePreviewName = "dune";
+		 }
+		 if (ModelName == "INSURGENT")
+		 {
+			 VehiclePreviewDictName = "candc_default";
+			 VehiclePreviewName = "insurgent";
+		 }
+		 if (ModelName == "INSURGENT2")
+		 {
+			 VehiclePreviewDictName = "candc_default";
+			 VehiclePreviewName = "insurgent2";
+		 }
+		 if (ModelName == "KALAHARI")
+		 {
+			 VehiclePreviewDictName = "sssa_default";
+			 VehiclePreviewName = "kalahari";
+		 }
+		 if (ModelName == "MARSHALL")
+		 {
+			 VehiclePreviewDictName = "candc_default";
+			 VehiclePreviewName = "marshall";
+		 }
+		 if (ModelName == "MESA3")
+		 {
+			 VehiclePreviewDictName = "candc_default";
+			 VehiclePreviewName = "mesa3";
+		 }
+		 if (ModelName == "MONSTER")
+		 {
+			 VehiclePreviewDictName = "candc_default";
+			 VehiclePreviewName = "monster";
+		 }
+		 if (ModelName == "RANCHERXL")
+		 {
+			 VehiclePreviewDictName = "sssa_dlc_business";
+			 VehiclePreviewName = "rancherx";
+		 }
+		 if (ModelName == "REBEL")
+		 {
+			 VehiclePreviewDictName = "sssa_default";
+			 VehiclePreviewName = "rebel";
+		 }
+		 if (ModelName == "REBEL2")
+		 {
+			 VehiclePreviewDictName = "sssa_dlc_hipster";
+			 VehiclePreviewName = "rebel2";
+		 }
+		 if (ModelName == "SANDKING")
+		 {
+			 VehiclePreviewDictName = "sssa_default";
+			 VehiclePreviewName = "sandking";
+		 }
+		 if (ModelName == "SANDKING2")
+		 {
+			 VehiclePreviewDictName = "sssa_default";
+			 VehiclePreviewName = "sandkin2";
+		 }
+		 if (ModelName == "TECHNICAL")
+		 {
+			 VehiclePreviewDictName = "candc_default";
+			 VehiclePreviewName = "technical";
+		 }
+		 if (ModelName == "TROPHYTRUCK")
+		 {
+			 VehiclePreviewDictName = "sssa_dlc_stunt";
+			 VehiclePreviewName = "trophy";
+		 }
+		 if (ModelName == "TROPHYTRUCK2")
+		 {
+			 VehiclePreviewDictName = "sssa_dlc_stunt";
+			 VehiclePreviewName = "trophy2";
+		 }
+		 if (ModelName == "TECHNICAL2")
+		 {
+			 VehiclePreviewDictName = "candc_importexport";
+			 VehiclePreviewName = "technical2";
+		 }
+		 if (ModelName == "DUNE5")
+		 {
+			 VehiclePreviewDictName = "candc_importexport";
+			 VehiclePreviewName = "dune5";
+		 }
+		 if (ModelName == "BLAZER5")
+		 {
+			 VehiclePreviewDictName = "candc_importexport";
+			 VehiclePreviewName = "blazer5";
+		 }
+		 if (ModelName == "BLADE")
+		 {
+			 VehiclePreviewDictName = "sssa_dlc_heist";
+			 VehiclePreviewName = "blade";
+		 }
+		 if (ModelName == "BUCCANEER")
+		 {
+			 VehiclePreviewDictName = "lsc_default";
+			 VehiclePreviewName = "buccaneer2";
+		 }
+		 if (ModelName == "BUCCANEER2")
+		 {
+			 VehiclePreviewDictName = "lsc_default";
+			 VehiclePreviewName = "buccaneer2_a";
+		 }
+		 if (ModelName == "CHINO")
+		 {
+			 VehiclePreviewDictName = "lgm_dlc_luxe";
+			 VehiclePreviewName = "chino";
+		 }
+		 if (ModelName == "CHINO2")
+		 {
+			 VehiclePreviewDictName = "lsc_default";
+			 VehiclePreviewName = "chino2";
+		 }
+		 if (ModelName == "COQUETTE3")
+		 {
+			 VehiclePreviewDictName = "lgm_dlc_luxe";
+			 VehiclePreviewName = "coquette3";
+		 }
+		 if (ModelName == "DOMINATOR")
+		 {
+			 VehiclePreviewDictName = "sssa_dlc_mp_to_sp";
+			 VehiclePreviewName = "dominator2";
+		 }
+		 if (ModelName == "DOMINATOR2")
+		 {
+			 VehiclePreviewDictName = "sssa_dlc_mp_to_sp";
+			 VehiclePreviewName = "dominator2";
+		 }
+		 if (ModelName == "DUKES")
+		 {
+			 VehiclePreviewDictName = "candc_default";
+			 VehiclePreviewName = "dukes";
+		 }
+		 if (ModelName == "DUKES2")
+		 {
+			 VehiclePreviewDictName = "candc_default";
+			 VehiclePreviewName = "dukes";
+		 }
+		 if (ModelName == "GAUNTLET")
+		 {
+			 VehiclePreviewDictName = "sssa_default";
+			 VehiclePreviewName = "gauntlet";
+		 }
+		 if (ModelName == "GAUNTLET2")
+		 {
+			 VehiclePreviewDictName = "sssa_dlc_mp_to_sp";
+			 VehiclePreviewName = "gauntlet2";
+		 }
+		 if (ModelName == "gauntlet3")
+		 {
+			 VehiclePreviewDictName = "sssa_dlc_vinewood";
+			 VehiclePreviewName = "gauntlet3";
+		 }
+		 if (ModelName == "gauntlet4")
+		 {
+			 VehiclePreviewDictName = "sssa_dlc_vinewood";
+			 VehiclePreviewName = "gauntlet4";
+		 }
+		 if (ModelName == "FACTION")
+		 {
+			 VehiclePreviewDictName = "lsc_default";
+			 VehiclePreviewName = "faction2";
+		 }
+		 if (ModelName == "FACTION2")
+		 {
+			 VehiclePreviewDictName = "lsc_default";
+			 VehiclePreviewName = "faction2";
+		 }
+		 if (ModelName == "FACTION3")
+		 {
+			 VehiclePreviewDictName = "lsc_lowrider2";
+			 VehiclePreviewName = "faction3";
+		 }
+		 if (ModelName == "HOTKNIFE")
+		 {
+			 VehiclePreviewDictName = "lgm_default";
+			 VehiclePreviewName = "hotknife";
+		 }
+		 if (ModelName == "LURCHER")
+		 {
+			 VehiclePreviewDictName = "sssa_dlc_halloween";
+			 VehiclePreviewName = "lurcher";
+		 }
+		 if (ModelName == "MOONBEAM")
+		 {
+			 VehiclePreviewDictName = "lsc_default";
+			 VehiclePreviewName = "moonbeam2";
+		 }
+		 if (ModelName == "MOONBEAM2")
+		 {
+			 VehiclePreviewDictName = "lsc_default";
+			 VehiclePreviewName = "moonbeam2";
+		 }
+		 if (ModelName == "NIGHTSHADE")
+		 {
+			 VehiclePreviewDictName = "lgm_dlc_apartments";
+			 VehiclePreviewName = "niteshad";
+		 }
+		 if (ModelName == "PICADOR")
+		 {
+			 VehiclePreviewDictName = "sssa_dlc_hipster";
+			 VehiclePreviewName = "picador";
+		 }
+		 if (ModelName == "RATLOADER")
+		 {
+			 VehiclePreviewDictName = "sssa_dlc_valentines";
+			 VehiclePreviewName = "rloader";
+		 }
+		 if (ModelName == "RATLOADER2")
+		 {
+			 VehiclePreviewDictName = "sssa_dlc_christmas_2";
+			 VehiclePreviewName = "rloader2";
+		 }
+		 if (ModelName == "RUINER")
+		 {
+			 VehiclePreviewDictName = "sssa_dlc_battle";
+			 VehiclePreviewName = "ruiner";
+		 }
+		 if (ModelName == "RUINER2")
+		 {
+			 VehiclePreviewDictName = "candc_importexport";
+			 VehiclePreviewName = "ruiner2";
+		 }
+		 if (ModelName == "SABREGT")
+		 {
+			 VehiclePreviewDictName = "lsc_lowrider2";
+			 VehiclePreviewName = "sabregt2";
+		 }
+		 if (ModelName == "SABREGT2")
+		 {
+			 VehiclePreviewDictName = "lsc_lowrider2";
+			 VehiclePreviewName = "sabregt2";
+		 }
+		 if (ModelName == "SLAMVAN")
+		 {
+			 VehiclePreviewDictName = "sssa_dlc_christmas_2";
+			 VehiclePreviewName = "slamvan";
+		 }
+		 if (ModelName == "SLAMVAN3")
+		 {
+			 VehiclePreviewDictName = "lsc_lowrider2";
+			 VehiclePreviewName = "slamvan3";
+		 }
+		 if (ModelName == "STALION")
+		 {
+			 VehiclePreviewDictName = "sssa_dlc_mp_to_sp";
+			 VehiclePreviewName = "stalion2";
+		 }
+		 if (ModelName == "STALION2")
+		 {
+			 VehiclePreviewDictName = "sssa_dlc_mp_to_sp";
+			 VehiclePreviewName = "stalion2";
+		 }
+		 if (ModelName == "TAMPA")
+		 {
+			 VehiclePreviewDictName = "sssa_dlc_christmas_3";
+			 VehiclePreviewName = "tampa";
+		 }
+		 if (ModelName == "VIGERO")
+		 {
+			 VehiclePreviewDictName = "sssa_default";
+			 VehiclePreviewName = "vigero";
+		 }
+		 if (ModelName == "VIRGO")
+		 {
+			 VehiclePreviewDictName = "lgm_dlc_luxe";
+			 VehiclePreviewName = "virgo";
+		 }
+		 if (ModelName == "VIRGO2")
+		 {
+			 VehiclePreviewDictName = "lsc_lowrider2";
+			 VehiclePreviewName = "virgo2";
+		 }
+		 if (ModelName == "VIRGO3")
+		 {
+			 VehiclePreviewDictName = "lsc_lowrider2";
+			 VehiclePreviewName = "virgo2";
+		 }
+		 if (ModelName == "VOODOO")
+		 {
+			 VehiclePreviewDictName = "lsc_default";
+			 VehiclePreviewName = "voodoo";
+		 }
+		 if (ModelName == "VOODOO2")
+		 {
+			 VehiclePreviewDictName = "lsc_default";
+			 VehiclePreviewName = "voodoo";
+		 }
+		 if (ModelName == "AKUMA")
+		 {
+			 VehiclePreviewDictName = "sssa_default";
+			 VehiclePreviewName = "akuma";
+		 }
+		 if (ModelName == "AVARUS")
+		 {
+			 VehiclePreviewDictName = "sssa_dlc_biker";
+			 VehiclePreviewName = "avarus";
+		 }
+		 if (ModelName == "BAGGER")
+		 {
+			 VehiclePreviewDictName = "sssa_dlc_biker";
+			 VehiclePreviewName = "bagger";
+		 }
+		 if (ModelName == "BATI2")
+		 {
+			 VehiclePreviewDictName = "sssa_default";
+			 VehiclePreviewName = "bati2";
+		 }
+		 if (ModelName == "BF400")
+		 {
+			 VehiclePreviewDictName = "sssa_dlc_stunt";
+			 VehiclePreviewName = "bf400";
+		 }
+		 if (ModelName == "CARBONRS")
+		 {
+			 VehiclePreviewDictName = "lgm_default";
+			 VehiclePreviewName = "carbon";
+		 }
+		 if (ModelName == "CHIMERA")
+		 {
+			 VehiclePreviewDictName = "sssa_dlc_biker";
+			 VehiclePreviewName = "chimera";
+		 }
+		 if (ModelName == "CLIFFHANGER")
+		 {
+			 VehiclePreviewDictName = "sssa_dlc_stunt";
+			 VehiclePreviewName = "cliffhanger";
+		 }
+		 if (ModelName == "DAEMON")
+		 {
+			 VehiclePreviewDictName = "lgm_dlc_specialraces";
+			 VehiclePreviewName = "infernus2";
+		 }
+		 if (ModelName == "DAEMON2")
+		 {
+			 VehiclePreviewDictName = "sssa_dlc_biker";
+			 VehiclePreviewName = "daemon2";
+		 }
+		 if (ModelName == "DEFILER")
+		 {
+			 VehiclePreviewDictName = "sssa_dlc_biker";
+			 VehiclePreviewName = "defiler";
+		 }
+		 if (ModelName == "DOUBLE")
+		 {
+			 VehiclePreviewDictName = "sssa_default";
+			 VehiclePreviewName = "double";
+		 }
+		 if (ModelName == "ENDURO")
+		 {
+			 VehiclePreviewDictName = "sssa_dlc_heist";
+			 VehiclePreviewName = "enduro";
+		 }
+		 if (ModelName == "ESSKEY")
+		 {
+			 VehiclePreviewDictName = "sssa_dlc_biker";
+			 VehiclePreviewName = "esskey";
+		 }
+		 if (ModelName == "FAGGIO")
+		 {
+			 VehiclePreviewDictName = "sssa_default";
+			 VehiclePreviewName = "faggio";
+		 }
+		 if (ModelName == "FAGGIO2")
+		 {
+			 VehiclePreviewDictName = "lgm_dlc_specialraces";
+			 VehiclePreviewName = "infernus2";
+		 }
+		 if (ModelName == "FAGGIO3")
+		 {
+			 VehiclePreviewDictName = "sssa_dlc_biker";
+			 VehiclePreviewName = "faggio3";
+		 }
+		 if (ModelName == "GARGOYLE")
+		 {
+			 VehiclePreviewDictName = "sssa_dlc_stunt";
+			 VehiclePreviewName = "gargoyle";
+		 }
+		 if (ModelName == "HAKUCHOU")
+		 {
+			 VehiclePreviewDictName = "sssa_dlc_lts_creator";
+			 VehiclePreviewName = "hakuchou";
+		 }
+		 if (ModelName == "HAKUCHOU2")
+		 {
+			 VehiclePreviewDictName = "lgm_dlc_biker";
+			 VehiclePreviewName = "hakuchou2";
+		 }
+		 if (ModelName == "HEXER")
+		 {
+			 VehiclePreviewDictName = "sssa_default";
+			 VehiclePreviewName = "hexer";
+		 }
+		 if (ModelName == "INNOVATION")
+		 {
+			 VehiclePreviewDictName = "sssa_dlc_heist";
+			 VehiclePreviewName = "innovation";
+		 }
+		 if (ModelName == "LECTRO")
+		 {
+			 VehiclePreviewDictName = "lgm_dlc_heist";
+			 VehiclePreviewName = "lectro";
+		 }
+		 if (ModelName == "MANCHEZ")
+		 {
+			 VehiclePreviewDictName = "sssa_dlc_biker";
+			 VehiclePreviewName = "manchez";
+		 }
+		 if (ModelName == "NEMESIS")
+		 {
+			 VehiclePreviewDictName = "sssa_dlc_heist";
+			 VehiclePreviewName = "nemesis";
+		 }
+		 if (ModelName == "NIGHTBLADE")
+		 {
+			 VehiclePreviewDictName = "sssa_dlc_biker";
+			 VehiclePreviewName = "nightblade";
+		 }
+		 if (ModelName == "PCJ")
+		 {
+			 VehiclePreviewDictName = "sssa_default";
+			 VehiclePreviewName = "pcj";
+		 }
+		 if (ModelName == "RATBIKE")
+		 {
+			 VehiclePreviewDictName = "sssa_dlc_biker";
+			 VehiclePreviewName = "ratbike";
+		 }
+		 if (ModelName == "RUFFIAN")
+		 {
+			 VehiclePreviewDictName = "sssa_default";
+			 VehiclePreviewName = "ruffian";
+		 }
+		 if (ModelName == "SANCHEZ")
+		 {
+			 VehiclePreviewDictName = "sssa_default";
+			 VehiclePreviewName = "sanchez";
+		 }
+		 if (ModelName == "SANCHEZ2")
+		 {
+			 VehiclePreviewDictName = "sssa_default";
+			 VehiclePreviewName = "sanchez2";
+		 }
+		 if (ModelName == "SANCTUS")
+		 {
+			 VehiclePreviewDictName = "lgm_dlc_specialraces";
+			 VehiclePreviewName = "infernus2";
+		 }
+		 if (ModelName == "SHOTARO")
+		 {
+			 VehiclePreviewDictName = "lgm_dlc_biker";
+			 VehiclePreviewName = "shotaro";
+		 }
+		 if (ModelName == "SOVEREIGN")
+		 {
+			 VehiclePreviewDictName = "sssa_dlc_independence";
+			 VehiclePreviewName = "sovereign";
+		 }
+		 if (ModelName == "THRUST")
+		 {
+			 VehiclePreviewDictName = "lgm_dlc_business2";
+			 VehiclePreviewName = "thrust";
+		 }
+		 if (ModelName == "VADER")
+		 {
+			 VehiclePreviewDictName = "sssa_default";
+			 VehiclePreviewName = "vader";
+		 }
+		 if (ModelName == "VINDICATOR")
+		 {
+			 VehiclePreviewDictName = "lgm_dlc_luxe";
+			 VehiclePreviewName = "vindicator";
+		 }
+		 if (ModelName == "VORTEX")
+		 {
+			 VehiclePreviewDictName = "lgm_dlc_specialraces";
+			 VehiclePreviewName = "infernus2";
+		 }
+		 if (ModelName == "WOLFSBANE")
+		 {
+			 VehiclePreviewDictName = "lgm_dlc_specialraces";
+			 VehiclePreviewName = "infernus2";
+		 }
+		 if (ModelName == "ZOMBIEA")
+		 {
+			 VehiclePreviewDictName = "sssa_dlc_biker";
+			 VehiclePreviewName = "zombiea";
+		 }
+		 if (ModelName == "ZOMBIEB")
+		 {
+			 VehiclePreviewDictName = "sssa_dlc_biker";
+			 VehiclePreviewName = "zombieb";
+		 }
+		 if (ModelName == "DIABLOUS")
+		 {
+			 VehiclePreviewDictName = "lgm_dlc_specialraces";
+			 VehiclePreviewName = "infernus2";
+		 }
+		 if (ModelName == "DIABLOUS2")
+		 {
+			 VehiclePreviewDictName = "lsc_dlc_import_export";
+			 VehiclePreviewName = "diablous2";
+		 }
+		 if (ModelName == "FCR")
+		 {
+			 VehiclePreviewDictName = "lgm_dlc_specialraces";
+			 VehiclePreviewName = "infernus2";
+		 }
+		 if (ModelName == "FCR2")
+		 {
+			 VehiclePreviewDictName = "lsc_dlc_import_export";
+			 VehiclePreviewName = "fcr2";
+		 }
+		 if (ModelName == "BARRACKS")
+		 {
+			 VehiclePreviewDictName = "candc_default";
+			 VehiclePreviewName = "barracks";
+		 }
+		 if (ModelName == "BARRACKS3")
+		 {
+			 VehiclePreviewDictName = "candc_default";
+			 VehiclePreviewName = "barracks";
+		 }
+		 if (ModelName == "CRUSADER")
+		 {
+			 VehiclePreviewDictName = "candc_default";
+			 VehiclePreviewName = "crusader";
+		 }
+		 if (ModelName == "RHINO")
+		 {
+			 VehiclePreviewDictName = "candc_default";
+			 VehiclePreviewName = "rhino";
+		 }
+		 if (ModelName == "DUMP")
+		 {
+			 VehiclePreviewDictName = "candc_default";
+			 VehiclePreviewName = "dump";
+		 }
+		 if (ModelName == "GUARDIAN")
+		 {
+			 VehiclePreviewDictName = "sssa_dlc_heist";
+			 VehiclePreviewName = "guardian";
+		 }
+		 if (ModelName == "ANNIHILATOR")
+		 {
+			 VehiclePreviewDictName = "elt_default";
+			 VehiclePreviewName = "annihl";
+		 }
+		 if (ModelName == "BUZZARD")
+		 {
+			 VehiclePreviewDictName = "candc_default";
+			 VehiclePreviewName = "buzzard";
+		 }
+		 if (ModelName == "BUZZARD2")
+		 {
+			 VehiclePreviewDictName = "candc_default";
+			 VehiclePreviewName = "buzzard";
+		 }
+		 if (ModelName == "CARGOBOB")
+		 {
+			 VehiclePreviewDictName = "candc_default";
+			 VehiclePreviewName = "cargobob";
+		 }
+		 if (ModelName == "CARGOBOB2")
+		 {
+			 VehiclePreviewDictName = "candc_executive1";
+			 VehiclePreviewName = "cargobob2";
+		 }
+		 if (ModelName == "CARGOBOB3")
+		 {
+			 VehiclePreviewDictName = "candc_default";
+			 VehiclePreviewName = "cargobob";
+		 }
+		 if (ModelName == "CARGOBOB4")
+		 {
+			 VehiclePreviewDictName = "candc_default";
+			 VehiclePreviewName = "cargobob";
+		 }
+		 if (ModelName == "FROGGER")
+		 {
+			 VehiclePreviewDictName = "elt_default";
+			 VehiclePreviewName = "frogger";
+		 }
+		 if (ModelName == "MAVERICK")
+		 {
+			 VehiclePreviewDictName = "elt_default";
+			 VehiclePreviewName = "maverick";
+		 }
+		 if (ModelName == "avenger")
+		 {
+			 VehiclePreviewDictName = "candc_chopper";
+			 VehiclePreviewName = "banner_0";
+		 }
+		 if (ModelName == "SAVAGE")
+		 {
+			 VehiclePreviewDictName = "candc_default";
+			 VehiclePreviewName = "savage";
+		 }
+		 if (ModelName == "SUPERVOLITO")
+		 {
+			 VehiclePreviewDictName = "elt_dlc_apartments";
+			 VehiclePreviewName = "svolito";
+		 }
+		 if (ModelName == "SUPERVOLITO2")
+		 {
+			 VehiclePreviewDictName = "elt_dlc_apartments";
+			 VehiclePreviewName = "svolito2";
+		 }
+		 if (ModelName == "SWIFT")
+		 {
+			 VehiclePreviewDictName = "elt_dlc_pilot";
+			 VehiclePreviewName = "swift";
+		 }
+		 if (ModelName == "SWIFT2")
+		 {
+			 VehiclePreviewDictName = "elt_dlc_luxe";
+			 VehiclePreviewName = "swift2";
+		 }
+		 if (ModelName == "VALKYRIE")
+		 {
+			 VehiclePreviewDictName = "candc_default";
+			 VehiclePreviewName = "valkyrie";
+		 }
+		 if (ModelName == "VALKYRIE2")
+		 {
+			 VehiclePreviewDictName = "candc_default";
+			 VehiclePreviewName = "valkyrie";
+		 }
+		 if (ModelName == "VOLATUS")
+		 {
+			 VehiclePreviewDictName = "elt_dlc_executive1";
+			 VehiclePreviewName = "volatus";
+		 }
+		 if (ModelName == "FIRETRUK")
+		 {
+			 VehiclePreviewDictName = "candc_casinoheist";
+			 VehiclePreviewName = "firetruk";
+		 }
+		 if (ModelName == "LGUARD")
+		 {
+			 VehiclePreviewDictName = "candc_casinoheist";
+			 VehiclePreviewName = "lguard";
+		 }
+		 if (ModelName == "PBUS")
+		 {
+			 VehiclePreviewDictName = "candc_default";
+			 VehiclePreviewName = "pbus";
+		 }
+		 if (ModelName == "BMX")
+		 {
+			 VehiclePreviewDictName = "pandm_default";
+			 VehiclePreviewName = "bmx";
+		 }
+		 if (ModelName == "CRUISER")
+		 {
+			 VehiclePreviewDictName = "pandm_default";
+			 VehiclePreviewName = "cruiser";
+		 }
+		 if (ModelName == "SCORCHER")
+		 {
+			 VehiclePreviewDictName = "pandm_default";
+			 VehiclePreviewName = "scorcher";
+		 }
+		 if (ModelName == "TRIBIKE")
+		 {
+			 VehiclePreviewDictName = "pandm_default";
+			 VehiclePreviewName = "tribike";
+		 }
+		 if (ModelName == "TRIBIKE2")
+		 {
+			 VehiclePreviewDictName = "pandm_default";
+			 VehiclePreviewName = "tribike2";
+		 }
+		 if (ModelName == "TRIBIKE3")
+		 {
+			 VehiclePreviewDictName = "pandm_default";
+			 VehiclePreviewName = "tribike3";
+		 }
+		 if (ModelName == "COGCABRIO")
+		 {
+			 VehiclePreviewDictName = "lgm_default";
+			 VehiclePreviewName = "cogcabri";
+		 }
+		 if (ModelName == "EXEMPLAR")
+		 {
+			 VehiclePreviewDictName = "lgm_default";
+			 VehiclePreviewName = "exemplar";
+		 }
+		 if (ModelName == "F620")
+		 {
+			 VehiclePreviewDictName = "sssa_dlc_business2";
+			 VehiclePreviewName = "f620";
+		 }
+		 if (ModelName == "FELON")
+		 {
+			 VehiclePreviewDictName = "sssa_default";
+			 VehiclePreviewName = "felon";
+		 }
+		 if (ModelName == "FELON2")
+		 {
+			 VehiclePreviewDictName = "sssa_default";
+			 VehiclePreviewName = "felon2";
+		 }
+		 if (ModelName == "JACKAL")
+		 {
+			 VehiclePreviewDictName = "sssa_dlc_heist";
+			 VehiclePreviewName = "jackal";
+		 }
+		 if (ModelName == "ORACLE")
+		 {
+			 VehiclePreviewDictName = "sssa_default";
+			 VehiclePreviewName = "oracle";
+		 }
+		 if (ModelName == "ORACLE2")
+		 {
+			 VehiclePreviewDictName = "sssa_default";
+			 VehiclePreviewName = "oracle";
+		 }
+		 if (ModelName == "SENTINEL")
+		 {
+			 VehiclePreviewDictName = "sssa_dlc_business2";
+			 VehiclePreviewName = "sentinel";
+		 }
+		 if (ModelName == "SENTINEL2")
+		 {
+			 VehiclePreviewDictName = "sssa_dlc_business2";
+			 VehiclePreviewName = "sentinel";
+		 }
+		 if (ModelName == "WINDSOR")
+		 {
+			 VehiclePreviewDictName = "lgm_dlc_luxe";
+			 VehiclePreviewName = "windsor";
+		 }
+		 if (ModelName == "WINDSOR2")
+		 {
+			 VehiclePreviewDictName = "lgm_dlc_executive1";
+			 VehiclePreviewName = "windsor2";
+		 }
+		 if (ModelName == "ZION")
+		 {
+			 VehiclePreviewDictName = "sssa_default";
+			 VehiclePreviewName = "zion";
+		 }
+		 if (ModelName == "ZION2")
+		 {
+			 VehiclePreviewDictName = "sssa_default";
+			 VehiclePreviewName = "zion2";
+		 }
+		 if (ModelName == "BRIOSO")
+		 {
+			 VehiclePreviewDictName = "sssa_dlc_stunt";
+			 VehiclePreviewName = "brioso";
+		 }
+		 if (ModelName == "DILETTANTE")
+		 {
+			 VehiclePreviewDictName = "sssa_default";
+			 VehiclePreviewName = "dilettan";
+		 }
+		 if (ModelName == "ISSI2")
+		 {
+			 VehiclePreviewDictName = "sssa_default";
+			 VehiclePreviewName = "issi2";
+		 }
+		 if (ModelName == "PANTO")
+		 {
+			 VehiclePreviewDictName = "sssa_dlc_hipster";
+			 VehiclePreviewName = "panto";
+		 }
+		 if (ModelName == "PRAIRIE")
+		 {
+			 VehiclePreviewDictName = "sssa_dlc_battle";
+			 VehiclePreviewName = "prairie";
+		 }
+		 if (ModelName == "RHAPSODY")
+		 {
+			 VehiclePreviewDictName = "sssa_dlc_hipster";
+			 VehiclePreviewName = "rhapsody";
+		 }
+		 if (ModelName == "MULE")
+		 {
+			 VehiclePreviewDictName = "candc_default";
+			 VehiclePreviewName = "mule";
+		 }
+		 if (ModelName == "MULE2")
+		 {
+			 VehiclePreviewDictName = "candc_default";
+			 VehiclePreviewName = "mule";
+		 }
+		 if (ModelName == "MULE3")
+		 {
+			 VehiclePreviewDictName = "candc_default";
+			 VehiclePreviewName = "mule";
+		 }
+		 if (ModelName == "STOCKADE")
+		 {
+			 VehiclePreviewDictName = "candc_casinoheist";
+			 VehiclePreviewName = "stockade";
+		 }
+		 if (ModelName == "DINGHY")
+		 {
+			 VehiclePreviewDictName = "dock_default";
+			 VehiclePreviewName = "dinghy3";
+		 }
+		 if (ModelName == "DINGHY2")
+		 {
+			 VehiclePreviewDictName = "dock_default";
+			 VehiclePreviewName = "dinghy3";
+		 }
+		 if (ModelName == "DINGHY3")
+		 {
+			 VehiclePreviewDictName = "dock_default";
+			 VehiclePreviewName = "dinghy3";
+		 }
+		 if (ModelName == "DINGHY4")
+		 {
+			 VehiclePreviewDictName = "dock_default";
+			 VehiclePreviewName = "dinghy3";
+		 }
+		 if (ModelName == "JETMAX")
+		 {
+			 VehiclePreviewDictName = "dock_default";
+			 VehiclePreviewName = "jetmax";
+		 }
+		 if (ModelName == "MARQUIS")
+		 {
+			 VehiclePreviewDictName = "dock_default";
+			 VehiclePreviewName = "marquis";
+		 }
+		 if (ModelName == "SEASHARK")
+		 {
+			 VehiclePreviewDictName = "dock_default";
+			 VehiclePreviewName = "seashark";
+		 }
+		 if (ModelName == "SEASHARK2")
+		 {
+			 VehiclePreviewDictName = "dock_default";
+			 VehiclePreviewName = "seashark";
+		 }
+		 if (ModelName == "SEASHARK3")
+		 {
+			 VehiclePreviewDictName = "dock_default";
+			 VehiclePreviewName = "seashark";
+		 }
+		 if (ModelName == "SPEEDER")
+		 {
+			 VehiclePreviewDictName = "dock_default";
+			 VehiclePreviewName = "speeder";
+		 }
+		 if (ModelName == "SPEEDER2")
+		 {
+			 VehiclePreviewDictName = "dock_default";
+			 VehiclePreviewName = "speeder";
+		 }
+		 if (ModelName == "SQUALO")
+		 {
+			 VehiclePreviewDictName = "dock_default";
+			 VehiclePreviewName = "squalo";
+		 }
+		 if (ModelName == "SUBMERSIBLE2")
+		 {
+			 VehiclePreviewDictName = "dock_default";
+			 VehiclePreviewName = "sub2";
+		 }
+		 if (ModelName == "SUNTRAP")
+		 {
+			 VehiclePreviewDictName = "dock_default";
+			 VehiclePreviewName = "suntrap";
+		 }
+		 if (ModelName == "TORO")
+		 {
+			 VehiclePreviewDictName = "dock_default";
+			 VehiclePreviewName = "toro";
+		 }
+		 if (ModelName == "TORO2")
+		 {
+			 VehiclePreviewDictName = "dock_default";
+			 VehiclePreviewName = "toro";
+		 }
+		 if (ModelName == "TROPIC")
+		 {
+			 VehiclePreviewDictName = "dock_default";
+			 VehiclePreviewName = "tropic";
+		 }
+		 if (ModelName == "TROPIC2")
+		 {
+			 VehiclePreviewDictName = "dock_default";
+			 VehiclePreviewName = "tropic";
+		 }
+		 if (ModelName == "TUG")
+		 {
+			 VehiclePreviewDictName = "dock_dlc_executive1";
+			 VehiclePreviewName = "tug";
+		 }
+*/

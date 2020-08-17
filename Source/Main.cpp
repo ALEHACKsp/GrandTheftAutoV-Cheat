@@ -53,7 +53,7 @@ void Cheat::Main() {
 		{
 			Cheat::Title(xorstr_("Main Menu"));
 			Cheat::MenuOption(xorstr_("Self Options >"), SelfOptionsMenu);
-			Cheat::MenuOption(xorstr_("Network Options >"), networkoptions);
+			Cheat::MenuOption(xorstr_("Online Options >"), OnlineOptionsMenu);
 			Cheat::MenuOption(xorstr_("Weapon Options >"), weaponmenu);
 			Cheat::MenuOption(xorstr_("Vehicle Options >"), vehiclemenu);
 			Cheat::MenuOption(xorstr_("Teleport Options >"), teleportmenu);
@@ -143,10 +143,10 @@ void Cheat::Main() {
 				}
 			}
 		}
-		break; 
-		case networkoptions:
+		break;
+		case OnlineOptionsMenu:
 		{
-			Cheat::Title("Network Options");
+			Cheat::Title("Online Options");
 			Cheat::MenuOption("Player List >", PlayerListMenu);
 			if (!NETWORK::NETWORK_IS_SESSION_STARTED()) 
 			{
@@ -2443,7 +2443,7 @@ void Cheat::Main() {
 					Cheat::GameFunctions::MinimapNotification("~r~Player isn't in a vehicle");
 				}
 			}
-			Cheat::Break("~bold~Neon Presets", true);
+			Cheat::Break("Neon Presets", true);
 			if (Cheat::Option("Red", "")) {
 				int VehID = PED::GET_VEHICLE_PED_IS_IN(PlayerPedID, 0);
 				VEHICLE::_IS_VEHICLE_NEON_LIGHT_ENABLED(VehID, 1);
@@ -3902,52 +3902,63 @@ void Cheat::Main() {
 		case visionsmenu:
 		{
 			Cheat::Title("Vision's");
-			if (Cheat::Option("Default", "")) {
+			if (Cheat::Option("Default", "")) 
+			{
 				GRAPHICS::SET_TIMECYCLE_MODIFIER("DEFAULT");
 			}
-			if (Cheat::Option("Timecycle On", "")) {
+			if (Cheat::Option("Timecycle", "")) 
+			{
 				GRAPHICS::SET_TIMECYCLE_MODIFIER("CAMERA_secuirity_FUZZ");
 			}
-			if (Cheat::Option("Timecycle Off", "")) {
-				GRAPHICS::CLEAR_TIMECYCLE_MODIFIER();
-			}
-			if (Cheat::Option("Stoned", "")) {
+			if (Cheat::Option("Stoned", "")) 
+			{
 				GRAPHICS::SET_TIMECYCLE_MODIFIER("stoned");
 			}
-			if (Cheat::Option("Orange", "")) {
+			if (Cheat::Option("Orange", "")) 
+			{
 				GRAPHICS::SET_TIMECYCLE_MODIFIER("REDMIST");
 			}
-			if (Cheat::Option("Cocaine", "")) {
+			if (Cheat::Option("Cocaine", "")) 
+			{
 				GRAPHICS::SET_TIMECYCLE_MODIFIER("drug_flying_base");
 			}
-			if (Cheat::Option("Huffin Gas", "")) {
+			if (Cheat::Option("Huffin Gas", "")) 
+			{
 				GRAPHICS::SET_TIMECYCLE_MODIFIER("DRUG_gas_huffin");
 			}
-			if (Cheat::Option("Wobbly", "")) {
+			if (Cheat::Option("Wobbly", "")) 
+			{
 				GRAPHICS::SET_TIMECYCLE_MODIFIER("drug_wobbly");
 			}
-			if (Cheat::Option("Drunk", "")) {
+			if (Cheat::Option("Drunk", "")) 
+			{
 				GRAPHICS::SET_TIMECYCLE_MODIFIER("Drunk");
 			}
-			if (Cheat::Option("Heaven", "")) {
+			if (Cheat::Option("Heaven", "")) 
+			{
 				GRAPHICS::SET_TIMECYCLE_MODIFIER("Bloom");
 			}
 			if (Cheat::Option("3D", "")) {
 				GRAPHICS::SET_TIMECYCLE_MODIFIER("PlayerSwitchPulse");
 			}
-			if (Cheat::Option("Killstreak", "")) {
+			if (Cheat::Option("Killstreak", "")) 
+			{
 				GRAPHICS::SET_TIMECYCLE_MODIFIER("MP_Killstreak");
 			}
-			if (Cheat::Option("Hallucinations", "")) {
+			if (Cheat::Option("Hallucinations", "")) 
+			{
 				GRAPHICS::SET_TIMECYCLE_MODIFIER("player_transition");
 			}
-			if (Cheat::Option("Low Quality", "")) {
+			if (Cheat::Option("Low Quality", "")) 
+			{
 				GRAPHICS::SET_TIMECYCLE_MODIFIER("cinema_001");
 			}
-			if (Cheat::Option("Blurry", "")) {
+			if (Cheat::Option("Blurry", "")) 
+			{
 				GRAPHICS::SET_TIMECYCLE_MODIFIER("CHOP");
 			}
-			if (Cheat::Option("Fucked Up Screen", "")) {
+			if (Cheat::Option("Fucked Up Screen", "")) 
+			{
 				GRAPHICS::SET_TIMECYCLE_MODIFIER("BarryFadeOut");
 			}
 		}
@@ -4286,6 +4297,8 @@ void Cheat::Main() {
 		case guisettings:
 		{
 			Cheat::Title("GUI Settings");
+			Cheat::MenuOption("Theme Loader >", ThemeLoaderMenu);
+			Cheat::Break("Options", true);
 			Cheat::MenuOption("Colors >", GUIColorsMenu);
 			Cheat::MenuOption("Header Options >", headeroptionsmenu);
 			Cheat::StringVector("Toggles", { "Shop Box", "Circle" }, Cheat::CheatFeatures::BoolOptionVectorPosition, "Select Boolean Toggle");
@@ -4293,6 +4306,7 @@ void Cheat::Main() {
 			Cheat::Toggle("Restore To Previous Submenu", Cheat::GUI::RestorePreviousSubmenu, "When opening restores previous submenu");
 			Cheat::Float("X-Axis", Cheat::GUI::guiX, 0.11f, 0.86f, 0.01, true, "");
 			Cheat::Float("Y-Axis", Cheat::GUI::guiY, 0.10f, 0.90f, 0.01, true, "");
+			Cheat::Float("GUI Width", Cheat::GUI::guiWidth, 0.21f, 0.30f, 0.01, true, "TODO: Text Scaling not implemented");
 			std::string OpenKeyString = "Open Key: ~c~" + Cheat::CheatFunctions::VirtualKeyCodeToString(Cheat::GUI::openKey);
 			if (Cheat::Option(OpenKeyString.c_str(), "Select to change"))
 			{
@@ -4311,7 +4325,6 @@ void Cheat::Main() {
 			}
 			Cheat::Int("Scroll Delay", Cheat::GUI::keyPressDelay2, 1, 200, 1);
 			Cheat::Int("Int Delay", Cheat::GUI::keyPressDelay3, 1, 200, 1);
-			Cheat::MenuOption("Theme Loader >", ThemeLoaderMenu);
 		}
 		break; 
 		case headeroptionsmenu:

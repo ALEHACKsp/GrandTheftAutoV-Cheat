@@ -121,7 +121,7 @@ const char* hkGetLabelText(void* this_, const char* label)
 	return ogGetLabelText(this_, label);
 }
 
-int MiscScriptsArray[] = { 2931916346, 1337731455, 323449272, 544453591, 3413717565, 3693313620, 3266142158, 2519761921, 2422236493, 
+unsigned int MiscScriptsArray[] = { 2931916346, 1337731455, 323449272, 544453591, 3413717565, 3693313620, 3266142158, 2519761921, 2422236493, 
 						   1764541627, 4164637196, 301606138, 3041711092
 						};
 void* m_OriginalGetEventData = nullptr;

@@ -338,8 +338,6 @@ namespace Cheat
 	}
 	namespace GameFunctions 
 	{
-		float GetGameFramesPerSecond();
-		void DrawGameFramesPerSecond();
 		void GiveAllWeaponsToPlayer(Ped Player);
 		void RepairAndCleanVehicle();
 		void SubtitleNotification(char* Message, int ShowDuration = 4000);
@@ -475,7 +473,6 @@ namespace Cheat
 	}
 	void Title(const char* title);
 	void Speedometer(char* text);
-	void fps(char* text);
 	void AddPlayerInfoBoxTextEntry(char* text, int Row1 = NULL, int Row2 = NULL, int Row3 = NULL, int Row4 = NULL);
 	bool Break(const char* option, bool TextCentered);
 	bool Option(const char* option, const char* InformationText, bool PlayerList = false);

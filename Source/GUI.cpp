@@ -581,7 +581,8 @@ bool Cheat::IntVector(const char* option, std::vector<int> Vector, int& position
 {
 	Option(option, "");
 
-	if (GUI::optionCount == GUI::currentOption) {
+	if (GUI::optionCount == GUI::currentOption) 
+	{
 		int max = Vector.size() - 1;
 		int min = 0;
 		if (GUI::leftPressed) {
@@ -839,11 +840,6 @@ void Cheat::GUI::BackMenu()
 void Cheat::Speedometer(char* text)
 {
 	Drawing::Text(text, { 0, 0, 255, 255 }, { 0.90, 0.5000f }, { 0.70f, 0.70f }, false);
-	
-}
-void Cheat::fps(char* text)
-{
-	Drawing::Text(text, { 255, 255, 255, 255 }, { 0.50f, 0.002f }, { 0.30f, 0.30f }, false);
 }
 void Cheat::AddPlayerInfoBoxTextEntry(char* text, int Row1, int Row2, int Row3, int Row4)
 {

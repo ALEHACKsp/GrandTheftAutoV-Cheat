@@ -1,31 +1,6 @@
 #include "stdafx.h"
 
 
-float Cheat::GameFunctions::GetGameFramesPerSecond()
-{
-	static int		iFrames = 0;
-	static clock_t	clockFrames = clock();
-	static float	iFps;
-	iFrames++;
-	clock_t dif = clock() - clockFrames;
-	if (dif > 500)
-	{
-		iFps = iFrames / (dif / 1000.f);
-		iFrames = 0;
-		clockFrames = clock();
-	}
-	return iFps;
-}
-
-void Cheat::GameFunctions::DrawGameFramesPerSecond()
-{
-	std::string str = std::to_string(GetGameFramesPerSecond());
-	while (str.size() > str.find(".")) { str.pop_back(); }
-	std::string MessageString = xorstr_("FPS: ") + str;
-	Cheat::fps((char*)MessageString.c_str());
-}
-
-
 void Cheat::GameFunctions::GiveAllWeaponsToPlayer(Ped Player)
 {
 	for (int i = 0; i < (sizeof(Cheat::GameArrays::WeaponsHashList) / sizeof Cheat::GameArrays::WeaponsHashList[0]); i++)
@@ -98,7 +73,8 @@ void Cheat::GameFunctions::TeleportToObjective()
 		int blipIterator = UI::IS_WAYPOINT_ACTIVE() ? UI::_GET_BLIP_INFO_ID_ITERATOR() : SpriteStandard;    
 		for (Blip i = UI::GET_FIRST_BLIP_INFO_ID(blipIterator);
 			UI::DOES_BLIP_EXIST(i) != 0; i = UI::GET_NEXT_BLIP_INFO_ID(blipIterator)) {
-			if (UI::GET_BLIP_INFO_ID_TYPE(i) == 4 && UI::GET_BLIP_COLOUR(i) == 5 != ColorBlue && UI::IS_BLIP_ON_MINIMAP(i) == 1) {
+			if (UI::GET_BLIP_INFO_ID_TYPE(i) == 4 && UI::GET_BLIP_COLOUR(i) == 5 != ColorBlue && UI::IS_BLIP_ON_MINIMAP(i) == 1) 
+			{
 				wayp = UI::GET_BLIP_INFO_ID_COORD(i);
 				blipFound = true;
 				Cheat::GameFunctions::TeleportToCoords(e, wayp);

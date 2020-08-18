@@ -476,7 +476,22 @@ void Cheat::CheatFeatures::FastRun(bool toggle)
 bool Cheat::CheatFeatures::ShowFPSBool = false;
 void Cheat::CheatFeatures::ShowFPS()
 {
-	Cheat::GameFunctions::DrawGameFramesPerSecond();
+	static int		iFrames = 0;
+	static clock_t	clockFrames = clock();
+	static float	iFps;
+	iFrames++;
+	clock_t dif = clock() - clockFrames;
+	if (dif > 500)
+	{
+		iFps = iFrames / (dif / 1000.f);
+		iFrames = 0;
+		clockFrames = clock();
+	}
+
+	std::string str = std::to_string(iFps);
+	while (str.size() > str.find(".")) { str.pop_back(); }
+	std::string MessageString = xorstr_("FPS: ") + str;
+	Drawing::Text((char*)MessageString.c_str(), { 255, 255, 255, 255 }, { 0.50f, 0.002f }, { 0.30f, 0.30f }, false);
 }
 
 

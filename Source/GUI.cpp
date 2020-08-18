@@ -274,7 +274,7 @@ bool Cheat::VehicleOption(const char* option, std::string ModelName)
 				 Drawing::Text(ModelNameDrawingText.c_str(), GUI::count, { Cheat::GUI::guiX + 0.111f,  GUI::guiY + 0.008f }, { 0.45f, 0.30f }, false);
 				 Drawing::Text(ModelMaxSpeed.str().c_str(), GUI::count, { Cheat::GUI::guiX + 0.111f, GUI::guiY + 0.026f }, { 0.45f, 0.30f }, false);
 				 Drawing::Rect(GUI::MenuBackgroundRect, { Cheat::GUI::guiX + 0.187f, GUI::guiY - 0.056f }, { 0.16f, 0.22f });
-				 Drawing::Spriter(VehiclePreviewDictName, VehiclePreviewName, Cheat::GUI::guiX + 0.187f, GUI::guiY - 0.068f, 0.15, 0.15, 0, 255, 255, 255, 255);
+				 Drawing::Spriter(VehiclePreviewDictName, VehiclePreviewName, Cheat::GUI::guiX + 0.187f, GUI::guiY - 0.068f, 0.15f, 0.15f, 0.f, 255, 255, 255, 255);
 			 }
 			 else
 			 {
@@ -282,7 +282,7 @@ bool Cheat::VehicleOption(const char* option, std::string ModelName)
 				 Drawing::Text(ModelNameDrawingText.c_str(), GUI::count, { Cheat::GUI::guiX - 0.262f, GUI::guiY + 0.008f }, { 0.45f, 0.30f }, false);
 				 Drawing::Text(ModelMaxSpeed.str().c_str(), GUI::count, { Cheat::GUI::guiX - 0.262f, GUI::guiY + 0.026f }, { 0.45f, 0.30f }, false);
 				 Drawing::Rect(GUI::MenuBackgroundRect, { Cheat::GUI::guiX - 0.187f, GUI::guiY - 0.056f }, { 0.16f, 0.22f });
-				 Drawing::Spriter(VehiclePreviewDictName, VehiclePreviewName, Cheat::GUI::guiX - 0.187f, GUI::guiY - 0.068f, 0.15, 0.15, 0, 255, 255, 255, 255);
+				 Drawing::Spriter(VehiclePreviewDictName, VehiclePreviewName, Cheat::GUI::guiX - 0.187f, GUI::guiY - 0.068f, 0.15f, 0.15f, 0.f, 255, 255, 255, 255);
 			 }
 		 }
 		if (GUI::selectPressed)
@@ -895,11 +895,12 @@ void Cheat::LoadThemeFilesLooped()
 	if (!Cheat::CheatFunctions::DoesDirectoryExists(ThemeFolderPath)) { Cheat::CheatFunctions::CreateNewDirectory(ThemeFolderPath); }
 
 	int i = 0;
-	for (const auto & file : std::filesystem::directory_iterator(ThemeFolderPath.c_str())) {
+	for (const auto & file : std::filesystem::directory_iterator(ThemeFolderPath.c_str())) 
+	{
 		if (file.path().extension() == ".ini")
 		{
 			GUI::ThemeFilesArray[i] = new char[file.path().stem().string().length() + 1];
-			strcpy(GUI::ThemeFilesArray[i], file.path().stem().string().c_str());
+			strcpy_s(GUI::ThemeFilesArray[i], sizeof(GUI::ThemeFilesArray[i]), file.path().stem().string().c_str());
 			++i;
 		}
 	}

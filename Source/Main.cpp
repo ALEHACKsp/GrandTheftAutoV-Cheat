@@ -2861,15 +2861,13 @@ void Cheat::Main() {
 		case timemenu:
 		{
 			Cheat::Title("Time Options");
-			time_t now;
-			now = time(NULL);
-			if (Cheat::Int("Hour", SetTimeHour, 0, 23, 1, "Select to set")) { NETWORK::NETWORK_OVERRIDE_CLOCK_TIME(SetTimeHour, TIME::GET_CLOCK_MINUTES(), TIME::GET_CLOCK_SECONDS()); }
-			if (Cheat::Int("Minutes", SetTimeMinutes, 0, 59, 1, "Select to set")) { NETWORK::NETWORK_OVERRIDE_CLOCK_TIME(TIME::GET_CLOCK_HOURS(), SetTimeMinutes, TIME::GET_CLOCK_SECONDS()); }
-			if (Cheat::Int("Seconds", SetTimeSeconds, 0, 59, 1, "Select to set")) { NETWORK::NETWORK_OVERRIDE_CLOCK_TIME(TIME::GET_CLOCK_HOURS(), TIME::GET_CLOCK_MINUTES(), SetTimeSeconds); }
+			if (Cheat::Int("Hour", SetTimeHour, 0, 23, 1)) { NETWORK::NETWORK_OVERRIDE_CLOCK_TIME(SetTimeHour, TIME::GET_CLOCK_MINUTES(), TIME::GET_CLOCK_SECONDS()); }
+			if (Cheat::Int("Minutes", SetTimeMinutes, 0, 59, 1)) { NETWORK::NETWORK_OVERRIDE_CLOCK_TIME(TIME::GET_CLOCK_HOURS(), SetTimeMinutes, TIME::GET_CLOCK_SECONDS()); }
+			if (Cheat::Int("Seconds", SetTimeSeconds, 0, 59, 1)) { NETWORK::NETWORK_OVERRIDE_CLOCK_TIME(TIME::GET_CLOCK_HOURS(), TIME::GET_CLOCK_MINUTES(), SetTimeSeconds); }
 			Cheat::Break("Current Time", true);
 			std::string CurrentGameTimeString = "Game Time: ~c~" + std::to_string(TIME::GET_CLOCK_HOURS()) + ":" + std::to_string(TIME::GET_CLOCK_MINUTES()) + ":" + std::to_string(TIME::GET_CLOCK_SECONDS());
 			Cheat::Break(CurrentGameTimeString.c_str(), false);
-			std::string CurrentSystemTimeString = "System Time: ~c~" + std::to_string(localtime(&now)->tm_hour) + ":" + std::to_string(localtime(&now)->tm_min) + ":" + std::to_string(localtime(&now)->tm_sec);
+			std::string CurrentSystemTimeString = "System Time: ~c~" + CheatFunctions::ReturnDateTimeFormatAsString(xorstr_("%H:%M:%S"));
 			Cheat::Break(CurrentSystemTimeString.c_str(), false);
 			Cheat::Break("Misc", true);
 			Cheat::Toggle("Slow Motion", Cheat::CheatFeatures::SlowMotionBool, "Slows Down Game Time");
@@ -3504,13 +3502,13 @@ void Cheat::Main() {
 			if (Cheat::Option("High In The Sky", ""))
 			{
 				Vector3 Coords;
-				Coords.x = 240.93; Coords.y = -765.19f; Coords.z = 2558.83f;
+				Coords.x = 240.93f; Coords.y = -765.19f; Coords.z = 2558.83f;
 				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Diamond Casino & Resort", ""))
 			{
 				Vector3 Coords;
-				Coords.x = 916.37; Coords.y = 51.22f; Coords.z = 80.89f;
+				Coords.x = 916.37f; Coords.y = 51.22f; Coords.z = 80.89f;
 				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Mount Chiliad", "")) {
@@ -3530,22 +3528,22 @@ void Cheat::Main() {
 			}
 			if (Cheat::Option("Zancudo Tower", "")) {
 				Vector3 Coords;
-				Coords.x = -2356.0940; Coords.y = 3248.645; Coords.z = 101.4505;
+				Coords.x = -2356.0940f; Coords.y = 3248.645f; Coords.z = 101.4505f;
 				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Mask Shop", "")) {
 				Vector3 Coords;
-				Coords.x = -1338.16; Coords.y = -1278.11; Coords.z = 4.87;
+				Coords.x = -1338.16f; Coords.y = -1278.11f; Coords.z = 4.87f;
 				Cheat::GameFunctions::TPto(Coords);
 			}	
 			if (Cheat::Option("LSC", "")) {
 				Vector3 Coords;
-				Coords.x = -373.01; Coords.y = -124.91; Coords.z = 38.31;
+				Coords.x = -373.01f; Coords.y = -124.91f; Coords.z = 38.31f;
 				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Ammunation", "")) {
 				Vector3 Coords;
-				Coords.x = 247.3652; Coords.y = -45.8777; Coords.z = 69.9411;
+				Coords.x = 247.3652f; Coords.y = -45.8777f; Coords.z = 69.9411f;
 				Cheat::GameFunctions::TPto(Coords);
 			}	
 			if (Cheat::Option("Airport", "")) {
@@ -3555,7 +3553,7 @@ void Cheat::Main() {
 			}
 			if (Cheat::Option("Clothes Store", "")) {
 				Vector3 Coords;
-				Coords.x = -718.91; Coords.y = -158.16; Coords.z = 37.00;
+				Coords.x = -718.91f; Coords.y = -158.16f; Coords.z = 37.00f;
 				Cheat::GameFunctions::TPto(Coords);
 			}
 			if (Cheat::Option("Waterfall", "")) {
@@ -3575,7 +3573,7 @@ void Cheat::Main() {
 			}	
 			if (Cheat::Option("MMI", "")) {
 				Vector3 Coords;
-				Coords.x = -222.1977; Coords.y = -1185.8500; Coords.z = 23.0294;
+				Coords.x = -222.1977f; Coords.y = -1185.8500f; Coords.z = 23.0294f;
 				Cheat::GameFunctions::TPto(Coords);
 			}		
 			if (Cheat::Option("Sandy Shores Airfield", "")) {
@@ -3591,35 +3589,34 @@ void Cheat::Main() {
 			Cheat::MenuOption("Go to IPL Loader submenu", iplloader);
 			if (Cheat::Option("North Yankton", ""))
 			{
-				ENTITY::SET_ENTITY_COORDS(PlayerPedID, 5309.519, -5212.37, 83.522, true, false, false, true);
+				ENTITY::SET_ENTITY_COORDS(PlayerPedID, 5309.519f, -5212.37f, 83.522f, true, false, false, true);
 			}
 			if (Cheat::Option("Yacht", ""))
 			{
-				ENTITY::SET_ENTITY_COORDS(PlayerPedID, -2045.8, -1031.2, 11.9, true, false, false, true);
+				ENTITY::SET_ENTITY_COORDS(PlayerPedID, -2045.8f, -1031.2f, 11.9f, true, false, false, true);
 			}
 			if (Cheat::Option("Destroyed Hospital", ""))
 			{
-				ENTITY::SET_ENTITY_COORDS(PlayerPedID, 356.8, -590.1, 43.3, true, false, false, true);
+				ENTITY::SET_ENTITY_COORDS(PlayerPedID, 356.8f, -590.1f, 43.3f, true, false, false, true);
 			}
 			if (Cheat::Option("Jewelry Store", ""))
 			{
-				ENTITY::SET_ENTITY_COORDS(PlayerPedID, -630.4, -236.7, 40.0, true, false, false, true);
+				ENTITY::SET_ENTITY_COORDS(PlayerPedID, -630.4f, -236.7f, 40.0f, true, false, false, true);
 			}
 			if (Cheat::Option("Morgue", ""))
 			{
-				ENTITY::SET_ENTITY_COORDS(PlayerPedID, 244.9, -1374.7, 39.5, true, false, false, true);
+				ENTITY::SET_ENTITY_COORDS(PlayerPedID, 244.9f, -1374.7f, 39.5f, true, false, false, true);
 			}
 			if (Cheat::Option("Cargo Ship", ""))
 			{
-				ENTITY::SET_ENTITY_COORDS(PlayerPedID, -90.0, -2365.8, 14.3, true, false, false, true);
+				ENTITY::SET_ENTITY_COORDS(PlayerPedID, -90.0f, -2365.8f, 14.3f, true, false, false, true);
 			}
 		}
 		break; 
 		case ESPMenu:
 		{
 			Cheat::Title("ESP Options");
-			Cheat::Toggle("Players ESP", Cheat::CheatFeatures::PlayerESPBool, "Toggle Player ESP");
-			Cheat::Toggle("Show Player Names", Cheat::CheatFeatures::PlayerNameESPBool, "Show ESP Player Names");
+			Cheat::Toggle("Basic ESP", Cheat::CheatFeatures::PlayerESPBool, "Toggle Player ESP");
 		}
 		break; 
 		case player_troll:
@@ -4013,35 +4010,29 @@ void Cheat::Main() {
 		{
 			Cheat::Title("Outfits");
 			if (Cheat::Option("Random Outfit", "Get random outfit")) { PED::SET_PED_RANDOM_COMPONENT_VARIATION(PlayerPedID, true); }
-			if (Cheat::Option("Police Uniform", "Get police uniform - female model only"))
+			if (Cheat::Option("Police Uniform", "Get police uniform"))
 			{
-				if (PED::IS_PED_MODEL(PlayerPedID, GAMEPLAY::GET_HASH_KEY("mp_f_freemode_01")))
-				{
-					ENTITY::GET_ENTITY_MODEL(PlayerPedID) == GAMEPLAY::GET_HASH_KEY("mp_f_freemode_01");
-					PED::SET_PED_PROP_INDEX(PlayerPedID, 0, 45, 0, 0);
-					PED::SET_PED_COMPONENT_VARIATION(PlayerPedID, 11, 48, 0, 0);
-					PED::SET_PED_COMPONENT_VARIATION(PlayerPedID, 4, 34, 0, 0);
-					PED::SET_PED_COMPONENT_VARIATION(PlayerPedID, 3, 0, 0, 0);
-					PED::SET_PED_COMPONENT_VARIATION(PlayerPedID, 6, 25, 0, 0);
-					PED::SET_PED_COMPONENT_VARIATION(PlayerPedID, 8, 35, 0, 0);
-				}
-				else
-				{
-					Cheat::GameFunctions::MinimapNotification("~r~This only works on the female GTA Online character model");
-				}
-				
+				PED::SET_PED_PROP_INDEX(PlayerPedID, 0, 45, 0, 0);
+				PED::SET_PED_COMPONENT_VARIATION(PlayerPedID, 11, 48, 0, 0);
+				PED::SET_PED_COMPONENT_VARIATION(PlayerPedID, 4, 34, 0, 0);
+				PED::SET_PED_COMPONENT_VARIATION(PlayerPedID, 3, 0, 0, 0);
+				PED::SET_PED_COMPONENT_VARIATION(PlayerPedID, 6, 25, 0, 0);
+				PED::SET_PED_COMPONENT_VARIATION(PlayerPedID, 8, 35, 0, 0);			
 			}
-			if (Cheat::Option("Default Variation", "Get default pedmodel variation")) {
+			if (Cheat::Option("Default Variation", "Get default pedmodel variation")) 
+			{
 				PED::SET_PED_DEFAULT_COMPONENT_VARIATION(PlayerPedID);
-
 			}
-			if (Cheat::Option("Random Variation", "Get random pedmodel variation")) {
+			if (Cheat::Option("Random Variation", "Get random pedmodel variation"))
+			{
 				PED::SET_PED_RANDOM_COMPONENT_VARIATION(PlayerPedID, true);
 			}
-			if (Cheat::Option("Random Accessories", "")) {
+			if (Cheat::Option("Random Accessories", "")) 
+			{
 				PED::SET_PED_RANDOM_PROPS(PlayerPedID);
 			}
-			if (Cheat::Option("Reset Appearance", "")) {
+			if (Cheat::Option("Reset Appearance", "")) 
+			{
 				PED::CLEAR_ALL_PED_PROPS(PlayerPedID);
 				PED::CLEAR_PED_DECORATIONS(PlayerPedID);
 				PED::SET_PED_COMPONENT_VARIATION(PlayerPedID, 1, 0, 0, 0);
@@ -4299,15 +4290,15 @@ void Cheat::Main() {
 		{
 			Cheat::Title("GUI Settings");
 			Cheat::MenuOption("Theme Loader >", ThemeLoaderMenu);
-			Cheat::Break("Options", true);
+			Cheat::Break("Settings", true);
 			Cheat::MenuOption("Colors >", GUIColorsMenu);
 			Cheat::MenuOption("Header Options >", headeroptionsmenu);
 			Cheat::StringVector("Toggles", { "Shop Box", "Circle" }, Cheat::CheatFeatures::BoolOptionVectorPosition, "Select Boolean Toggle");
 			Cheat::Int("Max Visible Menu Options", Cheat::GUI::maxVisOptions, 5, 16, 1);
 			Cheat::Toggle("Restore To Previous Submenu", Cheat::GUI::RestorePreviousSubmenu, "When opening restores previous submenu");
-			Cheat::Float("X-Axis", Cheat::GUI::guiX, 0.11f, 0.86f, 0.01, true, "");
-			Cheat::Float("Y-Axis", Cheat::GUI::guiY, 0.10f, 0.90f, 0.01, true, "");
-			Cheat::Float("GUI Width", Cheat::GUI::guiWidth, 0.21f, 0.30f, 0.01, true, "TODO: Text Scaling not implemented");
+			Cheat::Float("X-Axis", Cheat::GUI::guiX, 0.11f, 0.86f, 0.01f, true, "");
+			Cheat::Float("Y-Axis", Cheat::GUI::guiY, 0.10f, 0.90f, 0.01f, true, "");
+			Cheat::Float("GUI Width", Cheat::GUI::guiWidth, 0.21f, 0.30f, 0.01f, true, "TODO: Text Scaling not implemented");
 			std::string OpenKeyString = "Open Key: ~c~" + Cheat::CheatFunctions::VirtualKeyCodeToString(Cheat::GUI::openKey);
 			if (Cheat::Option(OpenKeyString.c_str(), "Select to change"))
 			{

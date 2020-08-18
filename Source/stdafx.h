@@ -2,7 +2,6 @@
 
 #pragma warning(disable : 4244)			//			'argument' : conversion from 'type1' to 'type2', possible loss of data
 #pragma warning(disable : 26812)		//			The enum type type-name is unscoped. Prefer 'enum class' over 'enum' (Enum.3)
-#pragma warning(disable : 4996)			//			Your code uses a function, class member, variable, or typedef that's marked deprecated.
 #pragma warning(disable : 26495)		//			Variable '%variable%' is uninitialized. Always initialize a member variable.
 #pragma warning(disable : 4091)	
 #pragma warning(disable : 6262)
@@ -253,8 +252,6 @@ namespace Cheat
 		extern bool VehicleGunBool;
 		extern char* VehicleGun_VehicleNameChar;
 		void VehicleGun();
-		extern bool PlayerNameESPBool;
-		void PlayerNameESP();
 		extern bool PlayerESPBool;
 		void PlayerESP();
 		extern bool OffRadarBool;
@@ -319,7 +316,6 @@ namespace Cheat
 		bool DoesFileExists(const std::string& fileName);
 		bool DoesDirectoryExists(const std::string& dirName_in);
 		void CreateNewDirectory(std::string Path);
-		std::string ReturnDateAndTimeAsString();
 		std::string GetLastErrorAsString();
 		void CheatThreadLoopFunctions();
 		bool IsGameWindowFocussed();
@@ -338,6 +334,7 @@ namespace Cheat
 		std::string ReadStringFromIni(std::string file, std::string app, std::string key);
 		void WriteBoolToIni(bool b00l, std::string file, std::string app, std::string key);
 		bool ReadBoolFromIni(std::string file, std::string app, std::string key);
+		std::string ReturnDateTimeFormatAsString(const char* DateTimeFormat);
 	}
 	namespace GameFunctions 
 	{

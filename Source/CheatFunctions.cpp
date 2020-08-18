@@ -25,13 +25,15 @@ bool Cheat::CheatFunctions::DoesDirectoryExists(const std::string& dirName_in)
 	return false;   
 }
 
-std::string Cheat::CheatFunctions::ReturnDateAndTimeAsString()
+//See https://en.cppreference.com/w/cpp/io/manip/put_time
+std::string Cheat::CheatFunctions::ReturnDateTimeFormatAsString(const char* DateTimeFormat)
 {
-	auto t = std::time(nullptr);
-	auto tm = *std::localtime(&t);
-	std::ostringstream oss;
-	oss << std::put_time(&tm, xorstr_("[%d-%m-%Y - %H:%M:%S]"));
-	return oss.str();;
+	struct tm NewTimeHandle;
+	time_t CurrentTimeHandle = time(0);
+	localtime_s(&NewTimeHandle, &CurrentTimeHandle);
+	std::ostringstream TimeDateString;
+	TimeDateString << std::put_time(&NewTimeHandle, DateTimeFormat);
+	return TimeDateString.str();;
 }
 
 std::string Cheat::CheatFunctions::ReturnCheatBuildAsString()
@@ -332,7 +334,6 @@ void Cheat::CheatFunctions::SaveSettings()
 	Cheat::CheatFunctions::WriteBoolToIni(Cheat::CheatFeatures::JumpAroundModeBool, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("jumparoundmode"));
 	Cheat::CheatFunctions::WriteBoolToIni(Cheat::CheatFeatures::TinyPlayerBool, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("tinyplayer"));
 	Cheat::CheatFunctions::WriteBoolToIni(Cheat::CheatFeatures::PlayerESPBool, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("allplayersesp"));
-	Cheat::CheatFunctions::WriteBoolToIni(Cheat::CheatFeatures::PlayerNameESPBool, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("allplayersesp_names"));
 	Cheat::CheatFunctions::WriteBoolToIni(Cheat::CheatFeatures::OffRadarBool, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("offradar"));
 	Cheat::CheatFunctions::WriteBoolToIni(Cheat::CheatFeatures::RevealPlayersBool, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("reveal_players"));
 	Cheat::CheatFunctions::WriteBoolToIni(Cheat::CheatFeatures::DriveOnWaterBool, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("driveonwater"));
@@ -422,7 +423,6 @@ void Cheat::CheatFunctions::LoadSettings(bool StartUp)
 	if (Cheat::CheatFunctions::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("spawnmaxupgraded")) == xorstr_("true")) { spawnmaxupgraded = true; }
 	if (Cheat::CheatFunctions::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("tinyplayer")) == xorstr_("true")) { Cheat::CheatFeatures::TinyPlayerBool = true; }
 	if (Cheat::CheatFunctions::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("allplayersesp")) == xorstr_("true")) { Cheat::CheatFeatures::PlayerESPBool = true; }
-	if (Cheat::CheatFunctions::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("allplayersesp_names")) == xorstr_("true")) { Cheat::CheatFeatures::PlayerNameESPBool = true; }
 	if (Cheat::CheatFunctions::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("jumparoundmode")) == xorstr_("true")) { Cheat::CheatFeatures::JumpAroundModeBool = true; }
 	if (Cheat::CheatFunctions::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("offradar")) == xorstr_("true")) { Cheat::CheatFeatures::OffRadarBool = true; }
 	if (Cheat::CheatFunctions::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("reveal_players")) == xorstr_("true")) { Cheat::CheatFeatures::RevealPlayersBool = true; }
@@ -458,7 +458,10 @@ void Cheat::CheatFunctions::LoadSettings(bool StartUp)
 	if (Cheat::CheatFunctions::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("show_joining_players_notification")) == xorstr_("true")) { show_joining_players_notification = true; }
 	if (Cheat::CheatFunctions::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("show_vehicle_previews")) == xorstr_("true")) { Cheat::CheatFeatures::ShowVehicleInfoAndPreview = true; }
 	else { if (Cheat::CheatFunctions::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), "show_vehicle_previews") == "false") Cheat::CheatFeatures::ShowVehicleInfoAndPreview = false; }
-	std::string ActiveThemeSetting = Cheat::CheatFunctions::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("active_theme")); char* ActiveThemeSettingChar = new char[Cheat::CheatFunctions::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("active_theme")).length() + 1]; strcpy(ActiveThemeSettingChar, ActiveThemeSetting.c_str()); if (ActiveThemeSetting != xorstr_("NULL")) { Cheat::LoadTheme((char*)ActiveThemeSettingChar, true); }
+	
+	std::string ActiveThemeSetting = Cheat::CheatFunctions::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("active_theme")); char* ActiveThemeSettingChar = new char[Cheat::CheatFunctions::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("CHEAT"), xorstr_("active_theme")).length() + 1]; 
+	strcpy_s(ActiveThemeSettingChar, sizeof(ActiveThemeSettingChar), ActiveThemeSetting.c_str());
+	if (ActiveThemeSetting != xorstr_("NULL")) { Cheat::LoadTheme((char*)ActiveThemeSettingChar, true); }
 
 
 	//Load Hotkeys
@@ -503,6 +506,7 @@ std::string Cheat::CheatFunctions::VirtualKeyCodeToString(UCHAR virtualKey)
 	case VK_DIVIDE:
 	case VK_NUMLOCK:
 		scanCode |= KF_EXTENDED;
+		break;
 	default:
 		result = GetKeyNameTextA(scanCode << 16, szName, 128);
 	}

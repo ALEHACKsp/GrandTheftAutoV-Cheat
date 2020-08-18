@@ -86,7 +86,7 @@ void Cheat::GameFunctions::SetPedTexture(Ped Ped, int ComponentID, int DrawableI
 void Cheat::GameFunctions::TeleportToObjective()
 {
 	Entity e;
-	Vector3 wayp;
+	Vector3 wayp{};
 	Ped playerPed = PlayerPedID;
 	if (PED::IS_PED_IN_ANY_VEHICLE(playerPed, FALSE))
 		e = PED::GET_VEHICLE_PED_IS_USING(playerPed);
@@ -1233,7 +1233,7 @@ void Cheat::GameFunctions::NearbyPedsCommitSuicide()
 void Cheat::GameFunctions::DrawMarkerAbovePlayer(int Type, Player player, RGBA Color)
 {
 	Vector3 coords = ENTITY::GET_ENTITY_COORDS(PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(player), false);
-	GRAPHICS::DRAW_MARKER(Type, coords.x, coords.y, coords.z + 1.3f, 0, 0, 0, 0, 180, 0, 0.3, 0.3, 0.3, Color.r, Color.g, Color.b, Color.a, 1, 1, 1, 0, 0, 0, 0);
+	GRAPHICS::DRAW_MARKER(Type, coords.x, coords.y, coords.z + 1.3f, 0.f, 0.f, 0.f, 0.f, 180.f, 0.f, 0.3f, 0.3f, 0.3f, Color.r, Color.g, Color.b, Color.a, 1, 1, 1, 0, 0, 0, 0);
 }
 
 bool VehicleSpawnerSpawnInsideVehicle = false;

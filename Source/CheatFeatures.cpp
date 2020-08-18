@@ -152,7 +152,6 @@ void Cheat::CheatFeatures::Looped()
 	TinyPlayerBool ? TinyPlayer(true) : TinyPlayer(false);
 	UnlimitedRocketBoostBool ? UnlimitedRocketBoost() : NULL;
 	VehicleGunBool ? VehicleGun() : NULL;
-	PlayerNameESPBool ? PlayerNameESP() : NULL;
 	PlayerESPBool ? PlayerESP() : NULL;
 	OffRadarBool ? OffRadar() : NULL;
 	RevealPlayersBool ? RevealPlayers() : NULL;
@@ -223,11 +222,11 @@ void Cheat::CheatFeatures::SlowMotion(bool toggle)
 {
 	if (toggle)
 	{
-		GAMEPLAY::SET_TIME_SCALE(0.2);
+		GAMEPLAY::SET_TIME_SCALE(0.2f);
 	}
 	else
 	{
-		GAMEPLAY::SET_TIME_SCALE(1);
+		GAMEPLAY::SET_TIME_SCALE(1.f);
 	}
 }
 
@@ -465,11 +464,11 @@ void Cheat::CheatFeatures::FastRun(bool toggle)
 {
 	if (toggle)
 	{
-		PLAYER::SET_RUN_SPRINT_MULTIPLIER_FOR_PLAYER(PlayerID, 1.39);
+		PLAYER::SET_RUN_SPRINT_MULTIPLIER_FOR_PLAYER(PlayerID, 1.39f);
 	}
 	else
 	{
-		PLAYER::SET_RUN_SPRINT_MULTIPLIER_FOR_PLAYER(PlayerID, 1.00);
+		PLAYER::SET_RUN_SPRINT_MULTIPLIER_FOR_PLAYER(PlayerID, 1.00f);
 	}
 }
 
@@ -677,7 +676,7 @@ bool Cheat::CheatFeatures::NoClipBool = false;
 void Cheat::CheatFeatures::NoClip()
 {
 	float x, y, z;
-	float d = 0.999999;
+	float d = 0.999999f;
 
 	Cheat::GameFunctions::GetCameraDirection(&x, &y, &z);
 
@@ -952,50 +951,6 @@ void Cheat::CheatFeatures::VehicleGun()
 	}
 }
 
-bool Cheat::CheatFeatures::PlayerNameESPBool = false;
-void Cheat::CheatFeatures::PlayerNameESP()
-{
-	Player playerPed = PlayerPedID;
-	for (int i = 0; i < 32; i++)
-	{
-		if (PlayerID != i) {
-			Player playerHandle = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(i);
-			Vector3 handleCoords = ENTITY::GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(playerHandle, 0, 0, 0);
-			Vector3 playerCoords = ENTITY::GET_ENTITY_COORDS(playerPed, 0);
-			char* Name = PLAYER::GET_PLAYER_NAME(PLAYER::INT_TO_PLAYERINDEX(i));
-
-			if (ENTITY::DOES_ENTITY_EXIST(playerHandle))
-			{
-				float x1;
-				float y1;
-
-				std::string playerName = PLAYER::GET_PLAYER_NAME(PLAYER::INT_TO_PLAYERINDEX(i));
-
-				std::string nameSetupRed = xorstr_("~HUD_COLOUR_RED~") + playerName;
-				std::string nameSetupGreen = xorstr_("~HUD_COLOUR_GREEN~") + playerName;
-
-				char* playerInfoRed = new char[nameSetupRed.length() + 1];
-				char* playerInfoGreen = new char[nameSetupGreen.length() + 1];
-
-				std::strcpy(playerInfoRed, nameSetupRed.c_str());
-				std::strcpy(playerInfoGreen, nameSetupGreen.c_str());
-
-				UI::SET_TEXT_FONT(6);
-				UI::SET_TEXT_SCALE(0.0, 0.40);
-				UI::SET_TEXT_COLOUR(0, 255, 0, 255);
-				UI::SET_TEXT_CENTRE(0);
-				UI::SET_TEXT_DROPSHADOW(0, 0, 0, 0, 0);
-				UI::SET_TEXT_EDGE(0, 0, 0, 0, 0);
-				UI::BEGIN_TEXT_COMMAND_DISPLAY_TEXT("STRING");
-				if (ENTITY::HAS_ENTITY_CLEAR_LOS_TO_ENTITY(PlayerPedID, playerHandle, 17)) { UI::ADD_TEXT_COMPONENT_SUBSTRING_PLAYER_NAME(playerInfoGreen); }
-				else { UI::ADD_TEXT_COMPONENT_SUBSTRING_PLAYER_NAME(playerInfoRed); }
-				UI::END_TEXT_COMMAND_DISPLAY_TEXT(x1, y1);
-				UI::SET_TEXT_OUTLINE();
-				UI::SET_TEXT_DROPSHADOW(5, 0, 78, 255, 255);
-			}
-		}
-	}
-}
 
 bool Cheat::CheatFeatures::PlayerESPBool = false;
 void Cheat::CheatFeatures::PlayerESP()
@@ -1241,8 +1196,8 @@ void Cheat::CheatFeatures::VehicleWeapons()
 		{
 			if (!WEAPON::HAS_WEAPON_ASSET_LOADED(weaponAssetRocket)) { WEAPON::REQUEST_WEAPON_ASSET(weaponAssetRocket, 31, 0); while (!WEAPON::HAS_WEAPON_ASSET_LOADED(weaponAssetRocket)) { WAIT(0); } }
 
-			Vector3 coords0from = ENTITY::GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(veh, -(v1.x + 0.25f), v1.y + 1.25f, 0.1);
-			Vector3 coords1from = ENTITY::GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(veh, (v1.x + 0.25f), v1.y + 1.25f, 0.1);
+			Vector3 coords0from = ENTITY::GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(veh, -(v1.x + 0.25f), v1.y + 1.25f, 0.1f);
+			Vector3 coords1from = ENTITY::GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(veh, (v1.x + 0.25f), v1.y + 1.25f, 0.1f);
 			Vector3 coords0to = ENTITY::GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(veh, -v1.x, v1.y + 100.0f, 0.1f);
 			Vector3 coords1to = ENTITY::GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(veh, v1.x, v1.y + 100.0f, 0.1f);
 			GAMEPLAY::SHOOT_SINGLE_BULLET_BETWEEN_COORDS(coords0from.x, coords0from.y, coords0from.z, coords0to.x, coords0to.y, coords0to.z, 250, 1, weaponAssetRocket, PlayerPedID, 1, 0, -1.0);
@@ -1270,13 +1225,13 @@ void Cheat::CheatFeatures::AirstrikeGun()
 bool Cheat::CheatFeatures::SuperRunBool = false;
 void Cheat::CheatFeatures::SuperRun()
 {
-	if (CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlSprint) && CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, 232)) 
+	if (CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlSprint) && CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlScriptPadUp))
 	{
 		Ped ped = PlayerPedID;
-		Vector3 offset = ENTITY::GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(ped, 0, 0.6, 0);
-		ENTITY::APPLY_FORCE_TO_ENTITY(ped, 1, 0.0f, 1.3, 0, 0.0f, 0.0f, 0.0f, 0, 1, 1, 1, 0, 1);
-		PLAYER::SET_PLAYER_SPRINT(PlayerID, 1);
-		PLAYER::SET_RUN_SPRINT_MULTIPLIER_FOR_PLAYER(PlayerID, 1.59);
+		Vector3 offset = ENTITY::GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(ped, 0.f, 0.6f, 0.f);
+		ENTITY::APPLY_FORCE_TO_ENTITY(ped, 1, 0.0f, 1.3f, 0.f, 0.0f, 0.0f, 0.0f, 0, 1, 1, 1, 0, 1.f);
+		PLAYER::SET_PLAYER_SPRINT(PlayerID, true);
+		PLAYER::SET_RUN_SPRINT_MULTIPLIER_FOR_PLAYER(PlayerID, 1.59f);
 	}
 }
 
@@ -1335,11 +1290,11 @@ void Cheat::CheatFeatures::ShowSessionInformation()
 	std::string yMsg = xorstr_(" Y ") + std::to_string(playerCoord.y);
 	std::string zMsg = xorstr_(" Z ") + std::to_string(playerCoord.z);
 
-	Cheat::Drawing::Text(xorstr_("Local Player Coords"), Cheat::GUI::optionText, { 0.162, 0.8100f }, { 0.25f, 0.25f }, false);
-	Cheat::Drawing::Text(xMsg.c_str(), Cheat::GUI::optionText, { 0.16, 0.8225f }, { 0.25f, 0.25f }, false);
-	Cheat::Drawing::Text(yMsg.c_str(), Cheat::GUI::optionText, { 0.16, 0.8350f }, { 0.25f, 0.25f }, false);
-	Cheat::Drawing::Text(zMsg.c_str(), Cheat::GUI::optionText, { 0.16, 0.8475f }, { 0.25f, 0.25f }, false);
-	if (NETWORK::NETWORK_IS_SESSION_STARTED()) { Cheat::Drawing::Text(NumbConnectedPlayers.c_str(), Cheat::GUI::optionText, { 0.1615, 0.8650f }, { 0.25f, 0.25f }, false); }
+	Cheat::Drawing::Text(xorstr_("Local Player Coords"), Cheat::GUI::optionText, { 0.162f, 0.8100f }, { 0.25f, 0.25f }, false);
+	Cheat::Drawing::Text(xMsg.c_str(), Cheat::GUI::optionText, { 0.16f, 0.8225f }, { 0.25f, 0.25f }, false);
+	Cheat::Drawing::Text(yMsg.c_str(), Cheat::GUI::optionText, { 0.16f, 0.8350f }, { 0.25f, 0.25f }, false);
+	Cheat::Drawing::Text(zMsg.c_str(), Cheat::GUI::optionText, { 0.16f, 0.8475f }, { 0.25f, 0.25f }, false);
+	if (NETWORK::NETWORK_IS_SESSION_STARTED()) { Cheat::Drawing::Text(NumbConnectedPlayers.c_str(), Cheat::GUI::optionText, { 0.1615f, 0.8650f }, { 0.25f, 0.25f }, false); }
 }
 
 

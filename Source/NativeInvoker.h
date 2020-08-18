@@ -88,7 +88,7 @@ public:
 			tempValues[target] = args[i];
 		}
 
-		memcpy( m_TempStack, tempValues, sizeof( m_TempStack ) );
+		memcpy(m_TempStack, tempValues, sizeof(m_TempStack));
 	}
 
 	template <typename T>

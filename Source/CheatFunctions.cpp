@@ -38,7 +38,7 @@ std::string Cheat::CheatFunctions::ReturnDateTimeFormatAsString(const char* Date
 
 std::string Cheat::CheatFunctions::ReturnCheatBuildAsString()
 {
-	return xorstr_("1.2.0.2");
+	return xorstr_("1.2.0.3");
 }
 
 std::string Cheat::CheatFunctions::ReturnCheatModuleDirectoryPath()

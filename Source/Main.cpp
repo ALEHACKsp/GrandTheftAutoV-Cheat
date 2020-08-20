@@ -4000,8 +4000,8 @@ void Cheat::Main() {
 			if (Cheat::Int("Accesories Texture", accesoriestexture, 0, 255, 1, "")) { Cheat::GameFunctions::SetPedTexture(PlayerPedID, 8, accesories, accesoriestexture); }
 			if (Cheat::Int("Accesories2", accesoriessec, 0, 255, 1, "")) { Cheat::GameFunctions::SetPedTexture(PlayerPedID, 9, accesoriessec, 0); }
 			if (Cheat::Int("Accesories2 Texture", accesoriessectexture, 0, 255, 1, "")) { Cheat::GameFunctions::SetPedTexture(PlayerPedID, 9, accesoriessec, accesoriessectexture); }
-			if (Cheat::Int("Torso2", torsosec, 0, 255, 1, "")) { Cheat::GameFunctions::SetPedTexture(PlayerPedID, 11, torsosec, 0); }
-			if (Cheat::Int("Torso2 Texture", torsosectexture, 0, 255, 1, "")) { Cheat::GameFunctions::SetPedTexture(PlayerPedID, 11, torsosec, torsosectexture); }
+			if (Cheat::Int("Torso 2", torsosec, 0, 255, 1, "")) { Cheat::GameFunctions::SetPedTexture(PlayerPedID, 11, torsosec, 0); }
+			if (Cheat::Int("Torso 2 Texture", torsosectexture, 0, 255, 1, "")) { Cheat::GameFunctions::SetPedTexture(PlayerPedID, 11, torsosec, torsosectexture); }
 			if (Cheat::Int("Textures", textures, 0, 255, 1, "")) { Cheat::GameFunctions::SetPedTexture(PlayerPedID, 10, textures, 0); }
 			if (Cheat::Int("Textures Texture", texturestexture, 0, 255, 1, "")) {  Cheat::GameFunctions::SetPedTexture(PlayerPedID, 9, textures, texturestexture); }
 		}

@@ -1,6 +1,5 @@
 #include "stdafx.h"
 
-
 void Cheat::GameFunctions::GiveAllWeaponsToPlayer(Ped Player)
 {
 	for (int i = 0; i < (sizeof(Cheat::GameArrays::WeaponsHashList) / sizeof Cheat::GameArrays::WeaponsHashList[0]); i++)

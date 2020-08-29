@@ -643,7 +643,7 @@ void Cheat::GameFunctions::LoadPlayerInformation(char* playerName, Player p)
 			Cheat::AddPlayerInfoBoxTextEntry((char*)PlayerRank.str().c_str(), NULL, 2);
 
 			std::ostringstream PlayerMoney;
-			PlayerMoney << globalHandle(1590535).At(p, 876).At(211).At(56).As<int>();
+			PlayerMoney << xorstr_("$") << globalHandle(1590535).At(p, 876).At(211).At(56).As<int>();
 			Cheat::AddPlayerInfoBoxTextEntry((char*)PlayerMoney.str().c_str(), NULL, 3);
 		}
 		else

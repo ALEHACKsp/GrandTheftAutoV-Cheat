@@ -419,7 +419,7 @@ namespace Cheat
 	}
 	namespace GameArrays 
 	{
-		extern int RankPointsArray[8000];
+		extern const int RankPointsArray[8000];
 		extern const std::vector<std::string> SummerSpecialModels;
 		extern const std::vector<std::string> PedModels;
 		extern const std::vector<std::string> BoatModels;

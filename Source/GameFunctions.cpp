@@ -635,7 +635,7 @@ void Cheat::GameFunctions::LoadPlayerInformation(char* playerName, Player p)
 		Cheat::AddPlayerInfoBoxTextEntry(PLAYER::GET_PLAYER_NAME(p), NULL, 1);
 
 		Cheat::AddPlayerInfoBoxTextEntry(xorstr_("Rank"), 2);
-		Cheat::AddPlayerInfoBoxTextEntry(xorstr_("Cash"), 3);
+		Cheat::AddPlayerInfoBoxTextEntry(xorstr_("Money"), 3);
 		if (NETWORK::NETWORK_IS_SESSION_STARTED()) 
 		{
 			std::ostringstream PlayerRank;
@@ -643,8 +643,7 @@ void Cheat::GameFunctions::LoadPlayerInformation(char* playerName, Player p)
 			Cheat::AddPlayerInfoBoxTextEntry((char*)PlayerRank.str().c_str(), NULL, 2);
 
 			std::ostringstream PlayerMoney;
-			PlayerMoney << globalHandle(1590535).At(p, 876).At(211).At(3).As<int>(); // Cash Only
-			int Earnings = globalHandle(1590535).At(p, 876).At(211).At(56).As<int>(); // Cash + Bank Money
+			PlayerMoney << globalHandle(1590535).At(p, 876).At(211).At(56).As<int>();
 			Cheat::AddPlayerInfoBoxTextEntry((char*)PlayerMoney.str().c_str(), NULL, 3);
 		}
 		else

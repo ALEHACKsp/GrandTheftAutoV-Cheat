@@ -326,8 +326,8 @@ bool Cheat::Break(const char * option, bool TextCentered)
 	}
 	else if (GUI::optionCount > (GUI::currentOption - GUI::maxVisOptions) && GUI::optionCount <= GUI::currentOption)
 	{
-		if (TextCentered) { Drawing::Text(option, GUI::breakText, { Cheat::GUI::guiX, (GUI::optionCount - (GUI::currentOption - GUI::maxVisOptions)) * 0.035f + 0.125f }, { 0.35f, 0.35f }, TextCentered); }
-		else { Drawing::Text(option, GUI::breakText, { Cheat::GUI::guiX - 0.100f, (GUI::optionCount - (GUI::currentOption - GUI::maxVisOptions)) * 0.035f + 0.125f }, { 0.35f, 0.35f }, TextCentered); }
+		if (TextCentered) { Drawing::Text(option, GUI::breakText, { Cheat::GUI::guiX, GUI::guiY + (GUI::optionCount - (GUI::currentOption - GUI::maxVisOptions)) * 0.035f - 0.175f }, { 0.35f, 0.35f }, TextCentered); }
+		else { Drawing::Text(option, GUI::breakText, { Cheat::GUI::guiX - 0.100f, GUI::guiY + (GUI::optionCount - (GUI::currentOption - GUI::maxVisOptions)) * 0.035f - 0.175f }, { 0.35f, 0.35f }, TextCentered); }
 		Drawing::Rect(GUI::MenuBackgroundRect, { Cheat::GUI::guiX, GUI::guiY + (GUI::optionCount - (GUI::currentOption - GUI::maxVisOptions))*0.035f - 0.1585f }, { Cheat::GUI::guiWidth, 0.035f });
 	}
 	return false;

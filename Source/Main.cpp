@@ -41,7 +41,8 @@ int SessionTimeHour;
 int SessionTimeMinutes;
 int SessionTimeSeconds;
 
-void Cheat::Main() { 
+void Cheat::Main() 
+{ 
 	Cheat::CheatFunctions::PostInitCheat();
 	while (true) 
 	{

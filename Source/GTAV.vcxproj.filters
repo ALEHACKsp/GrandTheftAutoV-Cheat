@@ -42,9 +42,6 @@
     <ClInclude Include="GUI.h">
       <Filter>Header Files\GUI</Filter>
     </ClInclude>
-    <ClInclude Include="Hooking.h">
-      <Filter>Header Files\Game Hooking</Filter>
-    </ClInclude>
     <ClInclude Include="CrossMapping.h">
       <Filter>Header Files\Game Hooking</Filter>
     </ClInclude>
@@ -73,6 +70,9 @@
       <Filter>Header Files\Game Hooking</Filter>
     </ClInclude>
     <ClInclude Include="Enums.h">
+      <Filter>Header Files\Game Hooking</Filter>
+    </ClInclude>
+    <ClInclude Include="GameHooking.h">
       <Filter>Header Files\Game Hooking</Filter>
     </ClInclude>
   </ItemGroup>

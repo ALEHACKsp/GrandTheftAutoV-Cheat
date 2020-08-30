@@ -83,7 +83,7 @@
     <ClInclude Include="Enums.h" />
     <ClInclude Include="GameArrays.h" />
     <ClInclude Include="GameFunctions.h" />
-    <ClInclude Include="Hooking.h" />
+    <ClInclude Include="GameHooking.h" />
     <ClInclude Include="Memory.h" />
     <ClInclude Include="GUI.h" />
     <ClInclude Include="NativeCaller.h" />

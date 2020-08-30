@@ -1384,11 +1384,10 @@ void Cheat::GameFunctions::InstructionsEnd()
 	GRAPHICS::END_SCALEFORM_MOVIE_METHOD();
 }
 
-void Cheat::GameFunctions::SetSessionTime(int h, int m, int s) {
-	GameHooking::ClockTime->hour = h;
-	GameHooking::ClockTime->minute = h;
-	GameHooking::ClockTime->second = s;
-	GameHooking::set_session_time_info(4, 0);
+void Cheat::GameFunctions::SetSessionTime(int h, int m, int s) 
+{
+	NETWORK::NETWORK_OVERRIDE_CLOCK_TIME(h, m, s);
+	GameHooking::set_session_time_info(1, 0);
 }
 
 
@@ -1398,9 +1397,9 @@ void Cheat::GameFunctions::AddBlipToVehicle(Vehicle Vehicle)
 	ENTITY::SET_ENTITY_AS_MISSION_ENTITY(Vehicle, true, true);
 	for (int i = 0; i < 350; i++)NETWORK::SET_NETWORK_ID_CAN_MIGRATE(Vehicle, 0);
 	VEHICLE::SET_VEHICLE_HAS_BEEN_OWNED_BY_PLAYER(Vehicle, true);
-	int b = UI::ADD_BLIP_FOR_ENTITY(Vehicle);
-	UI::SET_BLIP_SPRITE(b, 60);
-	UI::SET_BLIP_NAME_FROM_TEXT_FILE(b, "Vehicle");
+	int BlipHandle = UI::ADD_BLIP_FOR_ENTITY(Vehicle);
+	UI::SET_BLIP_SPRITE(BlipHandle, 60);
+	UI::SET_BLIP_NAME_FROM_TEXT_FILE(BlipHandle, "Vehicle");
 }
 
 bool Cheat::GameFunctions::DeleteVehicle(Vehicle Vehicle)

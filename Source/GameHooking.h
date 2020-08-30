@@ -1,15 +1,14 @@
 #pragma once
 
-typedef bool(*fpIsDLCPresent)						(std::uint32_t dlcHash);
-typedef int(__cdecl*	TriggerScriptEvent)			(int unk0, int* args, int argCount, int bitFlags);
-typedef int(__cdecl*	SessionWeather)				(int unk0, int, int argCount, int bitFlags);
-typedef uint32_t*(*__cdecl        fpFileRegister)	(int*, const char*, bool, const char*, bool);
-typedef BOOL(_cdecl* GetEventData)					(int eventGroup, int eventIndex, uint64_t* argStruct, int argStructSize);
-using fpGetScriptHandlerIfNetworked					= void* (*) ();
+typedef bool(*fpIsDLCPresent)							(std::uint32_t dlcHash);
+typedef int(__stdcall* TriggerScriptEvent)				(int unk0, int* args, int argCount, int bitFlags);
+typedef int(__stdcall* SessionWeather)					(int unk0, int, int argCount, int bitFlags);
+typedef uint32_t*(*__stdcall fpFileRegister)		    (int*, const char*, bool, const char*, bool);
+typedef BOOL(__stdcall* GetEventData)					(int eventGroup, int eventIndex, uint64_t* argStruct, int argStructSize);
+typedef void (__stdcall* fpSetSessionTime)(int, int);
+using fpGetScriptHandlerIfNetworked = void* (*) ();
 using fpGetScriptHandler = void* (*) ();
-using fpGetLabelText = const char* (*)				(void* this_, const char* label);
-struct clockTime { int hour, minute, second; };
-typedef void(__cdecl* fpSetSessionTime)(int, int);
+using fpGetLabelText = const char* (*) (void* this_, const char* label);
 
 
 class GameHooking
@@ -25,7 +24,6 @@ public:
 	static fpGetScriptHandlerIfNetworked	GetScriptHandlerIfNetworked;
 	static fpGetScriptHandler				GetScriptHandler;
 	static fpGetLabelText					GetLabelText;
-	static clockTime*						ClockTime;
 	static fpSetSessionTime					set_session_time_info;
 
 	static void DoGameHooking();

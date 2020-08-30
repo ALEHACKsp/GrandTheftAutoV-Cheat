@@ -13,7 +13,6 @@ fpIsDLCPresent														GameHooking::is_DLC_present;
 TriggerScriptEvent													GameHooking::trigger_script_event;
 SessionWeather														GameHooking::session_weather;
 GetEventData														GameHooking::get_event_data;
-clockTime*															GameHooking::ClockTime;
 fpSetSessionTime													GameHooking::set_session_time_info;
 fpGetLabelText														GameHooking::GetLabelText = nullptr;
 fpGetScriptHandlerIfNetworked										GameHooking::GetScriptHandlerIfNetworked = nullptr;
@@ -372,13 +371,12 @@ void GameHooking::DoGameHooking()
 	GameHooking::GetScriptHandlerIfNetworked	= static_cast<fpGetScriptHandlerIfNetworked>(Memory::pattern("40 53 48 83 EC 20 E8 ? ? ? ? 48 8B D8 48 85 C0 74 12 48 8B 10 48 8B C8").count(1).get(0).get<void>(0));
 	GameHooking::GetScriptHandler				= static_cast<fpGetScriptHandler>(Memory::pattern("48 83 EC 28 E8 ? ? ? ? 33 C9 48 85 C0 74 0C E8 ? ? ? ? 48 8B 88 ? ? ? ?").count(1).get(0).get<void>(0));
 	
-	//Set Pattern
+	//Set Patterns
 	setPat<uint64_t>(xorstr_("frame count"), xorstr_("\x8B\x15\x00\x00\x00\x00\x41\xFF\xCF"), xorstr_("xx????xxx"), &GameHooking::m_frameCount, true, 2); 
 	setFn<fpIsDLCPresent>(xorstr_("is_DLC_present"), xorstr_("\x48\x89\x5C\x24\x00\x57\x48\x83\xEC\x20\x81\xF9\x00\x00\x00\x00"), xorstr_("xxxx?xxxxxxx????"), &GameHooking::is_DLC_present);
 	setFn<TriggerScriptEvent>(xorstr_("trigger_script_event"), xorstr_("\x48\x8B\xC4\x48\x89\x58\x08\x48\x89\x68\x10\x48\x89\x70\x18\x48\x89\x78\x20\x41\x56\x48\x81\xEC\x00\x00\x00\x00\x45\x8B\xF0\x41\x8B\xF9"), xorstr_("xxxxxxxxxxxxxxxxxxxxxxxx????xxxxxx"), &GameHooking::trigger_script_event);
 	setFn<SessionWeather>(xorstr_("session_weather"), xorstr_("\x48\x89\x5C\x24\x00\x48\x89\x6C\x24\x00\x48\x89\x74\x24\x00\x57\x48\x83\xEC\x30\x40\x8A\xE9"), xorstr_("xxxx?xxxx?xxxx?xxxxxxxx"), &GameHooking::session_weather);
 	setFn<GetEventData>(xorstr_("get_event_data"), xorstr_("\x48\x89\x5C\x24\x00\x57\x48\x83\xEC\x20\x49\x8B\xF8\x4C\x8D\x05\x00\x00\x00\x00\x41\x8B\xD9\xE8\x00\x00\x00\x00\x48\x85\xC0\x74\x14\x4C\x8B\x10\x44\x8B\xC3\x48\x8B\xD7\x41\xC1\xE0\x03\x48\x8B\xC8\x41\xFF\x52\x30\x48\x8B\x5C\x24\x00"), xorstr_("xxxx?xxxxxxxxxxx????xxxx????xxxxxxxxxxxxxxxxxxxxxxxxxxxxx?"), &GameHooking::get_event_data);
-	setPat<clockTime>(xorstr_("clock_time"), xorstr_("\x48\x8D\x0D\x00\x00\x00\x00\x8B\xFA\xE8\x00\x00\x00\x00\x44\x8D\x0C\x5B"), xorstr_("xxx????xxx????xxxx"), &GameHooking::ClockTime, true, 3);
 	setFn<fpSetSessionTime>(xorstr_("session_time_set"), xorstr_("\x48\x89\x5C\x24\x08\x57\x48\x83\xEC\x20\x8B\xF9\x48\x8B\x0D\x00\x00\x00\x00\x48\x8B\xDA\x33\xD2\xE9\x00\x00\x00\x00"), xorstr_("xxxxxxxxxxxxxxx????xxxxxx????"), &GameHooking::set_session_time_info);
 	
 

@@ -177,9 +177,9 @@ void Cheat::Main()
 		case sessiontimemenu:
 		{
 			Cheat::Title("Session Time");
-			Cheat::Int("Hour", SessionTimeHour, 0, 23, 1, "");
-			Cheat::Int("Minutes", SessionTimeMinutes, 0, 59, 1, "");
-			Cheat::Int("Seconds", SessionTimeSeconds, 0, 59, 1, "");
+			Cheat::Int("Hour", SessionTimeHour, 0, 23, 1);
+			Cheat::Int("Minutes", SessionTimeMinutes, 0, 59, 1);
+			Cheat::Int("Seconds", SessionTimeSeconds, 0, 59, 1);
 			if (Cheat::Option("Set Time", "")) { Cheat::GameFunctions::SetSessionTime(SessionTimeHour, SessionTimeMinutes, SessionTimeSeconds); }
 		}
 		break;

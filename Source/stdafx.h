@@ -42,7 +42,7 @@
 #include "NativeInvoker.h"
 #include "NativeCaller.h"
 #include "Natives.h"
-#include "Hooking.h"
+#include "GameHooking.h"
 #include "GUI.h"
 #include "Types.h"
 #include "GameFunctions.h"

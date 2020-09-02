@@ -8,12 +8,10 @@ bool Cheat::CheatFeatures::UseKMH = true;
 bool Cheat::CheatFeatures::BlockScriptEvents = true;
 bool Cheat::CheatFeatures::ShowBlockedScriptEventNotifications = true;
 bool Cheat::CheatFeatures::ShowPlayerTagsPlayerList = true;
-bool Cheat::CheatFeatures::AutoSaveSettings = false;
 bool Cheat::CheatFeatures::ShowVehicleInfoAndPreview = true;
 std::chrono::steady_clock::time_point Cheat::CheatFeatures::PostInitScaleFormStart;
 
 
-std::chrono::steady_clock::time_point AutoSaveSettingsStart = std::chrono::high_resolution_clock::now();
 void Cheat::CheatFeatures::Looped()
 {
 	//Post Init Scaleform Banner Notification - Show for 10 seconds or until cheat GUI is opened
@@ -38,16 +36,6 @@ void Cheat::CheatFeatures::Looped()
 		Cheat::GameFunctions::InstructionsEnd();
 	}
 
-	//Auto Save Settings Loop - once every 10 minutes
-	if (Cheat::CheatFeatures::AutoSaveSettings)
-	{
-		auto AutoSaveSettingsEnd = std::chrono::high_resolution_clock::now();
-		if (std::chrono::duration_cast<std::chrono::seconds>(AutoSaveSettingsEnd - AutoSaveSettingsStart).count() > 600)
-		{
-			Cheat::CheatFunctions::SaveSettings();
-			AutoSaveSettingsStart = std::chrono::high_resolution_clock::now();
-		}
-	}
 
 	//New Session Member Notification Feature
 	Cheat::GameFunctions::CheckNewSessionMembersLoop();
@@ -491,7 +479,7 @@ void Cheat::CheatFeatures::ShowFPS()
 	std::string str = std::to_string(iFps);
 	while (str.size() > str.find(".")) { str.pop_back(); }
 	std::string MessageString = xorstr_("FPS: ") + str;
-	Drawing::Text((char*)MessageString.c_str(), { 255, 255, 255, 255 }, { 0.50f, 0.002f }, { 0.30f, 0.30f }, false);
+	GUI::Drawing::Text((char*)MessageString.c_str(), { 255, 255, 255, 255 }, { 0.50f, 0.002f }, { 0.30f, 0.30f }, false);
 }
 
 
@@ -763,16 +751,16 @@ void Cheat::CheatFeatures::EntityInformationGun()
 		Vector3 AimedEntityCoords = ENTITY::GET_ENTITY_COORDS(AimedEntityHandle, false);
 		std::string AimedEntityHealth = xorstr_("Entity Health: ") + std::to_string(ENTITY::GET_ENTITY_HEALTH(AimedEntityHandle));
 		std::string AimedEntityHash = xorstr_("Entity Hash: ") + std::to_string(ENTITY::GET_ENTITY_MODEL(AimedEntityHandle));
-		Cheat::Drawing::Text(xorstr_("~bold~Aimed Entity Information"), { 255, 255, 255, 255, 0 }, { 0.500f, 0.380f }, { 0.35f, 0.35f }, false);
-		Cheat::Drawing::Text(AimedEntityHash.c_str(), { 255, 255, 255, 255, 0 }, { 0.500f, 0.400f }, { 0.35f, 0.35f }, false);
-		Cheat::Drawing::Text(AimedEntityHealth.c_str(), { 255, 255, 255, 255, 0 }, { 0.500f, 0.420f }, { 0.35f, 0.35f }, false);
+		Cheat::GUI::Drawing::Text(xorstr_("~bold~Aimed Entity Information"), { 255, 255, 255, 255, 0 }, { 0.500f, 0.380f }, { 0.35f, 0.35f }, false);
+		Cheat::GUI::Drawing::Text(AimedEntityHash.c_str(), { 255, 255, 255, 255, 0 }, { 0.500f, 0.400f }, { 0.35f, 0.35f }, false);
+		Cheat::GUI::Drawing::Text(AimedEntityHealth.c_str(), { 255, 255, 255, 255, 0 }, { 0.500f, 0.420f }, { 0.35f, 0.35f }, false);
 
 		std::string EntityTypeMessageString;
 		if (ENTITY::IS_ENTITY_A_PED(AimedEntityHandle)) { EntityTypeMessageString = xorstr_("Entity Type: Ped"); }
 		else if (ENTITY::IS_ENTITY_A_VEHICLE(AimedEntityHandle)) { EntityTypeMessageString = xorstr_("Entity Type: Vehicle"); }
 		else if (ENTITY::IS_ENTITY_AN_OBJECT(AimedEntityHandle)) { EntityTypeMessageString = xorstr_("Entity Type: Object"); }
 		else { EntityTypeMessageString = xorstr_("Entity Type: Generic"); }
-		Cheat::Drawing::Text(EntityTypeMessageString.c_str(), { 255, 255, 255, 255, 0 }, { 0.500f, 0.440f }, { 0.35f, 0.35f }, false);
+		Cheat::GUI::Drawing::Text(EntityTypeMessageString.c_str(), { 255, 255, 255, 255, 0 }, { 0.500f, 0.440f }, { 0.35f, 0.35f }, false);
 	}
 }
 
@@ -1305,11 +1293,11 @@ void Cheat::CheatFeatures::ShowSessionInformation()
 	std::string yMsg = xorstr_(" Y ") + std::to_string(playerCoord.y);
 	std::string zMsg = xorstr_(" Z ") + std::to_string(playerCoord.z);
 
-	Cheat::Drawing::Text(xorstr_("Local Player Coords"), Cheat::GUI::optionText, { 0.162f, 0.8100f }, { 0.25f, 0.25f }, false);
-	Cheat::Drawing::Text(xMsg.c_str(), Cheat::GUI::optionText, { 0.16f, 0.8225f }, { 0.25f, 0.25f }, false);
-	Cheat::Drawing::Text(yMsg.c_str(), Cheat::GUI::optionText, { 0.16f, 0.8350f }, { 0.25f, 0.25f }, false);
-	Cheat::Drawing::Text(zMsg.c_str(), Cheat::GUI::optionText, { 0.16f, 0.8475f }, { 0.25f, 0.25f }, false);
-	if (NETWORK::NETWORK_IS_SESSION_STARTED()) { Cheat::Drawing::Text(NumbConnectedPlayers.c_str(), Cheat::GUI::optionText, { 0.1615f, 0.8650f }, { 0.25f, 0.25f }, false); }
+	Cheat::GUI::Drawing::Text(xorstr_("Local Player Coords"), Cheat::GUI::optionText, { 0.162f, 0.8100f }, { 0.25f, 0.25f }, false);
+	Cheat::GUI::Drawing::Text(xMsg.c_str(), Cheat::GUI::optionText, { 0.16f, 0.8225f }, { 0.25f, 0.25f }, false);
+	Cheat::GUI::Drawing::Text(yMsg.c_str(), Cheat::GUI::optionText, { 0.16f, 0.8350f }, { 0.25f, 0.25f }, false);
+	Cheat::GUI::Drawing::Text(zMsg.c_str(), Cheat::GUI::optionText, { 0.16f, 0.8475f }, { 0.25f, 0.25f }, false);
+	if (NETWORK::NETWORK_IS_SESSION_STARTED()) { Cheat::GUI::Drawing::Text(NumbConnectedPlayers.c_str(), Cheat::GUI::optionText, { 0.1615f, 0.8650f }, { 0.25f, 0.25f }, false); }
 }
 
 

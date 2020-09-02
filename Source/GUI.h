@@ -111,7 +111,8 @@ enum SubMenus
 	headeroptionsmenu,
 	player_otherpickupsmenu,
 	VehicleCustomizerMenu,
-	DLCVehiclesMenu
+	DLCVehiclesMenu,
+	SUBMENUS_END //Used to get total amount of SubMenus (SUBMENUS_END - 2) 
 };
 extern enum SubMenus;
 

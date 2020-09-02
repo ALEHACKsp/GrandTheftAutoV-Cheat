@@ -619,15 +619,15 @@ void Cheat::GameFunctions::LoadPlayerInformation(char* playerName, Player p)
 		//Draw Title and Background
 		if (Cheat::GUI::guiX < 0.54f)
 		{
-			Drawing::Rect(GUI::scroller, { Cheat::GUI::guiX + 0.266f, GUI::guiY + 0.01f }, { 0.32f, 0.31f }); //Main Background Rect
-			Drawing::Text(xorstr_("Player Information"), { GUI::titleText }, { Cheat::GUI::guiX + 0.260f, GUI::guiY - 0.170f }, { 0.50f, 0.35f }, true);
-			Drawing::Rect(GUI::MainTitleRect, { Cheat::GUI::guiX + 0.266f, GUI::guiY - 0.154f }, { 0.32f, 0.023f });
+			GUI::Drawing::Rect(GUI::scroller, { Cheat::GUI::guiX + 0.266f, GUI::guiY + 0.01f }, { 0.32f, 0.31f }); //Main Background Rect
+			GUI::Drawing::Text(xorstr_("Player Information"), { GUI::titleText }, { Cheat::GUI::guiX + 0.260f, GUI::guiY - 0.170f }, { 0.50f, 0.35f }, true);
+			GUI::Drawing::Rect(GUI::MainTitleRect, { Cheat::GUI::guiX + 0.266f, GUI::guiY - 0.154f }, { 0.32f, 0.023f });
 		}
 		else
 		{
-			Drawing::Rect(GUI::scroller, { Cheat::GUI::guiX - 0.266f, GUI::guiY + 0.01f }, { 0.32f, 0.31f }); //Main Background Rect
-			Drawing::Text(xorstr_("Player Information"), { GUI::titleText }, { Cheat::GUI::guiX - 0.260f, GUI::guiY - 0.170f }, { 0.50f, 0.35f }, true);
-			Drawing::Rect(GUI::MainTitleRect, { Cheat::GUI::guiX - 0.266f, GUI::guiY - 0.154f }, { 0.32f, 0.023f });
+			GUI::Drawing::Rect(GUI::scroller, { Cheat::GUI::guiX - 0.266f, GUI::guiY + 0.01f }, { 0.32f, 0.31f }); //Main Background Rect
+			GUI::Drawing::Text(xorstr_("Player Information"), { GUI::titleText }, { Cheat::GUI::guiX - 0.260f, GUI::guiY - 0.170f }, { 0.50f, 0.35f }, true);
+			GUI::Drawing::Rect(GUI::MainTitleRect, { Cheat::GUI::guiX - 0.266f, GUI::guiY - 0.154f }, { 0.32f, 0.023f });
 		}
 
 		//Text Entry's
@@ -648,8 +648,8 @@ void Cheat::GameFunctions::LoadPlayerInformation(char* playerName, Player p)
 		}
 		else
 		{
-			Cheat::AddPlayerInfoBoxTextEntry(xorstr_("GTAO Only"), NULL, 2);
-			Cheat::AddPlayerInfoBoxTextEntry(xorstr_("GTAO Only"), NULL, 3);
+			Cheat::AddPlayerInfoBoxTextEntry(xorstr_("Not Available"), NULL, 2);
+			Cheat::AddPlayerInfoBoxTextEntry(xorstr_("Not Available"), NULL, 3);
 		}
 
 
@@ -1375,6 +1375,8 @@ void Cheat::GameFunctions::InstructionsAdd(char* text, int button)
 void Cheat::GameFunctions::InstructionsEnd() 
 {
 	GRAPHICS::BEGIN_SCALEFORM_MOVIE_METHOD(VAR_INSTRUCTIONAL_CONTAINER, "DRAW_INSTRUCTIONAL_BUTTONS");
+	GRAPHICS::END_SCALEFORM_MOVIE_METHOD();
+	GRAPHICS::BEGIN_SCALEFORM_MOVIE_METHOD(VAR_INSTRUCTIONAL_CONTAINER, "SET_BACKGROUND_COLOUR");
 	GRAPHICS::_ADD_SCALEFORM_MOVIE_METHOD_PARAMETER_INT(0);
 	GRAPHICS::_ADD_SCALEFORM_MOVIE_METHOD_PARAMETER_INT(0);
 	GRAPHICS::_ADD_SCALEFORM_MOVIE_METHOD_PARAMETER_INT(0);

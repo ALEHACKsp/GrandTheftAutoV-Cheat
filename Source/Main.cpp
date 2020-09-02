@@ -1,7 +1,7 @@
 #pragma once
 #include "stdafx.h"
 int Cheat::CheatFeatures::selectedPlayer;
-float TeleportFoward = 1;			//Used by Teleport Forward option
+float TeleportFoward = 1.f;			//Used by Teleport Forward option
 int engine_multiplier;				//Used by Vehicle Multipliers Options
 int torque_multiplier;				//Used by Vehicle Multipliers Options
 int SetTimeHour = 0;				//Used by World Time options
@@ -52,15 +52,15 @@ void Cheat::Main()
 		switch (Cheat::GUI::currentMenu) {
 		case MainMenu:
 		{
-			Cheat::Title(xorstr_("Main Menu"));
-			Cheat::MenuOption(xorstr_("Self Options >"), SelfOptionsMenu);
-			Cheat::MenuOption(xorstr_("Online Options >"), OnlineOptionsMenu);
-			Cheat::MenuOption(xorstr_("Weapon Options >"), weaponmenu);
-			Cheat::MenuOption(xorstr_("Vehicle Options >"), vehiclemenu);
-			Cheat::MenuOption(xorstr_("Teleport Options >"), teleportmenu);
-			Cheat::MenuOption(xorstr_("World Options >"), worldmenu);
-			Cheat::MenuOption(xorstr_("Misc Options >"), miscmenu);
-			Cheat::MenuOption(xorstr_("Settings >"), SettingsMenu);
+			Cheat::Title("Main Menu");
+			Cheat::MenuOption("Self Options >", SelfOptionsMenu);
+			Cheat::MenuOption("Online Options >", OnlineOptionsMenu);
+			Cheat::MenuOption("Weapon Options >", weaponmenu);
+			Cheat::MenuOption("Vehicle Options >", vehiclemenu);
+			Cheat::MenuOption("Teleport Options >", teleportmenu);
+			Cheat::MenuOption("World Options >", worldmenu);
+			Cheat::MenuOption("Misc Options >", miscmenu);
+			Cheat::MenuOption("Settings >", SettingsMenu);
 		}
 		break;
 		case AllPlayersMenu:
@@ -233,22 +233,22 @@ void Cheat::Main()
 			STATS::STAT_GET_INT(GAMEPLAY::GET_HASH_KEY("MPPLY_BAD_CREW_STATUS"),	&BADCREWSTATUS,		-1);
 			STATS::STAT_GET_INT(GAMEPLAY::GET_HASH_KEY("MPPLY_BAD_CREW_EMBLEM"),	&BADCREWEMBLEM,		-1);
 			STATS::STAT_GET_INT(GAMEPLAY::GET_HASH_KEY("MPPLY_ISPUNISHED"),			&ISPUNISHED,		-1);
-			Cheat::Int("Report Strength", REPORTSTRENGTH, 0, 100, true, "");
-			Cheat::Int("Game Exploits", intexploits, 0, 100, true, "");
-			Cheat::Int("Offensive Language", intoffensive, 0, 100, true, "");
-			Cheat::Int("Offensive Tagplate", OFFENSIVETAGPLATE, 0, 100, true, "");
-			Cheat::Int("Offensive UGC", OFFENSIVEUGC, 0, 100, true, "");
-			Cheat::Int("Exploits", EXPLOITS, 0, 100, true, "");
-			Cheat::Int("Griefing", GRIEFING, 0, 100, true, "");
-			Cheat::Int("Friendly", FRIENDLY, 0, 100, true, "");
-			Cheat::Int("Helpful", HELPFUL, 0, 100, true, "");
-			Cheat::Int("VC Annoying Me", VCANNOYINGME, 0, 100, true, "");
-			Cheat::Int("Vchate", VCHATE, 0, 100, true, "");
-			Cheat::Int("Bad Crew Name", BADCREWNAME, 0, 100, true, "");
-			Cheat::Int("Bad Crew Motto", BADCREWMOTTO, 0, 100, true, "");
-			Cheat::Int("Bad Crew Status", BADCREWSTATUS, 0, 100, true, "");
-			Cheat::Int("Bad Crew Emblem", BADCREWEMBLEM, 0, 100, true, "");
-			Cheat::Int("Is Punished", ISPUNISHED, 0, 100, true, "");
+			Cheat::Int("Report Strength", REPORTSTRENGTH, 0, 100, true, false, "");
+			Cheat::Int("Game Exploits", intexploits, 0, 100, true, false, "");
+			Cheat::Int("Offensive Language", intoffensive, 0, 100, true, false, "");
+			Cheat::Int("Offensive Tagplate", OFFENSIVETAGPLATE, 0, 100, true, false, "");
+			Cheat::Int("Offensive UGC", OFFENSIVEUGC, 0, 100, true, false, "");
+			Cheat::Int("Exploits", EXPLOITS, 0, 100, true, false, "");
+			Cheat::Int("Griefing", GRIEFING, 0, 100, true, false, "");
+			Cheat::Int("Friendly", FRIENDLY, 0, 100, true, false, "");
+			Cheat::Int("Helpful", HELPFUL, 0, 100, true, false, "");
+			Cheat::Int("VC Annoying Me", VCANNOYINGME, 0, 100, true, false, "");
+			Cheat::Int("Vchate", VCHATE, 0, 100, true, false, "");
+			Cheat::Int("Bad Crew Name", BADCREWNAME, 0, 100, true, false, "");
+			Cheat::Int("Bad Crew Motto", BADCREWMOTTO, 0, 100, true, false, "");
+			Cheat::Int("Bad Crew Status", BADCREWSTATUS, 0, 100, true, false, "");
+			Cheat::Int("Bad Crew Emblem", BADCREWEMBLEM, 0, 100, true, false, "");
+			Cheat::Int("Is Punished", ISPUNISHED, 0, 100, true, false, "");
 		}
 		break; 
 		case unlocksmenu:
@@ -2404,7 +2404,8 @@ void Cheat::Main()
 		case vehicle_lsc_neon_options:
 		{
 			Cheat::Title("Neon Options");
-			if (Cheat::Option("Enable Neons", "Enable Vehicle Neons")) {
+			if (Cheat::Option("Enable Neons", "Enable Vehicle Neons")) 
+			{
 				int VehID = PED::GET_VEHICLE_PED_IS_IN(PlayerPedID, 0);
 				VEHICLE::_IS_VEHICLE_NEON_LIGHT_ENABLED(VehID, 1);
 				VEHICLE::_SET_VEHICLE_NEON_LIGHT_ENABLED(VehID, 0, 1);
@@ -2900,45 +2901,45 @@ void Cheat::Main()
 			if (Cheat::Option("Set Hotkey", ""))
 			{
 				PressedKey = 0;
-				while (!Cheat::CheatFunctions::ReturnPressedKey(PressedKey)) { Cheat::Drawing::Text(PressAnyKeyMessageString, { 255, 255, 255, 255 }, { 0.525f, 0.400f }, { 0.900f, 0.900f }, true); WAIT(0, false); }
+				while (!Cheat::CheatFunctions::ReturnPressedKey(PressedKey)) { Cheat::GUI::Drawing::Text(PressAnyKeyMessageString, { 255, 255, 255, 255 }, { 0.525f, 0.400f }, { 0.900f, 0.900f }, true); WAIT(0, false); }
 				if (PressedKey == 27) { Cheat::GameFunctions::MinimapNotification("Canceled Setting Hotkey"); break; }
-				if (PressedKey != 0) { AntiCrashCameraHotkey = PressedKey; Cheat::GameFunctions::MinimapNotification("Anti-Crash Camera hotkey has been set"); }
+				if (PressedKey != 0) { CheatFunctions::SaveOptionToConfig("Anti-Crash Camera Hotkey", std::to_string(PressedKey)); AntiCrashCameraHotkey = PressedKey; Cheat::GameFunctions::MinimapNotification("Anti-Crash Camera hotkey has been set"); }
 			}
 			if (Cheat::Option("Clear Hotkey", "")) { Cheat::GameFunctions::MinimapNotification("Hotkey Cleared"); AntiCrashCameraHotkey = NULL; }
 			Cheat::Break("Teleport To Waypoint", true);
 			if (Cheat::Option("Set Hotkey", ""))
 			{
 				PressedKey = 0;
-				while (!Cheat::CheatFunctions::ReturnPressedKey(PressedKey)) { Cheat::Drawing::Text(PressAnyKeyMessageString, { 255, 255, 255, 255 }, { 0.525f, 0.400f }, { 0.900f, 0.900f }, true); WAIT(0, false); }
+				while (!Cheat::CheatFunctions::ReturnPressedKey(PressedKey)) { Cheat::GUI::Drawing::Text(PressAnyKeyMessageString, { 255, 255, 255, 255 }, { 0.525f, 0.400f }, { 0.900f, 0.900f }, true); WAIT(0, false); }
 				if (PressedKey == 27) { Cheat::GameFunctions::MinimapNotification("Canceled Setting Hotkey"); break; }
-				if (PressedKey != 0) { TeleportToWaypointHotkey = PressedKey; Cheat::GameFunctions::MinimapNotification("Teleport To Waypoint hotkey has been set"); }
+				if (PressedKey != 0) { CheatFunctions::SaveOptionToConfig("Teleport To Waypoint Hotkey", std::to_string(PressedKey)); TeleportToWaypointHotkey = PressedKey; Cheat::GameFunctions::MinimapNotification("Teleport To Waypoint hotkey has been set"); }
 			}
 			if (Cheat::Option("Clear Hotkey", "")) { Cheat::GameFunctions::MinimapNotification("Hotkey Cleared"); TeleportToWaypointHotkey = NULL; }
 			Cheat::Break("Repair & Clean Vehicle", true);
 			if (Cheat::Option("Set Hotkey", ""))
 			{
 				PressedKey = 0;
-				while (!Cheat::CheatFunctions::ReturnPressedKey(PressedKey)) { Cheat::Drawing::Text(PressAnyKeyMessageString, { 255, 255, 255, 255 }, { 0.525f, 0.400f }, { 0.900f, 0.900f }, true); WAIT(0, false); }
+				while (!Cheat::CheatFunctions::ReturnPressedKey(PressedKey)) { Cheat::GUI::Drawing::Text(PressAnyKeyMessageString, { 255, 255, 255, 255 }, { 0.525f, 0.400f }, { 0.900f, 0.900f }, true); WAIT(0, false); }
 				if (PressedKey == 27) { Cheat::GameFunctions::MinimapNotification("Canceled Setting Hotkey"); break; }
-				if (PressedKey != 0) { RepairAndCleanVehicleHotkey = PressedKey; Cheat::GameFunctions::MinimapNotification("Repair & Clean hotkey has been set"); }
+				if (PressedKey != 0) { CheatFunctions::SaveOptionToConfig("Repair & Clean Vehicle Hotkey", std::to_string(PressedKey)); RepairAndCleanVehicleHotkey = PressedKey; Cheat::GameFunctions::MinimapNotification("Repair & Clean hotkey has been set"); }
 			}
 			if (Cheat::Option("Clear Hotkey", "")) { Cheat::GameFunctions::MinimapNotification("Hotkey Cleared"); RepairAndCleanVehicleHotkey = NULL; }
 			Cheat::Break("Godmode", true);
 			if (Cheat::Option("Set Hotkey", ""))
 			{
 				PressedKey = 0;
-				while (!Cheat::CheatFunctions::ReturnPressedKey(PressedKey)) { Cheat::Drawing::Text(PressAnyKeyMessageString, { 255, 255, 255, 255 }, { 0.525f, 0.400f }, { 0.900f, 0.900f }, true); WAIT(0, false); }
+				while (!Cheat::CheatFunctions::ReturnPressedKey(PressedKey)) { Cheat::GUI::Drawing::Text(PressAnyKeyMessageString, { 255, 255, 255, 255 }, { 0.525f, 0.400f }, { 0.900f, 0.900f }, true); WAIT(0, false); }
 				if (PressedKey == 27) { Cheat::GameFunctions::MinimapNotification("Canceled Setting Hotkey"); break; }
-				if (PressedKey != 0) { GodModeToggleHotkey = PressedKey; Cheat::GameFunctions::MinimapNotification("Godmode hotkey has been set"); }
+				if (PressedKey != 0) { CheatFunctions::SaveOptionToConfig("Godmode Hotkey", std::to_string(PressedKey)); GodModeToggleHotkey = PressedKey; Cheat::GameFunctions::MinimapNotification("Godmode hotkey has been set"); }
 			}
 			if (Cheat::Option("Clear Hotkey", "")) { Cheat::GameFunctions::MinimapNotification("Hotkey Cleared"); GodModeToggleHotkey = NULL; }
 			Cheat::Break("Max Upgrade Vehicle", true);
 			if (Cheat::Option("Set Hotkey", ""))
 			{
 				PressedKey = 0;
-				while (!Cheat::CheatFunctions::ReturnPressedKey(PressedKey)) { Cheat::Drawing::Text(PressAnyKeyMessageString, { 255, 255, 255, 255 }, { 0.525f, 0.400f }, { 0.900f, 0.900f }, true); WAIT(0, false); }
+				while (!Cheat::CheatFunctions::ReturnPressedKey(PressedKey)) { Cheat::GUI::Drawing::Text(PressAnyKeyMessageString, { 255, 255, 255, 255 }, { 0.525f, 0.400f }, { 0.900f, 0.900f }, true); WAIT(0, false); }
 				if (PressedKey == 27) { Cheat::GameFunctions::MinimapNotification("Canceled Setting Hotkey"); break; }
-				if (PressedKey != 0) { MaxUpgradeVehicleHotKey = PressedKey; Cheat::GameFunctions::MinimapNotification("Max Upgrade Vehicle hotkey has been set"); }
+				if (PressedKey != 0) { CheatFunctions::SaveOptionToConfig("Max Upgrade Vehicle Hotkey", std::to_string(PressedKey)); MaxUpgradeVehicleHotKey = PressedKey; Cheat::GameFunctions::MinimapNotification("Max Upgrade Vehicle hotkey has been set"); }
 			}
 			if (Cheat::Option("Clear Hotkey", "")) { Cheat::GameFunctions::MinimapNotification("Hotkey Cleared"); MaxUpgradeVehicleHotKey = NULL; }
 			Cheat::Break("Teleport Forward(2m)", true);
@@ -2946,27 +2947,27 @@ void Cheat::Main()
 			{
 				PressedKey = 0;
 				TeleportToWaypointHotkey = NULL;
-				while (!Cheat::CheatFunctions::ReturnPressedKey(PressedKey)) { Cheat::Drawing::Text(PressAnyKeyMessageString, { 255, 255, 255, 255 }, { 0.525f, 0.400f }, { 0.900f, 0.900f }, true); WAIT(0, false); }
+				while (!Cheat::CheatFunctions::ReturnPressedKey(PressedKey)) { Cheat::GUI::Drawing::Text(PressAnyKeyMessageString, { 255, 255, 255, 255 }, { 0.525f, 0.400f }, { 0.900f, 0.900f }, true); WAIT(0, false); }
 				if (PressedKey == 27) { Cheat::GameFunctions::MinimapNotification("Canceled Setting Hotkey"); break; }
-				if (PressedKey != 0) { TeleportForward2mHotkey = PressedKey; Cheat::GameFunctions::MinimapNotification("Teleport Forward (2m) hotkey has been set"); }
+				if (PressedKey != 0) { CheatFunctions::SaveOptionToConfig("Teleport Forward Hotkey", std::to_string(PressedKey)); TeleportForward2mHotkey = PressedKey; Cheat::GameFunctions::MinimapNotification("Teleport Forward (2m) hotkey has been set"); }
 			}
 			if (Cheat::Option("Clear Hotkey", "")) { Cheat::GameFunctions::MinimapNotification("Hotkey Cleared"); TeleportForward2mHotkey = NULL; }
 			Cheat::Break("Suicide", true);
 			if (Cheat::Option("Set Hotkey", ""))
 			{
 				PressedKey = 0;
-				while (!Cheat::CheatFunctions::ReturnPressedKey(PressedKey)) { Cheat::Drawing::Text(PressAnyKeyMessageString, { 255, 255, 255, 255 }, { 0.525f, 0.400f }, { 0.900f, 0.900f }, true); WAIT(0, false); }
+				while (!Cheat::CheatFunctions::ReturnPressedKey(PressedKey)) { Cheat::GUI::Drawing::Text(PressAnyKeyMessageString, { 255, 255, 255, 255 }, { 0.525f, 0.400f }, { 0.900f, 0.900f }, true); WAIT(0, false); }
 				if (PressedKey == 27) { Cheat::GameFunctions::MinimapNotification("Canceled Setting Hotkey"); break; }
-				if (PressedKey != 0) { SuicideHotkey = PressedKey; Cheat::GameFunctions::MinimapNotification("Suicide hotkey has been set"); }
+				if (PressedKey != 0) { CheatFunctions::SaveOptionToConfig("Suicide Hotkey", std::to_string(PressedKey)); SuicideHotkey = PressedKey; Cheat::GameFunctions::MinimapNotification("Suicide hotkey has been set"); }
 			}
 			if (Cheat::Option("Clear Hotkey", "")) { Cheat::GameFunctions::MinimapNotification("Hotkey Cleared"); SuicideHotkey = NULL; }
 			Cheat::Break("Bail To Single Player", true);
 			if (Cheat::Option("Set Hotkey", ""))
 			{
 				PressedKey = 0;
-				while (!Cheat::CheatFunctions::ReturnPressedKey(PressedKey)) { Cheat::Drawing::Text(PressAnyKeyMessageString, { 255, 255, 255, 255 }, { 0.525f, 0.400f }, { 0.900f, 0.900f }, true); WAIT(0, false); }
+				while (!Cheat::CheatFunctions::ReturnPressedKey(PressedKey)) { Cheat::GUI::Drawing::Text(PressAnyKeyMessageString, { 255, 255, 255, 255 }, { 0.525f, 0.400f }, { 0.900f, 0.900f }, true); WAIT(0, false); }
 				if (PressedKey == 27) { Cheat::GameFunctions::MinimapNotification("Canceled Setting Hotkey"); break; }
-				if (PressedKey != 0) { BailToSinglePlayerHotkey = PressedKey; Cheat::GameFunctions::MinimapNotification("Bail To Single Player hotkey has been set"); }
+				if (PressedKey != 0) { CheatFunctions::SaveOptionToConfig("Bail To Single Player Hotkey", std::to_string(PressedKey)); BailToSinglePlayerHotkey = PressedKey; Cheat::GameFunctions::MinimapNotification("Bail To Single Player hotkey has been set"); }
 			}
 			if (Cheat::Option("Clear Hotkey", "")) { Cheat::GameFunctions::MinimapNotification("Hotkey Cleared"); BailToSinglePlayerHotkey = NULL; }
 		}
@@ -3463,10 +3464,10 @@ void Cheat::Main()
 		{
 			Cheat::Title("Custom Bullets");
 			Cheat::Toggle("Toggle", Cheat::CheatFeatures::CustomWeaponBulletsBool, "");
-			Cheat::ToggleCheckMark("Valkyrie Bullets", Cheat::CheatFeatures::CustomWeaponBullets_ValkyrieGun);
-			Cheat::ToggleCheckMark("Tank Bullets", Cheat::CheatFeatures::CustomWeaponBullets_TankBullets);
-			Cheat::ToggleCheckMark("RPG Bullets", Cheat::CheatFeatures::CustomWeaponBullets_RpgBullets);
-			Cheat::ToggleCheckMark("Firework Bullets", Cheat::CheatFeatures::CustomWeaponBullets_FireworkBullets);
+			Cheat::Toggle("Valkyrie Bullets", Cheat::CheatFeatures::CustomWeaponBullets_ValkyrieGun, "");
+			Cheat::Toggle("Tank Bullets", Cheat::CheatFeatures::CustomWeaponBullets_TankBullets, "");
+			Cheat::Toggle("RPG Bullets", Cheat::CheatFeatures::CustomWeaponBullets_RpgBullets, "");
+			Cheat::Toggle("Firework Bullets", Cheat::CheatFeatures::CustomWeaponBullets_FireworkBullets, "");
 		}
 		break; 
 		case aimbotsettingsmenu:
@@ -3486,7 +3487,7 @@ void Cheat::Main()
 				Vehicle LastUsedVehicle = VEHICLE::GET_LAST_DRIVEN_VEHICLE();
 				PED::SET_PED_INTO_VEHICLE(PlayerPedID, LastUsedVehicle, -1);
 			}
-			if (Cheat::Float("Teleport Forward", TeleportFoward, 1, 10, 1, false, "Select to teleport"))
+			if (Cheat::Float("Teleport Forward", TeleportFoward, 1, 10, 1, false, false, "Select to teleport"))
 			{
 				Vector3 Coords = ENTITY::GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(PlayerPedID, 0.0, TeleportFoward, 0.0);
 				int Handle = PlayerPedID;
@@ -3626,9 +3627,9 @@ void Cheat::Main()
 			Cheat::GameFunctions::LoadPlayerInformation(PLAYER::GET_PLAYER_NAME(Cheat::CheatFeatures::selectedPlayer), Cheat::CheatFeatures::selectedPlayer);
 			Cheat::Title("Troll Options");
 			Cheat::MenuOption("Attachment Options >", attachoptions);
-			Cheat::Toggle("Explode Loop", Cheat::CheatFeatures::ExplodeLoopSelectedPlayerBool, "Run explode loop on selected player");
-			Cheat::Toggle("Freeze Player", Cheat::CheatFeatures::FreezeSelectedPlayerBool, "Freeze character of selected player");
-			Cheat::Toggle("Shake Cam", Cheat::CheatFeatures::ShakeCamSelectedPlayerBool, "Shake selected player character camera");
+			Cheat::Toggle("Explode Loop", Cheat::CheatFeatures::ExplodeLoopSelectedPlayerBool, "Run explode loop on selected player", false);
+			Cheat::Toggle("Freeze Player", Cheat::CheatFeatures::FreezeSelectedPlayerBool, "Freeze character of selected player", false);
+			Cheat::Toggle("Shake Cam", Cheat::CheatFeatures::ShakeCamSelectedPlayerBool, "Shake selected player character camera", false);
 			if (Cheat::Option("Set Off Car Alarm", "Enable Car Alarm of Selected Player"))
 			{
 				int Handle = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(Cheat::CheatFeatures::selectedPlayer);
@@ -3771,10 +3772,12 @@ void Cheat::Main()
 		case PlayerListMenu:
 		{
 			Cheat::Title("Player List");
-			for (int i = 0; i < 32; ++i) {
+			for (int i = 0; i < 32; ++i) 
+			{
 				std::string PlayernameString = PLAYER::GET_PLAYER_NAME(i);
 				int hostindex = NETWORK::NETWORK_GET_HOST_OF_SCRIPT("Freemode", 4294967295, 0);
-				if (ENTITY::DOES_ENTITY_EXIST(PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(i))) {
+				if (ENTITY::DOES_ENTITY_EXIST(PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(i))) 
+				{
 					if (Cheat::CheatFeatures::ShowPlayerTagsPlayerList)
 					{
 						if (i == hostindex) { PlayernameString.append(" ~o~[Host]"); }
@@ -3796,7 +3799,7 @@ void Cheat::Main()
 			Cheat::GameFunctions::DrawMarkerAbovePlayer(2, Cheat::CheatFeatures::selectedPlayer, { 0, 0, 255, 255 });
 			Cheat::GameFunctions::LoadPlayerInformation(PLAYER::GET_PLAYER_NAME(Cheat::CheatFeatures::selectedPlayer), Cheat::CheatFeatures::selectedPlayer);
 			Cheat::Title(PLAYER::GET_PLAYER_NAME(Cheat::CheatFeatures::selectedPlayer));
-			Cheat::Toggle("Spectate Player", Cheat::CheatFeatures::SpectatePlayerBool, "Spectate Selected Player");
+			Cheat::Toggle("Spectate Player", Cheat::CheatFeatures::SpectatePlayerBool, "Spectate Selected Player", false);
 			if (Cheat::Option("Host Kick", "Kick selected player - Host only")) { NETWORK::NETWORK_SESSION_KICK_PLAYER(Cheat::CheatFeatures::selectedPlayer); }
 			if (Cheat::Option("Teleport To", "Teleport to selected player coords"))
 			{
@@ -3886,13 +3889,13 @@ void Cheat::Main()
 			Cheat::Toggle("Unlimited Special Ability", Cheat::CheatFeatures::UnlimitedSpecialAbilityBool, "Always 100% Special Ability");
 			Cheat::Toggle("Ignored By Everyone", Cheat::CheatFeatures::PlayerIgnoredBool, "NPC's will (mostly) ignore you");
 			Cheat::Toggle("Never Wanted", Cheat::CheatFeatures::NeverWantedBool, "Never get a wanted level");
-			Cheat::Int("Wanted Level", PlayerWantedLevelInteger, 0, 5, 1, "Set Wanted Level");
+			Cheat::Int("Wanted Level", PlayerWantedLevelInteger, 0, 5, 1, false, false, "Set Wanted Level");
 			if (Cheat::Option("Set Wanted Level", "Set above defined wanted level")) { if (Cheat::CheatFeatures::NeverWantedBool) { Cheat::CheatFeatures::NeverWantedBool = false; } PLAYER::SET_PLAYER_WANTED_LEVEL(PlayerID, PlayerWantedLevelInteger, 0); PLAYER::SET_PLAYER_WANTED_LEVEL_NOW(PlayerID, 0); }
 			Cheat::Toggle("Invisible", Cheat::CheatFeatures::PlayerInvisibleBool, "Makes your character invisible");
 			Cheat::Toggle("Explosive Melee", Cheat::CheatFeatures::ExplosiveMeleeBool, "Objects you hit with melee explode");
 			Cheat::Toggle("Tiny Player", Cheat::CheatFeatures::TinyPlayerBool, "Lowers your character's scaling");
 			Cheat::Toggle("Super Man", Cheat::CheatFeatures::SuperManBool, "Fly around like a superman!");
-			Cheat::Int("Player Opacity", Cheat::CheatFeatures::PlayerOpacityInt, 50, 250, 50, "Changes local player opacity");
+			Cheat::Int("Player Opacity", Cheat::CheatFeatures::PlayerOpacityInt, 50, 250, 50, false, "Changes local player opacity");
 			if (Cheat::Option("Suicide", "Kill your character")) { PED::APPLY_DAMAGE_TO_PED(PlayerPedID, 300, true); }
 			if (Cheat::Option("Give BST", "Get Bull Shark Testosterone - GTAO Only")) { globalHandle(2437549).At(3880).As<int>() = 1; }
 			if (Cheat::Option("Clean Player", "Remove any damage from player character")) { PED::CLEAR_PED_BLOOD_DAMAGE(PlayerPedID); PED::RESET_PED_VISIBLE_DAMAGE(PlayerPedID); Cheat::GameFunctions::MinimapNotification("Player Cleaned"); }	
@@ -3900,7 +3903,7 @@ void Cheat::Main()
 		break;
 		case visionsmenu:
 		{
-			Cheat::Title("Vision's");
+			Cheat::Title("Visions");
 			if (Cheat::Option("Default", "")) 
 			{
 				GRAPHICS::SET_TIMECYCLE_MODIFIER("DEFAULT");
@@ -3967,8 +3970,8 @@ void Cheat::Main()
 			Cheat::GameFunctions::DrawMarkerAbovePlayer(2, Cheat::CheatFeatures::selectedPlayer, { 0, 0, 255, 255 });
 			Cheat::GameFunctions::LoadPlayerInformation(PLAYER::GET_PLAYER_NAME(Cheat::CheatFeatures::selectedPlayer), Cheat::CheatFeatures::selectedPlayer);
 			Cheat::Title("Money Options");
-			Cheat::Toggle("Toggle", Cheat::CheatFeatures::MoneyDropBool, "Enable Money Drop on selected player");
-			Cheat::Int("Drop Delay", Cheat::CheatFeatures::MoneyDropDelay, 50, 2000, 50, "Set to 1500 to prevent transaction errors");
+			Cheat::Toggle("Toggle", Cheat::CheatFeatures::MoneyDropBool, "Enable Money Drop on selected player", false);
+			Cheat::Int("Drop Delay", Cheat::CheatFeatures::MoneyDropDelay, 50, 2000, 50, false, false, "Set to 1500 to prevent transaction errors");
 		} 
 		break; 
 		case clothingmenu:
@@ -3981,30 +3984,30 @@ void Cheat::Main()
 		case componentschangermenu:
 		{
 			Cheat::Title("Components Changer");
-			if (Cheat::Int("Face", face, 0, 255, 1, "")) { Cheat::GameFunctions::SetPedTexture(PlayerPedID, 0, face, 0); }
-			if (Cheat::Int("Face Texture", facetexture, 0, 255, 1, "")) { Cheat::GameFunctions::SetPedTexture(PlayerPedID, 0, face, facetexture); }
-			if (Cheat::Int("Head", head, 0, 255, 1, "")) { Cheat::GameFunctions::SetPedTexture(PlayerPedID, 0, head, 0); }
-			if (Cheat::Int("Head Texture", headtexture, 0, 255, 1, "")) { Cheat::GameFunctions::SetPedTexture(PlayerPedID, 1, head, headtexture); }
-			if (Cheat::Int("Hair", hair, 0, 255, 1, "")) { Cheat::GameFunctions::SetPedTexture(PlayerPedID, 2, hair, 0); }
-			if (Cheat::Int("Hair Texture", hairtexture, 0, 255, 1, "")) { Cheat::GameFunctions::SetPedTexture(PlayerPedID, 2, hair, hairtexture); }
-			if (Cheat::Int("Torso", torso, 0, 255, 1, "")) { Cheat::GameFunctions::SetPedTexture(PlayerPedID, 3, torso, 0); }
-			if (Cheat::Int("Torso Texture", torsotexture, 0, 255, 1, "")) { Cheat::GameFunctions::SetPedTexture(PlayerPedID, 3, torso, torsotexture); }
-			if (Cheat::Int("Legs", legs, 0, 255, 1, "")) { Cheat::GameFunctions::SetPedTexture(PlayerPedID, 4, legs, 0); }
-			if (Cheat::Int("Legs Texture", legstexture, 0, 255, 1, "")) { Cheat::GameFunctions::SetPedTexture(PlayerPedID, 4, legs, legstexture); }
-			if (Cheat::Int("Hands", hands, 0, 255, 1, "")) { Cheat::GameFunctions::SetPedTexture(PlayerPedID, 5, hands, 0); }
-			if (Cheat::Int("Hands Texture", handstexture, 0, 255, 1, "")) { Cheat::GameFunctions::SetPedTexture(PlayerPedID, 5, hands, handstexture); }
-			if (Cheat::Int("Feet", feet, 0, 255, 1, "")) { Cheat::GameFunctions::SetPedTexture(PlayerPedID, 6, feet, 0); }
-			if (Cheat::Int("Feet Texture", feettexture, 0, 255, 1, "")) { Cheat::GameFunctions::SetPedTexture(PlayerPedID, 6, feet, feettexture); }
-			if (Cheat::Int("Eyes", eyes, 0, 255, 1, "")) { Cheat::GameFunctions::SetPedTexture(PlayerPedID, 7, eyes, 0); }
-			if (Cheat::Int("Eyes Texture", eyestexture, 0, 255, 1, "")) { Cheat::GameFunctions::SetPedTexture(PlayerPedID, 7, eyes, eyestexture); }
-			if (Cheat::Int("Accesories", accesories, 0, 255, 1, "")) { Cheat::GameFunctions::SetPedTexture(PlayerPedID, 8, accesories, 0); }
-			if (Cheat::Int("Accesories Texture", accesoriestexture, 0, 255, 1, "")) { Cheat::GameFunctions::SetPedTexture(PlayerPedID, 8, accesories, accesoriestexture); }
-			if (Cheat::Int("Accesories2", accesoriessec, 0, 255, 1, "")) { Cheat::GameFunctions::SetPedTexture(PlayerPedID, 9, accesoriessec, 0); }
-			if (Cheat::Int("Accesories2 Texture", accesoriessectexture, 0, 255, 1, "")) { Cheat::GameFunctions::SetPedTexture(PlayerPedID, 9, accesoriessec, accesoriessectexture); }
-			if (Cheat::Int("Torso 2", torsosec, 0, 255, 1, "")) { Cheat::GameFunctions::SetPedTexture(PlayerPedID, 11, torsosec, 0); }
-			if (Cheat::Int("Torso 2 Texture", torsosectexture, 0, 255, 1, "")) { Cheat::GameFunctions::SetPedTexture(PlayerPedID, 11, torsosec, torsosectexture); }
-			if (Cheat::Int("Textures", textures, 0, 255, 1, "")) { Cheat::GameFunctions::SetPedTexture(PlayerPedID, 10, textures, 0); }
-			if (Cheat::Int("Textures Texture", texturestexture, 0, 255, 1, "")) {  Cheat::GameFunctions::SetPedTexture(PlayerPedID, 9, textures, texturestexture); }
+			if (Cheat::Int("Face", face, 0, 255, 1, false, false, "")) { Cheat::GameFunctions::SetPedTexture(PlayerPedID, 0, face, 0); }
+			if (Cheat::Int("Face Texture", facetexture, 0, 255, 1, false, false, "")) { Cheat::GameFunctions::SetPedTexture(PlayerPedID, 0, face, facetexture); }
+			if (Cheat::Int("Head", head, 0, 255, 1, false, false, "")) { Cheat::GameFunctions::SetPedTexture(PlayerPedID, 0, head, 0); }
+			if (Cheat::Int("Head Texture", headtexture, 0, 255, 1, false, false, "")) { Cheat::GameFunctions::SetPedTexture(PlayerPedID, 1, head, headtexture); }
+			if (Cheat::Int("Hair", hair, 0, 255, 1, false, false, "")) { Cheat::GameFunctions::SetPedTexture(PlayerPedID, 2, hair, 0); }
+			if (Cheat::Int("Hair Texture", hairtexture, 0, 255, 1, false, false, "")) { Cheat::GameFunctions::SetPedTexture(PlayerPedID, 2, hair, hairtexture); }
+			if (Cheat::Int("Torso", torso, 0, 255, 1, false, false, "")) { Cheat::GameFunctions::SetPedTexture(PlayerPedID, 3, torso, 0); }
+			if (Cheat::Int("Torso Texture", torsotexture, 0, 255, 1, false, false, "")) { Cheat::GameFunctions::SetPedTexture(PlayerPedID, 3, torso, torsotexture); }
+			if (Cheat::Int("Legs", legs, 0, 255, 1, false, false, "")) { Cheat::GameFunctions::SetPedTexture(PlayerPedID, 4, legs, 0); }
+			if (Cheat::Int("Legs Texture", legstexture, 0, 255, 1, false, false, "")) { Cheat::GameFunctions::SetPedTexture(PlayerPedID, 4, legs, legstexture); }
+			if (Cheat::Int("Hands", hands, 0, 255, 1, false, false, "")) { Cheat::GameFunctions::SetPedTexture(PlayerPedID, 5, hands, 0); }
+			if (Cheat::Int("Hands Texture", handstexture, 0, 255, 1, false, false, "")) { Cheat::GameFunctions::SetPedTexture(PlayerPedID, 5, hands, handstexture); }
+			if (Cheat::Int("Feet", feet, 0, 255, 1, false, false, "")) { Cheat::GameFunctions::SetPedTexture(PlayerPedID, 6, feet, 0); }
+			if (Cheat::Int("Feet Texture", feettexture, 0, 255, 1, false, false, "")) { Cheat::GameFunctions::SetPedTexture(PlayerPedID, 6, feet, feettexture); }
+			if (Cheat::Int("Eyes", eyes, 0, 255, 1, false, false, "")) { Cheat::GameFunctions::SetPedTexture(PlayerPedID, 7, eyes, 0); }
+			if (Cheat::Int("Eyes Texture", eyestexture, 0, 255, 1, false, false, "")) { Cheat::GameFunctions::SetPedTexture(PlayerPedID, 7, eyes, eyestexture); }
+			if (Cheat::Int("Accesories", accesories, 0, 255, 1, false, false, "")) { Cheat::GameFunctions::SetPedTexture(PlayerPedID, 8, accesories, 0); }
+			if (Cheat::Int("Accesories Texture", accesoriestexture, 0, 255, 1, false, false, "")) { Cheat::GameFunctions::SetPedTexture(PlayerPedID, 8, accesories, accesoriestexture); }
+			if (Cheat::Int("Accesories2", accesoriessec, 0, 255, 1, false, false, "")) { Cheat::GameFunctions::SetPedTexture(PlayerPedID, 9, accesoriessec, 0); }
+			if (Cheat::Int("Accesories2 Texture", accesoriessectexture, 0, 255, 1, false, false, "")) { Cheat::GameFunctions::SetPedTexture(PlayerPedID, 9, accesoriessec, accesoriessectexture); }
+			if (Cheat::Int("Torso 2", torsosec, 0, 255, 1, false, false, "")) { Cheat::GameFunctions::SetPedTexture(PlayerPedID, 11, torsosec, 0); }
+			if (Cheat::Int("Torso 2 Texture", torsosectexture, 0, 255, 1, false, false, "")) { Cheat::GameFunctions::SetPedTexture(PlayerPedID, 11, torsosec, torsosectexture); }
+			if (Cheat::Int("Textures", textures, 0, 255, 1, false, false, "")) { Cheat::GameFunctions::SetPedTexture(PlayerPedID, 10, textures, 0); }
+			if (Cheat::Int("Textures Texture", texturestexture, 0, 255, 1, false, false, "")) {  Cheat::GameFunctions::SetPedTexture(PlayerPedID, 9, textures, texturestexture); }
 		}
 		break;
 		case outfitsmenu:
@@ -4266,24 +4269,18 @@ void Cheat::Main()
 			Cheat::Title("Settings");
 			Cheat::MenuOption("GUI Settings >", guisettings);
 			Cheat::MenuOption("Cheat Settings >", menusettingsmenu);
-			Cheat::Toggle("Auto Save Settings", Cheat::CheatFeatures::AutoSaveSettings, "Auto Save Settings - every 10 minutes");
-			if (Cheat::Option("Save Settings Now", "Save settings immediatly")) {
-				Cheat::CheatFunctions::SaveSettings();
-				Cheat::GameFunctions::MinimapNotification("Settings Saved");
-			}
 		}
 		break;
 		case menusettingsmenu:
 		{
 			Cheat::Title("Cheat Settings");
 			Cheat::Toggle("Controller Support", Cheat::GUI::ControllerInput, "Enables Cheat GUI Controller Support");
-			Cheat::Break("~bold~Player List", true);
+			Cheat::Break("Player List", true);
 			Cheat::Toggle("Show Player Information", ShowPlayerInformationPlayerList, "Toggle Player Information Box");
 			Cheat::Toggle("Show Player Tags", Cheat::CheatFeatures::ShowPlayerTagsPlayerList, "Toggle Player Tags");
-			Cheat::Break("~bold~Speed", true);
-			if (Cheat::Option("Use Metric System (KM/H)", "")) { Cheat::CheatFeatures::UseKMH = true; Cheat::GameFunctions::MinimapNotification("Using metric system now"); }
-			if (Cheat::Option("Use Imperial System (MP/H)", "")) { Cheat::CheatFeatures::UseKMH = false; Cheat::GameFunctions::MinimapNotification("Using imperial system now"); }
-			Cheat::Break("~bold~Protection", true);
+			Cheat::Break("Speed", true);
+			Cheat::Toggle("Use KM/H", Cheat::CheatFeatures::UseKMH, "If disabled uses MP/H");
+			Cheat::Break("Protection", true);
 			Cheat::Toggle("Blocked Script Notifications", Cheat::CheatFeatures::ShowBlockedScriptEventNotifications, "");
 		}
 		break;
@@ -4294,17 +4291,17 @@ void Cheat::Main()
 			Cheat::Break("Settings", true);
 			Cheat::MenuOption("Colors >", GUIColorsMenu);
 			Cheat::MenuOption("Header Options >", headeroptionsmenu);
-			Cheat::StringVector("Toggles", { "Shop Box", "Circle" }, Cheat::CheatFeatures::BoolOptionVectorPosition, "Select Boolean Toggle");
-			Cheat::Int("Max Visible Menu Options", Cheat::GUI::maxVisOptions, 5, 16, 1);
-			Cheat::Toggle("Restore To Previous Submenu", Cheat::GUI::RestorePreviousSubmenu, "When opening restores previous submenu");
-			Cheat::Float("X-Axis", Cheat::GUI::guiX, 0.11f, 0.86f, 0.01f, true, "");
-			Cheat::Float("Y-Axis", Cheat::GUI::guiY, 0.10f, 0.90f, 0.01f, true, "");
-			Cheat::Float("GUI Width", Cheat::GUI::guiWidth, 0.21f, 0.30f, 0.01f, true, "TODO: Text Scaling not implemented");
+			Cheat::StringVector("Toggles", { "Shop Box", "Circle" }, Cheat::CheatFeatures::BoolOptionVectorPosition, "Select Boolean Toggle", false);
+			Cheat::Int("Max Visible Menu Options", Cheat::GUI::maxVisOptions, 5, 16, 1, false, false);
+			Cheat::Toggle("Restore To Previous Submenu", Cheat::GUI::RestorePreviousSubmenu, "When opening restores previous submenu", false);
+			Cheat::Float("X-Axis", Cheat::GUI::guiX, 0.11f, 0.86f, 0.01f, true, false, "");
+			Cheat::Float("Y-Axis", Cheat::GUI::guiY, 0.10f, 0.90f, 0.01f, true, false, "");
+			Cheat::Float("GUI Width", Cheat::GUI::guiWidth, 0.21f, 0.30f, 0.01f, true, false, "TODO: Text Scaling not implemented");
 			std::string OpenKeyString = "Open Key: ~c~" + Cheat::CheatFunctions::VirtualKeyCodeToString(Cheat::GUI::openKey);
 			if (Cheat::Option(OpenKeyString.c_str(), "Select to change"))
 			{
 				int PressedKey;
-				while (!Cheat::CheatFunctions::ReturnPressedKey(PressedKey)) { Cheat::Drawing::Text("~bold~Press any key to set Open Key, press Escape to cancel", { 255, 255, 255, 255 }, { 0.525f, 0.400f }, { 0.900f, 0.900f }, true); WAIT(0, false); }
+				while (!Cheat::CheatFunctions::ReturnPressedKey(PressedKey)) { Cheat::GUI::Drawing::Text("~bold~Press any key to set Open Key, press Escape to cancel", { 255, 255, 255, 255 }, { 0.525f, 0.400f }, { 0.900f, 0.900f }, true); WAIT(0, false); }
 				if (PressedKey == 27) { Cheat::GameFunctions::MinimapNotification("Canceled Setting Open Key"); break; }
 				if (PressedKey != 0) { Cheat::GUI::openKey = PressedKey; Cheat::GameFunctions::MinimapNotification("Open Key has been set"); }
 			}
@@ -4312,20 +4309,20 @@ void Cheat::Main()
 			if (Cheat::Option(GUINavigationKeyString.c_str(), "Select to change"))
 			{
 				int PressedKey;
-				while (!Cheat::CheatFunctions::ReturnPressedKey(PressedKey)) { Cheat::Drawing::Text("~bold~Press any key to set Cursor Navigation Key, press Escape to cancel", { 255, 255, 255, 255 }, { 0.525f, 0.400f }, { 0.900f, 0.900f }, true); WAIT(0, false); }
+				while (!Cheat::CheatFunctions::ReturnPressedKey(PressedKey)) { Cheat::GUI::Drawing::Text("~bold~Press any key to set Cursor Navigation Key, press Escape to cancel", { 255, 255, 255, 255 }, { 0.525f, 0.400f }, { 0.900f, 0.900f }, true); WAIT(0, false); }
 				if (PressedKey == 27) { Cheat::GameFunctions::MinimapNotification("Canceled Setting Cursor Navigation Key"); break; }
 				if (PressedKey != 0) { Cheat::GUI::GUINavigationKey = PressedKey; Cheat::GameFunctions::MinimapNotification("Cursor Navigation Key has been set"); }
 			}
-			Cheat::Int("Scroll Delay", Cheat::GUI::keyPressDelay2, 1, 200, 1);
-			Cheat::Int("Int Delay", Cheat::GUI::keyPressDelay3, 1, 200, 1);
+			Cheat::Int("Scroll Delay", Cheat::GUI::keyPressDelay2, 1, 200, 1, false, false);
+			Cheat::Int("Int Delay", Cheat::GUI::keyPressDelay3, 1, 200, 1, false, false);
 		}
 		break; 
 		case headeroptionsmenu:
 		{
 			Cheat::Title("Header Options");
-			Cheat::Toggle("Show Header GUI", Cheat::GUI::ShowHeaderGUI, "Toggle Header GUI");
-			Cheat::Toggle("Show Header Background", Cheat::GUI::ShowHeaderBackground, "Toggle Header Background");
-			Cheat::Toggle("Show Header Glare", Cheat::GUI::ShowHeaderGlare, "Show GTAO Interaction Menu Glare");
+			Cheat::Toggle("Show Header GUI", Cheat::GUI::ShowHeaderGUI, "Toggle Header GUI", false);
+			Cheat::Toggle("Show Header Background", Cheat::GUI::ShowHeaderBackground, "Toggle Header Background", false);
+			Cheat::Toggle("Show Header Glare", Cheat::GUI::ShowHeaderGlare, "Show GTAO Interaction Menu Glare", false);
 		}
 		break;
 		case GUIColorsMenu:
@@ -4351,10 +4348,10 @@ void Cheat::Main()
 				Cheat::GUI::MenuBottomRect.b = 0;
 				Cheat::GUI::MenuBottomRect.a = 255;
 			}		
-			Cheat::Int("Red", Cheat::GUI::MenuBottomRect.r, 0, 255, 1);
-			Cheat::Int("Green", Cheat::GUI::MenuBottomRect.g, 0, 255, 1);			
-			Cheat::Int("Blue", Cheat::GUI::MenuBottomRect.b, 0, 255, 1);
-			Cheat::Int("Opacity", Cheat::GUI::MenuBottomRect.a, 0, 255, 1);
+			Cheat::Int("Red", Cheat::GUI::MenuBottomRect.r, 0, 255, 1, false, false);
+			Cheat::Int("Green", Cheat::GUI::MenuBottomRect.g, 0, 255, 1, false, false);
+			Cheat::Int("Blue", Cheat::GUI::MenuBottomRect.b, 0, 255, 1, false, false);
+			Cheat::Int("Opacity", Cheat::GUI::MenuBottomRect.a, 0, 255, 1, false, false);
 		}
 		break;
 		case settingsmenubackground:
@@ -4367,10 +4364,10 @@ void Cheat::Main()
 				Cheat::GUI::MenuBackgroundRect.b = 0;
 				Cheat::GUI::MenuBackgroundRect.a = 220;
 			}
-			Cheat::Int("Red", Cheat::GUI::MenuBackgroundRect.r, 0, 255, 1);
-			Cheat::Int("Green", Cheat::GUI::MenuBackgroundRect.g, 0, 255, 1);
-			Cheat::Int("Blue", Cheat::GUI::MenuBackgroundRect.b, 0, 255, 1);
-			Cheat::Int("Opacity", Cheat::GUI::MenuBackgroundRect.a, 0, 255, 1);
+			Cheat::Int("Red", Cheat::GUI::MenuBackgroundRect.r, 0, 255, 1, false, false);
+			Cheat::Int("Green", Cheat::GUI::MenuBackgroundRect.g, 0, 255, 1, false, false);
+			Cheat::Int("Blue", Cheat::GUI::MenuBackgroundRect.b, 0, 255, 1, false, false);
+			Cheat::Int("Opacity", Cheat::GUI::MenuBackgroundRect.a, 0, 255, 1, false, false);
 		}
 		break;
 		case settingssmalltitlebackground:
@@ -4383,10 +4380,10 @@ void Cheat::Main()
 				Cheat::GUI::titleRect.b = 255;
 				Cheat::GUI::titleRect.a = 255;
 			}
-			Cheat::Int("Red", Cheat::GUI::titleRect.r, 0, 255, 1);
-			Cheat::Int("Green", Cheat::GUI::titleRect.g, 0, 255, 1);
-			Cheat::Int("Blue", Cheat::GUI::titleRect.b, 0, 255, 1);
-			Cheat::Int("Opacity", Cheat::GUI::titleRect.a, 0, 255, 1);
+			Cheat::Int("Red", Cheat::GUI::titleRect.r, 0, 255, 1, false, false);
+			Cheat::Int("Green", Cheat::GUI::titleRect.g, 0, 255, 1, false, false);
+			Cheat::Int("Blue", Cheat::GUI::titleRect.b, 0, 255, 1, false, false);
+			Cheat::Int("Opacity", Cheat::GUI::titleRect.a, 0, 255, 1, false, false);
 		}
 		break;
 		case settingsbottomline:
@@ -4399,10 +4396,10 @@ void Cheat::Main()
 				Cheat::GUI::TopAndBottomLine.b = 255;
 				Cheat::GUI::TopAndBottomLine.a = 255;
 			}
-			Cheat::Int("Red", Cheat::GUI::TopAndBottomLine.r, 0, 255, 1);
-			Cheat::Int("Green", Cheat::GUI::TopAndBottomLine.g, 0, 255, 1);
-			Cheat::Int("Blue", Cheat::GUI::TopAndBottomLine.b, 0, 255, 1);
-			Cheat::Int("Opacity", Cheat::GUI::TopAndBottomLine.a, 0, 255, 1);
+			Cheat::Int("Red", Cheat::GUI::TopAndBottomLine.r, 0, 255, 1, false, false);
+			Cheat::Int("Green", Cheat::GUI::TopAndBottomLine.g, 0, 255, 1, false, false);
+			Cheat::Int("Blue", Cheat::GUI::TopAndBottomLine.b, 0, 255, 1, false, false);
+			Cheat::Int("Opacity", Cheat::GUI::TopAndBottomLine.a, 0, 255, 1, false, false);
 		}
 		break;
 		case settingsheaderbackground:
@@ -4415,10 +4412,10 @@ void Cheat::Main()
 				Cheat::GUI::headerRect.b = 255;
 				Cheat::GUI::headerRect.a = 200;
 			}
-			Cheat::Int("Red", Cheat::GUI::headerRect.r, 0, 255, 1);
-			Cheat::Int("Green", Cheat::GUI::headerRect.g, 0, 255, 1);
-			Cheat::Int("Blue", Cheat::GUI::headerRect.b, 0, 255, 1);
-			Cheat::Int("Opacity", Cheat::GUI::headerRect.a, 0, 255, 1);
+			Cheat::Int("Red", Cheat::GUI::headerRect.r, 0, 255, 1, false, false);
+			Cheat::Int("Green", Cheat::GUI::headerRect.g, 0, 255, 1, false, false);
+			Cheat::Int("Blue", Cheat::GUI::headerRect.b, 0, 255, 1, false, false);
+			Cheat::Int("Opacity", Cheat::GUI::headerRect.a, 0, 255, 1, false, false);
 		}
 		break;
 		case ThemeLoaderMenu:
@@ -4478,10 +4475,10 @@ void Cheat::Main()
 				Cheat::GUI::MainTitleRect.b = 0;
 				Cheat::GUI::MainTitleRect.a = 255;
 			}
-			Cheat::Int("Red", Cheat::GUI::MainTitleRect.r, 0, 255, 1);
-			Cheat::Int("Green", Cheat::GUI::MainTitleRect.g, 0, 255, 1);
-			Cheat::Int("Blue", Cheat::GUI::MainTitleRect.b, 0, 255, 1);
-			Cheat::Int("Opacity", Cheat::GUI::MainTitleRect.a, 0, 255, 1);
+			Cheat::Int("Red", Cheat::GUI::MainTitleRect.r, 0, 255, 1, false, false);
+			Cheat::Int("Green", Cheat::GUI::MainTitleRect.g, 0, 255, 1, false, false);
+			Cheat::Int("Blue", Cheat::GUI::MainTitleRect.b, 0, 255, 1, false, false);
+			Cheat::Int("Opacity", Cheat::GUI::MainTitleRect.a, 0, 255, 1, false, false);
 		}
 		break;
 		case settingsoptiontext:
@@ -4494,10 +4491,10 @@ void Cheat::Main()
 				Cheat::GUI::optionText.b = 255;
 				Cheat::GUI::optionText.a = 255;
 			}
-			Cheat::Int("Red", Cheat::GUI::optionText.r, 0, 255, 1);
-			Cheat::Int("Green", Cheat::GUI::optionText.g, 0, 255, 1);
-			Cheat::Int("Blue", Cheat::GUI::optionText.b, 0, 255, 1);
-			Cheat::Int("Opacity", Cheat::GUI::optionText.a, 0, 255, 1);
+			Cheat::Int("Red", Cheat::GUI::optionText.r, 0, 255, 1, false, false);
+			Cheat::Int("Green", Cheat::GUI::optionText.g, 0, 255, 1, false, false);
+			Cheat::Int("Blue", Cheat::GUI::optionText.b, 0, 255, 1, false, false);
+			Cheat::Int("Opacity", Cheat::GUI::optionText.a, 0, 255, 1, false, false);
 		}
 		break;
 		case settingsscroller:
@@ -4510,10 +4507,10 @@ void Cheat::Main()
 				Cheat::GUI::scroller.b = 255;
 				Cheat::GUI::scroller.a = 255;
 			}
-			Cheat::Int("Red", Cheat::GUI::scroller.r, 0, 255, 1);
-			Cheat::Int("Green", Cheat::GUI::scroller.g, 0, 255, 1);
-			Cheat::Int("Blue", Cheat::GUI::scroller.b, 0, 255, 1);
-			Cheat::Int("Opacity", Cheat::GUI::scroller.a, 0, 255, 1);
+			Cheat::Int("Red", Cheat::GUI::scroller.r, 0, 255, 1, false, false);
+			Cheat::Int("Green", Cheat::GUI::scroller.g, 0, 255, 1, false, false);
+			Cheat::Int("Blue", Cheat::GUI::scroller.b, 0, 255, 1, false, false);
+			Cheat::Int("Opacity", Cheat::GUI::scroller.a, 0, 255, 1, false, false);
 		}
 		break;
 		}
@@ -4527,7 +4524,7 @@ DWORD WINAPI InitThread(LPVOID lpParam)
 	Cheat::CheatFunctions::CreateConsole();
 	Cheat::LogFunctions::Init();
 	GameHooking::DoGameHooking();
-	//Hook created - this thread is no longer needed
+	//Hooks created - this thread is no longer needed
 	return 0;
 }
 

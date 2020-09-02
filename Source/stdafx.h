@@ -25,10 +25,12 @@
 #include <fcntl.h>
 #include <io.h>
 #include <array>
+#include <thread>
 #pragma comment(lib, "Winmm.lib")
 
 //XORSTR
-#include "ThirdParty\XORSTR\xorstr.hpp"
+#include "ThirdParty/XORSTR/xorstr.hpp"
+
 //MinHook
 #pragma comment(lib,"ThirdParty/MinHook/libMinHook-x64-v141-md.lib")
 #include "ThirdParty/MinHook/MinHook.h"
@@ -54,16 +56,17 @@
 namespace Cheat 
 {
 	void Main();
-	namespace Drawing 
-	{
-		void Text(const char* text, RGBAF rgbaf, VECTOR2 position, VECTOR2_2 size, bool center);
-		void Rect(RGBA rgba, VECTOR2 position, VECTOR2_2 size);
-		void Spriter(std::string Streamedtexture, std::string textureName, float x, float y, float width, float height, float rotation, int r, int g, int b, int a);
-		void InitTextureFile();
-		void DrawScaleform(const float x, const float y, const float sx, const float sy, const int r, const int g, const int b);
-	}
 	namespace GUI 
 	{
+		namespace Drawing
+		{
+			void Text(const char* text, RGBAF rgbaf, VECTOR2 position, VECTOR2_2 size, bool center);
+			void Rect(RGBA rgba, VECTOR2 position, VECTOR2_2 size);
+			void Spriter(std::string Streamedtexture, std::string textureName, float x, float y, float width, float height, float rotation, int r, int g, int b, int a);
+			void InitTextureFile();
+			void DrawScaleform(const float x, const float y, const float sx, const float sy, const int r, const int g, const int b);
+		}
+
 		extern void ControlsLoop();
 		extern float guiX;
 		extern float guiY;
@@ -119,6 +122,7 @@ namespace Cheat
 		extern int keyPressPreviousTick3;
 		extern int openKey;
 		extern int GUINavigationKey;
+		extern int SaveItemKey;
 		extern int openpress;
 		extern int downpress;
 		extern int uppress;
@@ -143,7 +147,6 @@ namespace Cheat
 		extern bool BlockScriptEvents;
 		extern bool ShowBlockedScriptEventNotifications;
 		extern bool ShowPlayerTagsPlayerList;
-		extern bool AutoSaveSettings;
 		extern bool ShowVehicleInfoAndPreview;
 		extern bool CursorGUINavigationEnabled;
 		extern std::chrono::steady_clock::time_point PostInitScaleFormStart;
@@ -309,9 +312,14 @@ namespace Cheat
 	{
 		std::string ReturnCheatBuildAsString();
 		const std::string ReturnConfigFilePath();
-		void LoadSettings(bool StartUp);
+		void LoadSettings();
+		void RegisterOptionConfigAsLoaded(std::string OptionName);
+		bool IsOptionRegisteredAsLoaded(std::string OptionName);
 		std::string ReturnCheatModuleDirectoryPath();
-		void SaveSettings();
+		void SaveOptionToConfig(std::string OptionName, std::string OptionValue);
+		std::string GetOptionValueFromConfig(std::string OptionName);
+		void ShowItemSavingDisabledMessage(std::string OptionName);
+		bool IsSaveItemHotKeyPressed();
 		char* CombineTwoStrings(char* string1, char* string2);
 		bool DoesFileExists(const std::string& fileName);
 		bool DoesDirectoryExists(const std::string& dirName_in);
@@ -333,8 +341,8 @@ namespace Cheat
 		void WriteStringToIni(std::string string, std::string file, std::string app, std::string key);
 		std::string ReadStringFromIni(std::string file, std::string app, std::string key);
 		void WriteBoolToIni(bool b00l, std::string file, std::string app, std::string key);
-		bool ReadBoolFromIni(std::string file, std::string app, std::string key);
 		std::string ReturnDateTimeFormatAsString(const char* DateTimeFormat);
+		bool StringToBool(std::string String);
 	}
 	namespace GameFunctions 
 	{
@@ -475,17 +483,16 @@ namespace Cheat
 	void Speedometer(char* text);
 	void AddPlayerInfoBoxTextEntry(char* text, int Row1 = NULL, int Row2 = NULL, int Row3 = NULL, int Row4 = NULL);
 	bool Break(const char* option, bool TextCentered);
-	bool Option(const char* option, const char* InformationText, bool PlayerList = false);
+	bool Option(const char* option, const char* InformationText);
 	bool VehicleOption(const char* option, std::string ModelName);
 	bool MenuOption(const char* option, SubMenus newSub);
 	bool MenuOptionPlayerList(const char* option, SubMenus newSub, Player PlayerHandle);
-	bool Toggle(const char* option, bool& b00l, const char* InformationText);
-	bool ToggleCheckMark(const char* option, bool& b00l);
-	bool Int(const char* option, int& _int, int min, int max, int step, bool DisableControl = false, const char* InformationText = xorstr_("Select to change"));
-	bool Float(const char* option, float& _float, float min, float max, float steps, bool ReturnTrueWithValueChange, const char* InformationText);
-	bool IntVector(const char* option, std::vector<int> Vector, int& position);
-	bool FloatVector(const char* option, std::vector<float> Vector, int& position);
-	bool StringVector(const char* option, std::vector<std::string> Vector, int& position, const char* InformationText);
+	bool Toggle(const char* option, bool& b00l, const char* InformationText, bool IsSavable = true);
+	bool Int(const char* option, int& _int, int min, int max, int step, bool DisableControl = false, bool IsSavable = true, const char* InformationText = xorstr_("Select to change"));
+	bool Float(const char* option, float& _float, float min, float max, float steps, bool ReturnTrueWithValueChange, bool IsSavable = true, const char* InformationText = "");
+	bool IntVector(const char* option, std::vector<int> Vector, int& position, bool IsSavable = true);
+	bool FloatVector(const char* option, std::vector<float> Vector, int& position, bool IsSavable = true);
+	bool StringVector(const char* option, std::vector<std::string> Vector, int& position, const char* InformationText, bool IsSavable = true);
 	void LoadThemeFilesLooped();
 	void LoadTheme(char* ThemeFileName, bool StartUp);
 	void SaveTheme(char* ThemeFileName);

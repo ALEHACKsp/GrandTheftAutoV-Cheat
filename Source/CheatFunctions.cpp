@@ -340,7 +340,6 @@ void Cheat::CheatFunctions::LoadSettings()
 	std::thread LoadSettingsThreadHandle(LoadSettingsThreadFunction);
 	LoadSettingsThreadHandle.detach();
 
-
 	//Load Active Theme Name
 	std::string ActiveThemeSetting = Cheat::CheatFunctions::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("SETTINGS"), xorstr_("active_theme")); char* ActiveThemeSettingChar = new char[Cheat::CheatFunctions::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("SETTINGS"), xorstr_("active_theme")).length() + 1];
 	strcpy_s(ActiveThemeSettingChar, sizeof(ActiveThemeSettingChar), ActiveThemeSetting.c_str());
@@ -476,7 +475,7 @@ void Cheat::CheatFunctions::CreateConsole()
 	std::cin.clear();
 
 
-	// Print current build
+	//Print current build
 	std::cout << xorstr_("Build: ") << Cheat::CheatFunctions::ReturnCheatBuildAsString() << std::endl;
 }
 
@@ -532,5 +531,20 @@ bool Cheat::CheatFunctions::StringToBool(std::string String)
 	else if (String == xorstr_("0"))
 	{
 		return false;
+	}
+}
+
+std::vector <std::string> Cheat::CheatFeatures::SearchResultVector;
+std::string Cheat::CheatFeatures::SearchString;
+void Cheat::CheatFunctions::FilterStringVector(std::vector <std::string> Vector, std::string StringToFilter)
+{
+	CheatFeatures::SearchResultVector.clear();
+	Cheat::CheatFeatures::SearchString = StringToFilter;
+	for (auto const& i : Vector)
+	{
+		if (i.find(StringToFilter) != std::string::npos) 
+		{
+			CheatFeatures::SearchResultVector.push_back(i);
+		}
 	}
 }

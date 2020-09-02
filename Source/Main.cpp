@@ -1670,8 +1670,15 @@ void Cheat::Main()
 		break; 	
 		case modelchanger:
 		{
-			Cheat::Title("Change Model");
-			if (Cheat::Option("Custom Input", "Input custom ped model"))
+			Cheat::Title("Model Changer");
+			if (Cheat::Option("Search", ""))
+			{
+				char* KeyboardInput = Cheat::GameFunctions::DisplayKeyboardAndReturnInput(30);
+				if (KeyboardInput == "0") { break; }
+				CheatFunctions::FilterStringVector(Cheat::GameArrays::PedModels, KeyboardInput);
+				GUI::MoveMenu(SearchMenu);
+			}
+			if (Cheat::Option("Custom Input", "Input custom Ped model"))
 			{
 				char* KeyboardInput = Cheat::GameFunctions::DisplayKeyboardAndReturnInput(30);
 				if (KeyboardInput == "0") { break; }
@@ -1679,29 +1686,18 @@ void Cheat::Main()
 				if (!STREAMING::IS_MODEL_IN_CDIMAGE(model))
 				{
 					Cheat::GameFunctions::MinimapNotification("~r~That is not a valid ped model");
-					break;
 				}
-				STREAMING::REQUEST_MODEL(model);
-				while (!STREAMING::HAS_MODEL_LOADED(model)) WAIT(0);
-				PLAYER::SET_PLAYER_MODEL(PlayerID, model);
-				PED::SET_PED_DEFAULT_COMPONENT_VARIATION(PlayerPedID);
-				WAIT(10);
-				STREAMING::SET_MODEL_AS_NO_LONGER_NEEDED(model);
-				WAIT(50);
+				else
+				{
+					GameFunctions::ChangePedModelLocalPlayer(model);
+				}
 			}
 			Cheat::Break("Ped List", true);
 			for (auto const& i : Cheat::GameArrays::PedModels)
 			{
 				if (Cheat::Option((char*)i.c_str(), ""))
 				{
-					DWORD model = GAMEPLAY::GET_HASH_KEY((char*)i.c_str());
-					STREAMING::REQUEST_MODEL(model);
-					if (!STREAMING::HAS_MODEL_LOADED(model)) WAIT(250);
-					PLAYER::SET_PLAYER_MODEL(PlayerID, model);
-					PED::SET_PED_DEFAULT_COMPONENT_VARIATION(PlayerPedID);
-					WAIT(10);
-					STREAMING::SET_MODEL_AS_NO_LONGER_NEEDED(model);
-					WAIT(50);
+					GameFunctions::ChangePedModelLocalPlayer(GAMEPLAY::GET_HASH_KEY((char*)i.c_str()));
 				}
 			}
 		}
@@ -2976,7 +2972,6 @@ void Cheat::Main()
 		{
 			Cheat::Title("Misc Options");
 			Cheat::MenuOption("Hotkeys >", hotkeys);
-			//Cheat::MenuOption("Object Spawner >", objectspawnermenu); 
 			Cheat::MenuOption("HUD >", hudmenu); 
 			Cheat::MenuOption("IPL Loader >", iplloader);
 			Cheat::Toggle("Disable Phone", Cheat::CheatFeatures::DisablePhoneBool, "Disable phone controls");
@@ -3019,11 +3014,6 @@ void Cheat::Main()
 		{
 			Cheat::Title("HUD Options");
 			Cheat::Toggle("Hide All HUD Elements", Cheat::CheatFeatures::HideHUDBool, "");
-		}
-		break;
-		case objectspawnermenu:
-		{
-			Cheat::Title(xorstr_("Object Spawner"));
 		}
 		break; 
 		case iplloader:
@@ -3877,7 +3867,7 @@ void Cheat::Main()
 		case SelfOptionsMenu:
 		{
 			Cheat::Title("Self Options");
-			Cheat::MenuOption("Change Model >", modelchanger);
+			Cheat::MenuOption("Model Changer >", modelchanger);
 			Cheat::MenuOption("Scenarios >", scenarios);
 			Cheat::MenuOption("Clothing >", clothingmenu);
 			Cheat::MenuOption("Visions >", visionsmenu);
@@ -4511,6 +4501,29 @@ void Cheat::Main()
 			Cheat::Int("Green", Cheat::GUI::scroller.g, 0, 255, 1, false, false);
 			Cheat::Int("Blue", Cheat::GUI::scroller.b, 0, 255, 1, false, false);
 			Cheat::Int("Opacity", Cheat::GUI::scroller.a, 0, 255, 1, false, false);
+		}
+		break;
+		case SearchMenu:
+		{
+			Cheat::Title("Searching");
+			if (Cheat::Option("Go Back", ""))
+			{
+				CheatFeatures::SearchResultVector.clear();
+				GUI::BackMenu();
+			}
+			std::string SearchMessage = xorstr_("Search Term: ~c~") + Cheat::CheatFeatures::SearchString;
+			Cheat::Break(SearchMessage.c_str(), false);
+			Cheat::Break("Search Results", true);
+			if (!CheatFeatures::SearchResultVector.empty())
+			{
+				for (auto const& i : CheatFeatures::SearchResultVector)
+				{
+					if (Cheat::Option(i.c_str(), ""))
+					{
+						GameFunctions::ChangePedModelLocalPlayer(GAMEPLAY::GET_HASH_KEY((char*)i.c_str()));
+					}
+				}
+			}
 		}
 		break;
 		}

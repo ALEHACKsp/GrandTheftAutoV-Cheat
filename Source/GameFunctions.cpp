@@ -1529,3 +1529,13 @@ void Cheat::GameFunctions::EnableDisableCursorGUINavigation()
 		}
 	}
 }
+
+
+void Cheat::GameFunctions::ChangePedModelLocalPlayer(Hash PedModel)
+{
+	STREAMING::REQUEST_MODEL(PedModel);
+	while (!STREAMING::HAS_MODEL_LOADED(PedModel)) { WAIT(0); }
+	PLAYER::SET_PLAYER_MODEL(PlayerID, PedModel);
+	PED::SET_PED_DEFAULT_COMPONENT_VARIATION(PlayerPedID);
+	STREAMING::SET_MODEL_AS_NO_LONGER_NEEDED(PedModel);
+}

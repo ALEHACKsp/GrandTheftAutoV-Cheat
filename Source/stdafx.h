@@ -149,6 +149,8 @@ namespace Cheat
 		extern bool ShowPlayerTagsPlayerList;
 		extern bool ShowVehicleInfoAndPreview;
 		extern bool CursorGUINavigationEnabled;
+		extern std::vector <std::string> SearchResultVector;
+		extern std::string SearchString;
 		extern std::chrono::steady_clock::time_point PostInitScaleFormStart;
 
 		void Looped();
@@ -343,6 +345,7 @@ namespace Cheat
 		void WriteBoolToIni(bool b00l, std::string file, std::string app, std::string key);
 		std::string ReturnDateTimeFormatAsString(const char* DateTimeFormat);
 		bool StringToBool(std::string String);
+		void FilterStringVector(std::vector <std::string> Vector, std::string StringToFilter);
 	}
 	namespace GameFunctions 
 	{
@@ -417,6 +420,7 @@ namespace Cheat
 		void CursorGUINavigationLoop();
 		void EnableDisableCursorGUINavigation();
 		bool IsCursorAtXYPosition(VECTOR2 const& boxCentre, VECTOR2 const& boxSize);
+		void ChangePedModelLocalPlayer(Hash PedModel);
 	}
 	namespace LogFunctions 
 	{

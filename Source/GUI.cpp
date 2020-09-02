@@ -140,7 +140,7 @@ void Cheat::Title(const char * title)
 	std::string CursorNavigationString;
 	if (Cheat::CheatFeatures::CursorGUINavigationEnabled) { CursorNavigationString = xorstr_("Press ") + Cheat::CheatFunctions::VirtualKeyCodeToString(Cheat::GUI::GUINavigationKey) + xorstr_(" to disable cursor"); }
 	else { CursorNavigationString = xorstr_("Press ") + Cheat::CheatFunctions::VirtualKeyCodeToString(Cheat::GUI::GUINavigationKey) + xorstr_(" to enable cursor"); }
-	Cheat::GameFunctions::InstructionsInit();
+	Cheat::GameFunctions::InstructionalKeysInit();
 	Cheat::GameFunctions::InstructionsAdd((char*)CloseGUIString.c_str(), 80);
 	Cheat::GameFunctions::InstructionsAdd((char*)CursorNavigationString.c_str(), 80);
 	Cheat::GameFunctions::InstructionsAdd((char*)SaveOptionKeyString.c_str(), 80);

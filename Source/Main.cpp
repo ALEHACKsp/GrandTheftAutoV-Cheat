@@ -177,9 +177,9 @@ void Cheat::Main()
 		case sessiontimemenu:
 		{
 			Cheat::Title("Session Time");
-			Cheat::Int("Hour", SessionTimeHour, 0, 23, 1);
-			Cheat::Int("Minutes", SessionTimeMinutes, 0, 59, 1);
-			Cheat::Int("Seconds", SessionTimeSeconds, 0, 59, 1);
+			Cheat::Int("Hour", SessionTimeHour, 0, 23, 1, false, false);
+			Cheat::Int("Minutes", SessionTimeMinutes, 0, 59, 1, false, false);
+			Cheat::Int("Seconds", SessionTimeSeconds, 0, 59, 1, false, false);
 			if (Cheat::Option("Set Time", "")) { Cheat::GameFunctions::SetSessionTime(SessionTimeHour, SessionTimeMinutes, SessionTimeSeconds); }
 		}
 		break;
@@ -233,22 +233,22 @@ void Cheat::Main()
 			STATS::STAT_GET_INT(GAMEPLAY::GET_HASH_KEY("MPPLY_BAD_CREW_STATUS"),	&BADCREWSTATUS,		-1);
 			STATS::STAT_GET_INT(GAMEPLAY::GET_HASH_KEY("MPPLY_BAD_CREW_EMBLEM"),	&BADCREWEMBLEM,		-1);
 			STATS::STAT_GET_INT(GAMEPLAY::GET_HASH_KEY("MPPLY_ISPUNISHED"),			&ISPUNISHED,		-1);
-			Cheat::Int("Report Strength", REPORTSTRENGTH, 0, 100, true, false, "");
-			Cheat::Int("Game Exploits", intexploits, 0, 100, true, false, "");
-			Cheat::Int("Offensive Language", intoffensive, 0, 100, true, false, "");
-			Cheat::Int("Offensive Tagplate", OFFENSIVETAGPLATE, 0, 100, true, false, "");
-			Cheat::Int("Offensive UGC", OFFENSIVEUGC, 0, 100, true, false, "");
-			Cheat::Int("Exploits", EXPLOITS, 0, 100, true, false, "");
-			Cheat::Int("Griefing", GRIEFING, 0, 100, true, false, "");
-			Cheat::Int("Friendly", FRIENDLY, 0, 100, true, false, "");
-			Cheat::Int("Helpful", HELPFUL, 0, 100, true, false, "");
-			Cheat::Int("VC Annoying Me", VCANNOYINGME, 0, 100, true, false, "");
-			Cheat::Int("Vchate", VCHATE, 0, 100, true, false, "");
-			Cheat::Int("Bad Crew Name", BADCREWNAME, 0, 100, true, false, "");
-			Cheat::Int("Bad Crew Motto", BADCREWMOTTO, 0, 100, true, false, "");
-			Cheat::Int("Bad Crew Status", BADCREWSTATUS, 0, 100, true, false, "");
-			Cheat::Int("Bad Crew Emblem", BADCREWEMBLEM, 0, 100, true, false, "");
-			Cheat::Int("Is Punished", ISPUNISHED, 0, 100, true, false, "");
+			Cheat::Int("Report Strength", REPORTSTRENGTH, 0, 100, false, false, "");
+			Cheat::Int("Game Exploits", intexploits, 0, 100, false, false, "");
+			Cheat::Int("Offensive Language", intoffensive, 0, 100, false, false, "");
+			Cheat::Int("Offensive Tagplate", OFFENSIVETAGPLATE, 0, 100, false, false, "");
+			Cheat::Int("Offensive UGC", OFFENSIVEUGC, 0, 100, false, false, "");
+			Cheat::Int("Exploits", EXPLOITS, 0, 100, false, false, "");
+			Cheat::Int("Griefing", GRIEFING, 0, 100, false, false, "");
+			Cheat::Int("Friendly", FRIENDLY, 0, 100, false, false, "");
+			Cheat::Int("Helpful", HELPFUL, 0, 100, false, false, "");
+			Cheat::Int("VC Annoying Me", VCANNOYINGME, 0, 100, false, false, "");
+			Cheat::Int("Vchate", VCHATE, 0, 100, false, false, "");
+			Cheat::Int("Bad Crew Name", BADCREWNAME, 0, 100, false, false, "");
+			Cheat::Int("Bad Crew Motto", BADCREWMOTTO, 0, 100, false, false, "");
+			Cheat::Int("Bad Crew Status", BADCREWSTATUS, 0, 100, false, false, "");
+			Cheat::Int("Bad Crew Emblem", BADCREWEMBLEM, 0, 100, false, false, "");
+			Cheat::Int("Is Punished", ISPUNISHED, 0, 100, false, false, "");
 		}
 		break; 
 		case unlocksmenu:

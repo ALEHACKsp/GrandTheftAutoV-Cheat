@@ -5,7 +5,7 @@ int Cheat::CheatFeatures::SpeedometerVectorPosition = 0;
 int Cheat::CheatFeatures::PlayerOpacityInt = 250;
 bool Cheat::CheatFeatures::HotkeyToggleBool = true;
 bool Cheat::CheatFeatures::UseKMH = true;
-bool Cheat::CheatFeatures::BlockScriptEvents = true;
+bool Cheat::CheatFeatures::BlockScriptEvents = false;
 bool Cheat::CheatFeatures::ShowBlockedScriptEventNotifications = true;
 bool Cheat::CheatFeatures::ShowPlayerTagsPlayerList = true;
 bool Cheat::CheatFeatures::ShowVehicleInfoAndPreview = true;
@@ -31,7 +31,7 @@ void Cheat::CheatFeatures::Looped()
 	if (!Cheat::GUI::CheatGUIHasBeenOpened)
 	{
 		std::string OpenGUIString = xorstr_("Press ") + Cheat::CheatFunctions::VirtualKeyCodeToString(Cheat::GUI::openKey) + xorstr_(" to open GUI");
-		Cheat::GameFunctions::InstructionsInit();
+		Cheat::GameFunctions::InstructionalKeysInit();
 		Cheat::GameFunctions::InstructionsAdd((char*)OpenGUIString.c_str(), 80);
 		Cheat::GameFunctions::InstructionsEnd();
 	}

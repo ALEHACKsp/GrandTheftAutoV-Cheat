@@ -393,7 +393,7 @@ namespace Cheat
 		void EnableDisableAntiCrashCamera();
 		void CheckNewSessionMembersLoop();
 		bool IsEntityInInterior(Entity Entity);
-		void InstructionsInit();
+		void InstructionalKeysInit();
 		void InstructionsAdd(char* text, int button);
 		void InstructionsEnd();
 		void SetSessionTime(int h, int m, int s);

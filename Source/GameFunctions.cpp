@@ -1350,7 +1350,7 @@ bool Cheat::GameFunctions::IsEntityInInterior(Entity Entity)
 
 int VAR_INSTRUCTIONAL_CONTAINER;
 int VAR_INSTRUCTIONAL_COUNT;
-void Cheat::GameFunctions::InstructionsInit() 
+void Cheat::GameFunctions::InstructionalKeysInit()
 {
 	VAR_INSTRUCTIONAL_COUNT = 0;
 	VAR_INSTRUCTIONAL_CONTAINER = GRAPHICS::REQUEST_SCALEFORM_MOVIE("instructional_buttons");

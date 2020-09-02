@@ -340,6 +340,7 @@ void Cheat::CheatFunctions::LoadSettings()
 	std::thread LoadSettingsThreadHandle(LoadSettingsThreadFunction);
 	LoadSettingsThreadHandle.detach();
 
+
 	//Load Active Theme Name
 	std::string ActiveThemeSetting = Cheat::CheatFunctions::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("SETTINGS"), xorstr_("active_theme")); char* ActiveThemeSettingChar = new char[Cheat::CheatFunctions::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("SETTINGS"), xorstr_("active_theme")).length() + 1];
 	strcpy_s(ActiveThemeSettingChar, sizeof(ActiveThemeSettingChar), ActiveThemeSetting.c_str());

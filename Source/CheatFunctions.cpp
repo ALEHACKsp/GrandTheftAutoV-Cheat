@@ -122,49 +122,42 @@ bool Cheat::CheatFunctions::IsIntegerInRange(unsigned low, unsigned high, unsign
 }
 
 
-__int64 Cheat::CheatFunctions::FileSize(const wchar_t* name)
+bool Cheat::CheatFunctions::ExtractResource(const HINSTANCE hInstance, WORD resourceID, LPCSTR szFilename)
 {
-	WIN32_FILE_ATTRIBUTE_DATA fad;
-	if (!GetFileAttributesEx(name, GetFileExInfoStandard, &fad)) { return -1; } 
-	LARGE_INTEGER size;
-	size.HighPart = fad.nFileSizeHigh;
-	size.LowPart = fad.nFileSizeLow;
-	return size.QuadPart;
-}
-
-
-bool Cheat::CheatFunctions::extractResource(const HINSTANCE hInstance, WORD resourceID, LPCSTR szFilename)
-{
-	bool bSuccess = false;
 	try
 	{
-		// Find and load the resource
+		//Find and load the resource
 		HRSRC hResource = FindResource(hInstance, MAKEINTRESOURCE(resourceID), xorstr_(L"CHEAT_DATA"));
+		if (!hResource) { throw; }
 		HGLOBAL hFileResource = LoadResource(hInstance, hResource);
+		if (!hFileResource) { throw; }
 
-		// Open and map this to a disk file
+		//Open and map this to a disk file
 		LPVOID lpFile = LockResource(hFileResource);
 		DWORD dwSize = SizeofResource(hInstance, hResource);
 
-		// Open the file and filemap
+		//Open the file and filemap
 		HANDLE hFile = CreateFileA(szFilename, GENERIC_READ | GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 		HANDLE hFileMap = CreateFileMapping(hFile, NULL, PAGE_READWRITE, 0, dwSize, NULL);
-		LPVOID lpAddress = MapViewOfFile(hFileMap, FILE_MAP_WRITE, 0, 0, 0);
+		if (!hFileMap) { throw; }
 
-		// Write the file
+		LPVOID lpAddress = MapViewOfFile(hFileMap, FILE_MAP_WRITE, 0, 0, 0);
+		if (!lpAddress) { throw; }
+
+		//Write the file
 		CopyMemory(lpAddress, lpFile, dwSize);
 
-		// Un-map the file and close the handles
+		//Un-map the file and close the handles
 		UnmapViewOfFile(lpAddress);
 		CloseHandle(hFileMap);
 		CloseHandle(hFile);
-		bSuccess = true;
+		return true;
 	}
 	catch (...)
 	{
-		MessageBoxA(NULL, xorstr_("Failed to extract Texture data"), xorstr_("Error"), MB_OK | MB_ICONWARNING | MB_TOPMOST);
+		MessageBoxA(NULL, xorstr_("Failed to extract Texture File"), xorstr_("Error"), MB_OK | MB_ICONWARNING | MB_TOPMOST);
 	}
-	return bSuccess;
+	return false;
 }
 
 std::string Cheat::CheatFunctions::TextureFilePath()
@@ -327,7 +320,7 @@ void LoadSettingsThreadFunction()
 	{
 		SubMenus CurrentSubMenuInt = static_cast<SubMenus>(SubMenuInt);
 		Cheat::GUI::MoveMenu(CurrentSubMenuInt);
-		Sleep(25);
+		Sleep(50);
 	}
 	Cheat::GUI::CloseGUI();
 	Cheat::GUI::PreviousMenu = NOMENU;
@@ -358,7 +351,7 @@ void Cheat::CheatFunctions::LoadSettings()
 
 
 std::vector <std::string> LoadedOptionsVector;
-void Cheat::CheatFunctions::RegisterOptionConfigAsLoaded(std::string OptionName)
+void Cheat::CheatFunctions::RegisterOptionAsLoaded(std::string OptionName)
 {
 	for (auto const& i : LoadedOptionsVector)
 	{
@@ -480,7 +473,6 @@ void Cheat::CheatFunctions::CreateConsole()
 }
 
 
-
 int Cheat::CheatFunctions::ReturnNumberOfDigitsInValue(double Number) 
 {
 	int i = 0;
@@ -494,7 +486,6 @@ int Cheat::CheatFunctions::ReturnNumberOfDigitsInValue(double Number)
 	}
 	return i;
 }
-
 
 void Cheat::CheatFunctions::WriteStringToIni(std::string string, std::string file, std::string app, std::string key)
 {
@@ -531,20 +522,5 @@ bool Cheat::CheatFunctions::StringToBool(std::string String)
 	else if (String == xorstr_("0"))
 	{
 		return false;
-	}
-}
-
-std::vector <std::string> Cheat::CheatFeatures::SearchResultVector;
-std::string Cheat::CheatFeatures::SearchString;
-void Cheat::CheatFunctions::FilterStringVector(std::vector <std::string> Vector, std::string StringToFilter)
-{
-	CheatFeatures::SearchResultVector.clear();
-	Cheat::CheatFeatures::SearchString = StringToFilter;
-	for (auto const& i : Vector)
-	{
-		if (i.find(StringToFilter) != std::string::npos) 
-		{
-			CheatFeatures::SearchResultVector.push_back(i);
-		}
 	}
 }

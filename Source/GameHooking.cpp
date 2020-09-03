@@ -3,8 +3,7 @@
 
 using namespace Memory;
 
-ScriptThread*(*GetActiveThread)() = nullptr;
-HANDLE mainFiber;
+HANDLE MainFiber;
 DWORD wakeAt;
 
 std::vector<LPVOID>													GameHooking::m_hooks;
@@ -25,6 +24,8 @@ static GameHooking::NativeRegistrationNew**							m_registrationTable;
 static std::unordered_map<uint64_t, GameHooking::NativeHandler>		m_handlerCache;
 static std::vector<LPVOID>											m_hookedNative;
 static __int64**													m_globalPtr;
+ScriptThread* (*GetActiveThread)()									= nullptr;
+
 
 const int EVENT_COUNT = 85;
 static std::vector<void*> EventPtr;
@@ -149,9 +150,9 @@ void __stdcall ScriptFunction(LPVOID lpParameter)
 
 void GameHooking::onTickInit()
 {
-	if (mainFiber == nullptr)
+	if (MainFiber == nullptr)
 	{
-		mainFiber = ConvertThreadToFiber(nullptr);
+		MainFiber = ConvertThreadToFiber(nullptr);
 	}
 
 	if (timeGetTime() < wakeAt)
@@ -514,7 +515,7 @@ void WAIT(DWORD ms, bool ShowMessage)
 {
 	if (ShowMessage) { Cheat::GUI::Drawing::Text(xorstr_("One moment please"), { 255, 255, 255, 255 }, { 0.525f, 0.400f }, { 1.5f, 1.5f }, true); }
 	wakeAt = timeGetTime() + ms;
-	SwitchToFiber(mainFiber);
+	SwitchToFiber(MainFiber);
 }
 
 void GameHooking::defuseEvent(GameEvents e, bool toggle)

@@ -149,8 +149,6 @@ namespace Cheat
 		extern bool ShowPlayerTagsPlayerList;
 		extern bool ShowVehicleInfoAndPreview;
 		extern bool CursorGUINavigationEnabled;
-		extern std::vector <std::string> SearchResultVector;
-		extern std::string SearchString;
 		extern std::chrono::steady_clock::time_point PostInitScaleFormStart;
 
 		void Looped();
@@ -315,7 +313,7 @@ namespace Cheat
 		std::string ReturnCheatBuildAsString();
 		const std::string ReturnConfigFilePath();
 		void LoadSettings();
-		void RegisterOptionConfigAsLoaded(std::string OptionName);
+		void RegisterOptionAsLoaded(std::string OptionName);
 		bool IsOptionRegisteredAsLoaded(std::string OptionName);
 		std::string ReturnCheatModuleDirectoryPath();
 		void SaveOptionToConfig(std::string OptionName, std::string OptionValue);
@@ -331,8 +329,7 @@ namespace Cheat
 		bool IsGameWindowFocussed();
 		bool StringIsInteger(const std::string& s);
 		bool IsIntegerInRange(unsigned low, unsigned high, unsigned x);
-		_int64 FileSize(const wchar_t* name);
-		bool extractResource(const HINSTANCE hInstance, WORD resourceID, LPCSTR szFilename);
+		bool ExtractResource(const HINSTANCE hInstance, WORD resourceID, LPCSTR szFilename);
 		std::string TextureFilePath();
 		bool ReturnPressedKey(int &PressedKey);
 		void PostInitCheat();
@@ -345,7 +342,6 @@ namespace Cheat
 		void WriteBoolToIni(bool b00l, std::string file, std::string app, std::string key);
 		std::string ReturnDateTimeFormatAsString(const char* DateTimeFormat);
 		bool StringToBool(std::string String);
-		void FilterStringVector(std::vector <std::string> Vector, std::string StringToFilter);
 	}
 	namespace GameFunctions 
 	{

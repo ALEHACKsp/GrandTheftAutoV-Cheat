@@ -95,7 +95,6 @@ enum eThreadState
 	ThreadState3 = 0x3,
 	ThreadState4 = 0x4,
 };
-
 struct scrThreadContext
 {
 	int ThreadID;
@@ -125,7 +124,6 @@ struct scrThreadContext
 	int _set1;
 	int pad[17];
 };
-
 struct scrThread
 {
 	void *vTable;
@@ -135,7 +133,6 @@ struct scrThread
 	void *pad2;
 	const char *m_pszExitMessage;
 };
-
 struct ScriptThread : scrThread
 {
 	const char Name[64];
@@ -157,10 +154,6 @@ struct ScriptThread : scrThread
 	bool bool12;
 	const char gta_pad3[10];
 };
-
-/*
-//CPatternResult
-*/
 
 class CPatternResult
 {
@@ -226,10 +219,6 @@ private:
 	static DWORD	m_size;
 };
 
-/*
-//CPattern
-*/
-
 typedef	std::vector<CPatternResult>	vec_result;
 class CPattern
 {
@@ -237,9 +226,9 @@ public:
 	CPattern(char* szByte, char* szMask);
 	~CPattern();
 
-	CPattern&		find(int i = 0, uint64_t startAddress = 0);		//scans for i patterns
+	CPattern&		find(int i = 0, uint64_t startAddress = 0);
 	CPattern&		virtual_find(int i = 0, uint64_t startAddress = 0);
-	CPatternResult	get(int i);				//returns result i
+	CPatternResult	get(int i);
 
 protected:
 	char*			m_szByte;

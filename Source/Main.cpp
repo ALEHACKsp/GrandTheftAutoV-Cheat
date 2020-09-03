@@ -1671,13 +1671,6 @@ void Cheat::Main()
 		case modelchanger:
 		{
 			Cheat::Title("Model Changer");
-			if (Cheat::Option("Search", ""))
-			{
-				char* KeyboardInput = Cheat::GameFunctions::DisplayKeyboardAndReturnInput(30);
-				if (KeyboardInput == "0") { break; }
-				CheatFunctions::FilterStringVector(Cheat::GameArrays::PedModels, KeyboardInput);
-				GUI::MoveMenu(SearchMenu);
-			}
 			if (Cheat::Option("Custom Input", "Input custom Ped model"))
 			{
 				char* KeyboardInput = Cheat::GameFunctions::DisplayKeyboardAndReturnInput(30);
@@ -2589,8 +2582,8 @@ void Cheat::Main()
 		case worldmenu:
 		{
 			Cheat::Title("World Options");
-			Cheat::MenuOption("Time Options (local) >", timemenu);
-			Cheat::MenuOption("Weather Options (local) >", weathermenu);
+			Cheat::MenuOption("Time Options >", timemenu);
+			Cheat::MenuOption("Weather Options >", weathermenu);
 			Cheat::MenuOption("Nearby Vehicles >", nearbyvehicles_menu);
 			Cheat::MenuOption("Nearby Peds >", nearbypeds_menu); 
 			Cheat::Toggle("Snow (local)", Cheat::CheatFeatures::WorldSnowLocalBool, "GTA Online Only");
@@ -2859,9 +2852,9 @@ void Cheat::Main()
 		case timemenu:
 		{
 			Cheat::Title("Time Options");
-			if (Cheat::Int("Hour", SetTimeHour, 0, 23, 1)) { NETWORK::NETWORK_OVERRIDE_CLOCK_TIME(SetTimeHour, TIME::GET_CLOCK_MINUTES(), TIME::GET_CLOCK_SECONDS()); }
-			if (Cheat::Int("Minutes", SetTimeMinutes, 0, 59, 1)) { NETWORK::NETWORK_OVERRIDE_CLOCK_TIME(TIME::GET_CLOCK_HOURS(), SetTimeMinutes, TIME::GET_CLOCK_SECONDS()); }
-			if (Cheat::Int("Seconds", SetTimeSeconds, 0, 59, 1)) { NETWORK::NETWORK_OVERRIDE_CLOCK_TIME(TIME::GET_CLOCK_HOURS(), TIME::GET_CLOCK_MINUTES(), SetTimeSeconds); }
+			if (Cheat::Int("Hour", SetTimeHour, 0, 23, 1, false, true)) { NETWORK::NETWORK_OVERRIDE_CLOCK_TIME(SetTimeHour, TIME::GET_CLOCK_MINUTES(), TIME::GET_CLOCK_SECONDS()); }
+			if (Cheat::Int("Minutes", SetTimeMinutes, 0, 59, 1, false, true)) { NETWORK::NETWORK_OVERRIDE_CLOCK_TIME(TIME::GET_CLOCK_HOURS(), SetTimeMinutes, TIME::GET_CLOCK_SECONDS()); }
+			if (Cheat::Int("Seconds", SetTimeSeconds, 0, 59, 1, false, true)) { NETWORK::NETWORK_OVERRIDE_CLOCK_TIME(TIME::GET_CLOCK_HOURS(), TIME::GET_CLOCK_MINUTES(), SetTimeSeconds); }
 			Cheat::Break("Current Time", true);
 			std::string CurrentGameTimeString = "Game Time: ~c~" + std::to_string(TIME::GET_CLOCK_HOURS()) + ":" + std::to_string(TIME::GET_CLOCK_MINUTES()) + ":" + std::to_string(TIME::GET_CLOCK_SECONDS());
 			Cheat::Break(CurrentGameTimeString.c_str(), false);
@@ -3613,7 +3606,7 @@ void Cheat::Main()
 		break; 
 		case player_troll:
 		{
-			Cheat::GameFunctions::DrawMarkerAbovePlayer(2, Cheat::CheatFeatures::selectedPlayer, { 0, 0, 255, 255 });
+			Cheat::GameFunctions::DrawMarkerAbovePlayer(21, Cheat::CheatFeatures::selectedPlayer, { 0, 0, 255, 255 });
 			Cheat::GameFunctions::LoadPlayerInformation(PLAYER::GET_PLAYER_NAME(Cheat::CheatFeatures::selectedPlayer), Cheat::CheatFeatures::selectedPlayer);
 			Cheat::Title("Troll Options");
 			Cheat::MenuOption("Attachment Options >", attachoptions);
@@ -3786,7 +3779,7 @@ void Cheat::Main()
 		break;
 		case SelectedPlayerMenu:
 		{
-			Cheat::GameFunctions::DrawMarkerAbovePlayer(2, Cheat::CheatFeatures::selectedPlayer, { 0, 0, 255, 255 });
+			Cheat::GameFunctions::DrawMarkerAbovePlayer(21, Cheat::CheatFeatures::selectedPlayer, { 0, 0, 255, 255 });
 			Cheat::GameFunctions::LoadPlayerInformation(PLAYER::GET_PLAYER_NAME(Cheat::CheatFeatures::selectedPlayer), Cheat::CheatFeatures::selectedPlayer);
 			Cheat::Title(PLAYER::GET_PLAYER_NAME(Cheat::CheatFeatures::selectedPlayer));
 			Cheat::Toggle("Spectate Player", Cheat::CheatFeatures::SpectatePlayerBool, "Spectate Selected Player", false);
@@ -3810,7 +3803,7 @@ void Cheat::Main()
 		break;
 		case player_otherpickupsmenu:
 		{
-			Cheat::GameFunctions::DrawMarkerAbovePlayer(2, Cheat::CheatFeatures::selectedPlayer, { 0, 0, 255, 255 });
+			Cheat::GameFunctions::DrawMarkerAbovePlayer(21, Cheat::CheatFeatures::selectedPlayer, { 0, 0, 255, 255 });
 			Cheat::GameFunctions::LoadPlayerInformation(PLAYER::GET_PLAYER_NAME(Cheat::CheatFeatures::selectedPlayer), Cheat::CheatFeatures::selectedPlayer);
 			Cheat::Title("Other Pickups");
 			if (Cheat::Option("Body Armour", ""))
@@ -3832,7 +3825,7 @@ void Cheat::Main()
 		break;
 		case player_remoteoptions: 
 		{
-			Cheat::GameFunctions::DrawMarkerAbovePlayer(2, Cheat::CheatFeatures::selectedPlayer, { 0, 0, 255, 255 });
+			Cheat::GameFunctions::DrawMarkerAbovePlayer(21, Cheat::CheatFeatures::selectedPlayer, { 0, 0, 255, 255 });
 			Cheat::GameFunctions::LoadPlayerInformation(PLAYER::GET_PLAYER_NAME(Cheat::CheatFeatures::selectedPlayer), Cheat::CheatFeatures::selectedPlayer);
 			Cheat::Title("Remote Options");
 			if (Cheat::Option("Kick To Single Player", "Kick Selected Player to SP")) {
@@ -3846,7 +3839,7 @@ void Cheat::Main()
 		break;
 		case player_weaponmenu:
 		{
-			Cheat::GameFunctions::DrawMarkerAbovePlayer(2, Cheat::CheatFeatures::selectedPlayer, { 0, 0, 255, 255 });
+			Cheat::GameFunctions::DrawMarkerAbovePlayer(21, Cheat::CheatFeatures::selectedPlayer, { 0, 0, 255, 255 });
 			Cheat::GameFunctions::LoadPlayerInformation(PLAYER::GET_PLAYER_NAME(Cheat::CheatFeatures::selectedPlayer), Cheat::CheatFeatures::selectedPlayer);
 			Cheat::Title("Weapon Options");
 			if (Cheat::Option("Give All Weapons", "Give all weapons to selected player")) {	Cheat::GameFunctions::GiveAllWeaponsToPlayer(PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(Cheat::CheatFeatures::selectedPlayer)); }
@@ -3854,7 +3847,7 @@ void Cheat::Main()
 		break; 
 		case player_teleportmenu:
 		{
-			Cheat::GameFunctions::DrawMarkerAbovePlayer(2, Cheat::CheatFeatures::selectedPlayer, { 0, 0, 255, 255 });
+			Cheat::GameFunctions::DrawMarkerAbovePlayer(21, Cheat::CheatFeatures::selectedPlayer, { 0, 0, 255, 255 });
 			Cheat::GameFunctions::LoadPlayerInformation(PLAYER::GET_PLAYER_NAME(Cheat::CheatFeatures::selectedPlayer), Cheat::CheatFeatures::selectedPlayer);
 			Cheat::Title("Teleport Options"); 
 			if (Cheat::Option("Teleport Into Vehicle", "Teleport into Selected Player vehicle"))
@@ -3957,11 +3950,11 @@ void Cheat::Main()
 		break;
 		case playermoneymenu:
 		{
-			Cheat::GameFunctions::DrawMarkerAbovePlayer(2, Cheat::CheatFeatures::selectedPlayer, { 0, 0, 255, 255 });
+			Cheat::GameFunctions::DrawMarkerAbovePlayer(21, Cheat::CheatFeatures::selectedPlayer, { 0, 0, 255, 255 });
 			Cheat::GameFunctions::LoadPlayerInformation(PLAYER::GET_PLAYER_NAME(Cheat::CheatFeatures::selectedPlayer), Cheat::CheatFeatures::selectedPlayer);
 			Cheat::Title("Money Options");
 			Cheat::Toggle("Toggle", Cheat::CheatFeatures::MoneyDropBool, "Enable Money Drop on selected player", false);
-			Cheat::Int("Drop Delay", Cheat::CheatFeatures::MoneyDropDelay, 50, 2000, 50, false, false, "Set to 1500 to prevent transaction errors");
+			Cheat::Int("Drop Delay", Cheat::CheatFeatures::MoneyDropDelay, 50, 2000, 50, false, true, "Set to 1500 to prevent transaction errors");
 		} 
 		break; 
 		case clothingmenu:
@@ -4038,7 +4031,7 @@ void Cheat::Main()
 		break; 
 		case attachoptions:
 		{
-			Cheat::GameFunctions::DrawMarkerAbovePlayer(2, Cheat::CheatFeatures::selectedPlayer, { 0, 0, 255, 255 });
+			Cheat::GameFunctions::DrawMarkerAbovePlayer(21, Cheat::CheatFeatures::selectedPlayer, { 0, 0, 255, 255 });
 			Cheat::GameFunctions::LoadPlayerInformation(PLAYER::GET_PLAYER_NAME(Cheat::CheatFeatures::selectedPlayer), Cheat::CheatFeatures::selectedPlayer);
 			Cheat::Title("Attach Options");
 			if (Cheat::Option("Plate", ""))				{ Cheat::GameFunctions::AttachObjectToPed(Cheat::CheatFeatures::selectedPlayer, "p_oil_slick_01"); }
@@ -4053,17 +4046,18 @@ void Cheat::Main()
 			if (Cheat::Option("Windmill", ""))			{ Cheat::GameFunctions::AttachObjectToPed(Cheat::CheatFeatures::selectedPlayer, "prop_windmill_01"); }
 			if (Cheat::Option("Radar", ""))				{ Cheat::GameFunctions::AttachObjectToPed(Cheat::CheatFeatures::selectedPlayer, "prop_air_bigradar"); }
 
-			if (Cheat::Option("Delete All Objects", "Only removes above attached objects")) 
+			if (Cheat::Option("Detach All Objects", "Only detaches above attached objects")) 
 			{
-				const std::vector<std::string> ObjectsToRemoveArray = { "p_oil_slick_01", "hei_prop_heist_emp", "prop_beach_fire", "prop_juicestand",
-																		"prop_weed_01", "p_v_43_safe_s", "p_spinning_anus_s", "prop_ld_toilet_01", 
-																		"prop_xmas_tree_int", "prop_windmill_01", "prop_air_bigradar" };
-
+				const std::vector<std::string> ObjectsToRemoveArray = { 
+					xorstr_("p_oil_slick_01"),  xorstr_("hei_prop_heist_emp"),  xorstr_("prop_beach_fire"),  xorstr_("prop_juicestand"),
+					xorstr_("prop_weed_01"),  xorstr_("p_v_43_safe_s"),  xorstr_("p_spinning_anus_s"),  xorstr_("prop_ld_toilet_01"),
+					xorstr_("prop_xmas_tree_int"),  xorstr_("prop_windmill_01"),  xorstr_("prop_air_bigradar") 
+				};
 				for (auto const& i : ObjectsToRemoveArray) 
 				{ 
 					Cheat::GameFunctions::DetachObjectFromPed(PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(Cheat::CheatFeatures::selectedPlayer), (char*)i.c_str());
 				}			
-				Cheat::GameFunctions::MinimapNotification("All Objects Deleted From Player");
+				Cheat::GameFunctions::MinimapNotification("All Objects Detached From Player");
 			}
 		}
 		break;
@@ -4503,29 +4497,6 @@ void Cheat::Main()
 			Cheat::Int("Opacity", Cheat::GUI::scroller.a, 0, 255, 1, false, false);
 		}
 		break;
-		case SearchMenu:
-		{
-			Cheat::Title("Searching");
-			if (Cheat::Option("Go Back", ""))
-			{
-				CheatFeatures::SearchResultVector.clear();
-				GUI::BackMenu();
-			}
-			std::string SearchMessage = xorstr_("Search Term: ~c~") + Cheat::CheatFeatures::SearchString;
-			Cheat::Break(SearchMessage.c_str(), false);
-			Cheat::Break("Search Results", true);
-			if (!CheatFeatures::SearchResultVector.empty())
-			{
-				for (auto const& i : CheatFeatures::SearchResultVector)
-				{
-					if (Cheat::Option(i.c_str(), ""))
-					{
-						GameFunctions::ChangePedModelLocalPlayer(GAMEPLAY::GET_HASH_KEY((char*)i.c_str()));
-					}
-				}
-			}
-		}
-		break;
 		}
 		Cheat::GUI::End();
 		WAIT(0, false);
@@ -4553,7 +4524,7 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD  ul_reason_for_call, LPVOID lpReser
 		if (!Cheat::CheatFunctions::DoesDirectoryExists(Cheat::CheatFunctions::ReturnCheatModuleDirectoryPath() + (std::string)xorstr_("\\gtav"))) { Cheat::CheatFunctions::CreateNewDirectory(Cheat::CheatFunctions::ReturnCheatModuleDirectoryPath() + (std::string)xorstr_("\\gtav")); }
 		//Extract YTD texture file from module
 		DeleteFileA(Cheat::CheatFunctions::TextureFilePath().c_str());
-		Cheat::CheatFunctions::extractResource(hModule, 140, (LPCSTR)Cheat::CheatFunctions::TextureFilePath().c_str());
+		Cheat::CheatFunctions::ExtractResource(hModule, 140, (LPCSTR)Cheat::CheatFunctions::TextureFilePath().c_str());
 		//Continue cheat loading
 		CreateThread(NULL, NULL, InitThread, hModule, NULL, NULL);
 		break;

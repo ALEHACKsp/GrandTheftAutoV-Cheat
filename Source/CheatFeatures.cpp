@@ -1142,9 +1142,7 @@ void Cheat::CheatFeatures::MoneyDrop()
 	if (GetTickCount64() - MoneyDropDelayPreviousTick > MoneyDropDelay)
 	{
 		Hash PolyBag = GAMEPLAY::GET_HASH_KEY(xorstr_("p_poly_bag_01_s"));
-
 		Vector3 pp = ENTITY::GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(Cheat::CheatFeatures::selectedPlayer), 0.0, 0.0, 1.0);
-
 		STREAMING::REQUEST_MODEL(PolyBag);
 		while (!STREAMING::HAS_MODEL_LOADED(PolyBag)) { WAIT(0); }
 		if (STREAMING::HAS_MODEL_LOADED(PolyBag))

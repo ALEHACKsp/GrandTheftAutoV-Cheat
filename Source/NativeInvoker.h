@@ -1,4 +1,6 @@
 #pragma once
+#pragma warning( disable : 6001)
+#pragma warning( disable : 26451)
 
 class scrNativeCallContext {
 protected:

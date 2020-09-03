@@ -368,7 +368,7 @@ bool Cheat::MenuOptionPlayerList(const char* option, SubMenus newSub, Player Pla
 bool Cheat::Toggle(const char * option, bool & b00l, const char* InformationText, bool IsSavable)
 {
 	//Load Option From Config
-	if (!CheatFunctions::IsOptionRegisteredAsLoaded(option))
+	if (!CheatFunctions::IsOptionRegisteredAsLoaded(option) && IsSavable)
 	{
 		std::string ConfigFileValue = CheatFunctions::GetOptionValueFromConfig(option);
 		if (ConfigFileValue != xorstr_("NOT_FOUND")) 
@@ -466,7 +466,7 @@ bool Cheat::Toggle(const char * option, bool & b00l, const char* InformationText
 bool Cheat::Int(const char * option, int & _int, int min, int max, int step, bool DisableControl, bool IsSavable, const char* InformationText)
 {
 	//Load Option From Config
-	if (!CheatFunctions::IsOptionRegisteredAsLoaded(option))
+	if (!CheatFunctions::IsOptionRegisteredAsLoaded(option) && IsSavable)
 	{
 		std::string ConfigFileValue = CheatFunctions::GetOptionValueFromConfig(option);
 		if (ConfigFileValue != xorstr_("NOT_FOUND"))
@@ -578,7 +578,7 @@ bool Cheat::Int(const char * option, int & _int, int min, int max, int step, boo
 bool Cheat::Float(const char * option, float & _float, float min, float max, float steps, bool ReturnTrueWithValueChange, bool IsSavable, const char* InformationText)
 {
 	//Load Option From Config
-	if (!CheatFunctions::IsOptionRegisteredAsLoaded(option))
+	if (!CheatFunctions::IsOptionRegisteredAsLoaded(option) && IsSavable)
 	{
 		std::string ConfigFileValue = CheatFunctions::GetOptionValueFromConfig(option);
 		if (ConfigFileValue != xorstr_("NOT_FOUND"))
@@ -640,7 +640,7 @@ bool Cheat::Float(const char * option, float & _float, float min, float max, flo
 bool Cheat::IntVector(const char* option, std::vector<int> Vector, int& position, bool IsSavable)
 {
 	//Load Option From Config
-	if (!CheatFunctions::IsOptionRegisteredAsLoaded(option))
+	if (!CheatFunctions::IsOptionRegisteredAsLoaded(option) && IsSavable)
 	{
 		std::string ConfigFileValue = CheatFunctions::GetOptionValueFromConfig(option);
 		if (ConfigFileValue != xorstr_("NOT_FOUND"))
@@ -698,7 +698,7 @@ bool Cheat::IntVector(const char* option, std::vector<int> Vector, int& position
 bool Cheat::FloatVector(const char * option, std::vector<float> Vector, int & position, bool IsSavable)
 {
 	//Load Option From Config
-	if (!CheatFunctions::IsOptionRegisteredAsLoaded(option))
+	if (!CheatFunctions::IsOptionRegisteredAsLoaded(option) && IsSavable)
 	{
 		std::string ConfigFileValue = CheatFunctions::GetOptionValueFromConfig(option);
 		if (ConfigFileValue != xorstr_("NOT_FOUND"))
@@ -754,7 +754,7 @@ bool Cheat::FloatVector(const char * option, std::vector<float> Vector, int & po
 bool Cheat::StringVector(const char * option, std::vector<std::string> Vector, int & position, const char* InformationText, bool IsSavable)
 {
 	//Load Option From Config
-	if (!CheatFunctions::IsOptionRegisteredAsLoaded(option))
+	if (!CheatFunctions::IsOptionRegisteredAsLoaded(option) && IsSavable)
 	{
 		std::string ConfigFileValue = CheatFunctions::GetOptionValueFromConfig(option);
 		if (ConfigFileValue != xorstr_("NOT_FOUND"))
@@ -1028,11 +1028,7 @@ void Cheat::LoadTheme(char* ThemeFileName, bool StartUp)
 {
 	std::string ThemeFolderPath = Cheat::CheatFunctions::ReturnCheatModuleDirectoryPath() + (std::string)xorstr_("\\gtav\\Themes");
 	std::string ThemeFilePath = ThemeFolderPath + xorstr_("\\") + ThemeFileName + xorstr_(".ini");
-	if (!Cheat::CheatFunctions::DoesFileExists(ThemeFilePath)) 
-	{ 
-		Cheat::GameFunctions::MinimapNotification("~r~Failed to load theme: theme file does not exist"); 
-		return; 
-	}
+	if (!Cheat::CheatFunctions::DoesFileExists(ThemeFilePath)) { Cheat::GameFunctions::MinimapNotification("~r~Requested Theme File does not exist"); return;  }
 
 	Cheat::GUI::CurrentTheme = ThemeFileName;
 
@@ -1111,9 +1107,6 @@ void Cheat::LoadTheme(char* ThemeFileName, bool StartUp)
 	if (MenuBottomBackgroundBlue != "NOT_FOUND") { if (Cheat::CheatFunctions::StringIsInteger(MenuBottomBackgroundBlue)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(MenuBottomBackgroundBlue))) { Cheat::GUI::MenuBottomRect.b = std::stoi(MenuBottomBackgroundBlue); } } }
 	if (MenuBottomBackgroundOpacity != "NOT_FOUND") { if (Cheat::CheatFunctions::StringIsInteger(MenuBottomBackgroundOpacity)) { if (Cheat::CheatFunctions::IsIntegerInRange(0, 255, std::stoi(MenuBottomBackgroundOpacity))) { Cheat::GUI::MenuBottomRect.a = std::stoi(MenuBottomBackgroundOpacity); } } }
 
-	std::string ScrollDelaySetting = Cheat::CheatFunctions::ReadStringFromIni(ThemeFilePath, "THEME", "scroll_delay"); if (Cheat::CheatFunctions::StringIsInteger(ScrollDelaySetting)) { if (Cheat::CheatFunctions::IsIntegerInRange(1, 200, std::stoi(ScrollDelaySetting))) { Cheat::GUI::keyPressDelay2 = std::stoi(ScrollDelaySetting.c_str()); } }
-	std::string IntDelaySetting = Cheat::CheatFunctions::ReadStringFromIni(ThemeFilePath, "THEME", "int_delay"); if (Cheat::CheatFunctions::StringIsInteger(IntDelaySetting)) { if (Cheat::CheatFunctions::IsIntegerInRange(1, 200, std::stoi(IntDelaySetting))) { Cheat::GUI::keyPressDelay3 = std::stoi(IntDelaySetting.c_str()); } }
-	std::string BooleanToggleSetting = Cheat::CheatFunctions::ReadStringFromIni(ThemeFilePath, xorstr_("THEME"), xorstr_("boolean_toggle")); if (Cheat::CheatFunctions::StringIsInteger(BooleanToggleSetting)) { Cheat::CheatFeatures::BoolOptionVectorPosition = std::stoi(BooleanToggleSetting.c_str()); }
 	if (Cheat::CheatFunctions::ReadStringFromIni(ThemeFilePath, "THEME", "show_header_background") == "true") { Cheat::GUI::ShowHeaderBackground = true; }
 	if (Cheat::CheatFunctions::ReadStringFromIni(ThemeFilePath, "THEME", "show_header_gui") == "true") { Cheat::GUI::ShowHeaderGUI = true; } else { Cheat::GUI::ShowHeaderGUI = false; }
 	if (Cheat::CheatFunctions::ReadStringFromIni(ThemeFilePath, "THEME", "restore_previous_submenu") == "false") { Cheat::GUI::RestorePreviousSubmenu = false; } else { Cheat::GUI::RestorePreviousSubmenu = true; }
@@ -1125,6 +1118,9 @@ void Cheat::LoadTheme(char* ThemeFileName, bool StartUp)
 		float Y			= std::stod(Cheat::CheatFunctions::ReadStringFromIni(ThemeFilePath, "THEME", "gui_y"));
 		float Width		= std::stod(Cheat::CheatFunctions::ReadStringFromIni(ThemeFilePath, "THEME", "gui_width"));
 
+		Cheat::GUI::keyPressDelay2 = std::stoi(Cheat::CheatFunctions::ReadStringFromIni(ThemeFilePath, "THEME", "scroll_delay"));
+		Cheat::GUI::keyPressDelay3 = std::stoi(Cheat::CheatFunctions::ReadStringFromIni(ThemeFilePath, "THEME", "int_delay"));
+		Cheat::CheatFeatures::BoolOptionVectorPosition = std::stoi(Cheat::CheatFunctions::ReadStringFromIni(ThemeFilePath, xorstr_("THEME"), xorstr_("boolean_toggle")));
 
 		if (Cheat::CheatFunctions::IsIntegerInRange(0.110000, 0.86000, X))
 		{
@@ -1158,7 +1154,7 @@ void Cheat::LoadTheme(char* ThemeFileName, bool StartUp)
 	{
 		remove(ThemeFilePath.c_str());
 		SaveTheme(ThemeFileName);
-		Cheat::GameFunctions::SubtitleNotification("~b~Active theme outdated, it has been resaved to update for the changes", 5000);
+		Cheat::GameFunctions::SubtitleNotification("~b~Active Theme outdated, it has been resaved to update the changes", 5000);
 	}
 
 	//Save New Active Theme Name To Config File

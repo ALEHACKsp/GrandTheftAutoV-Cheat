@@ -336,7 +336,7 @@ void Cheat::CheatFunctions::LoadSettings()
 	//Load Active Theme Name
 	std::string ActiveThemeSetting = Cheat::CheatFunctions::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("SETTINGS"), xorstr_("active_theme")); char* ActiveThemeSettingChar = new char[Cheat::CheatFunctions::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("SETTINGS"), xorstr_("active_theme")).length() + 1];
 	strcpy_s(ActiveThemeSettingChar, sizeof(ActiveThemeSettingChar), ActiveThemeSetting.c_str());
-	if (ActiveThemeSetting != xorstr_("NULL")) { Cheat::LoadTheme((char*)ActiveThemeSettingChar, true); }
+	if (ActiveThemeSetting != xorstr_("NOT_FOUND")) { Cheat::LoadTheme((char*)ActiveThemeSettingChar, true); }
 
 	//Hotkeys
 	std::string LoadHotkey_BailToSinglePlayer = Cheat::CheatFunctions::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("SETTINGS"), xorstr_("hotkey_bailtosingleplayer")); if (Cheat::CheatFunctions::StringIsInteger(LoadHotkey_BailToSinglePlayer)) { BailToSinglePlayerHotkey = std::stoi(LoadHotkey_BailToSinglePlayer.c_str()); }
@@ -361,6 +361,7 @@ void Cheat::CheatFunctions::RegisterOptionAsLoaded(std::string OptionName)
 		}
 	}
 	LoadedOptionsVector.push_back(OptionName);
+	Cheat::LogFunctions::DebugMessage(xorstr_("Loaded savable option '") + OptionName + xorstr_("'"));
 }
 bool Cheat::CheatFunctions::IsOptionRegisteredAsLoaded(std::string OptionName)
 {

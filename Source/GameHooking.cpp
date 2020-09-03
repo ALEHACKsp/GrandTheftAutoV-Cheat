@@ -133,6 +133,7 @@ bool GetEventDataFunc(int eventGroup, int eventIndex, int* argStruct, int argStr
 	{
 		if (Cheat::CheatFeatures::ShowBlockedScriptEventNotifications)
 		{
+			Cheat::LogFunctions::DebugMessage("Blocked Script Event " + argStruct[0]);
 			std::string MessageString = xorstr_("Blocked Script Event ") + std::to_string(argStruct[0]);
 			Cheat::GameFunctions::AdvancedMinimapNotification(MessageString.data(), xorstr_("Textures"), xorstr_("AdvancedNotificationImage"), false, 4, xorstr_("Remote Events Protection"), "", .5, "");
 		}
@@ -380,34 +381,40 @@ void GameHooking::DoGameHooking()
 	setFn<GetEventData>(xorstr_("get_event_data"), xorstr_("\x48\x89\x5C\x24\x00\x57\x48\x83\xEC\x20\x49\x8B\xF8\x4C\x8D\x05\x00\x00\x00\x00\x41\x8B\xD9\xE8\x00\x00\x00\x00\x48\x85\xC0\x74\x14\x4C\x8B\x10\x44\x8B\xC3\x48\x8B\xD7\x41\xC1\xE0\x03\x48\x8B\xC8\x41\xFF\x52\x30\x48\x8B\x5C\x24\x00"), xorstr_("xxxx?xxxxxxxxxxx????xxxx????xxxxxxxxxxxxxxxxxxxxxxxxxxxxx?"), &GameHooking::get_event_data);
 	setFn<fpSetSessionTime>(xorstr_("session_time_set"), xorstr_("\x48\x89\x5C\x24\x08\x57\x48\x83\xEC\x20\x8B\xF9\x48\x8B\x0D\x00\x00\x00\x00\x48\x8B\xDA\x33\xD2\xE9\x00\x00\x00\x00"), xorstr_("xxxxxxxxxxxxxxx????xxxxxx????"), &GameHooking::set_session_time_info);
 	
-
 	//Hook GameState
+	Cheat::LogFunctions::DebugMessage(xorstr_("Load 'GameState'"));
 	char* c_location = nullptr;
 	void* v_location = nullptr;
 	c_location = p_gameState.count(1).get(0).get<char>(2);
 	c_location == nullptr ? Cheat::LogFunctions::Error(xorstr_("Failed to hook GameState")) : m_gameState = reinterpret_cast<decltype(m_gameState)>(c_location + *(int32_t*)c_location + 5);
 	
 	//Hook Vector3 Bypass
+	Cheat::LogFunctions::DebugMessage(xorstr_("Load 'Vector 3 Bypass'"));
 	v_location = p_fixVector3Result.count(1).get(0).get<void>(0);
 	if (v_location != nullptr) scrNativeCallContext::SetVectorResults = (void(*)(scrNativeCallContext*))(v_location);
 
 	//Hook Native Registration Table
+	Cheat::LogFunctions::DebugMessage(xorstr_("Load 'Native Registration Table'"));
 	c_location = p_nativeTable.count(1).get(0).get<char>(9);
 	c_location == nullptr ? Cheat::LogFunctions::Error(xorstr_("Failed to hook Native Registration Table")) : m_registrationTable = reinterpret_cast<decltype(m_registrationTable)>(c_location + *(int32_t*)c_location + 4);
 
 	//Hook Game World Pointer
+	Cheat::LogFunctions::DebugMessage(xorstr_("Load 'World Pointer'"));
 	c_location = p_worldPtr.count(1).get(0).get<char>(0);
 	c_location == nullptr ? Cheat::LogFunctions::Error(xorstr_("Failed to hook World Pointer")) : m_worldPtr = reinterpret_cast<uint64_t>(c_location) + *reinterpret_cast<int*>(reinterpret_cast<uint64_t>(c_location) + 3) + 7;
 
 	//Hook Game Blip List
+	Cheat::LogFunctions::DebugMessage(xorstr_("Load 'Blip List'"));
 	c_location = p_blipList.count(1).get(0).get<char>(0);
 	c_location == nullptr ? Cheat::LogFunctions::Error(xorstr_("Failed to hook Blip List")) : m_blipList = (BlipList*)(c_location + *reinterpret_cast<int*>(c_location + 3) + 7);
 
 	//Hook Active Game Thread
+	Cheat::LogFunctions::DebugMessage(xorstr_("Load 'Active Game Thread'"));
 	c_location = p_activeThread.count(1).get(0).get<char>(1);
 	c_location == nullptr ? Cheat::LogFunctions::Error(xorstr_("Failed to hook Active Game Thread")) : GetActiveThread = reinterpret_cast<decltype(GetActiveThread)>(c_location + *(int32_t*)c_location + 4);
 
 	//Get Global Pointer
+	Cheat::LogFunctions::DebugMessage(xorstr_("Load 'Global Pointer'"));
 	c_location = p_globalPtr.count(1).get(0).get<char>(0);
 	__int64 patternAddr = NULL;
 	c_location == nullptr ? Cheat::LogFunctions::Error(xorstr_("Failed to hook Global Pointer")) : patternAddr = reinterpret_cast<decltype(patternAddr)>(c_location);
@@ -415,6 +422,7 @@ void GameHooking::DoGameHooking()
 
 
 	//Get Event Hook -> Used by defuseEvent
+	Cheat::LogFunctions::DebugMessage(xorstr_("Load 'Event Hook'"));
 	if ((c_location = p_eventHook.count(1).get(0).get<char>(0)))
 	{
 		int i = 0, j = 0, matches = 0, found = 0;
@@ -440,9 +448,11 @@ void GameHooking::DoGameHooking()
 	}
 
 	//Initialize Natives
+	Cheat::LogFunctions::DebugMessage(xorstr_("Initialize Game Functions"));
 	CrossMapping::initNativeMap();
 
 	//Initialize MinHook
+	Cheat::LogFunctions::DebugMessage(xorstr_("Initialize MinHook"));
 	if (MH_Initialize() != MH_OK) { Cheat::LogFunctions::Error(xorstr_("Failed to initialize MinHook")); std::exit(EXIT_SUCCESS); }
 
 	bool WaitingGameLoadLogPrinted = false;
@@ -458,17 +468,20 @@ void GameHooking::DoGameHooking()
 
 	Cheat::LogFunctions::Message(xorstr_("Game Completed Loading"));
 
-
 	//Hook Game Functions
+	Cheat::LogFunctions::DebugMessage(xorstr_("Hook 'IS_DLC_PRESENT'"));
 	auto status = MH_CreateHook(GameHooking::is_DLC_present, HK_IS_DLC_PRESENT, (void**)&OG_IS_DLC_PRESENT);
 	if ((status != MH_OK && status != MH_ERROR_ALREADY_CREATED) || MH_EnableHook(GameHooking::is_DLC_present) != MH_OK) { Cheat::LogFunctions::Error(xorstr_("Failed to hook IS_DLC_PRESENT"));  std::exit(EXIT_SUCCESS); }
 	GameHooking::m_hooks.push_back(GameHooking::is_DLC_present);
+	Cheat::LogFunctions::DebugMessage(xorstr_("Hook 'GET_EVENT_DATA'"));
 	status = MH_CreateHook(GameHooking::get_event_data, GetEventDataFunc, &m_OriginalGetEventData);
 	if ((status != MH_OK && status != MH_ERROR_ALREADY_CREATED) || MH_EnableHook(GameHooking::get_event_data) != MH_OK) { Cheat::LogFunctions::Error(xorstr_("Failed to hook GET_EVENT_DATA"));  std::exit(EXIT_SUCCESS); }
 	GameHooking::m_hooks.push_back(GameHooking::get_event_data);
+	Cheat::LogFunctions::DebugMessage(xorstr_("Hook 'GET_SCRIPT_HANDLER_IF_NETWORKED'"));
 	status = MH_CreateHook(GameHooking::GetScriptHandlerIfNetworked, hkGetScriptHandlerIfNetworked, (void**)&ogGetScriptHandlerIfNetworked);
 	if (status != MH_OK || MH_EnableHook(GameHooking::GetScriptHandlerIfNetworked) != MH_OK) { Cheat::LogFunctions::Error(xorstr_("Failed to hook GET_SCRIPT_HANDLER_IF_NETWORKED"));  std::exit(EXIT_SUCCESS); }
 	GameHooking::m_hooks.push_back(GameHooking::GetScriptHandlerIfNetworked);
+	Cheat::LogFunctions::DebugMessage(xorstr_("Hook 'GET_LABEL_TEXT'"));
 	status = MH_CreateHook(GameHooking::GetLabelText, hkGetLabelText, (void**)&ogGetLabelText);
 	if (status != MH_OK || MH_EnableHook(GameHooking::GetLabelText) != MH_OK) { Cheat::LogFunctions::Error(xorstr_("Failed to hook GET_LABEL_TEXT"));  std::exit(EXIT_SUCCESS); }
 	GameHooking::m_hooks.push_back(GameHooking::GetLabelText);

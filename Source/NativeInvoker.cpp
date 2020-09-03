@@ -28,9 +28,7 @@ uint64_t * nativeCall()
 		}
 		__except (exceptionAddress = (GetExceptionInformation())->ExceptionRecord->ExceptionAddress, EXCEPTION_EXECUTE_HANDLER)
 		{
-			char* MessageBuff = NULL;
-			sprintf_s(MessageBuff, sizeof(MessageBuff), xorstr_("Executing game native 0x%016llx at address %p has failed."), exceptionAddress);
-			Cheat::LogFunctions::DebugMessage(MessageBuff);
+			std::cout << xorstr_("Failed to execute Game Function") << exceptionAddress << std::endl;
 		}
 	}
 	return reinterpret_cast<uint64_t*>(g_context.GetResultPointer());

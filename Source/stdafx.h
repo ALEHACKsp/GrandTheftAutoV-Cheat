@@ -420,10 +420,9 @@ namespace Cheat
 	}
 	namespace LogFunctions 
 	{
-		void Init();
 		void Message(char* Message);
 		void Error(char* Message);
-		void DebugMessage(char* Message);
+		void DebugMessage(std::string Message);
 	}
 	namespace GameArrays 
 	{

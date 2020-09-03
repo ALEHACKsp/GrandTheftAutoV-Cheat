@@ -281,8 +281,6 @@ namespace Cheat
 		extern int MoneyDropDelay;
 		extern int MoneyDropDelayPreviousTick;
 		void MoneyDrop();
-		extern bool RPDropBool;
-		void RPDrop();
 		extern bool MoneyGunBool;
 		void MoneyGun();
 		extern bool VehicleWeaponsBool;

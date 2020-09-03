@@ -3790,32 +3790,8 @@ void Cheat::Main()
 			Cheat::MenuOption("Weapon Options >", player_weaponmenu);
 			Cheat::MenuOption("Troll Options >", player_troll);
 			Cheat::MenuOption("Money Options >", playermoneymenu);
-			Cheat::MenuOption("RP Drop >", PlayerRPDropMenu);
-			Cheat::MenuOption("Other Pickups >", player_otherpickupsmenu);
-			Cheat::MenuOption("Remote Options >", player_remoteoptions);
+			//Cheat::MenuOption("Remote Options >", player_remoteoptions);
 			if (Cheat::Option("View Profile", "View Selected Player Social Club Profile")) { int playerHandle; NETWORK::NETWORK_HANDLE_FROM_PLAYER(Cheat::CheatFeatures::selectedPlayer, &playerHandle, 13); NETWORK::NETWORK_SHOW_PROFILE_UI(&playerHandle); }
-		}
-		break;
-		case player_otherpickupsmenu:
-		{
-			Cheat::GameFunctions::DrawMarkerAbovePlayer(21, Cheat::CheatFeatures::selectedPlayer, { 0, 0, 255, 255 });
-			Cheat::GameFunctions::LoadPlayerInformation(PLAYER::GET_PLAYER_NAME(Cheat::CheatFeatures::selectedPlayer), Cheat::CheatFeatures::selectedPlayer);
-			Cheat::Title("Other Pickups");
-			if (Cheat::Option("Body Armour", ""))
-			{
-				Vector3 pos = ENTITY::GET_ENTITY_COORDS(PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(Cheat::CheatFeatures::selectedPlayer), 1);
-				OBJECT::CREATE_AMBIENT_PICKUP(1274757841, pos.x, pos.y, pos.z + 1, 0, 100000, 1, 0, 1);
-			}
-			if (Cheat::Option("Parachute", ""))
-			{
-				Vector3 pos = ENTITY::GET_ENTITY_COORDS(PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(Cheat::CheatFeatures::selectedPlayer), 1);
-				OBJECT::CREATE_AMBIENT_PICKUP(1735599485, pos.x, pos.y, pos.z + 1, 0, 100000, 1, 0, 1);
-			}
-			if (Cheat::Option("Medical Kit", ""))
-			{
-				Vector3 pos = ENTITY::GET_ENTITY_COORDS(PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(Cheat::CheatFeatures::selectedPlayer), 1);
-				OBJECT::CREATE_AMBIENT_PICKUP(-1888453608, pos.x, pos.y, pos.z + 1, 0, 100000, 1, 0, 1);
-			}
 		}
 		break;
 		case player_remoteoptions: 
@@ -3951,12 +3927,6 @@ void Cheat::Main()
 			Cheat::Toggle("Toggle", Cheat::CheatFeatures::MoneyDropBool, "Enable Money Drop on selected player", false);
 			Cheat::Int("Drop Delay", Cheat::CheatFeatures::MoneyDropDelay, 50, 2000, 50, false, true, "Set to 1500 to prevent transaction errors");
 		} 
-		break; 
-		case PlayerRPDropMenu:
-		{
-			Cheat::Title("RP Drop");
-			Cheat::Toggle("Toggle", Cheat::CheatFeatures::RPDropBool, "Drop RP Items on Selected Player (2k RP)", false);
-		}
 		break;
 		case clothingmenu:
 		{

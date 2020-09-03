@@ -84,7 +84,6 @@ enum SubMenus
 	outfitsmenu,
 	componentschangermenu,
 	playermoneymenu, 
-	PlayerRPDropMenu,
 	player_weaponmenu,
 	player_remoteoptions,
 	sessionweathermenu,
@@ -108,7 +107,6 @@ enum SubMenus
 	reportsmenu_stats, 
 	allplayers_weaponoptionsmenu,
 	headeroptionsmenu,
-	player_otherpickupsmenu,
 	VehicleCustomizerMenu,
 	DLCVehiclesMenu,
 	SUBMENUS_END //Used to get total amount of SubMenus (SUBMENUS_END - 2) 

@@ -152,7 +152,6 @@ void Cheat::CheatFeatures::Looped()
 	NoIdleKickBool ? NoIdleKick() : NULL;
 	BribeAuthoritiesBool ? BribeAuthorities() : NULL;
 	MoneyDropBool ? MoneyDrop() : NULL;
-	RPDropBool ? RPDrop() : NULL;
 	MoneyGunBool ? MoneyGun() : NULL;
 	VehicleWeaponsBool ? VehicleWeapons() : NULL;
 	AirstrikeGunBool ? AirstrikeGun() : NULL;
@@ -1155,19 +1154,6 @@ void Cheat::CheatFeatures::MoneyDrop()
 	}
 }
 
-bool Cheat::CheatFeatures::RPDropBool = false;
-void Cheat::CheatFeatures::RPDrop()
-{
-	Hash RPObject = GAMEPLAY::GET_HASH_KEY(xorstr_("vw_prop_vw_colle_rsrcomm"));
-	Vector3 pp = ENTITY::GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(Cheat::CheatFeatures::selectedPlayer), 0.0, 0.0, 1.0);
-	STREAMING::REQUEST_MODEL(RPObject);
-	while (!STREAMING::HAS_MODEL_LOADED(RPObject)) { WAIT(0); }
-	if (STREAMING::HAS_MODEL_LOADED(RPObject))
-	{
-		OBJECT::CREATE_AMBIENT_PICKUP(0xC3CD8B31, pp.x, pp.y, pp.z, 5, 0, RPObject, false, false);
-		STREAMING::SET_MODEL_AS_NO_LONGER_NEEDED(RPObject);
-	}
-}
 
 bool Cheat::CheatFeatures::MoneyGunBool = false;
 void Cheat::CheatFeatures::MoneyGun()

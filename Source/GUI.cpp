@@ -11,7 +11,7 @@ bool Cheat::GUI::ShowHeaderGUI			= true;
 bool Cheat::GUI::ShowHeaderGlare		= true;
 bool Cheat::GUI::CheatGUIHasBeenOpened	= false;
 const char* OptionInformationText		= NULL;
-char* Cheat::GUI::CurrentTheme			= NULL;
+std::string Cheat::GUI::CurrentTheme;
 int Cheat::GUI::maxVisOptions			= 10;
 int Cheat::GUI::currentOption			= 0;
 int Cheat::GUI::currentOptionMenuBottom = 0;
@@ -25,7 +25,7 @@ SubMenus Cheat::GUI::currentMenu;
 int Cheat::GUI::PreviousMenuLevel;
 int Cheat::GUI::optionsArray			[1000];
 SubMenus Cheat::GUI::menusArray			[1000];
-char* Cheat::GUI::ThemeFilesArray		[1000];
+std::vector <std::string> Cheat::GUI::ThemeFilesVector;
 
 RGBAF Cheat::GUI::count				{ 255, 255, 255, 255, FontChaletLondon };
 RGBAF Cheat::GUI::titleText			{ 255, 255, 255, 255, FontChaletLondon };
@@ -1011,19 +1011,15 @@ void Cheat::AddPlayerInfoBoxTextEntry(char* text, int Row1, int Row2, int Row3, 
 
 void Cheat::LoadThemeFilesLooped()
 {
-	memset(GUI::ThemeFilesArray, 0, sizeof(GUI::ThemeFilesArray));
+	Cheat::GUI::ThemeFilesVector.clear();
 	std::string ThemeFolderPath = Cheat::CheatFunctions::ReturnCheatModuleDirectoryPath() + (std::string)"\\gtav\\Themes";
-
 	if (!Cheat::CheatFunctions::DoesDirectoryExists(ThemeFolderPath)) { Cheat::CheatFunctions::CreateNewDirectory(ThemeFolderPath); }
 
-	int i = 0;
 	for (const auto & file : std::filesystem::directory_iterator(ThemeFolderPath.c_str())) 
 	{
 		if (file.path().extension() == xorstr_(".ini"))
 		{
-			GUI::ThemeFilesArray[i] = new char[file.path().stem().string().length() + 1];
-			strcpy_s(GUI::ThemeFilesArray[i], sizeof(GUI::ThemeFilesArray[i]), file.path().stem().string().c_str());
-			++i;
+			Cheat::GUI::ThemeFilesVector.push_back(file.path().stem().string());
 		}
 	}
 }
@@ -1183,8 +1179,8 @@ void Cheat::GUI::DeleteCurrentTheme()
 	}
 	else 
 	{ 
-		Cheat::CheatFunctions::WriteStringToIni(xorstr_("NULL"), Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("SETTINGS"), xorstr_("active_theme"));
-		Cheat::GUI::CurrentTheme = NULL; 
+		Cheat::CheatFunctions::WriteStringToIni(xorstr_(""), Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("SETTINGS"), xorstr_("active_theme"));
+		Cheat::GUI::CurrentTheme.clear(); 
 		GUI::currentOption = 1;
 		Cheat::GameFunctions::MinimapNotification("Theme File Removed"); 
 	}

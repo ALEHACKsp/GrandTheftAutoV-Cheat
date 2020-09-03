@@ -4406,12 +4406,12 @@ void Cheat::Main()
 		{
 			Cheat::Title("Theme Loader");
 			Cheat::MenuOption("Theme Files >", ThemeFilesMenu);
-			if (Cheat::GUI::CurrentTheme != NULL)
+			if (!Cheat::GUI::CurrentTheme.empty())
 			{
-				Cheat::Break(Cheat::CheatFunctions::CombineTwoStrings("Active Theme: ~c~", Cheat::GUI::CurrentTheme), false);
+				Cheat::Break(Cheat::CheatFunctions::CombineTwoStrings("Active Theme: ~c~", (char*)Cheat::GUI::CurrentTheme.c_str()), false);
 				if (Cheat::Option("Save To Current Theme", ""))
 				{
-					Cheat::SaveTheme(Cheat::GUI::CurrentTheme);
+					Cheat::SaveTheme((char*)Cheat::GUI::CurrentTheme.c_str());
 				}
 				if (Cheat::Option("Delete Current Theme", "Delete active theme"))
 				{
@@ -4435,15 +4435,15 @@ void Cheat::Main()
 			Cheat::Title("Theme Files");
 			Cheat::LoadThemeFilesLooped();
 			Cheat::Break("All theme files below - select to load", true);
-			for (int i = 0; i < sizeof(Cheat::GUI::ThemeFilesArray) / sizeof(char*); i++)
+			for (auto const& i : Cheat::GUI::ThemeFilesVector)
 			{
-				if (Cheat::GUI::ThemeFilesArray[i] != NULL)
+				if (!Cheat::GUI::ThemeFilesVector.empty())
 				{
-					if (Cheat::Option(Cheat::GUI::ThemeFilesArray[i], ""))
+					if (Cheat::Option((char*)i.c_str(), ""))
 					{
-						std::string ThemeFilePathMenuList = Cheat::CheatFunctions::ReturnCheatModuleDirectoryPath() + (std::string)"\\gtav\\Themes\\" + Cheat::GUI::ThemeFilesArray[i] + ".ini";
+						std::string ThemeFilePathMenuList = Cheat::CheatFunctions::ReturnCheatModuleDirectoryPath() + (std::string)xorstr_("\\gtav\\Themes\\") + i + xorstr_(".ini");
 						if (!Cheat::CheatFunctions::DoesFileExists(ThemeFilePathMenuList)) { Cheat::GameFunctions::MinimapNotification("~r~Unable to locate theme file"); break; }
-						Cheat::LoadTheme(Cheat::GUI::ThemeFilesArray[i], false);
+						Cheat::LoadTheme((char*)i.c_str(), false);
 					}
 				}
 			}

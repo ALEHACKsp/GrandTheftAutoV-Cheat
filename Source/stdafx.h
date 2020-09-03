@@ -71,12 +71,12 @@ namespace Cheat
 		extern float guiX;
 		extern float guiY;
 		extern float guiWidth;
-		extern char* ThemeFilesArray[1000];
+		extern std::vector <std::string> ThemeFilesVector;
 		extern bool ShowHeaderBackground;
 		extern bool ShowHeaderGUI;
 		extern bool ShowHeaderGlare;
 		extern bool CheatGUIHasBeenOpened;
-		extern char* CurrentTheme;
+		extern std::string CurrentTheme;
 		extern bool selectPressed;
 		extern bool leftPressed;
 		extern bool rightPressed;

@@ -1546,12 +1546,6 @@ void Cheat::Main()
 			}
 		}
 		break;
-		case moneyoptionsmenu:
-		{
-			Cheat::Title("Money Options");
-			Cheat::Break("~bold~Remove Money", true);				
-		}
-		break; 
 		case miscstatsmenu:
 		{
 			Cheat::Title("Misc Stats");
@@ -3796,6 +3790,7 @@ void Cheat::Main()
 			Cheat::MenuOption("Weapon Options >", player_weaponmenu);
 			Cheat::MenuOption("Troll Options >", player_troll);
 			Cheat::MenuOption("Money Options >", playermoneymenu);
+			Cheat::MenuOption("RP Drop >", PlayerRPDropMenu);
 			Cheat::MenuOption("Other Pickups >", player_otherpickupsmenu);
 			Cheat::MenuOption("Remote Options >", player_remoteoptions);
 			if (Cheat::Option("View Profile", "View Selected Player Social Club Profile")) { int playerHandle; NETWORK::NETWORK_HANDLE_FROM_PLAYER(Cheat::CheatFeatures::selectedPlayer, &playerHandle, 13); NETWORK::NETWORK_SHOW_PROFILE_UI(&playerHandle); }
@@ -3957,6 +3952,12 @@ void Cheat::Main()
 			Cheat::Int("Drop Delay", Cheat::CheatFeatures::MoneyDropDelay, 50, 2000, 50, false, true, "Set to 1500 to prevent transaction errors");
 		} 
 		break; 
+		case PlayerRPDropMenu:
+		{
+			Cheat::Title("RP Drop");
+			Cheat::Toggle("Toggle", Cheat::CheatFeatures::RPDropBool, "Drop RP Items on Selected Player (2k RP)", false);
+		}
+		break;
 		case clothingmenu:
 		{
 			Cheat::Title("Clothing Options"); 

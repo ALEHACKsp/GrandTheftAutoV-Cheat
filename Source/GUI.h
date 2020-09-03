@@ -76,7 +76,8 @@ enum SubMenus
 	timemenu,
 	CommonTeleportLocations,
 	attachoptions,
-	player_troll,
+	SelectedPlayerTrollMenu,
+	SelectedPlayerFriendlyMenu,
 	protections,
 	ESPMenu, 
 	clothingmenu, 
@@ -84,7 +85,6 @@ enum SubMenus
 	outfitsmenu,
 	componentschangermenu,
 	playermoneymenu, 
-	player_weaponmenu,
 	player_remoteoptions,
 	sessionweathermenu,
 	sessiontimemenu,
@@ -109,7 +109,7 @@ enum SubMenus
 	headeroptionsmenu,
 	VehicleCustomizerMenu,
 	DLCVehiclesMenu,
-	SUBMENUS_END //Used to get total amount of SubMenus (SUBMENUS_END - 2) 
+	SUBMENUS_END //Used to get total size of SubMenus (SUBMENUS_END - 2) 
 };
 extern enum SubMenus;
 

@@ -3598,7 +3598,7 @@ void Cheat::Main()
 			Cheat::Toggle("Basic ESP", Cheat::CheatFeatures::PlayerESPBool, "Toggle Player ESP");
 		}
 		break; 
-		case player_troll:
+		case SelectedPlayerTrollMenu:
 		{
 			Cheat::GameFunctions::DrawMarkerAbovePlayer(21, Cheat::CheatFeatures::selectedPlayer, { 0, 0, 255, 255 });
 			Cheat::GameFunctions::LoadPlayerInformation(PLAYER::GET_PLAYER_NAME(Cheat::CheatFeatures::selectedPlayer), Cheat::CheatFeatures::selectedPlayer);
@@ -3787,11 +3787,19 @@ void Cheat::Main()
 
 			}
 			Cheat::MenuOption("Teleport Options >", player_teleportmenu);
-			Cheat::MenuOption("Weapon Options >", player_weaponmenu);
-			Cheat::MenuOption("Troll Options >", player_troll);
-			Cheat::MenuOption("Money Options >", playermoneymenu);
+			Cheat::MenuOption("Friendly Options >", SelectedPlayerFriendlyMenu);
+			Cheat::MenuOption("Troll Options >", SelectedPlayerTrollMenu);
 			//Cheat::MenuOption("Remote Options >", player_remoteoptions);
 			if (Cheat::Option("View Profile", "View Selected Player Social Club Profile")) { int playerHandle; NETWORK::NETWORK_HANDLE_FROM_PLAYER(Cheat::CheatFeatures::selectedPlayer, &playerHandle, 13); NETWORK::NETWORK_SHOW_PROFILE_UI(&playerHandle); }
+		}
+		break;
+		case SelectedPlayerFriendlyMenu:
+		{
+			Cheat::GameFunctions::DrawMarkerAbovePlayer(21, Cheat::CheatFeatures::selectedPlayer, { 0, 0, 255, 255 });
+			Cheat::GameFunctions::LoadPlayerInformation(PLAYER::GET_PLAYER_NAME(Cheat::CheatFeatures::selectedPlayer), Cheat::CheatFeatures::selectedPlayer);
+			Cheat::Title("Friendly Options");
+			Cheat::MenuOption("Money Options >", playermoneymenu);
+			if (Cheat::Option("Give All Weapons", "Give all weapons to selected player")) { Cheat::GameFunctions::GiveAllWeaponsToPlayer(PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(Cheat::CheatFeatures::selectedPlayer)); }
 		}
 		break;
 		case player_remoteoptions: 
@@ -3806,14 +3814,6 @@ void Cheat::Main()
 					GameHooking::trigger_script_event(1, kick_sp, 4, 1 << Cheat::CheatFeatures::selectedPlayer);
 				}
 			}
-		}
-		break;
-		case player_weaponmenu:
-		{
-			Cheat::GameFunctions::DrawMarkerAbovePlayer(21, Cheat::CheatFeatures::selectedPlayer, { 0, 0, 255, 255 });
-			Cheat::GameFunctions::LoadPlayerInformation(PLAYER::GET_PLAYER_NAME(Cheat::CheatFeatures::selectedPlayer), Cheat::CheatFeatures::selectedPlayer);
-			Cheat::Title("Weapon Options");
-			if (Cheat::Option("Give All Weapons", "Give all weapons to selected player")) {	Cheat::GameFunctions::GiveAllWeaponsToPlayer(PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(Cheat::CheatFeatures::selectedPlayer)); }
 		}
 		break; 
 		case player_teleportmenu:

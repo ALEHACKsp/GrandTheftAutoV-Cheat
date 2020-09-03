@@ -367,9 +367,7 @@ int Cheat::GameFunctions::ReturnRandomInteger(int start, int end) {
 void Cheat::GameFunctions::TeleportToCoords(Entity e, Vector3 coords)
 {
 	ENTITY::SET_ENTITY_COORDS_NO_OFFSET(e, coords.x, coords.y, coords.z, 0, 0, 1);
-	WAIT(0);
 }
-
 
 
 void Cheat::GameFunctions::GetCameraDirection(float* dirX, float* dirY, float* dirZ)

@@ -1662,7 +1662,7 @@ void Cheat::Main()
 			}
 		}
 		break; 	
-		case modelchanger:
+		case ModelChangerMenu:
 		{
 			Cheat::Title("Model Changer");
 			if (Cheat::Option("Custom Input", "Input custom Ped model"))
@@ -3831,8 +3831,8 @@ void Cheat::Main()
 		case SelfOptionsMenu:
 		{
 			Cheat::Title("Self Options");
-			Cheat::MenuOption("Model Changer >", modelchanger);
-			Cheat::MenuOption("Scenarios >", scenarios);
+			Cheat::MenuOption("Model Changer >", ModelChangerMenu);
+			Cheat::MenuOption("Animations & Scenarios >", AnimationsAndScenariosMenu);
 			Cheat::MenuOption("Clothing >", clothingmenu);
 			Cheat::MenuOption("Visions >", visionsmenu);
 			Cheat::Toggle("Godmode", Cheat::CheatFeatures::GodmodeBool, "Makes your character invincible");
@@ -4070,152 +4070,181 @@ void Cheat::Main()
 			Cheat::Toggle("Vehicle", Cheat::CheatFeatures::ProtectionVehicleBool, "Control & Explosions");
 		}
 		break; 
-		case scenarios:
+		case AnimationsAndScenariosMenu:
 		{
-			Cheat::Title("Scenario's");
-			Cheat::MenuOption("Animations >", animations); 
-			if (Cheat::Option("Stop Scenario", "")) { AI::CLEAR_PED_TASKS_IMMEDIATELY(PlayerPedID); }
-			if (Cheat::Option("Paparizzi", "")) {
+			Cheat::Title("Animations & Scenarios");
+			if (Cheat::Option("Stop scenarios & Animations", "")) { AI::CLEAR_PED_TASKS_IMMEDIATELY(PlayerPedID); }
+			Cheat::Break("Animations", true);
+			if (Cheat::Option("Sex Receiver", ""))
+			{
+				Cheat::GameFunctions::ClearAllAnimations();
+				Cheat::GameFunctions::DoLocalPedAnimation("rcmpaparazzo_2", "shag_loop_poppy");
+			}
+			if (Cheat::Option("Sex Giver", ""))
+			{
+				Cheat::GameFunctions::ClearAllAnimations();
+				Cheat::GameFunctions::DoLocalPedAnimation("rcmpaparazzo_2", "shag_loop_a");
+			}
+			if (Cheat::Option("Stripper Dance", ""))
+			{
+				Cheat::GameFunctions::ClearAllAnimations();
+				Cheat::GameFunctions::DoLocalPedAnimation("mini@strip_club@private_dance@part1", "priv_dance_p1");
+			}
+			if (Cheat::Option("Pole Dance", ""))
+			{
+				Cheat::GameFunctions::ClearAllAnimations();
+				Cheat::GameFunctions::DoLocalPedAnimation("mini@strip_club@pole_dance@pole_dance1", "pd_dance_01");
+			}
+			if (Cheat::Option("Push Ups", ""))
+			{
+				Cheat::GameFunctions::ClearAllAnimations();
+				Cheat::GameFunctions::DoLocalPedAnimation("amb@world_human_push_ups@male@base", "base");
+			}
+			if (Cheat::Option("Sit Ups", ""))
+			{
+				Cheat::GameFunctions::ClearAllAnimations();
+				Cheat::GameFunctions::DoLocalPedAnimation("amb@world_human_sit_ups@male@base", "base");
+			}
+			if (Cheat::Option("Celebrate", ""))
+			{
+				Cheat::GameFunctions::ClearAllAnimations();
+				Cheat::GameFunctions::DoLocalPedAnimation("rcmfanatic1celebrate", "celebrate");
+			}
+			if (Cheat::Option("Electrocution", ""))
+			{
+				Cheat::GameFunctions::ClearAllAnimations();
+				Cheat::GameFunctions::DoLocalPedAnimation("ragdoll@human", "electrocute");
+			}
+			if (Cheat::Option("Suicide", ""))
+			{
+				Cheat::GameFunctions::ClearAllAnimations();
+				Cheat::GameFunctions::DoLocalPedAnimation("mp_suicide", "pistol");
+			}
+			if (Cheat::Option("Showering", ""))
+			{
+				Cheat::GameFunctions::ClearAllAnimations();
+				Cheat::GameFunctions::DoLocalPedAnimation("mp_safehouseshower@male@", "male_shower_idle_b");
+			}
+			Cheat::Break("Scenarios", true);
+			if (Cheat::Option("Paparizzi", "")) 
+			{
 				Cheat::GameFunctions::ClearAllAnimations();
 				AI::TASK_START_SCENARIO_IN_PLACE(PlayerPedID, "WORLD_HUMAN_PAPARAZZI", 0, true);
 			}
-			if (Cheat::Option("Drug Dealer", "")) {
+			if (Cheat::Option("Drug Dealer", "")) 
+			{
 				Cheat::GameFunctions::ClearAllAnimations();
 				AI::TASK_START_SCENARIO_IN_PLACE(PlayerPedID, "WORLD_HUMAN_DRUG_DEALER_HARD", 0, true);
 			}
-			if (Cheat::Option("Drinking Coffee", "")) {
+			if (Cheat::Option("Drinking Coffee", "")) 
+			{
 				Cheat::GameFunctions::ClearAllAnimations();
 				AI::TASK_START_SCENARIO_IN_PLACE(PlayerPedID, "WORLD_HUMAN_AA_COFFEE", 0, true);
 			}
-			if (Cheat::Option("Playing Instruments", "")) {
+			if (Cheat::Option("Playing Instruments", "")) 
+			{
 				Cheat::GameFunctions::ClearAllAnimations();
 				AI::TASK_START_SCENARIO_IN_PLACE(PlayerPedID, "WORLD_HUMAN_MUSICIAN", 0, true);
 			}
-			if (Cheat::Option("Flexing", "")) {
+			if (Cheat::Option("Flexing", "")) 
+			{
 				Cheat::GameFunctions::ClearAllAnimations();
 				AI::TASK_START_SCENARIO_IN_PLACE(PlayerPedID, "WORLD_HUMAN_MUSCLE_FLEX", 0, true);
 			}
-			if (Cheat::Option("Jogging", "")) {
+			if (Cheat::Option("Jogging", "")) 
+			{
 				Cheat::GameFunctions::ClearAllAnimations();
 				AI::TASK_START_SCENARIO_IN_PLACE(PlayerPedID, "WORLD_HUMAN_JOG_STANDING", 0, true);
 			}
-			if (Cheat::Option("Binoculars", "")) {
+			if (Cheat::Option("Binoculars", "")) 
+			{
 				Cheat::GameFunctions::ClearAllAnimations();
 				AI::TASK_START_SCENARIO_IN_PLACE(PlayerPedID, "WORLD_HUMAN_BINOCULARS", 0, true);
 			}
-			if (Cheat::Option("Clipboard", "")) {
+			if (Cheat::Option("Clipboard", "")) 
+			{
 				Cheat::GameFunctions::ClearAllAnimations();
 				AI::TASK_START_SCENARIO_IN_PLACE(PlayerPedID, "WORLD_HUMAN_CLIPBOARD", 0, true);
 			}
-			if (Cheat::Option("Bench Press", "")) {
+			if (Cheat::Option("Bench Press", "")) 
+			{
 				Cheat::GameFunctions::ClearAllAnimations();
 				AI::TASK_START_SCENARIO_IN_PLACE(PlayerPedID, "PROP_HUMAN_SEAT_MUSCLE_BENCH_PRESS", 0, true);
 			}
-			if (Cheat::Option("Chin Ups", "")) {
+			if (Cheat::Option("Chin Ups", "")) 
+			{
 				Cheat::GameFunctions::ClearAllAnimations();
 				AI::TASK_START_SCENARIO_IN_PLACE(PlayerPedID, "PROP_HUMAN_MUSCLE_CHIN_UPS", 0, true);
 			}
-			if (Cheat::Option("BBQ", "")) {
+			if (Cheat::Option("BBQ", "")) 
+			{
 				Cheat::GameFunctions::ClearAllAnimations();
 				AI::TASK_START_SCENARIO_IN_PLACE(PlayerPedID, "PROP_HUMAN_BBQ", 0, true);
 			}
-			if (Cheat::Option("Superhero", "")) {
+			if (Cheat::Option("Superhero", "")) 
+			{
 				Cheat::GameFunctions::ClearAllAnimations();
 				AI::TASK_START_SCENARIO_IN_PLACE(PlayerPedID, "WORLD_HUMAN_SUPERHERO", 0, true);
 			}
-			if (Cheat::Option("Fishing", "")) {
+			if (Cheat::Option("Fishing", "")) 
+			{
 				Cheat::GameFunctions::ClearAllAnimations();
 				AI::TASK_START_SCENARIO_IN_PLACE(PlayerPedID, "WORLD_HUMAN_STAND_FISHING", 0, true);
 			}
-			if (Cheat::Option("Security", "")) {
+			if (Cheat::Option("Security", "")) 
+			{
 				Cheat::GameFunctions::ClearAllAnimations();
 				AI::TASK_START_SCENARIO_IN_PLACE(PlayerPedID, "WORLD_HUMAN_SECURITY_SHINE_TORCH", 0, true);
 			}
-			if (Cheat::Option("Leaf Blower", "")) {
+			if (Cheat::Option("Leaf Blower", "")) 
+			{
 				Cheat::GameFunctions::ClearAllAnimations();
 				AI::TASK_START_SCENARIO_IN_PLACE(PlayerPedID, "WORLD_HUMAN_GARDENER_LEAF_BLOWER", 0, true);
 			}
-			if (Cheat::Option("Film Shocking", "")) {
+			if (Cheat::Option("Film Shocking", "")) 
+			{
 				Cheat::GameFunctions::ClearAllAnimations();
 				AI::TASK_START_SCENARIO_IN_PLACE(PlayerPedID, "WORLD_HUMAN_MOBILE_FILM_SHOCKING", 0, true);
 			}
-			if (Cheat::Option("Idle Cop", "")) {
+			if (Cheat::Option("Idle Cop", "")) 
+			{
 				Cheat::GameFunctions::ClearAllAnimations();
 				AI::TASK_START_SCENARIO_IN_PLACE(PlayerPedID, "WORLD_HUMAN_COP_IDLES", 0, true);
 			}
-			if (Cheat::Option("Drinking", "")) {
+			if (Cheat::Option("Drinking", "")) 
+			{
 				Cheat::GameFunctions::ClearAllAnimations();
 				AI::TASK_START_SCENARIO_IN_PLACE(PlayerPedID, "WORLD_HUMAN_DRINKING", 0, true);
 			}
-			if (Cheat::Option("Golf Player", "")) {
+			if (Cheat::Option("Golf Player", "")) 
+			{
 				Cheat::GameFunctions::ClearAllAnimations();
 				AI::TASK_START_SCENARIO_IN_PLACE(PlayerPedID, "WORLD_HUMAN_GOLF_PLAYER", 0, true);
 			}
-			if (Cheat::Option("Welding", "")) {
+			if (Cheat::Option("Welding", "")) 
+			{
 				Cheat::GameFunctions::ClearAllAnimations();
 				AI::TASK_START_SCENARIO_IN_PLACE(PlayerPedID, "WORLD_HUMAN_WELDING", 0, true);
 			}
-			if (Cheat::Option("Smoking Pot", "")) {
+			if (Cheat::Option("Smoking Pot", "")) 
+			{
 				Cheat::GameFunctions::ClearAllAnimations();
 				AI::TASK_START_SCENARIO_IN_PLACE(PlayerPedID, "WORLD_HUMAN_SMOKING_POT", 0, true);
 			}
-			if (Cheat::Option("Hammering", "")) {
+			if (Cheat::Option("Hammering", "")) 
+			{
 				Cheat::GameFunctions::ClearAllAnimations();
 				AI::TASK_START_SCENARIO_IN_PLACE(PlayerPedID, "WORLD_HUMAN_HAMMERING", 0, true);
 			}
-			if (Cheat::Option("Tennis", "")) {
+			if (Cheat::Option("Tennis", "")) 
+			{
 				Cheat::GameFunctions::ClearAllAnimations();
 				AI::TASK_START_SCENARIO_IN_PLACE(PlayerPedID, "WORLD_HUMAN_TENNIS_PLAYER", 0, true);
 			}
-			if (Cheat::Option("Drilling", "")) {
+			if (Cheat::Option("Drilling", "")) 
+			{
 				Cheat::GameFunctions::ClearAllAnimations();
 				AI::TASK_START_SCENARIO_IN_PLACE(PlayerPedID, "WORLD_HUMAN_CONST_DRILL", 0, true);
-			}
-		}
-		break; 
-		case animations:
-		{
-			Cheat::Title("Animations");
-			if (Cheat::Option("Stop Animation", "Stop any active animations")) { Cheat::GameFunctions::ClearAllAnimations(); }
-			if (Cheat::Option("Sex Receiver", "")) {
-				Cheat::GameFunctions::ClearAllAnimations();
-				Cheat::GameFunctions::DoLocalPedAnimation("rcmpaparazzo_2", "shag_loop_poppy"); 
-			}
-			if (Cheat::Option("Sex Giver", "")) {
-				Cheat::GameFunctions::ClearAllAnimations();
-				Cheat::GameFunctions::DoLocalPedAnimation("rcmpaparazzo_2", "shag_loop_a"); 
-			}
-			if (Cheat::Option("Stripper Dance", "")) {
-				Cheat::GameFunctions::ClearAllAnimations();
-				Cheat::GameFunctions::DoLocalPedAnimation("mini@strip_club@private_dance@part1", "priv_dance_p1"); 
-			}
-			if (Cheat::Option("Pole Dance", "")) {
-				Cheat::GameFunctions::ClearAllAnimations();
-				Cheat::GameFunctions::DoLocalPedAnimation("mini@strip_club@pole_dance@pole_dance1", "pd_dance_01"); 
-			}
-			if (Cheat::Option("Push Ups", "")) {
-				Cheat::GameFunctions::ClearAllAnimations();
-				Cheat::GameFunctions::DoLocalPedAnimation("amb@world_human_push_ups@male@base", "base"); 
-			}
-			if (Cheat::Option("Sit Ups", "")) {
-				Cheat::GameFunctions::ClearAllAnimations();
-				Cheat::GameFunctions::DoLocalPedAnimation("amb@world_human_sit_ups@male@base", "base"); 
-			}
-			if (Cheat::Option("Celebrate", "")) { 
-				Cheat::GameFunctions::ClearAllAnimations();
-				Cheat::GameFunctions::DoLocalPedAnimation("rcmfanatic1celebrate", "celebrate"); 
-			}
-			if (Cheat::Option("Electrocution", "")) {
-				Cheat::GameFunctions::ClearAllAnimations();
-				Cheat::GameFunctions::DoLocalPedAnimation("ragdoll@human", "electrocute"); 
-			}
-			if (Cheat::Option("Suicide", "")) {
-				Cheat::GameFunctions::ClearAllAnimations();
-				Cheat::GameFunctions::DoLocalPedAnimation("mp_suicide", "pistol"); 
-			}
-			if (Cheat::Option("Showering", "")) {
-				Cheat::GameFunctions::ClearAllAnimations();
-				Cheat::GameFunctions::DoLocalPedAnimation("mp_safehouseshower@male@", "male_shower_idle_b"); 
 			}
 		}
 		break; 
@@ -4224,6 +4253,10 @@ void Cheat::Main()
 			Cheat::Title("Settings");
 			Cheat::MenuOption("GUI Settings >", guisettings);
 			Cheat::MenuOption("Cheat Settings >", menusettingsmenu);
+			if (Cheat::Option("Visit Github Page", ""))
+			{
+				system(xorstr_("start https://github.com/HowYouDoinMate/GrandTheftAutoV-Cheat"));
+			}
 		}
 		break;
 		case menusettingsmenu:

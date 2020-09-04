@@ -4257,6 +4257,10 @@ void Cheat::Main()
 			{
 				system(xorstr_("start https://github.com/HowYouDoinMate/GrandTheftAutoV-Cheat"));
 			}
+			if (Cheat::Option("Dump Log Data To File", ""))
+			{
+				Cheat::LogFunctions::DumpLogMessagesToFile();
+			}
 		}
 		break;
 		case menusettingsmenu:

@@ -320,7 +320,7 @@ namespace Cheat
 		std::string GetOptionValueFromConfig(std::string OptionName);
 		void ShowItemSavingDisabledMessage(std::string OptionName);
 		bool IsSaveItemHotKeyPressed();
-		char* CombineTwoStrings(char* string1, char* string2);
+		char* CombineTwoChars(char* string1, char* string2);
 		bool DoesFileExists(const std::string& fileName);
 		bool DoesDirectoryExists(const std::string& dirName_in);
 		void CreateNewDirectory(std::string Path);

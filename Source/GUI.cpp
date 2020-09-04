@@ -77,19 +77,19 @@ void Cheat::GUI::Drawing::Text(const char* text, RGBAF rgbaf, VECTOR2 position, 
 	UI::SET_TEXT_FONT(rgbaf.f);
 	UI::SET_TEXT_SCALE(size.w, size.h);
 	UI::BEGIN_TEXT_COMMAND_DISPLAY_TEXT("STRING");
-	UI::ADD_TEXT_COMPONENT_SUBSTRING_PLAYER_NAME((char*)text);
+	UI::ADD_TEXT_COMPONENT_SUBSTRING_PLAYER_NAME(CheatFunctions::StringToChar(text));
 	UI::END_TEXT_COMMAND_DISPLAY_TEXT(position.x, position.y);
 }
 
 void Cheat::GUI::Drawing::Spriter(std::string Streamedtexture, std::string textureName, float x, float y, float width, float height, float rotation, int r, int g, int b, int a)
 {
-	if (!GRAPHICS::HAS_STREAMED_TEXTURE_DICT_LOADED((char*)Streamedtexture.c_str()))
+	if (!GRAPHICS::HAS_STREAMED_TEXTURE_DICT_LOADED(CheatFunctions::StringToChar(Streamedtexture)))
 	{
-		GRAPHICS::REQUEST_STREAMED_TEXTURE_DICT((char*)Streamedtexture.c_str(), false);
+		GRAPHICS::REQUEST_STREAMED_TEXTURE_DICT(CheatFunctions::StringToChar(Streamedtexture.c_str()), false);
 	}
 	else
 	{
-		GRAPHICS::DRAW_SPRITE((char*)Streamedtexture.c_str(), (char*)textureName.c_str(), x, y, width, height, rotation, r, g, b, a);
+		GRAPHICS::DRAW_SPRITE(CheatFunctions::StringToChar(Streamedtexture), CheatFunctions::StringToChar(textureName), x, y, width, height, rotation, r, g, b, a);
 	}
 }
 
@@ -139,9 +139,9 @@ void Cheat::Title(const char * title)
 	if (Cheat::CheatFeatures::CursorGUINavigationEnabled) { CursorNavigationString = xorstr_("Press ") + Cheat::CheatFunctions::VirtualKeyCodeToString(Cheat::GUI::GUINavigationKey) + xorstr_(" to disable cursor"); }
 	else { CursorNavigationString = xorstr_("Press ") + Cheat::CheatFunctions::VirtualKeyCodeToString(Cheat::GUI::GUINavigationKey) + xorstr_(" to enable cursor"); }
 	Cheat::GameFunctions::InstructionalKeysInit();
-	Cheat::GameFunctions::InstructionsAdd((char*)CloseGUIString.c_str(), 80);
-	Cheat::GameFunctions::InstructionsAdd((char*)CursorNavigationString.c_str(), 80);
-	Cheat::GameFunctions::InstructionsAdd((char*)SaveOptionKeyString.c_str(), 80);
+	Cheat::GameFunctions::InstructionsAdd(CheatFunctions::StringToChar(CloseGUIString), 80);
+	Cheat::GameFunctions::InstructionsAdd(CheatFunctions::StringToChar(CursorNavigationString), 80);
+	Cheat::GameFunctions::InstructionsAdd(CheatFunctions::StringToChar(SaveOptionKeyString), 80);
 	Cheat::GameFunctions::InstructionsAdd(xorstr_("Back"), 136);
 	Cheat::GameFunctions::InstructionsAdd(xorstr_("Up/Down"), 10);
 	Cheat::GameFunctions::InstructionsAdd(xorstr_("Change Value"), 46);
@@ -246,8 +246,8 @@ bool Cheat::VehicleOption(const char* option, std::string ModelName)
 		{
 			if (Cheat::GameArrays::VehicleModelPictures[i].PreviewName == ModelName)
 			{ 
-				VehiclePreviewDictName	= (char*)Cheat::GameArrays::VehicleModelPictures[i].DictName.c_str();
-				VehiclePreviewName		= (char*)Cheat::GameArrays::VehicleModelPictures[i].PreviewName.c_str();
+				VehiclePreviewDictName	= CheatFunctions::StringToChar(Cheat::GameArrays::VehicleModelPictures[i].DictName);
+				VehiclePreviewName		= CheatFunctions::StringToChar(Cheat::GameArrays::VehicleModelPictures[i].PreviewName);
 			}
 		}
 			
@@ -257,11 +257,11 @@ bool Cheat::VehicleOption(const char* option, std::string ModelName)
 			 std::ostringstream ModelMaxSpeed;
 			 if (Cheat::CheatFeatures::UseKMH)
 			 {
-				 ModelMaxSpeed << xorstr_("Max Speed: ") << Cheat::GameFunctions::MSToKMH(VEHICLE::GET_VEHICLE_MODEL_ESTIMATED_MAX_SPEED(GAMEPLAY::GET_HASH_KEY((char*)ModelName.c_str()))) << xorstr_(" KM/H"); 
+				 ModelMaxSpeed << xorstr_("Max Speed: ") << Cheat::GameFunctions::MSToKMH(VEHICLE::GET_VEHICLE_MODEL_ESTIMATED_MAX_SPEED(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(ModelName)))) << xorstr_(" KM/H");
 			 }
 			 else
 			 {
-				 ModelMaxSpeed << xorstr_("Max Speed: ") << Cheat::GameFunctions::MSToMPH(VEHICLE::GET_VEHICLE_MODEL_ESTIMATED_MAX_SPEED(GAMEPLAY::GET_HASH_KEY((char*)ModelName.c_str()))) << xorstr_(" MP/H");
+				 ModelMaxSpeed << xorstr_("Max Speed: ") << Cheat::GameFunctions::MSToMPH(VEHICLE::GET_VEHICLE_MODEL_ESTIMATED_MAX_SPEED(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(ModelName)))) << xorstr_(" MP/H");
 			 }
 
 			 if (Cheat::GUI::guiX < 0.71f) 
@@ -562,16 +562,12 @@ bool Cheat::Int(const char * option, int & _int, int min, int max, int step, boo
 		if (GUI::selectPressed && !DisableControl)
 		{
 			int KeyBoardInput = Cheat::GameFunctions::DisplayKeyboardAndReturnInputInteger(CheatFunctions::ReturnNumberOfDigitsInValue(max));
-			if (KeyBoardInput >= min && KeyBoardInput <= max)
-			{
-				_int = KeyBoardInput;
-			}
+			if (KeyBoardInput >= min && KeyBoardInput <= max) { _int = KeyBoardInput; }
+			return true;
 		}
-
-		return true;
+		if (GUI::leftPressed && !DisableControl) { return true; }
+		else if (GUI::rightPressed && !DisableControl) { return true; }
 	}
-	else if (GUI::optionCount == GUI::currentOption && GUI::leftPressed && !DisableControl) return true;
-	else if (GUI::optionCount == GUI::currentOption && GUI::rightPressed && !DisableControl) return true;
 	return false;
 }
 

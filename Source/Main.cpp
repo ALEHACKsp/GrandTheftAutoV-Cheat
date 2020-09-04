@@ -1682,9 +1682,9 @@ void Cheat::Main()
 			Cheat::Break("Ped List", true);
 			for (auto const& i : Cheat::GameArrays::PedModels)
 			{
-				if (Cheat::Option((char*)i.c_str(), ""))
+				if (Cheat::Option(CheatFunctions::StringToChar(i), ""))
 				{
-					GameFunctions::ChangePedModelLocalPlayer(GAMEPLAY::GET_HASH_KEY((char*)i.c_str()));
+					GameFunctions::ChangePedModelLocalPlayer(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(i)));
 				}
 			}
 		}
@@ -1747,9 +1747,9 @@ void Cheat::Main()
 			Cheat::Title("2020 Summer Special");
 			for (auto const& i : Cheat::GameArrays::SummerSpecialModels)
 			{
-				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY((char*)i.c_str()))), i))
+				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(i)))), i))
 				{
-					Cheat::GameFunctions::SpawnVehicle((char*)i.c_str());
+					Cheat::GameFunctions::SpawnVehicle((CheatFunctions::StringToChar(i)));
 				}
 			}
 		}
@@ -1759,9 +1759,9 @@ void Cheat::Main()
 			Cheat::Title("Cunning Stunts");
 			for (auto const& i : Cheat::GameArrays::CunningStuntsDLCModels)
 			{
-				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY((char*)i.c_str()))), i))
+				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(i)))), i))
 				{
-					Cheat::GameFunctions::SpawnVehicle((char*)i.c_str());
+					Cheat::GameFunctions::SpawnVehicle((CheatFunctions::StringToChar(i)));
 				}
 			}
 		}
@@ -1771,9 +1771,9 @@ void Cheat::Main()
 			Cheat::Title("The Diamond Casino Heist");
 			for (auto const& i : Cheat::GameArrays::DiamondCasinoHeistDLCModels)
 			{
-				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY((char*)i.c_str()))), i))
+				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(i)))), i))
 				{
-					Cheat::GameFunctions::SpawnVehicle((char*)i.c_str());
+					Cheat::GameFunctions::SpawnVehicle((CheatFunctions::StringToChar(i)));
 				}
 			}
 		}
@@ -1783,9 +1783,9 @@ void Cheat::Main()
 			Cheat::Title("The Diamond Casino & Resort");
 			for (auto const& i : Cheat::GameArrays::CasinoDLCModels)
 			{
-				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY((char*)i.c_str()))), i))
+				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(i)))), i))
 				{
-					Cheat::GameFunctions::SpawnVehicle((char*)i.c_str());
+					Cheat::GameFunctions::SpawnVehicle((CheatFunctions::StringToChar(i)));
 				}
 			}
 		}
@@ -1795,9 +1795,9 @@ void Cheat::Main()
 			Cheat::Title("Arena War");
 			for (auto const& i : Cheat::GameArrays::ArenaWarModels)
 			{
-				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY((char*)i.c_str()))), i))
+				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(i)))), i))
 				{
-					Cheat::GameFunctions::SpawnVehicle((char*)i.c_str());
+					Cheat::GameFunctions::SpawnVehicle((CheatFunctions::StringToChar(i)));
 				}
 			}
 		}
@@ -1807,9 +1807,9 @@ void Cheat::Main()
 			Cheat::Title("Smuggler's Run");
 			for (auto const& i : Cheat::GameArrays::SmugglersRunModels)
 			{
-				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY((char*)i.c_str()))), i))
+				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(i)))), i))
 				{
-					Cheat::GameFunctions::SpawnVehicle((char*)i.c_str());
+					Cheat::GameFunctions::SpawnVehicle((CheatFunctions::StringToChar(i)));
 				}
 			}
 		}
@@ -1819,9 +1819,9 @@ void Cheat::Main()
 			Cheat::Title("Super");
 			for (auto const& i : Cheat::GameArrays::SuperModels)
 			{
-				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY((char*)i.c_str()))), i))
+				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(i)))), i))
 				{
-					Cheat::GameFunctions::SpawnVehicle((char*)i.c_str());
+					Cheat::GameFunctions::SpawnVehicle((CheatFunctions::StringToChar(i)));
 				}
 			}
 		}
@@ -1831,9 +1831,9 @@ void Cheat::Main()
 			Cheat::Title("Sports");
 			for (auto const& i : Cheat::GameArrays::SportModels)
 			{
-				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY((char*)i.c_str()))), i))
+				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(i)))), i))
 				{
-					Cheat::GameFunctions::SpawnVehicle((char*)i.c_str());
+					Cheat::GameFunctions::SpawnVehicle((CheatFunctions::StringToChar(i)));
 				}
 			}
 		}
@@ -1843,9 +1843,9 @@ void Cheat::Main()
 			Cheat::Title("Sports Classic");
 			for (auto const& i : Cheat::GameArrays::SportClassicModels)
 			{
-				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY((char*)i.c_str()))), i))
+				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(i)))), i))
 				{
-					Cheat::GameFunctions::SpawnVehicle((char*)i.c_str());
+					Cheat::GameFunctions::SpawnVehicle((CheatFunctions::StringToChar(i)));
 				}
 			}
 
@@ -1856,9 +1856,9 @@ void Cheat::Main()
 			Cheat::Title("Offroad");
 			for (auto const& i : Cheat::GameArrays::OffRoadModels)
 			{
-				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY((char*)i.c_str()))), i))
+				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(i)))), i))
 				{
-					Cheat::GameFunctions::SpawnVehicle((char*)i.c_str());
+					Cheat::GameFunctions::SpawnVehicle((CheatFunctions::StringToChar(i)));
 				}
 			}
 
@@ -1869,9 +1869,9 @@ void Cheat::Main()
 			Cheat::Title("Sedans");
 			for (auto const& i : Cheat::GameArrays::SedanModels)
 			{
-				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY((char*)i.c_str()))), i))
+				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(i)))), i))
 				{
-					Cheat::GameFunctions::SpawnVehicle((char*)i.c_str());
+					Cheat::GameFunctions::SpawnVehicle((CheatFunctions::StringToChar(i)));
 				}
 			}
 
@@ -1882,9 +1882,9 @@ void Cheat::Main()
 			Cheat::Title("Coupes");
 			for (auto const& i : Cheat::GameArrays::CoupesModels)
 			{
-				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY((char*)i.c_str()))), i))
+				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(i)))), i))
 				{
-					Cheat::GameFunctions::SpawnVehicle((char*)i.c_str());
+					Cheat::GameFunctions::SpawnVehicle((CheatFunctions::StringToChar(i)));
 				}
 			}
 		}
@@ -1894,9 +1894,9 @@ void Cheat::Main()
 			Cheat::Title("Muscle");
 			for (auto const& i : Cheat::GameArrays::MuscleModels)
 			{
-				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY((char*)i.c_str()))), i))
+				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(i)))), i))
 				{
-					Cheat::GameFunctions::SpawnVehicle((char*)i.c_str());
+					Cheat::GameFunctions::SpawnVehicle((CheatFunctions::StringToChar(i)));
 				}
 			}
 		}
@@ -1906,9 +1906,9 @@ void Cheat::Main()
 			Cheat::Title("Boats");
 			for (auto const& i : Cheat::GameArrays::BoatModels)
 			{
-				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY((char*)i.c_str()))), i))
+				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(i)))), i))
 				{
-					Cheat::GameFunctions::SpawnVehicle((char*)i.c_str());
+					Cheat::GameFunctions::SpawnVehicle((CheatFunctions::StringToChar(i)));
 				}
 			}
 		}
@@ -1918,9 +1918,9 @@ void Cheat::Main()
 			Cheat::Title("Commercial");
 			for (auto const& i : Cheat::GameArrays::CommercialModels)
 			{
-				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY((char*)i.c_str()))), i))
+				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(i)))), i))
 				{
-					Cheat::GameFunctions::SpawnVehicle((char*)i.c_str());
+					Cheat::GameFunctions::SpawnVehicle((CheatFunctions::StringToChar(i)));
 				}
 			}
 		}
@@ -1930,9 +1930,9 @@ void Cheat::Main()
 			Cheat::Title("Compacts");
 			for (auto const& i : Cheat::GameArrays::CompactsModels)
 			{
-				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY((char*)i.c_str()))), i))
+				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(i)))), i))
 				{
-					Cheat::GameFunctions::SpawnVehicle((char*)i.c_str());
+					Cheat::GameFunctions::SpawnVehicle((CheatFunctions::StringToChar(i)));
 				}
 			}
 		}
@@ -1942,9 +1942,9 @@ void Cheat::Main()
 			Cheat::Title("Cycles");
 			for (auto const& i : Cheat::GameArrays::CycleModels)
 			{
-				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY((char*)i.c_str()))), i))
+				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(i)))), i))
 				{
-					Cheat::GameFunctions::SpawnVehicle((char*)i.c_str());
+					Cheat::GameFunctions::SpawnVehicle((CheatFunctions::StringToChar(i)));
 				}
 			}
 		}
@@ -1954,9 +1954,9 @@ void Cheat::Main()
 			Cheat::Title("Emergency");
 			for (auto const& i : Cheat::GameArrays::EmergencyModels)
 			{
-				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY((char*)i.c_str()))), i))
+				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(i)))), i))
 				{
-					Cheat::GameFunctions::SpawnVehicle((char*)i.c_str());
+					Cheat::GameFunctions::SpawnVehicle((CheatFunctions::StringToChar(i)));
 				}
 			}
 		}
@@ -1966,9 +1966,9 @@ void Cheat::Main()
 			Cheat::Title("Helicopters");
 			for (auto const& i : Cheat::GameArrays::HelicopterModels)
 			{
-				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY((char*)i.c_str()))), i))
+				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(i)))), i))
 				{
-					Cheat::GameFunctions::SpawnVehicle((char*)i.c_str());
+					Cheat::GameFunctions::SpawnVehicle((CheatFunctions::StringToChar(i)));
 				}
 			}
 		}
@@ -1978,9 +1978,9 @@ void Cheat::Main()
 			Cheat::Title("Industrial");
 			for (auto const& i : Cheat::GameArrays::IndustrialModels)
 			{
-				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY((char*)i.c_str()))), i))
+				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(i)))), i))
 				{
-					Cheat::GameFunctions::SpawnVehicle((char*)i.c_str());
+					Cheat::GameFunctions::SpawnVehicle((CheatFunctions::StringToChar(i)));
 				}
 			}
 		}
@@ -1990,9 +1990,9 @@ void Cheat::Main()
 			Cheat::Title("Military");
 			for (auto const& i : Cheat::GameArrays::MilitaryModels)
 			{
-				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY((char*)i.c_str()))), i))
+				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(i)))), i))
 				{
-					Cheat::GameFunctions::SpawnVehicle((char*)i.c_str());
+					Cheat::GameFunctions::SpawnVehicle((CheatFunctions::StringToChar(i)));
 				}
 			}
 		}
@@ -2002,9 +2002,9 @@ void Cheat::Main()
 			Cheat::Title("Motorcycles");
 			for (auto const& i : Cheat::GameArrays::MotorcycleModels)
 			{
-				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY((char*)i.c_str()))), i))
+				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(i)))), i))
 				{
-					Cheat::GameFunctions::SpawnVehicle((char*)i.c_str());
+					Cheat::GameFunctions::SpawnVehicle((CheatFunctions::StringToChar(i)));
 				}
 			}
 		}
@@ -2014,9 +2014,9 @@ void Cheat::Main()
 			Cheat::Title("Planes");
 			for (auto const& i : Cheat::GameArrays::PlaneModels)
 			{
-				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY((char*)i.c_str()))), i))
+				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(i)))), i))
 				{
-					Cheat::GameFunctions::SpawnVehicle((char*)i.c_str());
+					Cheat::GameFunctions::SpawnVehicle((CheatFunctions::StringToChar(i)));
 				}
 			}
 		}
@@ -2026,9 +2026,9 @@ void Cheat::Main()
 			Cheat::Title("Service");
 			for (auto const& i : Cheat::GameArrays::ServiceModels)
 			{
-				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY((char*)i.c_str()))), i))
+				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(i)))), i))
 				{
-					Cheat::GameFunctions::SpawnVehicle((char*)i.c_str());
+					Cheat::GameFunctions::SpawnVehicle((CheatFunctions::StringToChar(i)));
 				}
 			}
 		}
@@ -2038,9 +2038,9 @@ void Cheat::Main()
 			Cheat::Title("SUV");
 			for (auto const& i : Cheat::GameArrays::SUVModels)
 			{
-				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY((char*)i.c_str()))), i))
+				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(i)))), i))
 				{
-					Cheat::GameFunctions::SpawnVehicle((char*)i.c_str());
+					Cheat::GameFunctions::SpawnVehicle((CheatFunctions::StringToChar(i)));
 				}
 			}
 		}
@@ -2050,9 +2050,9 @@ void Cheat::Main()
 			Cheat::Title("Trailer");
 			for (auto const& i : Cheat::GameArrays::TrailerModels)
 			{
-				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY((char*)i.c_str()))), i))
+				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(i)))), i))
 				{
-					Cheat::GameFunctions::SpawnVehicle((char*)i.c_str());
+					Cheat::GameFunctions::SpawnVehicle((CheatFunctions::StringToChar(i)));
 				}
 			}
 		}
@@ -2062,9 +2062,9 @@ void Cheat::Main()
 			Cheat::Title("Trains");
 			for (auto const& i : Cheat::GameArrays::TrainModels)
 			{
-				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY((char*)i.c_str()))), i))
+				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(i)))), i))
 				{
-					Cheat::GameFunctions::SpawnVehicle((char*)i.c_str());
+					Cheat::GameFunctions::SpawnVehicle((CheatFunctions::StringToChar(i)));
 				}
 			}
 		}
@@ -2074,9 +2074,9 @@ void Cheat::Main()
 			Cheat::Title("Utility");
 			for (auto const& i : Cheat::GameArrays::UtilityModels)
 			{
-				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY((char*)i.c_str()))), i))
+				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(i)))), i))
 				{
-					Cheat::GameFunctions::SpawnVehicle((char*)i.c_str());
+					Cheat::GameFunctions::SpawnVehicle((CheatFunctions::StringToChar(i)));
 				}
 			}
 		}
@@ -2086,9 +2086,9 @@ void Cheat::Main()
 			Cheat::Title("Vans");
 			for (auto const& i : Cheat::GameArrays::VanModels)
 			{
-				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY((char*)i.c_str()))), i))
+				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(i)))), i))
 				{
-					Cheat::GameFunctions::SpawnVehicle((char*)i.c_str());
+					Cheat::GameFunctions::SpawnVehicle((CheatFunctions::StringToChar(i)));
 				}
 			}
 		}
@@ -2098,9 +2098,9 @@ void Cheat::Main()
 			Cheat::Title("SSASSS");
 			for (auto const& i : Cheat::GameArrays::SSASSSModels)
 			{
-				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY((char*)i.c_str()))), i))
+				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(i)))), i))
 				{
-					Cheat::GameFunctions::SpawnVehicle((char*)i.c_str());
+					Cheat::GameFunctions::SpawnVehicle((CheatFunctions::StringToChar(i)));
 				}
 			}
 		}
@@ -2110,9 +2110,9 @@ void Cheat::Main()
 			Cheat::Title("The Doomsday Heist");
 			for (auto const& i : Cheat::GameArrays::DoomsdayModels)
 			{
-				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY((char*)i.c_str()))), i))
+				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(i)))), i))
 				{
-					Cheat::GameFunctions::SpawnVehicle((char*)i.c_str());
+					Cheat::GameFunctions::SpawnVehicle((CheatFunctions::StringToChar(i)));
 				}
 			}
 		}
@@ -2122,9 +2122,9 @@ void Cheat::Main()
 			Cheat::Title("Gunrunning");
 			for (auto const& i : Cheat::GameArrays::GunrunningModels)
 			{
-				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY((char*)i.c_str()))), i))
+				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(i)))), i))
 				{
-					Cheat::GameFunctions::SpawnVehicle((char*)i.c_str());
+					Cheat::GameFunctions::SpawnVehicle((CheatFunctions::StringToChar(i)));
 				}
 			}
 		}
@@ -2134,9 +2134,9 @@ void Cheat::Main()
 			Cheat::Title("After Hours");
 			for (auto const& i : Cheat::GameArrays::AfterHoursModels)
 			{
-				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY((char*)i.c_str()))), i))
+				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(i)))), i))
 				{
-					Cheat::GameFunctions::SpawnVehicle((char*)i.c_str());
+					Cheat::GameFunctions::SpawnVehicle((CheatFunctions::StringToChar(i)));
 				}
 			}
 		}
@@ -2532,7 +2532,7 @@ void Cheat::Main()
 		case vehicleweaponsmenu:
 		{
 			Cheat::Title("Vehicle Weapons");
-			Cheat::Toggle("Toggle", Cheat::CheatFeatures::VehicleWeaponsBool, "Press horn button to use");
+			Cheat::Toggle("Toggle Vehicle Weapons", Cheat::CheatFeatures::VehicleWeaponsBool, "Press horn button to use");
 			Cheat::Toggle("Show Lines", Cheat::CheatFeatures::VehicleWeapons_DrawLaser, "Show lines in front of vehicle");
 			if (Cheat::CheatFeatures::VehicleWeapons_TankRounds) {
 				Cheat::Break("Current: ~c~Tank Rounds", false);
@@ -3402,10 +3402,10 @@ void Cheat::Main()
 		case vehiclegunmenu:
 		{
 			Cheat::Title("Vehicle Gun");
-			Cheat::Toggle("Toggle", Cheat::CheatFeatures::VehicleGunBool, "Toggle Vehicle Gun");
+			Cheat::Toggle("Toggle Vehicle Gun", Cheat::CheatFeatures::VehicleGunBool, "Toggle Vehicle Gun");
 			if (Cheat::CheatFeatures::VehicleGun_VehicleNameChar != NULL)
 			{
-				char* CurrentVehicleGun = Cheat::CheatFunctions::CombineTwoStrings("Current: ~t~", Cheat::CheatFeatures::VehicleGun_VehicleNameChar);
+				char* CurrentVehicleGun = Cheat::CheatFunctions::CombineTwoChars("Current: ~t~", Cheat::CheatFeatures::VehicleGun_VehicleNameChar);
 				Cheat::Break(CurrentVehicleGun, false);
 			}
 			else
@@ -3440,7 +3440,7 @@ void Cheat::Main()
 		case custombulletsmenu: 
 		{
 			Cheat::Title("Custom Bullets");
-			Cheat::Toggle("Toggle", Cheat::CheatFeatures::CustomWeaponBulletsBool, "");
+			Cheat::Toggle("Toggle Custom Bullets", Cheat::CheatFeatures::CustomWeaponBulletsBool, "");
 			Cheat::Toggle("Valkyrie Bullets", Cheat::CheatFeatures::CustomWeaponBullets_ValkyrieGun, "");
 			Cheat::Toggle("Tank Bullets", Cheat::CheatFeatures::CustomWeaponBullets_TankBullets, "");
 			Cheat::Toggle("RPG Bullets", Cheat::CheatFeatures::CustomWeaponBullets_RpgBullets, "");
@@ -3450,7 +3450,7 @@ void Cheat::Main()
 		case aimbotsettingsmenu:
 		{
 			Cheat::Title("Triggerbot");
-			Cheat::Toggle("Toggle", Cheat::CheatFeatures::TriggerBotBool, "Toggle Triggerbot");
+			Cheat::Toggle("Toggle Triggerbot", Cheat::CheatFeatures::TriggerBotBool, "Toggle Triggerbot");
 			Cheat::Toggle("Shoot NPC's", Cheat::CheatFeatures::TriggerBot_ShootNPCBool, "Triggerbot shoots at NPC's");
 			Cheat::Toggle("Shoot Players", Cheat::CheatFeatures::TriggerBot_ShootPlayersBool, "Triggerbot shoots at players");
 		}
@@ -3762,7 +3762,7 @@ void Cheat::Main()
 						if (Cheat::GameFunctions::IsEntityInInterior(PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(i))) { PlayernameString.append(" ~p~[Interior]"); }
 						if (PlayerID == i) { PlayernameString.append(" ~g~[You]"); }
 					}
-					Cheat::MenuOptionPlayerList((char*)PlayernameString.c_str(), SelectedPlayerMenu, i) ? Cheat::CheatFeatures::selectedPlayer = i : NULL;
+					Cheat::MenuOptionPlayerList(CheatFunctions::StringToChar(PlayernameString), SelectedPlayerMenu, i) ? Cheat::CheatFeatures::selectedPlayer = i : NULL;
 					if (Cheat::GUI::currentOption == Cheat::GUI::optionCount) 
 					{
 						Cheat::GameFunctions::LoadPlayerInformation(PLAYER::GET_PLAYER_NAME(i), i); 
@@ -4026,7 +4026,7 @@ void Cheat::Main()
 				};
 				for (auto const& i : ObjectsToRemoveArray) 
 				{ 
-					Cheat::GameFunctions::DetachObjectFromPed(PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(Cheat::CheatFeatures::selectedPlayer), (char*)i.c_str());
+					Cheat::GameFunctions::DetachObjectFromPed(PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(Cheat::CheatFeatures::selectedPlayer), CheatFunctions::StringToChar(i));
 				}			
 				Cheat::GameFunctions::MinimapNotification("All Objects Detached From Player");
 			}
@@ -4416,10 +4416,10 @@ void Cheat::Main()
 			Cheat::MenuOption("Theme Files >", ThemeFilesMenu);
 			if (!Cheat::GUI::CurrentTheme.empty())
 			{
-				Cheat::Break(Cheat::CheatFunctions::CombineTwoStrings("Active Theme: ~c~", (char*)Cheat::GUI::CurrentTheme.c_str()), false);
+				Cheat::Break(Cheat::CheatFunctions::CombineTwoChars("Active Theme: ~c~", CheatFunctions::StringToChar(Cheat::GUI::CurrentTheme)), false);
 				if (Cheat::Option("Save To Current Theme", ""))
 				{
-					Cheat::SaveTheme((char*)Cheat::GUI::CurrentTheme.c_str());
+					Cheat::SaveTheme(CheatFunctions::StringToChar(Cheat::GUI::CurrentTheme));
 				}
 				if (Cheat::Option("Delete Current Theme", "Delete active theme"))
 				{
@@ -4447,11 +4447,11 @@ void Cheat::Main()
 			{
 				if (!Cheat::GUI::ThemeFilesVector.empty())
 				{
-					if (Cheat::Option((char*)i.c_str(), ""))
+					if (Cheat::Option(CheatFunctions::StringToChar(i), ""))
 					{
 						std::string ThemeFilePathMenuList = Cheat::CheatFunctions::ReturnCheatModuleDirectoryPath() + (std::string)xorstr_("\\gtav\\Themes\\") + i + xorstr_(".ini");
 						if (!Cheat::CheatFunctions::DoesFileExists(ThemeFilePathMenuList)) { Cheat::GameFunctions::MinimapNotification("~r~Unable to locate theme file"); break; }
-						Cheat::LoadTheme((char*)i.c_str(), false);
+						Cheat::LoadTheme(CheatFunctions::StringToChar(i), false);
 					}
 				}
 			}

@@ -322,7 +322,7 @@ void setPat(std::string	name, char*	pat, char* mask, T** out, bool rel, int offs
 		if (ptr == nullptr)
 		{
 			std::string Message = xorstr_("Failed to find '") + name + xorstr_("' pattern");
-			Cheat::LogFunctions::Error((char*)Message.c_str());
+			Cheat::LogFunctions::Error(Cheat::CheatFunctions::StringToChar(Message));
 			std::exit(EXIT_SUCCESS);
 		}
 
@@ -348,7 +348,7 @@ void setFn(std::string name, char* pat, char* mask, T* out, int skip = 0)
 	if (ptr == nullptr)
 	{
 		std::string Message = xorstr_("Failed to find '") + name + xorstr_("' pattern");
-		Cheat::LogFunctions::Error((char*)Message.c_str());
+		Cheat::LogFunctions::Error(Cheat::CheatFunctions::StringToChar(Message));
 		std::exit(EXIT_SUCCESS);
 	}
 

@@ -6,12 +6,12 @@ void Cheat::CheatFunctions::CreateNewDirectory(std::string Path)
 	if (!std::filesystem::create_directory(Path))
 	{
 		std::string String = xorstr_("Failed to create directory '") + Path + xorstr_("' Error: ") + Cheat::CheatFunctions::GetLastErrorAsString();
-		Cheat::LogFunctions::DebugMessage((char*)String.c_str());
+		Cheat::LogFunctions::DebugMessage(CheatFunctions::StringToChar(String));
 	}
 	else
 	{
 		std::string String = xorstr_("Created directory '") + Path + xorstr_("'");
-		Cheat::LogFunctions::DebugMessage((char*)String.c_str());
+		Cheat::LogFunctions::DebugMessage((CheatFunctions::StringToChar(String)));
 	}
 }
 
@@ -57,7 +57,7 @@ const std::string Cheat::CheatFunctions::ReturnConfigFilePath()
 
 char str[200];
 char str2[128];
-char* Cheat::CheatFunctions::CombineTwoStrings(char* string1, char* string2)
+char* Cheat::CheatFunctions::CombineTwoChars(char* string1, char* string2)
 {
 	strcpy_s(str2, "");
 	sprintf_s(str2, xorstr_("%s %s"), string1, string2);
@@ -287,7 +287,7 @@ bool Cheat::CheatFunctions::ReturnPressedKey(int& PressedKey)
 void Cheat::CheatFunctions::SaveOptionToConfig(std::string OptionName, std::string OptionValue)
 {
 	std::string LogMessage = xorstr_("'") + OptionName + xorstr_("' saved");
-	Cheat::GameFunctions::AdvancedMinimapNotification((char*)LogMessage.c_str(), xorstr_("Textures"), xorstr_("AdvancedNotificationImage"), false, 4, xorstr_("Config"), "", 0.5f, "");
+	Cheat::GameFunctions::AdvancedMinimapNotification(CheatFunctions::StringToChar(LogMessage), xorstr_("Textures"), xorstr_("AdvancedNotificationImage"), false, 4, xorstr_("Config"), "", 0.5f, "");
 	WriteStringToIni(OptionValue, ReturnConfigFilePath(), xorstr_("SETTINGS"), OptionName);
 }
 
@@ -299,7 +299,7 @@ std::string Cheat::CheatFunctions::GetOptionValueFromConfig(std::string OptionNa
 void Cheat::CheatFunctions::ShowItemSavingDisabledMessage(std::string OptionName)
 {
 	std::string DisableMessage = xorstr_("'") + OptionName + xorstr_("' cannot be saved");
-	Cheat::GameFunctions::AdvancedMinimapNotification((char*)DisableMessage.c_str(), xorstr_("Textures"), xorstr_("AdvancedNotificationImage"), false, 4, xorstr_("Config"), "", 0.5f, "");
+	Cheat::GameFunctions::AdvancedMinimapNotification(CheatFunctions::StringToChar(DisableMessage), xorstr_("Textures"), xorstr_("AdvancedNotificationImage"), false, 4, xorstr_("Config"), "", 0.5f, "");
 }
 
 bool Cheat::CheatFunctions::IsSaveItemHotKeyPressed()
@@ -334,9 +334,8 @@ void Cheat::CheatFunctions::LoadSettings()
 	LoadSettingsThreadHandle.detach();
 
 	//Load Active Theme Name
-	std::string ActiveThemeSetting = Cheat::CheatFunctions::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("SETTINGS"), xorstr_("active_theme")); char* ActiveThemeSettingChar = new char[Cheat::CheatFunctions::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("SETTINGS"), xorstr_("active_theme")).length() + 1];
-	strcpy_s(ActiveThemeSettingChar, sizeof(ActiveThemeSettingChar), ActiveThemeSetting.c_str());
-	if (ActiveThemeSetting != xorstr_("NOT_FOUND")) { Cheat::LoadTheme((char*)ActiveThemeSettingChar, true); }
+	std::string ActiveThemeSetting = Cheat::CheatFunctions::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("SETTINGS"), xorstr_("active_theme"));
+	if (ActiveThemeSetting != xorstr_("NOT_FOUND")) { Cheat::LoadTheme(CheatFunctions::StringToChar(ActiveThemeSetting), true); }
 
 	//Hotkeys
 	std::string LoadHotkey_BailToSinglePlayer = Cheat::CheatFunctions::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("SETTINGS"), xorstr_("hotkey_bailtosingleplayer")); if (Cheat::CheatFunctions::StringIsInteger(LoadHotkey_BailToSinglePlayer)) { BailToSinglePlayerHotkey = std::stoi(LoadHotkey_BailToSinglePlayer.c_str()); }

@@ -638,11 +638,11 @@ void Cheat::GameFunctions::LoadPlayerInformation(char* playerName, Player p)
 		{
 			std::ostringstream PlayerRank;
 			PlayerRank << globalHandle(1590535).At(p, 876).At(211).At(6).As<int>();
-			Cheat::AddPlayerInfoBoxTextEntry((char*)PlayerRank.str().c_str(), NULL, 2);
+			Cheat::AddPlayerInfoBoxTextEntry(CheatFunctions::StringToChar(PlayerRank.str()), NULL, 2);
 
 			std::ostringstream PlayerMoney;
 			PlayerMoney << xorstr_("$") << globalHandle(1590535).At(p, 876).At(211).At(56).As<int>();
-			Cheat::AddPlayerInfoBoxTextEntry((char*)PlayerMoney.str().c_str(), NULL, 3);
+			Cheat::AddPlayerInfoBoxTextEntry(CheatFunctions::StringToChar(PlayerMoney.str()), NULL, 3);
 		}
 		else
 		{
@@ -663,7 +663,7 @@ void Cheat::GameFunctions::LoadPlayerInformation(char* playerName, Player p)
 		else 
 		{ 
 			Health << HealthValue << xorstr_("%");
-			Cheat::AddPlayerInfoBoxTextEntry((char*)Health.str().c_str(), NULL, 4);
+			Cheat::AddPlayerInfoBoxTextEntry(CheatFunctions::StringToChar(Health.str()), NULL, 4);
 		}
 		
 
@@ -678,7 +678,7 @@ void Cheat::GameFunctions::LoadPlayerInformation(char* playerName, Player p)
 		else 
 		{ 
 			Armor << ArmorValue; 
-			Cheat::AddPlayerInfoBoxTextEntry((char*)Armor.str().c_str(), NULL, 5);
+			Cheat::AddPlayerInfoBoxTextEntry(CheatFunctions::StringToChar(Armor.str()), NULL, 5);
 		}
 
 		//Status
@@ -693,7 +693,7 @@ void Cheat::GameFunctions::LoadPlayerInformation(char* playerName, Player p)
 		else if (PED::IS_PED_FALLING(SelectedPlayerPed)) { Status << xorstr_("Player is falling"); }
 		else if (PED::IS_PED_DEAD_OR_DYING(SelectedPlayerPed, true)) { Status << xorstr_("Player is dead"); }
 		else { Status << xorstr_("~c~Unknown"); }
-		Cheat::AddPlayerInfoBoxTextEntry((char*)Status.str().c_str(), NULL, 6);
+		Cheat::AddPlayerInfoBoxTextEntry(CheatFunctions::StringToChar(Status.str()), NULL, 6);
 
 
 		//Vehicle
@@ -708,7 +708,7 @@ void Cheat::GameFunctions::LoadPlayerInformation(char* playerName, Player p)
 		{
 			Vehicle << xorstr_("~c~Not in a vehicle");
 		}
-		Cheat::AddPlayerInfoBoxTextEntry((char*)Vehicle.str().c_str(), NULL, 7);
+		Cheat::AddPlayerInfoBoxTextEntry(CheatFunctions::StringToChar(Vehicle.str()), NULL, 7);
 
 
 		//Speed
@@ -725,13 +725,13 @@ void Cheat::GameFunctions::LoadPlayerInformation(char* playerName, Player p)
 			{
 				Speed << MSToMPH(VehicleSpeed) << xorstr_(" MP/H");
 			}
-			Cheat::AddPlayerInfoBoxTextEntry((char*)Speed.str().c_str(), NULL, 8);
+			Cheat::AddPlayerInfoBoxTextEntry(CheatFunctions::StringToChar(Speed.str()), NULL, 8);
 		}
 		else
 		{
 			Cheat::AddPlayerInfoBoxTextEntry(xorstr_("Movement Speed"), 8);
 			Speed << round(ENTITY::GET_ENTITY_SPEED(SelectedPlayerPed) * 100) / 100 << xorstr_(" M/S");
-			Cheat::AddPlayerInfoBoxTextEntry((char*)Speed.str().c_str(), NULL, 8);
+			Cheat::AddPlayerInfoBoxTextEntry(CheatFunctions::StringToChar(Speed.str()), NULL, 8);
 		}
 
 
@@ -740,7 +740,7 @@ void Cheat::GameFunctions::LoadPlayerInformation(char* playerName, Player p)
 		int PlayerWantedLevel = PLAYER::GET_PLAYER_WANTED_LEVEL(p);
 		Cheat::AddPlayerInfoBoxTextEntry(xorstr_("Wanted Level"), 9);
 		WantedLevel << PlayerWantedLevel << xorstr_("/5");
-		Cheat::AddPlayerInfoBoxTextEntry((char*)WantedLevel.str().c_str(), NULL, 9);
+		Cheat::AddPlayerInfoBoxTextEntry(CheatFunctions::StringToChar(WantedLevel.str()), NULL, 9);
 
 
 		std::ostringstream Weapon;
@@ -995,7 +995,7 @@ void Cheat::GameFunctions::LoadPlayerInformation(char* playerName, Player p)
 		{
 			Weapon << xorstr_("~c~Unarmed");
 		}
-		Cheat::AddPlayerInfoBoxTextEntry((char*)Weapon.str().c_str(), NULL, 10);
+		Cheat::AddPlayerInfoBoxTextEntry(CheatFunctions::StringToChar(Weapon.str()), NULL, 10);
 
 
 		//Coords
@@ -1011,15 +1011,15 @@ void Cheat::GameFunctions::LoadPlayerInformation(char* playerName, Player p)
 		Cheat::AddPlayerInfoBoxTextEntry(xorstr_("X"), 11);
 		Cheat::AddPlayerInfoBoxTextEntry(xorstr_("Y"), 12);
 		Cheat::AddPlayerInfoBoxTextEntry(xorstr_("Z"), 13);
-		Cheat::AddPlayerInfoBoxTextEntry((char*)CoordX.str().c_str(), NULL, 11);
-		Cheat::AddPlayerInfoBoxTextEntry((char*)CoordY.str().c_str(), NULL, 12);
-		Cheat::AddPlayerInfoBoxTextEntry((char*)CoordZ.str().c_str(), NULL, 13);
+		Cheat::AddPlayerInfoBoxTextEntry(CheatFunctions::StringToChar(CoordX.str()), NULL, 11);
+		Cheat::AddPlayerInfoBoxTextEntry(CheatFunctions::StringToChar(CoordY.str()), NULL, 12);
+		Cheat::AddPlayerInfoBoxTextEntry(CheatFunctions::StringToChar(CoordZ.str()), NULL, 13);
 
 
 		std::ostringstream Zone; 
 		Cheat::AddPlayerInfoBoxTextEntry(xorstr_("Zone"), 14);
 		Zone << UI::_GET_LABEL_TEXT(ZONE::GET_NAME_OF_ZONE(SelectedPlayerPedCoords.x, SelectedPlayerPedCoords.y, SelectedPlayerPedCoords.z));
-		Cheat::AddPlayerInfoBoxTextEntry((char*)Zone.str().c_str(), NULL, 14);
+		Cheat::AddPlayerInfoBoxTextEntry(CheatFunctions::StringToChar(Zone.str()), NULL, 14);
 
 
 		Hash streetName, crossingRoad;
@@ -1027,7 +1027,7 @@ void Cheat::GameFunctions::LoadPlayerInformation(char* playerName, Player p)
 		Cheat::AddPlayerInfoBoxTextEntry(xorstr_("Street"), 15);
 		std::ostringstream Street; 
 		Street << UI::GET_STREET_NAME_FROM_HASH_KEY(streetName);
-		Cheat::AddPlayerInfoBoxTextEntry((char*)Street.str().c_str(), NULL, 15);
+		Cheat::AddPlayerInfoBoxTextEntry(CheatFunctions::StringToChar(Street.str()), NULL, 15);
 
 		float distance = Get3DDistance(SelectedPlayerPedCoords, ENTITY::GET_ENTITY_COORDS(PlayerPedID, true));
 		std::ostringstream Distance;
@@ -1043,7 +1043,7 @@ void Cheat::GameFunctions::LoadPlayerInformation(char* playerName, Player p)
 			Distance << distance << xorstr_(" Meters");
 		}
 		Cheat::AddPlayerInfoBoxTextEntry(xorstr_("Distance"), NULL, NULL, 1);
-		Cheat::AddPlayerInfoBoxTextEntry((char*)Distance.str().c_str(), NULL, NULL, NULL, 1);
+		Cheat::AddPlayerInfoBoxTextEntry(CheatFunctions::StringToChar(Distance.str()), NULL, NULL, NULL, 1);
 
 
 		//Modded Model
@@ -1321,7 +1321,7 @@ void Cheat::GameFunctions::CheckNewSessionMembersLoop()
 				if (!std::count(CurrentPlayerNamesSession.begin(), CurrentPlayerNamesSession.end(), var))
 				{
 					std::string NewPlayerString = xorstr_("<C>") + var + xorstr_("</C> joined the session.");
-					Cheat::GameFunctions::MinimapNotification((char*)NewPlayerString.c_str());
+					Cheat::GameFunctions::MinimapNotification(CheatFunctions::StringToChar(NewPlayerString));
 				}
 			}
 			SecondCall = false;

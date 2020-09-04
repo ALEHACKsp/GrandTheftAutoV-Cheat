@@ -32,7 +32,7 @@ void Cheat::CheatFeatures::Looped()
 	{
 		std::string OpenGUIString = xorstr_("Press ") + Cheat::CheatFunctions::VirtualKeyCodeToString(Cheat::GUI::openKey) + xorstr_(" to open GUI");
 		Cheat::GameFunctions::InstructionalKeysInit();
-		Cheat::GameFunctions::InstructionsAdd((char*)OpenGUIString.c_str(), 80);
+		Cheat::GameFunctions::InstructionsAdd(CheatFunctions::StringToChar(OpenGUIString), 80);
 		Cheat::GameFunctions::InstructionsEnd();
 	}
 
@@ -55,8 +55,8 @@ void Cheat::CheatFeatures::Looped()
 		{
 			Speed << Cheat::GameFunctions::MSToMPH(ENTITY::GET_ENTITY_SPEED(PED::GET_VEHICLE_PED_IS_IN(PlayerPedID, 0))) << xorstr_(" MP/H");
 		}
-		if (SpeedometerVectorPosition == 1 || SpeedometerVectorPosition == 3) { Cheat::Speedometer((char*)Speed.str().c_str()); }
-		if (SpeedometerVectorPosition == 2 || SpeedometerVectorPosition == 3) { VEHICLE::SET_VEHICLE_NUMBER_PLATE_TEXT(PED::GET_VEHICLE_PED_IS_IN(PlayerPedID, 0), (char*)Speed.str().c_str()); }
+		if (SpeedometerVectorPosition == 1 || SpeedometerVectorPosition == 3) { Cheat::Speedometer(CheatFunctions::StringToChar(Speed.str())); }
+		if (SpeedometerVectorPosition == 2 || SpeedometerVectorPosition == 3) { VEHICLE::SET_VEHICLE_NUMBER_PLATE_TEXT(PED::GET_VEHICLE_PED_IS_IN(PlayerPedID, 0), CheatFunctions::StringToChar(Speed.str())); }
 	}
 
 	//Player Opacity
@@ -324,10 +324,10 @@ void Cheat::CheatFeatures::OneHitKill(bool toggle)
 }
 
 bool PauseTime_IsCurrentTimeSet = false;
-bool Cheat::CheatFeatures::PauseTimeBool = false;
 int CurrentHourPauseTime;
 int CurrentMinutePauseTime;
 int CurrentSecondPauseTime;
+bool Cheat::CheatFeatures::PauseTimeBool = false;
 void Cheat::CheatFeatures::PauseTime(bool toggle)
 {
 	if (toggle)
@@ -348,7 +348,6 @@ void Cheat::CheatFeatures::PauseTime(bool toggle)
 }
 
 
-
 bool Cheat::CheatFeatures::ExplosiveMeleeBool = false;
 void Cheat::CheatFeatures::ExplosiveMelee()
 {
@@ -360,7 +359,6 @@ void Cheat::CheatFeatures::OrbitalCannonCooldownBypass()
 {
 	if (NETWORK::NETWORK_IS_SESSION_STARTED()) { STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY(xorstr_("MP0_ORBITAL_CANNON_COOLDOWN")), 0, 0); STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY(xorstr_("MP1_ORBITAL_CANNON_COOLDOWN")), 0, 0); }
 }
-
 
 
 bool Cheat::CheatFeatures::ProtectionVoteKickBool = false;
@@ -479,7 +477,7 @@ void Cheat::CheatFeatures::ShowFPS()
 	std::string str = std::to_string(iFps);
 	while (str.size() > str.find(".")) { str.pop_back(); }
 	std::string MessageString = xorstr_("FPS: ") + str;
-	GUI::Drawing::Text((char*)MessageString.c_str(), { 255, 255, 255, 255 }, { 0.50f, 0.002f }, { 0.30f, 0.30f }, false);
+	GUI::Drawing::Text(CheatFunctions::StringToChar(MessageString), { 255, 255, 255, 255 }, { 0.50f, 0.002f }, { 0.30f, 0.30f }, false);
 }
 
 
@@ -814,7 +812,7 @@ void Cheat::CheatFeatures::SpectatePlayer(bool toggle)
 	{
 		NETWORK::NETWORK_SET_IN_SPECTATOR_MODE(PlayerPedID, PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(selectedPlayer));
 		std::string String = xorstr_("Spectating '") + (std::string)PLAYER::GET_PLAYER_NAME(selectedPlayer) + xorstr_("'");
-		Cheat::GameFunctions::SubtitleNotification((char*)String.c_str(), 1);
+		Cheat::GameFunctions::SubtitleNotification(CheatFunctions::StringToChar(String), 1);
 	}
 	else
 	{

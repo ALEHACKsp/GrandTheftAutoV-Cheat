@@ -1682,7 +1682,7 @@ void Cheat::Main()
 			Cheat::Break("Ped List", true);
 			for (auto const& i : Cheat::GameArrays::PedModels)
 			{
-				if (Cheat::Option(CheatFunctions::StringToChar(i), ""))
+				if (Cheat::Option(i, ""))
 				{
 					GameFunctions::ChangePedModelLocalPlayer(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(i)));
 				}
@@ -2966,7 +2966,7 @@ void Cheat::Main()
 			Cheat::Toggle("No-Clip", Cheat::CheatFeatures::NoClipBool, "Use W and mouse to control");
 			Cheat::Toggle("Jump Around Mode", Cheat::CheatFeatures::JumpAroundModeBool, "Nearby vehicles will 'jump around'");
 			Cheat::Toggle("Free Cam", Cheat::CheatFeatures::FreeCamBool, "Use W and S to control. Shift to go faster");
-			Cheat::Toggle("Show Joining Players Notification", show_joining_players_notification, "");
+			Cheat::Toggle("Show Joining Players Notification", Cheat::CheatFeatures::ShowJoiningPlayersNotification, "");
 			Cheat::Toggle("No Orbital Cannon Cooldown", Cheat::CheatFeatures::OrbitalCannonCooldownBypassBool, "");
 			Cheat::Toggle("Auto Teleport To Waypoint", Cheat::CheatFeatures::AutoTeleportToWaypointBool, "");
 			Cheat::Toggle("Force Field", Cheat::CheatFeatures::PlayerForceFieldBool, "Gives your character a force field");
@@ -4447,7 +4447,7 @@ void Cheat::Main()
 			{
 				if (!Cheat::GUI::ThemeFilesVector.empty())
 				{
-					if (Cheat::Option(CheatFunctions::StringToChar(i), ""))
+					if (Cheat::Option(i, ""))
 					{
 						std::string ThemeFilePathMenuList = Cheat::CheatFunctions::ReturnCheatModuleDirectoryPath() + (std::string)xorstr_("\\gtav\\Themes\\") + i + xorstr_(".ini");
 						if (!Cheat::CheatFunctions::DoesFileExists(ThemeFilePathMenuList)) { Cheat::GameFunctions::MinimapNotification("~r~Unable to locate theme file"); break; }
@@ -4520,14 +4520,14 @@ DWORD WINAPI InitThread(LPVOID lpParam)
 	return 0;
 }
 
-HMODULE CheatModuleHandle;
+HMODULE Cheat::CheatModuleHandle;
 BOOL APIENTRY DllMain(HMODULE hModule, DWORD  ul_reason_for_call, LPVOID lpReserved)
 {
 	switch (ul_reason_for_call)
 	{
 	case DLL_PROCESS_ATTACH:
 		DisableThreadLibraryCalls(hModule);
-		CheatModuleHandle = hModule;
+		Cheat::CheatModuleHandle = hModule;
 		//Create 'gtav' directory
 		if (!Cheat::CheatFunctions::DoesDirectoryExists(Cheat::CheatFunctions::ReturnCheatModuleDirectoryPath() + (std::string)xorstr_("\\gtav"))) { Cheat::CheatFunctions::CreateNewDirectory(Cheat::CheatFunctions::ReturnCheatModuleDirectoryPath() + (std::string)xorstr_("\\gtav")); }
 		//Extract YTD texture file from module

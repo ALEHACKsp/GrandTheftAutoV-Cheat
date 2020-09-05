@@ -55,12 +55,13 @@
 
 namespace Cheat 
 {
+	extern HMODULE CheatModuleHandle;
 	void Main();
 	namespace GUI 
 	{
 		namespace Drawing
 		{
-			void Text(const char* text, RGBAF rgbaf, VECTOR2 position, VECTOR2_2 size, bool center);
+			void Text(std::string text, RGBAF rgbaf, VECTOR2 position, VECTOR2_2 size, bool center);
 			void Rect(RGBA rgba, VECTOR2 position, VECTOR2_2 size);
 			void Spriter(std::string Streamedtexture, std::string textureName, float x, float y, float width, float height, float rotation, int r, int g, int b, int a);
 			void InitTextureFile();
@@ -149,6 +150,7 @@ namespace Cheat
 		extern bool ShowPlayerTagsPlayerList;
 		extern bool ShowVehicleInfoAndPreview;
 		extern bool CursorGUINavigationEnabled;
+		extern bool ShowJoiningPlayersNotification;
 		extern std::chrono::steady_clock::time_point PostInitScaleFormStart;
 
 		void Looped();
@@ -479,23 +481,23 @@ namespace Cheat
 		0x34A67B97, 0xFBAB5776, 0x060EC506, 0xBA536372
 		};
 	}
-	void Title(const char* title);
-	void Speedometer(char* text);
+	void Title(std::string title);
+	void Speedometer(std::string text);
 	void AddPlayerInfoBoxTextEntry(char* text, int Row1 = NULL, int Row2 = NULL, int Row3 = NULL, int Row4 = NULL);
 	bool Break(const char* option, bool TextCentered);
-	bool Option(const char* option, const char* InformationText);
-	bool VehicleOption(const char* option, std::string ModelName);
-	bool MenuOption(const char* option, SubMenus newSub);
-	bool MenuOptionPlayerList(const char* option, SubMenus newSub, Player PlayerHandle);
-	bool Toggle(const char* option, bool& b00l, const char* InformationText, bool IsSavable = true);
-	bool Int(const char* option, int& _int, int min, int max, int step, bool DisableControl = false, bool IsSavable = true, const char* InformationText = xorstr_("Select to change"));
-	bool Float(const char* option, float& _float, float min, float max, float steps, bool ReturnTrueWithValueChange, bool IsSavable = true, const char* InformationText = "");
-	bool IntVector(const char* option, std::vector<int> Vector, int& position, bool IsSavable = true);
-	bool FloatVector(const char* option, std::vector<float> Vector, int& position, bool IsSavable = true);
-	bool StringVector(const char* option, std::vector<std::string> Vector, int& position, const char* InformationText, bool IsSavable = true);
+	bool Option(std::string option, std::string InformationText);
+	bool VehicleOption(std::string option, std::string ModelName);
+	bool MenuOption(std::string option, SubMenus newSub);
+	bool MenuOptionPlayerList(std::string option, SubMenus newSub, Player PlayerHandle);
+	bool Toggle(std::string option, bool& b00l, std::string InformationText, bool IsSavable = true);
+	bool Int(std::string option, int& _int, int min, int max, int step, bool DisableControl = false, bool IsSavable = true, std::string InformationText = xorstr_("Select to change"));
+	bool Float(std::string option, float& _float, float min, float max, float steps, bool ReturnTrueWithValueChange, bool IsSavable = true, std::string InformationText = "");
+	bool IntVector(std::string option, std::vector<int> Vector, int& position, bool IsSavable = true);
+	bool FloatVector(std::string option, std::vector<float> Vector, int& position, bool IsSavable = true);
+	bool StringVector(std::string option, std::vector<std::string> Vector, int& position, std::string InformationText, bool IsSavable = true);
 	void LoadThemeFilesLooped();
-	void LoadTheme(char* ThemeFileName, bool StartUp);
-	void SaveTheme(char* ThemeFileName);
+	void LoadTheme(std::string ThemeFileName, bool StartUp);
+	void SaveTheme(std::string ThemeFileName);
 }
 
 extern Player PlayerID;
@@ -505,6 +507,4 @@ extern bool VehicleSpawnerDeleteOldVehicle;
 extern bool VehicleSpawnerSpawnWithBlip;
 extern bool spawnvehiclewithgodmode;
 extern bool spawnmaxupgraded;
-extern bool show_joining_players_notification;
 extern bool ShowPlayerInformationPlayerList;
-extern HMODULE CheatModuleHandle;

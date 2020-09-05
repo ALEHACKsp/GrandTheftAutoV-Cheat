@@ -1291,10 +1291,9 @@ void Cheat::GameFunctions::EnableDisableAntiCrashCamera()
 std::vector<std::string> CurrentPlayerNamesSession;
 std::vector<std::string> CurrentPlayerNamesSession2;
 bool SecondCall = false;
-bool show_joining_players_notification = false;
 void Cheat::GameFunctions::CheckNewSessionMembersLoop()
 {
-	if (NETWORK::NETWORK_IS_SESSION_STARTED() && show_joining_players_notification)
+	if (NETWORK::NETWORK_IS_SESSION_STARTED() && CheatFeatures::ShowJoiningPlayersNotification)
 	{
 		if (!SecondCall) { CurrentPlayerNamesSession.clear(); CurrentPlayerNamesSession2.clear(); }
 

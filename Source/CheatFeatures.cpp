@@ -9,6 +9,7 @@ bool Cheat::CheatFeatures::BlockScriptEvents = false;
 bool Cheat::CheatFeatures::ShowBlockedScriptEventNotifications = true;
 bool Cheat::CheatFeatures::ShowPlayerTagsPlayerList = true;
 bool Cheat::CheatFeatures::ShowVehicleInfoAndPreview = true;
+bool Cheat::CheatFeatures::ShowJoiningPlayersNotification = true;
 std::chrono::steady_clock::time_point Cheat::CheatFeatures::PostInitScaleFormStart;
 
 
@@ -55,7 +56,7 @@ void Cheat::CheatFeatures::Looped()
 		{
 			Speed << Cheat::GameFunctions::MSToMPH(ENTITY::GET_ENTITY_SPEED(PED::GET_VEHICLE_PED_IS_IN(PlayerPedID, 0))) << xorstr_(" MP/H");
 		}
-		if (SpeedometerVectorPosition == 1 || SpeedometerVectorPosition == 3) { Cheat::Speedometer(CheatFunctions::StringToChar(Speed.str())); }
+		if (SpeedometerVectorPosition == 1 || SpeedometerVectorPosition == 3) { Cheat::Speedometer(Speed.str()); }
 		if (SpeedometerVectorPosition == 2 || SpeedometerVectorPosition == 3) { VEHICLE::SET_VEHICLE_NUMBER_PLATE_TEXT(PED::GET_VEHICLE_PED_IS_IN(PlayerPedID, 0), CheatFunctions::StringToChar(Speed.str())); }
 	}
 
@@ -477,7 +478,7 @@ void Cheat::CheatFeatures::ShowFPS()
 	std::string str = std::to_string(iFps);
 	while (str.size() > str.find(".")) { str.pop_back(); }
 	std::string MessageString = xorstr_("FPS: ") + str;
-	GUI::Drawing::Text(CheatFunctions::StringToChar(MessageString), { 255, 255, 255, 255 }, { 0.50f, 0.002f }, { 0.30f, 0.30f }, false);
+	GUI::Drawing::Text(MessageString, { 255, 255, 255, 255 }, { 0.50f, 0.002f }, { 0.30f, 0.30f }, false);
 }
 
 
@@ -750,15 +751,15 @@ void Cheat::CheatFeatures::EntityInformationGun()
 		std::string AimedEntityHealth = xorstr_("Entity Health: ") + std::to_string(ENTITY::GET_ENTITY_HEALTH(AimedEntityHandle));
 		std::string AimedEntityHash = xorstr_("Entity Hash: ") + std::to_string(ENTITY::GET_ENTITY_MODEL(AimedEntityHandle));
 		Cheat::GUI::Drawing::Text(xorstr_("~bold~Aimed Entity Information"), { 255, 255, 255, 255, 0 }, { 0.500f, 0.380f }, { 0.35f, 0.35f }, false);
-		Cheat::GUI::Drawing::Text(AimedEntityHash.c_str(), { 255, 255, 255, 255, 0 }, { 0.500f, 0.400f }, { 0.35f, 0.35f }, false);
-		Cheat::GUI::Drawing::Text(AimedEntityHealth.c_str(), { 255, 255, 255, 255, 0 }, { 0.500f, 0.420f }, { 0.35f, 0.35f }, false);
+		Cheat::GUI::Drawing::Text(AimedEntityHash, { 255, 255, 255, 255, 0 }, { 0.500f, 0.400f }, { 0.35f, 0.35f }, false);
+		Cheat::GUI::Drawing::Text(AimedEntityHealth, { 255, 255, 255, 255, 0 }, { 0.500f, 0.420f }, { 0.35f, 0.35f }, false);
 
 		std::string EntityTypeMessageString;
 		if (ENTITY::IS_ENTITY_A_PED(AimedEntityHandle)) { EntityTypeMessageString = xorstr_("Entity Type: Ped"); }
 		else if (ENTITY::IS_ENTITY_A_VEHICLE(AimedEntityHandle)) { EntityTypeMessageString = xorstr_("Entity Type: Vehicle"); }
 		else if (ENTITY::IS_ENTITY_AN_OBJECT(AimedEntityHandle)) { EntityTypeMessageString = xorstr_("Entity Type: Object"); }
 		else { EntityTypeMessageString = xorstr_("Entity Type: Generic"); }
-		Cheat::GUI::Drawing::Text(EntityTypeMessageString.c_str(), { 255, 255, 255, 255, 0 }, { 0.500f, 0.440f }, { 0.35f, 0.35f }, false);
+		Cheat::GUI::Drawing::Text(EntityTypeMessageString, { 255, 255, 255, 255, 0 }, { 0.500f, 0.440f }, { 0.35f, 0.35f }, false);
 	}
 }
 
@@ -1291,10 +1292,10 @@ void Cheat::CheatFeatures::ShowSessionInformation()
 	std::string zMsg = xorstr_(" Z ") + std::to_string(playerCoord.z);
 
 	Cheat::GUI::Drawing::Text(xorstr_("Local Player Coords"), Cheat::GUI::optionText, { 0.162f, 0.8100f }, { 0.25f, 0.25f }, false);
-	Cheat::GUI::Drawing::Text(xMsg.c_str(), Cheat::GUI::optionText, { 0.16f, 0.8225f }, { 0.25f, 0.25f }, false);
-	Cheat::GUI::Drawing::Text(yMsg.c_str(), Cheat::GUI::optionText, { 0.16f, 0.8350f }, { 0.25f, 0.25f }, false);
-	Cheat::GUI::Drawing::Text(zMsg.c_str(), Cheat::GUI::optionText, { 0.16f, 0.8475f }, { 0.25f, 0.25f }, false);
-	if (NETWORK::NETWORK_IS_SESSION_STARTED()) { Cheat::GUI::Drawing::Text(NumbConnectedPlayers.c_str(), Cheat::GUI::optionText, { 0.1615f, 0.8650f }, { 0.25f, 0.25f }, false); }
+	Cheat::GUI::Drawing::Text(xMsg, Cheat::GUI::optionText, { 0.16f, 0.8225f }, { 0.25f, 0.25f }, false);
+	Cheat::GUI::Drawing::Text(yMsg, Cheat::GUI::optionText, { 0.16f, 0.8350f }, { 0.25f, 0.25f }, false);
+	Cheat::GUI::Drawing::Text(zMsg, Cheat::GUI::optionText, { 0.16f, 0.8475f }, { 0.25f, 0.25f }, false);
+	if (NETWORK::NETWORK_IS_SESSION_STARTED()) { Cheat::GUI::Drawing::Text(NumbConnectedPlayers, Cheat::GUI::optionText, { 0.1615f, 0.8650f }, { 0.25f, 0.25f }, false); }
 }
 
 

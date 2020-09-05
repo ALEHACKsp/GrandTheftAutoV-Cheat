@@ -766,15 +766,14 @@ void Cheat::CheatFeatures::EntityInformationGun()
 bool Cheat::CheatFeatures::CartoonGunBool = false;
 void Cheat::CheatFeatures::CartoonGun()
 {
+	Vector3 v0, v1;
+	Entity WeaponEntityHandle = WEAPON::GET_CURRENT_PED_WEAPON_ENTITY_INDEX(PlayerPedID);
 	if (PED::IS_PED_SHOOTING(PlayerPedID))
 	{
-		STREAMING::REQUEST_NAMED_PTFX_ASSET("scr_rcbarry2");
-		while (!STREAMING::HAS_NAMED_PTFX_ASSET_LOADED("scr_rcbarry2")) { WAIT(0); }
-		auto WeaponEntityHandle = WEAPON::GET_CURRENT_PED_WEAPON_ENTITY_INDEX(PlayerPedID);
-		Vector3 v0, v1;
+		while (!STREAMING::HAS_NAMED_PTFX_ASSET_LOADED("scr_rcbarry2")) { STREAMING::REQUEST_NAMED_PTFX_ASSET("scr_rcbarry2"); WAIT(0); }
 		GAMEPLAY::GET_MODEL_DIMENSIONS(WEAPON::GET_SELECTED_PED_WEAPON(PlayerPedID), &v0, &v1);
 		GRAPHICS::USE_PARTICLE_FX_ASSET("scr_rcbarry2");
-		GRAPHICS::START_PARTICLE_FX_NON_LOOPED_ON_ENTITY("muz_clown", WeaponEntityHandle, (v0.x - v1.x) / 2.0f + 0.7f, 0.f, 0.f, 0.f, 180.f, 0.f, 1.f, 1, 1, 1);
+		GRAPHICS::START_NETWORKED_PARTICLE_FX_NON_LOOPED_ON_ENTITY("muz_clown", WeaponEntityHandle, (v0.x - v1.x) / 2.0f + 0.7f, 0.f, 0.f, 0.f, 180.f, 0.f, 1.f, true, true, true);
 	}
 }
 

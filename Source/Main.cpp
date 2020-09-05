@@ -3783,7 +3783,7 @@ void Cheat::Main()
 				Entity handle;
 				Vector3 coords = ENTITY::GET_ENTITY_COORDS(PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(Cheat::CheatFeatures::selectedPlayer), false);
 				PED::IS_PED_IN_ANY_VEHICLE(PlayerPedID, false) ? handle = PED::GET_VEHICLE_PED_IS_USING(PlayerPedID) : handle = PlayerPedID;
-				Cheat::GameFunctions::TeleportToCoords(handle, coords);
+				Cheat::GameFunctions::TeleportToCoords(handle, coords, false);
 
 			}
 			Cheat::MenuOption("Teleport Options >", player_teleportmenu);
@@ -4073,7 +4073,7 @@ void Cheat::Main()
 		case AnimationsAndScenariosMenu:
 		{
 			Cheat::Title("Animations & Scenarios");
-			if (Cheat::Option("Stop scenarios & Animations", "")) { AI::CLEAR_PED_TASKS_IMMEDIATELY(PlayerPedID); }
+			if (Cheat::Option("Stop Scenarios & Animations", "")) { AI::CLEAR_PED_TASKS_IMMEDIATELY(PlayerPedID); }
 			Cheat::Break("Animations", true);
 			if (Cheat::Option("Sex Receiver", ""))
 			{

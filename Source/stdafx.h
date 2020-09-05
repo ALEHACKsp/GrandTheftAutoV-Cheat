@@ -367,7 +367,7 @@ namespace Cheat
 		float GetDistanceBetweenTwoVectors(Vector3* pointA, Vector3* pointB);
 		float GetVectorLength(Vector3* vector);
 		Vector3 GetBlipMarker();
-		void TeleportToCoords(Entity e, Vector3 coords);
+		void TeleportToCoords(Entity e, Vector3 coords, bool AutoCorrectGroundHeight);
 		int ReturnRandomInteger(int start, int end);
 		float GetDistanceBetweenTwoPoints(Vector3 A, Vector3 B);
 		Vector3 GetEntityCoords(Entity entity);

@@ -62,7 +62,7 @@ void Cheat::GameFunctions::TeleportToObjective()
 	Entity e;
 	Vector3 wayp{};
 	Ped playerPed = PlayerPedID;
-	if (PED::IS_PED_IN_ANY_VEHICLE(playerPed, FALSE))
+	if (PED::IS_PED_IN_ANY_VEHICLE(playerPed, false))
 		e = PED::GET_VEHICLE_PED_IS_USING(playerPed);
 	else e = playerPed;
 	bool blipFound = false;
@@ -76,27 +76,9 @@ void Cheat::GameFunctions::TeleportToObjective()
 			{
 				wayp = UI::GET_BLIP_INFO_ID_COORD(i);
 				blipFound = true;
-				Cheat::GameFunctions::TeleportToCoords(e, wayp);
+				Cheat::GameFunctions::TeleportToCoords(e, wayp, false);
 			}
-			bool groundFound = false;
-			static float groundCheckHeight[] =
-			{ 100.0, 150.0, 50.0, 0.0, 200.0, 250.0, 300.0, 350.0, 400.0, 450.0, 500.0, 550.0, 600.0, 650.0, 700.0, 750.0, 800.0 };
-			for (int i = 0; i < sizeof(groundCheckHeight) / sizeof(float); i++)
-			{
-				ENTITY::SET_ENTITY_COORDS_NO_OFFSET(e, wayp.x, wayp.y, groundCheckHeight[i], 0, 0, 1);
-				WAIT(1);
-				if (GAMEPLAY::GET_GROUND_Z_FOR_3D_COORD(wayp.x, wayp.y, groundCheckHeight[i], &wayp.z, 0))
-				{
-					groundFound = true;
-					wayp.z += 3.0;
-					break;
-				}
-			}
-			if (!groundFound)
-			{
-				wayp.z = 1000.0;
-				WEAPON::GIVE_DELAYED_WEAPON_TO_PED(PlayerPedID, 0xFBAB5776, 1, 0);
-			}
+			GameFunctions::TeleportToCoords(e, wayp, true);
 		}
 		break;
 	}
@@ -107,7 +89,7 @@ void Cheat::GameFunctions::TeleportToObjective()
 			blipFound = true;
 		}
 	}
-	blipFound ? Cheat::GameFunctions::TeleportToCoords(e, wayp) : Cheat::GameFunctions::MinimapNotification(xorstr_("~r~Objective not found"));
+	blipFound ? Cheat::GameFunctions::TeleportToCoords(e, wayp, false) : Cheat::GameFunctions::MinimapNotification(xorstr_("~r~Objective not found"));
 }
 
 
@@ -364,10 +346,32 @@ int Cheat::GameFunctions::ReturnRandomInteger(int start, int end) {
 	return GAMEPLAY::GET_RANDOM_INT_IN_RANGE(start, end);
 }
 
-void Cheat::GameFunctions::TeleportToCoords(Entity e, Vector3 coords)
+void Cheat::GameFunctions::TeleportToCoords(Entity e, Vector3 coords, bool AutoCorrectGroundHeight)
 {
-	ENTITY::SET_ENTITY_COORDS_NO_OFFSET(e, coords.x, coords.y, coords.z, 0, 0, 1);
+	if (!AutoCorrectGroundHeight)
+	{
+		ENTITY::SET_ENTITY_COORDS_NO_OFFSET(e, coords.x, coords.y, coords.z, false, false, true);
+	}
+	else
+	{
+		bool groundFound = false;
+		static float groundCheckHeight[] = { 100.0, 150.0, 50.0, 0.0, 200.0, 250.0, 300.0, 350.0, 400.0, 450.0, 500.0, 550.0, 600.0, 650.0, 700.0, 750.0, 800.0 };
+		for (int i = 0; i < sizeof(groundCheckHeight) / sizeof(float); i++)
+		{
+			ENTITY::SET_ENTITY_COORDS_NO_OFFSET(e, coords.x, coords.y, groundCheckHeight[i], 0, 0, 1);
+			WAIT(100);
+			if (GAMEPLAY::GET_GROUND_Z_FOR_3D_COORD(coords.x, coords.y, groundCheckHeight[i], &coords.z, 0))
+			{
+				groundFound = true;
+				coords.z += 3.0;
+				break;
+			}
+		}
+		if (!groundFound) { coords.z = 1000.0; WEAPON::GIVE_DELAYED_WEAPON_TO_PED(PlayerPedID, 0xFBAB5776, 1, false); }
+		ENTITY::SET_ENTITY_COORDS_NO_OFFSET(e, coords.x, coords.y, coords.z, false, false, true);
+	}
 }
+
 
 
 void Cheat::GameFunctions::GetCameraDirection(float* dirX, float* dirY, float* dirZ)
@@ -1247,25 +1251,9 @@ void Cheat::GameFunctions::TeleportToWaypoint()
 {
 	if (!UI::IS_WAYPOINT_ACTIVE()) { Cheat::GameFunctions::MinimapNotification(xorstr_("~r~Please set waypoint")); return; }
 	Vector3 coords = Cheat::GameFunctions::GetBlipMarker();
-
 	Entity e = PlayerPedID;
 	if (PED::IS_PED_IN_ANY_VEHICLE(e, 0)) { e = PED::GET_VEHICLE_PED_IS_USING(e); }
-
-	bool groundFound = false;
-	static float groundCheckHeight[] = { 100.0, 150.0, 50.0, 0.0, 200.0, 250.0, 300.0, 350.0, 400.0, 450.0, 500.0, 550.0, 600.0, 650.0, 700.0, 750.0, 800.0 };
-	for (int i = 0; i < sizeof(groundCheckHeight) / sizeof(float); i++)
-	{
-		ENTITY::SET_ENTITY_COORDS_NO_OFFSET(e, coords.x, coords.y, groundCheckHeight[i], 0, 0, 1);
-		WAIT(100);
-		if (GAMEPLAY::GET_GROUND_Z_FOR_3D_COORD(coords.x, coords.y, groundCheckHeight[i], &coords.z, 0))
-		{
-			groundFound = true;
-			coords.z += 3.0;
-			break;
-		}
-	}
-	if (!groundFound) { coords.z = 1000.0; WEAPON::GIVE_DELAYED_WEAPON_TO_PED(PlayerPedID, 0xFBAB5776, 1, 0); }
-	Cheat::GameFunctions::TeleportToCoords(e, coords);
+	Cheat::GameFunctions::TeleportToCoords(e, coords, true);
 }
 
 Cam antiCrashCam;

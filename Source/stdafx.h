@@ -78,6 +78,7 @@ namespace Cheat
 		extern bool ShowHeaderGlare;
 		extern bool CheatGUIHasBeenOpened;
 		extern std::string CurrentTheme;
+		extern bool DisableGUIControls;
 		extern bool selectPressed;
 		extern bool leftPressed;
 		extern bool rightPressed;
@@ -136,6 +137,10 @@ namespace Cheat
 		void BackMenu();
 		void CloseGUI();
 		void End();
+		void EnableDisableGUIControls();
+		void LoadThemeFilesLooped();
+		void LoadTheme(std::string ThemeFileName, bool StartUp);
+		void SaveTheme(std::string ThemeFileName);
 	}
 	namespace CheatFeatures 
 	{
@@ -419,6 +424,7 @@ namespace Cheat
 		void EnableDisableCursorGUINavigation();
 		bool IsCursorAtXYPosition(VECTOR2 const& boxCentre, VECTOR2 const& boxSize);
 		void ChangePedModelLocalPlayer(Hash PedModel);
+		bool PlayerIsFreemodeScriptHost(Player Player);
 	}
 	namespace LogFunctions 
 	{
@@ -494,9 +500,6 @@ namespace Cheat
 	bool IntVector(std::string option, std::vector<int> Vector, int& position, bool IsSavable = true);
 	bool FloatVector(std::string option, std::vector<float> Vector, int& position, bool IsSavable = true);
 	bool StringVector(std::string option, std::vector<std::string> Vector, int& position, std::string InformationText, bool IsSavable = true);
-	void LoadThemeFilesLooped();
-	void LoadTheme(std::string ThemeFileName, bool StartUp);
-	void SaveTheme(std::string ThemeFileName);
 }
 
 extern Player PlayerID;

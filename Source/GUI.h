@@ -80,7 +80,6 @@ enum SubMenus
 	protections,
 	ESPMenu, 
 	clothingmenu, 
-	visionsmenu,
 	outfitsmenu,
 	componentschangermenu,
 	playermoneymenu, 

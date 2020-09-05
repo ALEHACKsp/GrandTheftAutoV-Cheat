@@ -316,6 +316,7 @@ bool Cheat::CheatFunctions::IsSaveItemHotKeyPressed()
 
 void LoadSettingsThreadFunction()
 {
+	Cheat::GUI::EnableDisableGUIControls();
 	for (int SubMenuInt = MainMenu; SubMenuInt != SUBMENUS_END; SubMenuInt++)
 	{
 		SubMenus CurrentSubMenuInt = static_cast<SubMenus>(SubMenuInt);
@@ -325,6 +326,7 @@ void LoadSettingsThreadFunction()
 	Cheat::GUI::CloseGUI();
 	Cheat::GUI::PreviousMenu = NOMENU;
 	Cheat::GUI::CheatGUIHasBeenOpened = false;
+	Cheat::GUI::EnableDisableGUIControls();
 }
 
 void Cheat::CheatFunctions::LoadSettings()
@@ -335,7 +337,7 @@ void Cheat::CheatFunctions::LoadSettings()
 
 	//Load Active Theme Name
 	std::string ActiveThemeSetting = Cheat::CheatFunctions::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("SETTINGS"), xorstr_("active_theme"));
-	if (ActiveThemeSetting != xorstr_("NOT_FOUND")) { Cheat::LoadTheme(CheatFunctions::StringToChar(ActiveThemeSetting), true); }
+	if (ActiveThemeSetting != xorstr_("NOT_FOUND")) { Cheat::GUI::LoadTheme(CheatFunctions::StringToChar(ActiveThemeSetting), true); }
 
 	//Hotkeys
 	std::string LoadHotkey_BailToSinglePlayer = Cheat::CheatFunctions::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("SETTINGS"), xorstr_("hotkey_bailtosingleplayer")); if (Cheat::CheatFunctions::StringIsInteger(LoadHotkey_BailToSinglePlayer)) { BailToSinglePlayerHotkey = std::stoi(LoadHotkey_BailToSinglePlayer.c_str()); }

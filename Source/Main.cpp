@@ -2148,7 +2148,6 @@ void Cheat::Main()
 			Cheat::MenuOption("Spawner >", vehiclespawnermenu);
 			Cheat::MenuOption("Vehicle Weapons >", vehicleweaponsmenu);
 			Cheat::MenuOption("Vehicle Customizer >", VehicleCustomizerMenu);
-			Cheat::MenuOption("Door Options >", vehicledooroptionsmenu);
 			if (Cheat::Option("Delete Current Vehicle", "Delete the current vehicle"))
 			{
 				if (!Cheat::GameFunctions::DeleteVehicle(PED::GET_VEHICLE_PED_IS_USING(PlayerPedID))) 
@@ -2245,6 +2244,7 @@ void Cheat::Main()
 			Cheat::MenuOption("Color Options >", VehicleCustomizerColorMenu);
 			Cheat::MenuOption("Neon Options >", vehicle_lsc_neon_options);
 			Cheat::MenuOption("Multipliers >", vehiclemultipliersmenus);
+			Cheat::MenuOption("Door Options >", vehicledooroptionsmenu);
 		}
 		break;
 		case VehicleCustomizerColorMenu:
@@ -3464,7 +3464,7 @@ void Cheat::Main()
 				Vehicle LastUsedVehicle = VEHICLE::GET_LAST_DRIVEN_VEHICLE();
 				PED::SET_PED_INTO_VEHICLE(PlayerPedID, LastUsedVehicle, -1);
 			}
-			if (Cheat::Float("Teleport Forward", TeleportFoward, 1, 10, 1, false, false, "Select to teleport"))
+			if (Cheat::Float("Teleport Forward", TeleportFoward, 1.f, 10.f, 1.f, false, false, "Select to teleport"))
 			{
 				Vector3 Coords = ENTITY::GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(PlayerPedID, 0.0, TeleportFoward, 0.0);
 				int Handle = PlayerPedID;
@@ -3752,21 +3752,17 @@ void Cheat::Main()
 			for (int i = 0; i < 32; ++i) 
 			{
 				std::string PlayernameString = PLAYER::GET_PLAYER_NAME(i);
-				int hostindex = NETWORK::NETWORK_GET_HOST_OF_SCRIPT("Freemode", 4294967295, 0);
 				if (ENTITY::DOES_ENTITY_EXIST(PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(i))) 
 				{
 					if (Cheat::CheatFeatures::ShowPlayerTagsPlayerList)
 					{
-						if (i == hostindex) { PlayernameString.append(" ~o~[Host]"); }
+						if (Cheat::GameFunctions::PlayerIsFreemodeScriptHost(i)) { PlayernameString.append(" ~o~[Host]"); }
 						if (Cheat::GameFunctions::IsPlayerFriend(i)) { PlayernameString.append(" ~b~[Friend]"); }
 						if (Cheat::GameFunctions::IsEntityInInterior(PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(i))) { PlayernameString.append(" ~p~[Interior]"); }
 						if (PlayerID == i) { PlayernameString.append(" ~g~[You]"); }
 					}
 					Cheat::MenuOptionPlayerList(PlayernameString, SelectedPlayerMenu, i) ? Cheat::CheatFeatures::selectedPlayer = i : NULL;
-					if (Cheat::GUI::currentOption == Cheat::GUI::optionCount) 
-					{
-						Cheat::GameFunctions::LoadPlayerInformation(PLAYER::GET_PLAYER_NAME(i), i); 
-					}
+					if (Cheat::GUI::currentOption == Cheat::GUI::optionCount) { Cheat::GameFunctions::LoadPlayerInformation(PLAYER::GET_PLAYER_NAME(i), i); }
 				}
 			}
 		}
@@ -3807,11 +3803,12 @@ void Cheat::Main()
 			Cheat::GameFunctions::DrawMarkerAbovePlayer(21, Cheat::CheatFeatures::selectedPlayer, { 0, 0, 255, 255 });
 			Cheat::GameFunctions::LoadPlayerInformation(PLAYER::GET_PLAYER_NAME(Cheat::CheatFeatures::selectedPlayer), Cheat::CheatFeatures::selectedPlayer);
 			Cheat::Title("Remote Options");
-			if (Cheat::Option("Kick To Single Player", "Kick Selected Player to SP")) {
+			if (Cheat::Option("Kick To Single Player", "Kick Selected Player to SP")) 
+			{
 				if (NETWORK::NETWORK_IS_SESSION_STARTED())
 				{
-					int kick_sp[4] = { 1667907776, Cheat::CheatFeatures::selectedPlayer, 0, 0 };
-					GameHooking::trigger_script_event(1, kick_sp, 4, 1 << Cheat::CheatFeatures::selectedPlayer);
+					uint64_t kick_sp[4] = { 1667907776, Cheat::CheatFeatures::selectedPlayer, 0, 0 };
+					SCRIPT::TRIGGER_SCRIPT_EVENT(1, kick_sp, 4, 1 << Cheat::CheatFeatures::selectedPlayer);
 				}
 			}
 		}
@@ -3834,7 +3831,6 @@ void Cheat::Main()
 			Cheat::MenuOption("Model Changer >", ModelChangerMenu);
 			Cheat::MenuOption("Animations & Scenarios >", AnimationsAndScenariosMenu);
 			Cheat::MenuOption("Clothing >", clothingmenu);
-			Cheat::MenuOption("Visions >", visionsmenu);
 			Cheat::Toggle("Godmode", Cheat::CheatFeatures::GodmodeBool, "Makes your character invincible");
 			Cheat::Toggle("No Ragdoll & Seatbelt", Cheat::CheatFeatures::NoRagdollAndSeatbeltBool, "Disables ragdoll on your character");
 			Cheat::Toggle("Super Jump", Cheat::CheatFeatures::SuperJumpBool, "Makes your character jump higher");
@@ -3853,70 +3849,6 @@ void Cheat::Main()
 			if (Cheat::Option("Suicide", "Kill your character")) { PED::APPLY_DAMAGE_TO_PED(PlayerPedID, 300, true); }
 			if (Cheat::Option("Give BST", "Get Bull Shark Testosterone - GTAO Only")) { globalHandle(2437549).At(3880).As<int>() = 1; }
 			if (Cheat::Option("Clean Player", "Remove any damage from player character")) { PED::CLEAR_PED_BLOOD_DAMAGE(PlayerPedID); PED::RESET_PED_VISIBLE_DAMAGE(PlayerPedID); Cheat::GameFunctions::MinimapNotification("Player Cleaned"); }	
-		}
-		break;
-		case visionsmenu:
-		{
-			Cheat::Title("Visions");
-			if (Cheat::Option("Default", "")) 
-			{
-				GRAPHICS::SET_TIMECYCLE_MODIFIER("DEFAULT");
-			}
-			if (Cheat::Option("Timecycle", "")) 
-			{
-				GRAPHICS::SET_TIMECYCLE_MODIFIER("CAMERA_secuirity_FUZZ");
-			}
-			if (Cheat::Option("Stoned", "")) 
-			{
-				GRAPHICS::SET_TIMECYCLE_MODIFIER("stoned");
-			}
-			if (Cheat::Option("Orange", "")) 
-			{
-				GRAPHICS::SET_TIMECYCLE_MODIFIER("REDMIST");
-			}
-			if (Cheat::Option("Cocaine", "")) 
-			{
-				GRAPHICS::SET_TIMECYCLE_MODIFIER("drug_flying_base");
-			}
-			if (Cheat::Option("Huffin Gas", "")) 
-			{
-				GRAPHICS::SET_TIMECYCLE_MODIFIER("DRUG_gas_huffin");
-			}
-			if (Cheat::Option("Wobbly", "")) 
-			{
-				GRAPHICS::SET_TIMECYCLE_MODIFIER("drug_wobbly");
-			}
-			if (Cheat::Option("Drunk", "")) 
-			{
-				GRAPHICS::SET_TIMECYCLE_MODIFIER("Drunk");
-			}
-			if (Cheat::Option("Heaven", "")) 
-			{
-				GRAPHICS::SET_TIMECYCLE_MODIFIER("Bloom");
-			}
-			if (Cheat::Option("3D", "")) {
-				GRAPHICS::SET_TIMECYCLE_MODIFIER("PlayerSwitchPulse");
-			}
-			if (Cheat::Option("Killstreak", "")) 
-			{
-				GRAPHICS::SET_TIMECYCLE_MODIFIER("MP_Killstreak");
-			}
-			if (Cheat::Option("Hallucinations", "")) 
-			{
-				GRAPHICS::SET_TIMECYCLE_MODIFIER("player_transition");
-			}
-			if (Cheat::Option("Low Quality", "")) 
-			{
-				GRAPHICS::SET_TIMECYCLE_MODIFIER("cinema_001");
-			}
-			if (Cheat::Option("Blurry", "")) 
-			{
-				GRAPHICS::SET_TIMECYCLE_MODIFIER("CHOP");
-			}
-			if (Cheat::Option("Fucked Up Screen", "")) 
-			{
-				GRAPHICS::SET_TIMECYCLE_MODIFIER("BarryFadeOut");
-			}
 		}
 		break;
 		case playermoneymenu:
@@ -4415,7 +4347,7 @@ void Cheat::Main()
 				Cheat::Break("Active Theme : ~c~" + Cheat::GUI::CurrentTheme, false);
 				if (Cheat::Option("Save To Current Theme", ""))
 				{
-					Cheat::SaveTheme(Cheat::GUI::CurrentTheme);
+					Cheat::GUI::SaveTheme(Cheat::GUI::CurrentTheme);
 				}
 				if (Cheat::Option("Delete Current Theme", "Delete active theme"))
 				{
@@ -4430,14 +4362,14 @@ void Cheat::Main()
 			{
 				char* NewThemeFileName = Cheat::GameFunctions::DisplayKeyboardAndReturnInput(20);
 				if (NewThemeFileName == "0") { break; }
-				Cheat::SaveTheme(NewThemeFileName);
+				Cheat::GUI::SaveTheme(NewThemeFileName);
 			}
 		}
 		break;
 		case ThemeFilesMenu:
 		{
 			Cheat::Title("Theme Files");
-			Cheat::LoadThemeFilesLooped();
+			Cheat::GUI::LoadThemeFilesLooped();
 			Cheat::Break("All theme files below - select to load", true);
 			for (auto const& i : Cheat::GUI::ThemeFilesVector)
 			{
@@ -4447,7 +4379,7 @@ void Cheat::Main()
 					{
 						std::string ThemeFilePathMenuList = Cheat::CheatFunctions::ReturnCheatModuleDirectoryPath() + (std::string)xorstr_("\\gtav\\Themes\\") + i + xorstr_(".ini");
 						if (!Cheat::CheatFunctions::DoesFileExists(ThemeFilePathMenuList)) { Cheat::GameFunctions::MinimapNotification("~r~Unable to locate theme file"); break; }
-						Cheat::LoadTheme(CheatFunctions::StringToChar(i), false);
+						Cheat::GUI::LoadTheme(CheatFunctions::StringToChar(i), false);
 					}
 				}
 			}

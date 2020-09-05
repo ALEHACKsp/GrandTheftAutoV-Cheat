@@ -1,7 +1,6 @@
 #pragma once
 
 typedef bool(*fpIsDLCPresent)							(std::uint32_t dlcHash);
-typedef int(__stdcall* TriggerScriptEvent)				(int unk0, int* args, int argCount, int bitFlags);
 typedef int(__stdcall* SessionWeather)					(int unk0, int, int argCount, int bitFlags);
 typedef uint32_t*(*__stdcall fpFileRegister)		    (int*, const char*, bool, const char*, bool);
 typedef BOOL(__stdcall* GetEventData)					(int eventGroup, int eventIndex, uint64_t* argStruct, int argStructSize);
@@ -14,10 +13,8 @@ using fpGetLabelText = const char* (*) (void* this_, const char* label);
 class GameHooking
 {
 public:
-	static std::vector<LPVOID>				m_hooks;
 	static uint64_t*						m_frameCount;
 	static fpIsDLCPresent					is_DLC_present;
-	static TriggerScriptEvent				trigger_script_event;
 	static SessionWeather					session_weather;
 	static fpFileRegister					m_fileregister;
 	static GetEventData						get_event_data;

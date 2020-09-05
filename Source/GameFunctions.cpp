@@ -559,7 +559,6 @@ void Cheat::GameFunctions::DoLocalPedAnimation(char* AnimationName, char* Animat
 }
 
 
-
 void Cheat::GameFunctions::DoNearbyPedsAnimation(char* AnimationName, char* AnimationID)
 {
 	const int ElementAmount = 10;
@@ -1515,7 +1514,6 @@ void Cheat::GameFunctions::EnableDisableCursorGUINavigation()
 	}
 }
 
-
 void Cheat::GameFunctions::ChangePedModelLocalPlayer(Hash PedModel)
 {
 	STREAMING::REQUEST_MODEL(PedModel);
@@ -1523,4 +1521,16 @@ void Cheat::GameFunctions::ChangePedModelLocalPlayer(Hash PedModel)
 	PLAYER::SET_PLAYER_MODEL(PlayerID, PedModel);
 	PED::SET_PED_DEFAULT_COMPONENT_VARIATION(PlayerPedID);
 	STREAMING::SET_MODEL_AS_NO_LONGER_NEEDED(PedModel);
+}
+
+bool Cheat::GameFunctions::PlayerIsFreemodeScriptHost(Player Player)
+{
+	if (Player == NETWORK::NETWORK_GET_HOST_OF_SCRIPT("Freemode", 4294967295, 0))
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }

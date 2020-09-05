@@ -1749,7 +1749,7 @@ void Cheat::Main()
 			{
 				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(i)))), i))
 				{
-					Cheat::GameFunctions::SpawnVehicle((CheatFunctions::StringToChar(i)));
+					Cheat::GameFunctions::SpawnVehicle(CheatFunctions::StringToChar(i));
 				}
 			}
 		}
@@ -1761,7 +1761,7 @@ void Cheat::Main()
 			{
 				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(i)))), i))
 				{
-					Cheat::GameFunctions::SpawnVehicle((CheatFunctions::StringToChar(i)));
+					Cheat::GameFunctions::SpawnVehicle(CheatFunctions::StringToChar(i));
 				}
 			}
 		}
@@ -1773,7 +1773,7 @@ void Cheat::Main()
 			{
 				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(i)))), i))
 				{
-					Cheat::GameFunctions::SpawnVehicle((CheatFunctions::StringToChar(i)));
+					Cheat::GameFunctions::SpawnVehicle(CheatFunctions::StringToChar(i));
 				}
 			}
 		}
@@ -1785,7 +1785,7 @@ void Cheat::Main()
 			{
 				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(i)))), i))
 				{
-					Cheat::GameFunctions::SpawnVehicle((CheatFunctions::StringToChar(i)));
+					Cheat::GameFunctions::SpawnVehicle(CheatFunctions::StringToChar(i));
 				}
 			}
 		}
@@ -1797,7 +1797,7 @@ void Cheat::Main()
 			{
 				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(i)))), i))
 				{
-					Cheat::GameFunctions::SpawnVehicle((CheatFunctions::StringToChar(i)));
+					Cheat::GameFunctions::SpawnVehicle(CheatFunctions::StringToChar(i));
 				}
 			}
 		}
@@ -1809,7 +1809,7 @@ void Cheat::Main()
 			{
 				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(i)))), i))
 				{
-					Cheat::GameFunctions::SpawnVehicle((CheatFunctions::StringToChar(i)));
+					Cheat::GameFunctions::SpawnVehicle(CheatFunctions::StringToChar(i));
 				}
 			}
 		}
@@ -1821,7 +1821,7 @@ void Cheat::Main()
 			{
 				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(i)))), i))
 				{
-					Cheat::GameFunctions::SpawnVehicle((CheatFunctions::StringToChar(i)));
+					Cheat::GameFunctions::SpawnVehicle(CheatFunctions::StringToChar(i));
 				}
 			}
 		}
@@ -1833,7 +1833,7 @@ void Cheat::Main()
 			{
 				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(i)))), i))
 				{
-					Cheat::GameFunctions::SpawnVehicle((CheatFunctions::StringToChar(i)));
+					Cheat::GameFunctions::SpawnVehicle(CheatFunctions::StringToChar(i));
 				}
 			}
 		}
@@ -1845,7 +1845,7 @@ void Cheat::Main()
 			{
 				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(i)))), i))
 				{
-					Cheat::GameFunctions::SpawnVehicle((CheatFunctions::StringToChar(i)));
+					Cheat::GameFunctions::SpawnVehicle(CheatFunctions::StringToChar(i));
 				}
 			}
 
@@ -1858,7 +1858,7 @@ void Cheat::Main()
 			{
 				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(i)))), i))
 				{
-					Cheat::GameFunctions::SpawnVehicle((CheatFunctions::StringToChar(i)));
+					Cheat::GameFunctions::SpawnVehicle(CheatFunctions::StringToChar(i));
 				}
 			}
 
@@ -1871,7 +1871,7 @@ void Cheat::Main()
 			{
 				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(i)))), i))
 				{
-					Cheat::GameFunctions::SpawnVehicle((CheatFunctions::StringToChar(i)));
+					Cheat::GameFunctions::SpawnVehicle(CheatFunctions::StringToChar(i));
 				}
 			}
 
@@ -1884,7 +1884,7 @@ void Cheat::Main()
 			{
 				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(i)))), i))
 				{
-					Cheat::GameFunctions::SpawnVehicle((CheatFunctions::StringToChar(i)));
+					Cheat::GameFunctions::SpawnVehicle(CheatFunctions::StringToChar(i));
 				}
 			}
 		}
@@ -1896,7 +1896,7 @@ void Cheat::Main()
 			{
 				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(i)))), i))
 				{
-					Cheat::GameFunctions::SpawnVehicle((CheatFunctions::StringToChar(i)));
+					Cheat::GameFunctions::SpawnVehicle(CheatFunctions::StringToChar(i));
 				}
 			}
 		}
@@ -1908,7 +1908,7 @@ void Cheat::Main()
 			{
 				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(i)))), i))
 				{
-					Cheat::GameFunctions::SpawnVehicle((CheatFunctions::StringToChar(i)));
+					Cheat::GameFunctions::SpawnVehicle(CheatFunctions::StringToChar(i));
 				}
 			}
 		}
@@ -1920,7 +1920,7 @@ void Cheat::Main()
 			{
 				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(i)))), i))
 				{
-					Cheat::GameFunctions::SpawnVehicle((CheatFunctions::StringToChar(i)));
+					Cheat::GameFunctions::SpawnVehicle(CheatFunctions::StringToChar(i));
 				}
 			}
 		}
@@ -1932,7 +1932,7 @@ void Cheat::Main()
 			{
 				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(i)))), i))
 				{
-					Cheat::GameFunctions::SpawnVehicle((CheatFunctions::StringToChar(i)));
+					Cheat::GameFunctions::SpawnVehicle(CheatFunctions::StringToChar(i));
 				}
 			}
 		}
@@ -1944,7 +1944,7 @@ void Cheat::Main()
 			{
 				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(i)))), i))
 				{
-					Cheat::GameFunctions::SpawnVehicle((CheatFunctions::StringToChar(i)));
+					Cheat::GameFunctions::SpawnVehicle(CheatFunctions::StringToChar(i));
 				}
 			}
 		}
@@ -1956,7 +1956,7 @@ void Cheat::Main()
 			{
 				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(i)))), i))
 				{
-					Cheat::GameFunctions::SpawnVehicle((CheatFunctions::StringToChar(i)));
+					Cheat::GameFunctions::SpawnVehicle(CheatFunctions::StringToChar(i));
 				}
 			}
 		}
@@ -1968,7 +1968,7 @@ void Cheat::Main()
 			{
 				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(i)))), i))
 				{
-					Cheat::GameFunctions::SpawnVehicle((CheatFunctions::StringToChar(i)));
+					Cheat::GameFunctions::SpawnVehicle(CheatFunctions::StringToChar(i));
 				}
 			}
 		}
@@ -1980,7 +1980,7 @@ void Cheat::Main()
 			{
 				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(i)))), i))
 				{
-					Cheat::GameFunctions::SpawnVehicle((CheatFunctions::StringToChar(i)));
+					Cheat::GameFunctions::SpawnVehicle(CheatFunctions::StringToChar(i));
 				}
 			}
 		}
@@ -1992,7 +1992,7 @@ void Cheat::Main()
 			{
 				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(i)))), i))
 				{
-					Cheat::GameFunctions::SpawnVehicle((CheatFunctions::StringToChar(i)));
+					Cheat::GameFunctions::SpawnVehicle(CheatFunctions::StringToChar(i));
 				}
 			}
 		}
@@ -2004,7 +2004,7 @@ void Cheat::Main()
 			{
 				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(i)))), i))
 				{
-					Cheat::GameFunctions::SpawnVehicle((CheatFunctions::StringToChar(i)));
+					Cheat::GameFunctions::SpawnVehicle(CheatFunctions::StringToChar(i));
 				}
 			}
 		}
@@ -2016,7 +2016,7 @@ void Cheat::Main()
 			{
 				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(i)))), i))
 				{
-					Cheat::GameFunctions::SpawnVehicle((CheatFunctions::StringToChar(i)));
+					Cheat::GameFunctions::SpawnVehicle(CheatFunctions::StringToChar(i));
 				}
 			}
 		}
@@ -2028,7 +2028,7 @@ void Cheat::Main()
 			{
 				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(i)))), i))
 				{
-					Cheat::GameFunctions::SpawnVehicle((CheatFunctions::StringToChar(i)));
+					Cheat::GameFunctions::SpawnVehicle(CheatFunctions::StringToChar(i));
 				}
 			}
 		}
@@ -2040,7 +2040,7 @@ void Cheat::Main()
 			{
 				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(i)))), i))
 				{
-					Cheat::GameFunctions::SpawnVehicle((CheatFunctions::StringToChar(i)));
+					Cheat::GameFunctions::SpawnVehicle(CheatFunctions::StringToChar(i));
 				}
 			}
 		}
@@ -2052,7 +2052,7 @@ void Cheat::Main()
 			{
 				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(i)))), i))
 				{
-					Cheat::GameFunctions::SpawnVehicle((CheatFunctions::StringToChar(i)));
+					Cheat::GameFunctions::SpawnVehicle(CheatFunctions::StringToChar(i));
 				}
 			}
 		}
@@ -2064,7 +2064,7 @@ void Cheat::Main()
 			{
 				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(i)))), i))
 				{
-					Cheat::GameFunctions::SpawnVehicle((CheatFunctions::StringToChar(i)));
+					Cheat::GameFunctions::SpawnVehicle(CheatFunctions::StringToChar(i));
 				}
 			}
 		}
@@ -2076,7 +2076,7 @@ void Cheat::Main()
 			{
 				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(i)))), i))
 				{
-					Cheat::GameFunctions::SpawnVehicle((CheatFunctions::StringToChar(i)));
+					Cheat::GameFunctions::SpawnVehicle(CheatFunctions::StringToChar(i));
 				}
 			}
 		}
@@ -2088,7 +2088,7 @@ void Cheat::Main()
 			{
 				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(i)))), i))
 				{
-					Cheat::GameFunctions::SpawnVehicle((CheatFunctions::StringToChar(i)));
+					Cheat::GameFunctions::SpawnVehicle(CheatFunctions::StringToChar(i));
 				}
 			}
 		}
@@ -2100,7 +2100,7 @@ void Cheat::Main()
 			{
 				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(i)))), i))
 				{
-					Cheat::GameFunctions::SpawnVehicle((CheatFunctions::StringToChar(i)));
+					Cheat::GameFunctions::SpawnVehicle(CheatFunctions::StringToChar(i));
 				}
 			}
 		}
@@ -2112,7 +2112,7 @@ void Cheat::Main()
 			{
 				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(i)))), i))
 				{
-					Cheat::GameFunctions::SpawnVehicle((CheatFunctions::StringToChar(i)));
+					Cheat::GameFunctions::SpawnVehicle(CheatFunctions::StringToChar(i));
 				}
 			}
 		}
@@ -2124,7 +2124,7 @@ void Cheat::Main()
 			{
 				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(i)))), i))
 				{
-					Cheat::GameFunctions::SpawnVehicle((CheatFunctions::StringToChar(i)));
+					Cheat::GameFunctions::SpawnVehicle(CheatFunctions::StringToChar(i));
 				}
 			}
 		}
@@ -2136,7 +2136,7 @@ void Cheat::Main()
 			{
 				if (Cheat::VehicleOption(UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(i)))), i))
 				{
-					Cheat::GameFunctions::SpawnVehicle((CheatFunctions::StringToChar(i)));
+					Cheat::GameFunctions::SpawnVehicle(CheatFunctions::StringToChar(i));
 				}
 			}
 		}
@@ -3762,7 +3762,7 @@ void Cheat::Main()
 						if (Cheat::GameFunctions::IsEntityInInterior(PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(i))) { PlayernameString.append(" ~p~[Interior]"); }
 						if (PlayerID == i) { PlayernameString.append(" ~g~[You]"); }
 					}
-					Cheat::MenuOptionPlayerList(CheatFunctions::StringToChar(PlayernameString), SelectedPlayerMenu, i) ? Cheat::CheatFeatures::selectedPlayer = i : NULL;
+					Cheat::MenuOptionPlayerList(PlayernameString, SelectedPlayerMenu, i) ? Cheat::CheatFeatures::selectedPlayer = i : NULL;
 					if (Cheat::GUI::currentOption == Cheat::GUI::optionCount) 
 					{
 						Cheat::GameFunctions::LoadPlayerInformation(PLAYER::GET_PLAYER_NAME(i), i); 
@@ -4257,10 +4257,6 @@ void Cheat::Main()
 			{
 				system(xorstr_("start https://github.com/HowYouDoinMate/GrandTheftAutoV-Cheat"));
 			}
-			if (Cheat::Option("Dump Log Data To File", ""))
-			{
-				Cheat::LogFunctions::DumpLogMessagesToFile();
-			}
 		}
 		break;
 		case menusettingsmenu:
@@ -4416,10 +4412,10 @@ void Cheat::Main()
 			Cheat::MenuOption("Theme Files >", ThemeFilesMenu);
 			if (!Cheat::GUI::CurrentTheme.empty())
 			{
-				Cheat::Break(Cheat::CheatFunctions::CombineTwoChars("Active Theme: ~c~", CheatFunctions::StringToChar(Cheat::GUI::CurrentTheme)), false);
+				Cheat::Break("Active Theme : ~c~" + Cheat::GUI::CurrentTheme, false);
 				if (Cheat::Option("Save To Current Theme", ""))
 				{
-					Cheat::SaveTheme(CheatFunctions::StringToChar(Cheat::GUI::CurrentTheme));
+					Cheat::SaveTheme(Cheat::GUI::CurrentTheme);
 				}
 				if (Cheat::Option("Delete Current Theme", "Delete active theme"))
 				{
@@ -4531,7 +4527,7 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD  ul_reason_for_call, LPVOID lpReser
 		//Create 'gtav' directory
 		if (!Cheat::CheatFunctions::DoesDirectoryExists(Cheat::CheatFunctions::ReturnCheatModuleDirectoryPath() + (std::string)xorstr_("\\gtav"))) { Cheat::CheatFunctions::CreateNewDirectory(Cheat::CheatFunctions::ReturnCheatModuleDirectoryPath() + (std::string)xorstr_("\\gtav")); }
 		//Extract YTD texture file from module
-		DeleteFileA(Cheat::CheatFunctions::TextureFilePath().c_str());
+		remove(Cheat::CheatFunctions::TextureFilePath().c_str());
 		Cheat::CheatFunctions::ExtractResource(hModule, 140, (LPCSTR)Cheat::CheatFunctions::TextureFilePath().c_str());
 		//Continue cheat loading
 		CreateThread(NULL, NULL, InitThread, hModule, NULL, NULL);

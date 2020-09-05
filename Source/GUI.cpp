@@ -204,7 +204,7 @@ bool Cheat::Option(std::string option, std::string InformationText)
 	}
 	if (GUI::currentOption == GUI::optionCount)
 	{
-		OptionInformationText = InformationText;
+		if (InformationText == "") { OptionInformationText.clear(); } else { OptionInformationText = InformationText; }
 		GUI::previousOption = GUI::currentOption;
 		if (GUI::selectPressed)
 		{
@@ -289,7 +289,7 @@ bool Cheat::VehicleOption(std::string option, std::string ModelName)
 	}
 	return false;
 }
-bool Cheat::Break(const char * option, bool TextCentered)
+bool Cheat::Break(std::string option, bool TextCentered)
 {
 	GUI::optionCount++;
 
@@ -816,7 +816,7 @@ void Cheat::GUI::End()
 		GUI::Drawing::Rect(GUI::TopAndBottomLine, { Cheat::GUI::guiX, GUI::guiY + ((GUI::maxVisOptions + 1) * 0.035f - 0.1765f) }, { Cheat::GUI::guiWidth, 0.002f });
 		GUI::Drawing::Spriter("commonmenu", "shop_arrows_upanddown", Cheat::GUI::guiX, GUI::guiY + ((GUI::maxVisOptions + 1) * 0.035f - 0.160f), 0.020f, 0.035f, 180, GUI::TopAndBottomLine.r, GUI::TopAndBottomLine.g, GUI::TopAndBottomLine.b, GUI::TopAndBottomLine.a);
 
-		if (OptionInformationText != "") 
+		if (!OptionInformationText.empty()) 
 		{
 			GUI::Drawing::Rect(GUI::MenuBottomRect, { Cheat::GUI::guiX, GUI::guiY + ((GUI::maxVisOptions + 2) * 0.035f - 0.161f) }, { Cheat::GUI::guiWidth, 0.030f }); // Option Info Rect
 			GUI::Drawing::Spriter("shared", "info_icon_32", { Cheat::GUI::guiX - 0.095f }, GUI::guiY + ((GUI::maxVisOptions + 2) * 0.035f - 0.168f), 0.020f, 0.035f, 0, 255, 255, 255, 255); // Option Info Info Spriter
@@ -831,7 +831,7 @@ void Cheat::GUI::End()
 		GUI::Drawing::Rect(GUI::TopAndBottomLine, { Cheat::GUI::guiX, GUI::guiY + (GUI::optionCount + 1) * 0.035f - 0.1765f }, { Cheat::GUI::guiWidth, 0.002f });
 		GUI::Drawing::Spriter("commonmenu", "shop_arrows_upanddown", Cheat::GUI::guiX, GUI::guiY + ((GUI::optionCount + 1) * 0.035f - 0.160f), 0.020f, 0.035f, 180, GUI::TopAndBottomLine.r, GUI::TopAndBottomLine.g, GUI::TopAndBottomLine.b, GUI::TopAndBottomLine.a);
 
-		if (OptionInformationText != "") 
+		if (!OptionInformationText.empty())
 		{
 			GUI::Drawing::Rect(GUI::MenuBottomRect, { Cheat::GUI::guiX, GUI::guiY + (GUI::optionCount + 2) * 0.035f - 0.161f }, { Cheat::GUI::guiWidth, 0.030f }); // Option Info Rect
 			GUI::Drawing::Spriter("shared", "info_icon_32", { Cheat::GUI::guiX - 0.095f }, GUI::guiY + ((GUI::optionCount + 2) * 0.035f - 0.168), 0.020f, 0.035f, 0, 255, 255, 255, 255); // Option Info Info Spriter
@@ -964,7 +964,7 @@ void Cheat::Speedometer(std::string text)
 {
 	GUI::Drawing::Text(text, { 0, 0, 255, 255 }, { 0.90f, 0.5000f }, { 0.70f, 0.70f }, false);
 }
-void Cheat::AddPlayerInfoBoxTextEntry(char* text, int Row1, int Row2, int Row3, int Row4)
+void Cheat::AddPlayerInfoBoxTextEntry(std::string text, int Row1, int Row2, int Row3, int Row4)
 {
 	if (Cheat::GUI::guiX < 0.54f)
 	{		

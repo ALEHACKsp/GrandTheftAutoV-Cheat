@@ -425,7 +425,6 @@ namespace Cheat
 		void Message(char* Message);
 		void Error(char* Message);
 		void DebugMessage(std::string Message);
-		void DumpLogMessagesToFile();
 	}
 	namespace GameArrays 
 	{
@@ -483,8 +482,8 @@ namespace Cheat
 	}
 	void Title(std::string title);
 	void Speedometer(std::string text);
-	void AddPlayerInfoBoxTextEntry(char* text, int Row1 = NULL, int Row2 = NULL, int Row3 = NULL, int Row4 = NULL);
-	bool Break(const char* option, bool TextCentered);
+	void AddPlayerInfoBoxTextEntry(std::string text, int Row1 = NULL, int Row2 = NULL, int Row3 = NULL, int Row4 = NULL);
+	bool Break(std::string option, bool TextCentered);
 	bool Option(std::string option, std::string InformationText);
 	bool VehicleOption(std::string option, std::string ModelName);
 	bool MenuOption(std::string option, SubMenus newSub);

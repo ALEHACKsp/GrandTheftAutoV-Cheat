@@ -43,10 +43,9 @@ int SessionTimeSeconds;
 
 void Cheat::Main() 
 { 
-	Cheat::CheatFunctions::PostInitCheat();
+	Cheat::CheatFeatures::NoneLooped();
 	while (true) 
 	{
-		Cheat::GUI::ControlsLoop();
 		Cheat::CheatFunctions::CheatThreadLoopFunctions();
 
 		switch (Cheat::GUI::currentMenu) {
@@ -2840,7 +2839,6 @@ void Cheat::Main()
 					}
 				}
 			}
-
 		}
 		break;
 		case timemenu:
@@ -3403,10 +3401,9 @@ void Cheat::Main()
 		{
 			Cheat::Title("Vehicle Gun");
 			Cheat::Toggle("Toggle Vehicle Gun", Cheat::CheatFeatures::VehicleGunBool, "Toggle Vehicle Gun");
-			if (Cheat::CheatFeatures::VehicleGun_VehicleNameChar != NULL)
+			if (!Cheat::CheatFeatures::VehicleGun_VehicleNameString.empty())
 			{
-				char* CurrentVehicleGun = Cheat::CheatFunctions::CombineTwoChars("Current: ~t~", Cheat::CheatFeatures::VehicleGun_VehicleNameChar);
-				Cheat::Break(CurrentVehicleGun, false);
+				Cheat::Break("Current: ~t~" + Cheat::CheatFeatures::VehicleGun_VehicleNameString, false);
 			}
 			else
 			{
@@ -3425,16 +3422,16 @@ void Cheat::Main()
 				}
 				else
 				{
-					Cheat::CheatFeatures::VehicleGun_VehicleNameChar = SpawnVehicle;
+					Cheat::CheatFeatures::VehicleGun_VehicleNameString = SpawnVehicle;
 					Cheat::GameFunctions::MinimapNotification("Custom Vehicle Set");
 				}
 			}
-			if (Cheat::Option("Rhino Tank", "")) { Cheat::CheatFeatures::VehicleGun_VehicleNameChar = "RHINO"; }
-			if (Cheat::Option("Hydra", "")) { Cheat::CheatFeatures::VehicleGun_VehicleNameChar = "HYDRA"; }
-			if (Cheat::Option("Airport Bus", "")) { Cheat::CheatFeatures::VehicleGun_VehicleNameChar = "AIRBUS"; }
-			if (Cheat::Option("Brickade", "")) { Cheat::CheatFeatures::VehicleGun_VehicleNameChar = "BRICKADE"; }
-			if (Cheat::Option("Cargo Plane", "")) { Cheat::CheatFeatures::VehicleGun_VehicleNameChar = "CARGOPLANE"; }
-			if (Cheat::Option("Dump", "")) { Cheat::CheatFeatures::VehicleGun_VehicleNameChar = "DUMP"; }
+			if (Cheat::Option("Rhino Tank", "")) { Cheat::CheatFeatures::VehicleGun_VehicleNameString = "RHINO"; }
+			if (Cheat::Option("Hydra", "")) { Cheat::CheatFeatures::VehicleGun_VehicleNameString = "HYDRA"; }
+			if (Cheat::Option("Airport Bus", "")) { Cheat::CheatFeatures::VehicleGun_VehicleNameString = "AIRBUS"; }
+			if (Cheat::Option("Brickade", "")) { Cheat::CheatFeatures::VehicleGun_VehicleNameString = "BRICKADE"; }
+			if (Cheat::Option("Cargo Plane", "")) { Cheat::CheatFeatures::VehicleGun_VehicleNameString = "CARGOPLANE"; }
+			if (Cheat::Option("Dump", "")) { Cheat::CheatFeatures::VehicleGun_VehicleNameString = "DUMP"; }
 		}
 		break;
 		case custombulletsmenu: 
@@ -3845,7 +3842,7 @@ void Cheat::Main()
 			Cheat::Toggle("Explosive Melee", Cheat::CheatFeatures::ExplosiveMeleeBool, "Objects you hit with melee explode");
 			Cheat::Toggle("Tiny Player", Cheat::CheatFeatures::TinyPlayerBool, "Lowers your character's scaling");
 			Cheat::Toggle("Super Man", Cheat::CheatFeatures::SuperManBool, "Fly around like a superman!");
-			Cheat::Int("Player Opacity", Cheat::CheatFeatures::PlayerOpacityInt, 50, 250, 50, false, "Changes local player opacity");
+			if (Cheat::Int("Player Opacity", Cheat::CheatFeatures::PlayerOpacityInt, 50, 250, 50, false, "Changes local player opacity")) { ENTITY::SET_ENTITY_ALPHA(PlayerPedID, (Cheat::CheatFeatures::PlayerOpacityInt), false); }
 			if (Cheat::Option("Suicide", "Kill your character")) { PED::APPLY_DAMAGE_TO_PED(PlayerPedID, 300, true); }
 			if (Cheat::Option("Give BST", "Get Bull Shark Testosterone - GTAO Only")) { globalHandle(2437549).At(3880).As<int>() = 1; }
 			if (Cheat::Option("Clean Player", "Remove any damage from player character")) { PED::CLEAR_PED_BLOOD_DAMAGE(PlayerPedID); PED::RESET_PED_VISIBLE_DAMAGE(PlayerPedID); Cheat::GameFunctions::MinimapNotification("Player Cleaned"); }	
@@ -4344,7 +4341,7 @@ void Cheat::Main()
 			Cheat::MenuOption("Theme Files >", ThemeFilesMenu);
 			if (!Cheat::GUI::CurrentTheme.empty())
 			{
-				Cheat::Break("Active Theme : ~c~" + Cheat::GUI::CurrentTheme, false);
+				Cheat::Break("Active Theme: ~c~" + Cheat::GUI::CurrentTheme, false);
 				if (Cheat::Option("Save To Current Theme", ""))
 				{
 					Cheat::GUI::SaveTheme(Cheat::GUI::CurrentTheme);
@@ -4370,10 +4367,9 @@ void Cheat::Main()
 		{
 			Cheat::Title("Theme Files");
 			Cheat::GUI::LoadThemeFilesLooped();
-			Cheat::Break("All theme files below - select to load", true);
-			for (auto const& i : Cheat::GUI::ThemeFilesVector)
+			if (!Cheat::GUI::ThemeFilesVector.empty())
 			{
-				if (!Cheat::GUI::ThemeFilesVector.empty())
+				for (auto const& i : Cheat::GUI::ThemeFilesVector)
 				{
 					if (Cheat::Option(i, ""))
 					{
@@ -4382,6 +4378,10 @@ void Cheat::Main()
 						Cheat::GUI::LoadTheme(CheatFunctions::StringToChar(i), false);
 					}
 				}
+			}
+			else
+			{
+				Cheat::Break("No Theme Files Available", false);
 			}
 		}
 		break;

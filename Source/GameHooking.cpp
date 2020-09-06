@@ -386,7 +386,7 @@ void GameHooking::DoGameHooking()
 	c_location == nullptr ? Cheat::LogFunctions::Error(xorstr_("Failed to hook GameState")) : m_gameState = reinterpret_cast<decltype(m_gameState)>(c_location + *(int32_t*)c_location + 5);
 	
 	//Hook Vector3 Bypass
-	Cheat::LogFunctions::DebugMessage(xorstr_("Load 'Vector 3 Bypass'"));
+	Cheat::LogFunctions::DebugMessage(xorstr_("Load 'Vector3 Bypass'"));
 	v_location = p_fixVector3Result.count(1).get(0).get<void>(0);
 	if (v_location != nullptr) scrNativeCallContext::SetVectorResults = (void(*)(scrNativeCallContext*))(v_location);
 

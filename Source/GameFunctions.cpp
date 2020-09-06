@@ -1499,7 +1499,7 @@ void Cheat::GameFunctions::CursorGUINavigationLoop()
 }
 void Cheat::GameFunctions::EnableDisableCursorGUINavigation()
 {
-	if (GUI::menuLevel != 0)
+	if (GUI::menuLevel != 0 && !GUI::GUIControlsDisabled)
 	{
 		if (Cheat::CheatFeatures::CursorGUINavigationEnabled)
 		{

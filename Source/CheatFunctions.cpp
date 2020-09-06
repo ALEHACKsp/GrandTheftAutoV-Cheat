@@ -101,6 +101,9 @@ void Cheat::CheatFunctions::CheatThreadLoopFunctions()
 
 	//Features
 	Cheat::CheatFeatures::Looped();
+
+	//Controls
+	Cheat::GUI::ControlsLoop();
 }
 
 
@@ -304,7 +307,7 @@ void Cheat::CheatFunctions::ShowItemSavingDisabledMessage(std::string OptionName
 
 bool Cheat::CheatFunctions::IsSaveItemHotKeyPressed()
 {
-	if (GetAsyncKeyState(GUI::SaveItemKey) & 0x8000 && Cheat::CheatFunctions::IsGameWindowFocussed())
+	if (GetAsyncKeyState(GUI::SaveItemKey) & 0x8000 && Cheat::CheatFunctions::IsGameWindowFocussed() && !GUI::GUIControlsDisabled)
 	{
 		return true;
 	}
@@ -316,17 +319,17 @@ bool Cheat::CheatFunctions::IsSaveItemHotKeyPressed()
 
 void LoadSettingsThreadFunction()
 {
-	Cheat::GUI::EnableDisableGUIControls();
+	Cheat::GUI::EnableGUIControlsDisabled();
 	for (int SubMenuInt = MainMenu; SubMenuInt != SUBMENUS_END; SubMenuInt++)
 	{
 		SubMenus CurrentSubMenuInt = static_cast<SubMenus>(SubMenuInt);
 		Cheat::GUI::MoveMenu(CurrentSubMenuInt);
-		Sleep(50);
+		Sleep(100);
 	}
 	Cheat::GUI::CloseGUI();
 	Cheat::GUI::PreviousMenu = NOMENU;
 	Cheat::GUI::CheatGUIHasBeenOpened = false;
-	Cheat::GUI::EnableDisableGUIControls();
+	Cheat::GUI::EnableGUIControlsDisabled();
 }
 
 void Cheat::CheatFunctions::LoadSettings()
@@ -374,14 +377,6 @@ bool Cheat::CheatFunctions::IsOptionRegisteredAsLoaded(std::string OptionName)
 		}
 	}
 	return false;
-}
-
-void Cheat::CheatFunctions::PostInitCheat()
-{
-	Cheat::GUI::Drawing::InitTextureFile();
-	Cheat::CheatFunctions::LoadSettings();
-	Cheat::LogFunctions::Message(xorstr_("GTAV Cheat Initialization Completed"));
-	Cheat::CheatFeatures::PostInitScaleFormStart = std::chrono::high_resolution_clock::now();
 }
 
 char* Cheat::CheatFunctions::StringToChar(std::string string)

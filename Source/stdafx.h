@@ -78,7 +78,7 @@ namespace Cheat
 		extern bool ShowHeaderGlare;
 		extern bool CheatGUIHasBeenOpened;
 		extern std::string CurrentTheme;
-		extern bool DisableGUIControls;
+		extern bool GUIControlsDisabled;
 		extern bool selectPressed;
 		extern bool leftPressed;
 		extern bool rightPressed;
@@ -137,7 +137,7 @@ namespace Cheat
 		void BackMenu();
 		void CloseGUI();
 		void End();
-		void EnableDisableGUIControls();
+		void EnableGUIControlsDisabled();
 		void LoadThemeFilesLooped();
 		void LoadTheme(std::string ThemeFileName, bool StartUp);
 		void SaveTheme(std::string ThemeFileName);
@@ -156,8 +156,8 @@ namespace Cheat
 		extern bool ShowVehicleInfoAndPreview;
 		extern bool CursorGUINavigationEnabled;
 		extern bool ShowJoiningPlayersNotification;
-		extern std::chrono::steady_clock::time_point PostInitScaleFormStart;
 
+		void NoneLooped();
 		void Looped();
 		extern bool GodmodeBool;
 		void Godmode(bool toggle);
@@ -260,7 +260,7 @@ namespace Cheat
 		extern bool UnlimitedRocketBoostBool;
 		void UnlimitedRocketBoost();
 		extern bool VehicleGunBool;
-		extern char* VehicleGun_VehicleNameChar;
+		extern std::string VehicleGun_VehicleNameString;
 		void VehicleGun();
 		extern bool PlayerESPBool;
 		void PlayerESP();
@@ -339,7 +339,6 @@ namespace Cheat
 		bool ExtractResource(const HINSTANCE hInstance, WORD resourceID, LPCSTR szFilename);
 		std::string TextureFilePath();
 		bool ReturnPressedKey(int &PressedKey);
-		void PostInitCheat();
 		char* StringToChar(std::string string);
 		std::string VirtualKeyCodeToString(UCHAR virtualKey);
 		void CreateConsole();

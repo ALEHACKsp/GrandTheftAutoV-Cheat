@@ -3,7 +3,7 @@
 float Cheat::GUI::guiX					= 0.11f;
 float Cheat::GUI::guiY					= 0.30f;
 float Cheat::GUI::guiWidth				= 0.21f; //TODO: Text Scaling not implemented yet
-bool Cheat::GUI::DisableGUIControls		= false; //Used during initialization (LoadSettings())
+bool Cheat::GUI::GUIControlsDisabled    = false; //Used during initialization (LoadSettings())
 bool Cheat::GUI::selectPressed			= false;
 bool Cheat::GUI::leftPressed			= false;
 bool Cheat::GUI::rightPressed			= false;
@@ -109,9 +109,9 @@ void Cheat::GUI::Drawing::DrawScaleform(const float x, const float y, const floa
 void Cheat::Title(std::string title)
 {
 	GUI::Drawing::Text(title, { GUI::titleText }, { GUI::guiX, GUI::guiY - 0.17f }, { 0.50f, 0.35f }, true);
-	if (Cheat::GUI::ShowHeaderBackground)		{ GUI::Drawing::Rect(GUI::headerRect, { Cheat::GUI::guiX, GUI::guiY - 0.208f }, { Cheat::GUI::guiWidth, 0.084f });  }
-	if (GUI::ShowHeaderGlare)					{ GUI::Drawing::DrawScaleform(Cheat::GUI::guiX + .330f, GUI::guiY + 0.162f, 1.0f, 0.912f, 255, 255, 255); }
-	if (Cheat::GUI::ShowHeaderGUI)				{ Cheat::GUI::Drawing::Spriter(xorstr_("Textures"), xorstr_("HeaderDefaultTransparent"), Cheat::GUI::guiX, GUI::guiY - 0.208f, Cheat::GUI::guiWidth, 0.084f, 0, 255, 255, 255, 255); }
+	if (Cheat::GUI::ShowHeaderBackground) { GUI::Drawing::Rect(GUI::headerRect, { Cheat::GUI::guiX, GUI::guiY - 0.208f }, { Cheat::GUI::guiWidth, 0.084f }); }
+	if (GUI::ShowHeaderGlare) { GUI::Drawing::DrawScaleform(Cheat::GUI::guiX + .330f, GUI::guiY + 0.162f, 1.0f, 0.912f, 255, 255, 255); }
+	if (Cheat::GUI::ShowHeaderGUI) { Cheat::GUI::Drawing::Spriter(xorstr_("Textures"), xorstr_("HeaderDefaultTransparent"), Cheat::GUI::guiX, GUI::guiY - 0.208f, Cheat::GUI::guiWidth, 0.084f, 0, 255, 255, 255, 255); }
 	GUI::Drawing::Rect(GUI::MainTitleRect, { Cheat::GUI::guiX, GUI::guiY - 0.154f }, { Cheat::GUI::guiWidth, 0.023f });
 	GUI::Drawing::Rect(GUI::TopAndBottomLine, { Cheat::GUI::guiX, GUI::guiY - 0.142f }, { Cheat::GUI::guiWidth, 0.002f });
 
@@ -849,16 +849,19 @@ void PlaySoundFrontend_default(char* sound_name)
 
 void Cheat::GUI::ControlsLoop()
 {
-	if (!DisableGUIControls)
+	if (!GUIControlsDisabled)
 	{
 		GUI::selectPressed = false;
 		GUI::leftPressed = false;
 		GUI::rightPressed = false;
 
-		if (GetTickCount64() - GUI::keyPressPreviousTick > GUI::keyPressDelay) {
-			if (GetTickCount64() - GUI::keyPressPreviousTick2 > GUI::keyPressDelay2) {
-				if (GetTickCount64() - GUI::keyPressPreviousTick3 > GUI::keyPressDelay3) {
-					if (GetAsyncKeyState(GUI::openKey) & 1 && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlScriptRB) && CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendX) && GUI::ControllerInput)
+		if (GetTickCount64() - GUI::keyPressPreviousTick > GUI::keyPressDelay) 
+		{
+			if (GetTickCount64() - GUI::keyPressPreviousTick2 > GUI::keyPressDelay2) 
+			{
+				if (GetTickCount64() - GUI::keyPressPreviousTick3 > GUI::keyPressDelay3) 
+				{
+					if (GetAsyncKeyState(GUI::openKey) & 0x8000 && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlScriptRB) && CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendX) && GUI::ControllerInput)
 					{
 						if (GUI::menuLevel == 0)
 						{
@@ -882,13 +885,13 @@ void Cheat::GUI::ControlsLoop()
 						PlaySoundFrontend_default("SELECT");
 						GUI::keyPressPreviousTick = GetTickCount64();
 					}
-					else if (GetAsyncKeyState(VK_NUMPAD0) & 1 && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendCancel) && GUI::ControllerInput)
+					else if (GetAsyncKeyState(VK_NUMPAD0) & 0x8000 && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendCancel) && GUI::ControllerInput)
 					{
 						if (GUI::menuLevel > 0) { GUI::BackMenu(); PlaySoundFrontend_default("BACK"); }
 
 						GUI::keyPressPreviousTick = GetTickCount64();
 					}
-					else if (GetAsyncKeyState(VK_NUMPAD8) & 1 && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendUp) && GUI::ControllerInput)
+					else if (GetAsyncKeyState(VK_NUMPAD8) & 0x8000 && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendUp) && GUI::ControllerInput)
 					{
 						GUI::currentOption > 1 ? GUI::currentOption-- : GUI::currentOption = GUI::optionCount;
 						if (GUI::menuLevel > 0)
@@ -896,7 +899,7 @@ void Cheat::GUI::ControlsLoop()
 
 						GUI::keyPressPreviousTick2 = GetTickCount64();
 					}
-					else if (GetAsyncKeyState(VK_NUMPAD2) & 1 && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendDown) && GUI::ControllerInput)
+					else if (GetAsyncKeyState(VK_NUMPAD2) & 0x8000 && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendDown) && GUI::ControllerInput)
 					{
 						GUI::currentOption < GUI::optionCount ? GUI::currentOption++ : GUI::currentOption = 1;
 						if (GUI::menuLevel > 0)
@@ -904,7 +907,7 @@ void Cheat::GUI::ControlsLoop()
 
 						GUI::keyPressPreviousTick2 = GetTickCount64();
 					}
-					else if (GetAsyncKeyState(VK_NUMPAD6) & 1 && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlPhoneRight) && GUI::ControllerInput)
+					else if (GetAsyncKeyState(VK_NUMPAD6) & 0x8000 && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlPhoneRight) && GUI::ControllerInput)
 					{
 						GUI::leftPressed = true;
 						if (GUI::menuLevel > 0)
@@ -912,7 +915,7 @@ void Cheat::GUI::ControlsLoop()
 
 						GUI::keyPressPreviousTick3 = GetTickCount64();
 					}
-					else if (GetAsyncKeyState(VK_NUMPAD4) & 1 && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlPhoneLeft) && GUI::ControllerInput)
+					else if (GetAsyncKeyState(VK_NUMPAD4) & 0x8000 && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlPhoneLeft) && GUI::ControllerInput)
 					{
 						GUI::rightPressed = true;
 						if (GUI::menuLevel > 0)
@@ -920,7 +923,7 @@ void Cheat::GUI::ControlsLoop()
 
 						GUI::keyPressPreviousTick3 = GetTickCount64();
 					}
-					else if (GetAsyncKeyState(VK_NUMPAD5) & 1 && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept) && GUI::ControllerInput)
+					else if (GetAsyncKeyState(VK_NUMPAD5) & 0x8000 && Cheat::CheatFunctions::IsGameWindowFocussed() || CONTROLS::IS_DISABLED_CONTROL_PRESSED(0, ControlFrontendAccept) && GUI::ControllerInput)
 					{
 						GUI::selectPressed = true;
 						if (GUI::menuLevel > 0)
@@ -1183,17 +1186,17 @@ void Cheat::GUI::DeleteCurrentTheme()
 	}
 }
 
-void Cheat::GUI::EnableDisableGUIControls()
+void Cheat::GUI::EnableGUIControlsDisabled()
 {
-	if (DisableGUIControls)
+	if (GUIControlsDisabled)
 	{
 		Cheat::LogFunctions::DebugMessage(xorstr_("Enabled GUI Controls"));
-		DisableGUIControls = false;
+		GUIControlsDisabled = false;
 	}
 	else
 	{
 		Cheat::LogFunctions::DebugMessage(xorstr_("Disabled GUI Controls"));
-		DisableGUIControls = true;
+		GUIControlsDisabled = true;
 	}
 }
 

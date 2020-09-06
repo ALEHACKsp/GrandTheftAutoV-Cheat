@@ -10,33 +10,37 @@ bool Cheat::CheatFeatures::ShowBlockedScriptEventNotifications = true;
 bool Cheat::CheatFeatures::ShowPlayerTagsPlayerList = true;
 bool Cheat::CheatFeatures::ShowVehicleInfoAndPreview = true;
 bool Cheat::CheatFeatures::ShowJoiningPlayersNotification = true;
-std::chrono::steady_clock::time_point Cheat::CheatFeatures::PostInitScaleFormStart;
 
+int PostInitBannerNotificationScaleformHandle;
+void Cheat::CheatFeatures::NoneLooped()
+{
+	//Initialize Texture File
+	Cheat::GUI::Drawing::InitTextureFile();
+
+	//Load Settings
+	Cheat::CheatFunctions::LoadSettings();
+
+	//Log Post Init Completion
+	Cheat::LogFunctions::Message(xorstr_("GTAV Cheat Initialization Completed"));
+
+	//Init Scaleform Banner Notification
+	std::string OpenGUIString = xorstr_("Cheat has been successfully initialized. Have fun!\nPress ") + Cheat::CheatFunctions::VirtualKeyCodeToString(Cheat::GUI::openKey) + xorstr_(" to open GUI");
+	PostInitBannerNotificationScaleformHandle = GRAPHICS::REQUEST_SCALEFORM_MOVIE(xorstr_("mp_big_message_freemode"));
+	while (!GRAPHICS::HAS_SCALEFORM_MOVIE_LOADED(PostInitBannerNotificationScaleformHandle)) { WAIT(0, false); }
+	GRAPHICS::BEGIN_SCALEFORM_MOVIE_METHOD(PostInitBannerNotificationScaleformHandle, xorstr_("SHOW_SHARD_WASTED_MP_MESSAGE"));
+	GRAPHICS::_ADD_SCALEFORM_MOVIE_METHOD_PARAMETER_STRING(xorstr_("<FONT FACE='$Font2'>GTAV Cheat"));
+	GRAPHICS::_ADD_SCALEFORM_MOVIE_METHOD_PARAMETER_STRING(CheatFunctions::StringToChar(OpenGUIString));
+	GRAPHICS::_ADD_SCALEFORM_MOVIE_METHOD_PARAMETER_INT(5);
+	GRAPHICS::END_SCALEFORM_MOVIE_METHOD();
+}
 
 void Cheat::CheatFeatures::Looped()
 {
-	//Post Init Scaleform Banner Notification - Show for 10 seconds or until cheat GUI is opened
-	if (!Cheat::GUI::CheatGUIHasBeenOpened && !(std::chrono::duration_cast<std::chrono::seconds>(std::chrono::high_resolution_clock::now() - PostInitScaleFormStart).count() > 10))
+	//Post Init Scaleform Banner Notification
+	if (!GUI::CheatGUIHasBeenOpened)
 	{ 
-		auto ScaleformHandle = GRAPHICS::REQUEST_SCALEFORM_MOVIE(xorstr_("mp_big_message_freemode"));
-		while (!GRAPHICS::HAS_SCALEFORM_MOVIE_LOADED(ScaleformHandle)) { WAIT(0, false); }
-		GRAPHICS::BEGIN_SCALEFORM_MOVIE_METHOD(ScaleformHandle, xorstr_("SHOW_SHARD_WASTED_MP_MESSAGE"));
-		GRAPHICS::_ADD_SCALEFORM_MOVIE_METHOD_PARAMETER_STRING(xorstr_("<FONT FACE='$Font2'>GTAV Cheat"));
-		GRAPHICS::_ADD_SCALEFORM_MOVIE_METHOD_PARAMETER_STRING(xorstr_("Cheat has been successfully initialized. Have fun!"));
-		GRAPHICS::_ADD_SCALEFORM_MOVIE_METHOD_PARAMETER_INT(5);
-		GRAPHICS::END_SCALEFORM_MOVIE_METHOD();
-		GRAPHICS::DRAW_SCALEFORM_MOVIE_FULLSCREEN(ScaleformHandle, 255, 255, 255, 255, 0);
+		GRAPHICS::DRAW_SCALEFORM_MOVIE_FULLSCREEN(PostInitBannerNotificationScaleformHandle, 255, 255, 255, 255, 0);
 	}
-
-	//Key Instructions, Cheat GUI
-	if (!Cheat::GUI::CheatGUIHasBeenOpened)
-	{
-		std::string OpenGUIString = xorstr_("Press ") + Cheat::CheatFunctions::VirtualKeyCodeToString(Cheat::GUI::openKey) + xorstr_(" to open GUI");
-		Cheat::GameFunctions::InstructionalKeysInit();
-		Cheat::GameFunctions::InstructionsAdd(CheatFunctions::StringToChar(OpenGUIString), 80);
-		Cheat::GameFunctions::InstructionsEnd();
-	}
-
 
 	//New Session Member Notification Feature
 	Cheat::GameFunctions::CheckNewSessionMembersLoop();
@@ -59,9 +63,6 @@ void Cheat::CheatFeatures::Looped()
 		if (SpeedometerVectorPosition == 1 || SpeedometerVectorPosition == 3) { Cheat::Speedometer(Speed.str()); }
 		if (SpeedometerVectorPosition == 2 || SpeedometerVectorPosition == 3) { VEHICLE::SET_VEHICLE_NUMBER_PLATE_TEXT(PED::GET_VEHICLE_PED_IS_IN(PlayerPedID, 0), CheatFunctions::StringToChar(Speed.str())); }
 	}
-
-	//Player Opacity
-	ENTITY::SET_ENTITY_ALPHA(PlayerPedID, (PlayerOpacityInt), false);
 
 	//Hotkey loops
 	if (TeleportForward2mHotkey != NULL && HotkeyToggleBool)
@@ -912,7 +913,7 @@ void Cheat::CheatFeatures::UnlimitedRocketBoost()
 	}
 }
 
-char* Cheat::CheatFeatures::VehicleGun_VehicleNameChar;
+std::string Cheat::CheatFeatures::VehicleGun_VehicleNameString;
 bool Cheat::CheatFeatures::VehicleGunBool = false;
 void Cheat::CheatFeatures::VehicleGun()
 {
@@ -920,7 +921,7 @@ void Cheat::CheatFeatures::VehicleGun()
 	if (PED::IS_PED_SHOOTING(playerPed))
 	{
 		float offset = 0;
-		int vehmodel = GAMEPLAY::GET_HASH_KEY(VehicleGun_VehicleNameChar);
+		int vehmodel = GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(VehicleGun_VehicleNameString));
 		STREAMING::REQUEST_MODEL(vehmodel);
 
 		while (!STREAMING::HAS_MODEL_LOADED(vehmodel)) { WAIT(0); }
@@ -1081,11 +1082,8 @@ void Cheat::CheatFeatures::SuperMan()
 
 	if (ENTITY::IS_ENTITY_IN_AIR(PlayerPedID) && !PED::IS_PED_RAGDOLL(PlayerPedID))
 	{
-		// W key
 		if (GetAsyncKeyState(0x57) && Cheat::CheatFunctions::IsGameWindowFocussed()) { Cheat::GameFunctions::ApplyForceToEntity(PlayerPedID, 0, 6, 0); }
-		// S key
 		if (GetAsyncKeyState(0x53) && Cheat::CheatFunctions::IsGameWindowFocussed()) { Cheat::GameFunctions::ApplyForceToEntity(PlayerPedID, 0, -6, 0); }
-		//VK_SHIFT
 		if (GetAsyncKeyState(VK_SHIFT) && Cheat::CheatFunctions::IsGameWindowFocussed()) { Cheat::GameFunctions::ApplyForceToEntity(PlayerPedID, 0, 0, 6); }
 	}
 }

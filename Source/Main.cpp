@@ -3836,8 +3836,7 @@ void Cheat::Main()
 			Cheat::Toggle("Unlimited Special Ability", Cheat::CheatFeatures::UnlimitedSpecialAbilityBool, "Always 100% Special Ability");
 			Cheat::Toggle("Ignored By Everyone", Cheat::CheatFeatures::PlayerIgnoredBool, "NPC's will (mostly) ignore you");
 			Cheat::Toggle("Never Wanted", Cheat::CheatFeatures::NeverWantedBool, "Never get a wanted level");
-			Cheat::Int("Wanted Level", PlayerWantedLevelInteger, 0, 5, 1, false, false, "Set Wanted Level");
-			if (Cheat::Option("Set Wanted Level", "Set above defined wanted level")) { if (Cheat::CheatFeatures::NeverWantedBool) { Cheat::CheatFeatures::NeverWantedBool = false; } PLAYER::SET_PLAYER_WANTED_LEVEL(PlayerID, PlayerWantedLevelInteger, 0); PLAYER::SET_PLAYER_WANTED_LEVEL_NOW(PlayerID, 0); }
+			if (Cheat::Int("Wanted Level", PlayerWantedLevelInteger, 0, 5, 1, false, false, "Set Wanted Level")) { Cheat::CheatFeatures::NeverWantedBool = false; PLAYER::SET_PLAYER_WANTED_LEVEL(PlayerID, PlayerWantedLevelInteger, false); PLAYER::SET_PLAYER_WANTED_LEVEL_NOW(PlayerID, false); }
 			Cheat::Toggle("Invisible", Cheat::CheatFeatures::PlayerInvisibleBool, "Makes your character invisible");
 			Cheat::Toggle("Explosive Melee", Cheat::CheatFeatures::ExplosiveMeleeBool, "Objects you hit with melee explode");
 			Cheat::Toggle("Tiny Player", Cheat::CheatFeatures::TinyPlayerBool, "Lowers your character's scaling");

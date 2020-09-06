@@ -148,22 +148,15 @@ void Cheat::Main()
 		{
 			Cheat::Title("Online Options");
 			Cheat::MenuOption("Player List >", PlayerListMenu);
-			if (!NETWORK::NETWORK_IS_SESSION_STARTED()) 
-			{
-				Cheat::Break("Join GTA Online to see all options", true); 
-			}
-			else 
-			{
-				Cheat::MenuOption("All Players >", AllPlayersMenu);
-				Cheat::MenuOption("Protections >", protections); 
-				Cheat::MenuOption("Stats Options >", statsoptionsmenu);
-				Cheat::MenuOption("Session Options >", sessionoptionsmenu);
-				Cheat::Toggle("Off Radar", Cheat::CheatFeatures::OffRadarBool, "Enables Lester Off Radar Feature");
-				Cheat::Toggle("Reveal Players", Cheat::CheatFeatures::RevealPlayersBool, "Enables Lester Reveal Players Feature");
-				//Cheat::Toggle("No Idle Kick", Cheat::CheatFeatures::NoIdleKickBool, "Does not work when out of game focus");
-				//Cheat::Toggle("Bribe Authorities", Cheat::CheatFeatures::BribeAuthoritiesBool, "Enables Bribe Authorities");
-				if (Cheat::Option("Get Empty Session", "Get Empty (Public) Session")) {  Sleep(10000); }
-			}
+			Cheat::MenuOption("All Players >", AllPlayersMenu);
+			Cheat::MenuOption("Protections >", protections);
+			Cheat::MenuOption("Stats Options >", statsoptionsmenu);
+			Cheat::MenuOption("Session Options >", sessionoptionsmenu);
+			Cheat::Toggle("Off Radar", Cheat::CheatFeatures::OffRadarBool, "Enables Lester Off Radar Feature");
+			Cheat::Toggle("Reveal Players", Cheat::CheatFeatures::RevealPlayersBool, "Enables Lester Reveal Players Feature");
+			//Cheat::Toggle("No Idle Kick", Cheat::CheatFeatures::NoIdleKickBool, "Does not work when out of game focus");
+			//Cheat::Toggle("Bribe Authorities", Cheat::CheatFeatures::BribeAuthoritiesBool, "Enables Bribe Authorities");
+			if (Cheat::Option("Get Empty Session", "Get Empty (Public) Session")) { Sleep(10000); }
 		}
 		break; 
 		case sessionoptionsmenu:
@@ -179,7 +172,13 @@ void Cheat::Main()
 			Cheat::Int("Hour", SessionTimeHour, 0, 23, 1, false, false);
 			Cheat::Int("Minutes", SessionTimeMinutes, 0, 59, 1, false, false);
 			Cheat::Int("Seconds", SessionTimeSeconds, 0, 59, 1, false, false);
-			if (Cheat::Option("Set Time", "")) { Cheat::GameFunctions::SetSessionTime(SessionTimeHour, SessionTimeMinutes, SessionTimeSeconds); }
+			if (Cheat::Option("Set Time", ""))
+			{
+				if (NETWORK::NETWORK_IS_SESSION_STARTED())
+				{
+					Cheat::GameFunctions::SetSessionTime(SessionTimeHour, SessionTimeMinutes, SessionTimeSeconds);
+				}
+			}
 		}
 		break;
 		case sessionweathermenu:
@@ -2844,9 +2843,9 @@ void Cheat::Main()
 		case timemenu:
 		{
 			Cheat::Title("Time Options");
-			if (Cheat::Int("Hour", SetTimeHour, 0, 23, 1, false, true)) { NETWORK::NETWORK_OVERRIDE_CLOCK_TIME(SetTimeHour, TIME::GET_CLOCK_MINUTES(), TIME::GET_CLOCK_SECONDS()); }
-			if (Cheat::Int("Minutes", SetTimeMinutes, 0, 59, 1, false, true)) { NETWORK::NETWORK_OVERRIDE_CLOCK_TIME(TIME::GET_CLOCK_HOURS(), SetTimeMinutes, TIME::GET_CLOCK_SECONDS()); }
-			if (Cheat::Int("Seconds", SetTimeSeconds, 0, 59, 1, false, true)) { NETWORK::NETWORK_OVERRIDE_CLOCK_TIME(TIME::GET_CLOCK_HOURS(), TIME::GET_CLOCK_MINUTES(), SetTimeSeconds); }
+			if (Cheat::Int("Hour", SetTimeHour, 0, 23, 1, false, false)) { NETWORK::NETWORK_OVERRIDE_CLOCK_TIME(SetTimeHour, TIME::GET_CLOCK_MINUTES(), TIME::GET_CLOCK_SECONDS()); }
+			if (Cheat::Int("Minutes", SetTimeMinutes, 0, 59, 1, false, false)) { NETWORK::NETWORK_OVERRIDE_CLOCK_TIME(TIME::GET_CLOCK_HOURS(), SetTimeMinutes, TIME::GET_CLOCK_SECONDS()); }
+			if (Cheat::Int("Seconds", SetTimeSeconds, 0, 59, 1, false, false)) { NETWORK::NETWORK_OVERRIDE_CLOCK_TIME(TIME::GET_CLOCK_HOURS(), TIME::GET_CLOCK_MINUTES(), SetTimeSeconds); }
 			Cheat::Break("Current Time", true);
 			std::string CurrentGameTimeString = "Game Time: ~c~" + std::to_string(TIME::GET_CLOCK_HOURS()) + ":" + std::to_string(TIME::GET_CLOCK_MINUTES()) + ":" + std::to_string(TIME::GET_CLOCK_SECONDS());
 			Cheat::Break(CurrentGameTimeString.c_str(), false);
@@ -3783,6 +3782,7 @@ void Cheat::Main()
 			Cheat::MenuOption("Friendly Options >", SelectedPlayerFriendlyMenu);
 			Cheat::MenuOption("Troll Options >", SelectedPlayerTrollMenu);
 			//Cheat::MenuOption("Remote Options >", player_remoteoptions);
+			if (Cheat::Option("Copy Outfit", "Get Selected Player Outfit")) { Cheat::GameFunctions::CopySelectedPlayerOutfit(Cheat::CheatFeatures::selectedPlayer); }
 			if (Cheat::Option("View Profile", "View Selected Player Social Club Profile")) { int playerHandle; NETWORK::NETWORK_HANDLE_FROM_PLAYER(Cheat::CheatFeatures::selectedPlayer, &playerHandle, 13); NETWORK::NETWORK_SHOW_PROFILE_UI(&playerHandle); }
 		}
 		break;

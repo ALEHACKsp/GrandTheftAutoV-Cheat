@@ -721,11 +721,11 @@ void Cheat::CheatFeatures::NoClip()
 bool Cheat::CheatFeatures::RainbowVehicleBool = false;
 void Cheat::CheatFeatures::RainbowVehicle()
 {
-	int Red = GAMEPLAY::GET_RANDOM_INT_IN_RANGE(0, 255),
-	Green = GAMEPLAY::GET_RANDOM_INT_IN_RANGE(0, 255),
-	Blue = GAMEPLAY::GET_RANDOM_INT_IN_RANGE(0, 255);
-	VEHICLE::SET_VEHICLE_CUSTOM_PRIMARY_COLOUR(PED::GET_VEHICLE_PED_IS_USING(PlayerPedID), Red, Green, Blue);
-	VEHICLE::SET_VEHICLE_CUSTOM_SECONDARY_COLOUR(PED::GET_VEHICLE_PED_IS_USING(PlayerPedID), Red, Green, Blue);
+	//int Red = GameFunctions::ReturnRandomInteger(0, 255);
+	//int Green = GameFunctions::ReturnRandomInteger(0, 255);
+	//int Blue = GameFunctions::ReturnRandomInteger(0, 255);
+	//VEHICLE::SET_VEHICLE_CUSTOM_PRIMARY_COLOUR(PED::GET_VEHICLE_PED_IS_USING(PlayerPedID), Red, Green, Blue);
+	//VEHICLE::SET_VEHICLE_CUSTOM_SECONDARY_COLOUR(PED::GET_VEHICLE_PED_IS_USING(PlayerPedID), Red, Green, Blue);
 }
 
 bool Cheat::CheatFeatures::TeleportGunBool = false;

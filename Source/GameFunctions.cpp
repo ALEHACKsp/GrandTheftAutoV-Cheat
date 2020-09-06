@@ -1082,6 +1082,26 @@ void Cheat::GameFunctions::LoadPlayerInformation(char* playerName, Player p)
 		{
 			Cheat::AddPlayerInfoBoxTextEntry(xorstr_("No"), NULL, NULL, NULL, 4);
 		}
+
+		//Rockstar ID
+		Cheat::AddPlayerInfoBoxTextEntry(xorstr_("Rockstar ID"), NULL, NULL, 5);
+		Cheat::AddPlayerInfoBoxTextEntry(std::to_string(Cheat::GameFunctions::ReturnPlayerRockstarID(p)), NULL, NULL, NULL, 5);
+
+		//IP Address
+		if (NETWORK::NETWORK_IS_SESSION_STARTED())
+		{
+			char ipBuf[32] = {};
+			auto IPAddressData = GameHooking::GetPlayerAddress(p);
+			int PlayerIPHandle = *(uintptr_t*)(IPAddressData + 0x10b8);
+			if (PlayerIPHandle)
+			{
+				auto ip = (BYTE*)(PlayerIPHandle + 0x44);
+				//std::string IPString = std::to_string(ip[3]), ip[2], ip[1], * ip;
+				std::printf(ipBuf, sizeof(ipBuf) - 1, "~r~IP: %u.%u.%u.%u", ip[3], ip[2], ip[1], *ip);
+				//Cheat::AddPlayerInfoBoxTextEntry(xorstr_("IP Address"), NULL, NULL, 6);
+				//Cheat::AddPlayerInfoBoxTextEntry(CheatFunctions::StringToChar(ipBuf), NULL, NULL, NULL, 6);
+			}
+		}
 	}
 }
 
@@ -1533,4 +1553,58 @@ bool Cheat::GameFunctions::PlayerIsFreemodeScriptHost(Player Player)
 	{
 		return false;
 	}
+}
+
+int FadeSpeedPreviousTick;
+void Cheat::GameFunctions::RGBFader(int& r, int& g, int& b, int FadeSpeed)
+{
+	if (GetTickCount64() - FadeSpeedPreviousTick > FadeSpeed)
+	{
+		if (r > 0 && b == 0)
+		{
+			r--;
+			g++;
+		}
+		if (g > 0 && r == 0)
+		{
+			g--;
+			b++;
+		}
+		if (b > 0 && g == 0)
+		{
+			r++;
+			b--;
+		}
+		FadeSpeedPreviousTick = GetTickCount64();
+	}
+}
+
+void Cheat::GameFunctions::CopySelectedPlayerOutfit(Player SelectedPlayer)
+{
+	Ped SelectedPlayerPedHandle = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(SelectedPlayer);
+	if (SelectedPlayerPedHandle != PlayerID)
+	{
+		for (int i = 0; i < 12; i++)
+		{
+			PED::SET_PED_COMPONENT_VARIATION(PlayerPedID, i, PED::GET_PED_DRAWABLE_VARIATION(SelectedPlayerPedHandle, i), PED::GET_PED_TEXTURE_VARIATION(SelectedPlayerPedHandle, i), PED::GET_PED_PALETTE_VARIATION(SelectedPlayerPedHandle, i));
+			WAIT(0, true);
+		}
+	}
+}
+
+int Cheat::GameFunctions::ReturnPlayerRockstarID(Player PlayerHandle)
+{
+	char* RockstarIDBuffer;
+	int NETWORK_HANDLE[76];
+	NETWORK::NETWORK_HANDLE_FROM_PLAYER(PlayerHandle, &NETWORK_HANDLE[0], 13);
+	if (NETWORK::NETWORK_IS_HANDLE_VALID(&NETWORK_HANDLE[0], 13)) 
+	{
+		RockstarIDBuffer = NETWORK::NETWORK_MEMBER_ID_FROM_GAMER_HANDLE(&NETWORK_HANDLE[0]);
+	}
+	else  { RockstarIDBuffer = "0"; }
+	try
+	{
+		return std::stoi(RockstarIDBuffer);
+	}
+	catch (...) { return 0; }
 }

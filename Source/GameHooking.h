@@ -8,6 +8,7 @@ typedef void (__stdcall* fpSetSessionTime)(int, int);
 using fpGetScriptHandlerIfNetworked = void* (*) ();
 using fpGetScriptHandler = void* (*) ();
 using fpGetLabelText = const char* (*) (void* this_, const char* label);
+typedef __int64(__cdecl* fpGetPlayerAddress)(Player);
 
 
 class GameHooking
@@ -22,6 +23,7 @@ public:
 	static fpGetScriptHandler				GetScriptHandler;
 	static fpGetLabelText					GetLabelText;
 	static fpSetSessionTime					set_session_time_info;
+	static fpGetPlayerAddress				GetPlayerAddress;
 
 	static void DoGameHooking();
 	static uint64_t getWorldPtr();

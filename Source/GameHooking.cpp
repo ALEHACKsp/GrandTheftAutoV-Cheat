@@ -14,6 +14,7 @@ fpSetSessionTime													GameHooking::set_session_time_info;
 fpGetLabelText														GameHooking::GetLabelText = nullptr;
 fpGetScriptHandlerIfNetworked										GameHooking::GetScriptHandlerIfNetworked = nullptr;
 fpGetScriptHandler													GameHooking::GetScriptHandler = nullptr;
+fpGetPlayerAddress													GameHooking::GetPlayerAddress;
 
 static eGameState* 													m_gameState;
 static uint64_t														m_worldPtr;
@@ -119,9 +120,7 @@ const char* hkGetLabelText(void* this_, const char* label)
 	return ogGetLabelText(this_, label);
 }
 
-unsigned int MiscScriptsArray[] = { 2931916346, 1337731455, 323449272, 544453591, 3413717565, 3693313620, 3266142158, 2519761921, 2422236493, 
-						   1764541627, 4164637196, 301606138, 3041711092
-						};
+unsigned int MiscScriptsArray[] = { 0 };
 void* m_OriginalGetEventData = nullptr;
 bool GetEventDataFunc(int eventGroup, int eventIndex, int* argStruct, int argStructSize)
 {
@@ -320,7 +319,7 @@ void setPat(std::string	name, char*	pat, char* mask, T** out, bool rel, int offs
 		if (ptr == nullptr)
 		{
 			std::string Message = xorstr_("Failed to find '") + name + xorstr_("' pattern");
-			Cheat::LogFunctions::Error(Cheat::CheatFunctions::StringToChar(Message));
+			Cheat::LogFunctions::Error(Cheat::CheatFunctions::StringToChar(Message), false);
 			std::exit(EXIT_SUCCESS);
 		}
 
@@ -346,7 +345,7 @@ void setFn(std::string name, char* pat, char* mask, T* out, int skip = 0)
 	if (ptr == nullptr)
 	{
 		std::string Message = xorstr_("Failed to find '") + name + xorstr_("' pattern");
-		Cheat::LogFunctions::Error(Cheat::CheatFunctions::StringToChar(Message));
+		Cheat::LogFunctions::Error(Cheat::CheatFunctions::StringToChar(Message), true);
 		std::exit(EXIT_SUCCESS);
 	}
 
@@ -358,32 +357,34 @@ void setFn(std::string name, char* pat, char* mask, T* out, int skip = 0)
 void GameHooking::DoGameHooking()
 {
 	Cheat::LogFunctions::Message(xorstr_("Hooking Game Functions & Creating Main Fiber"));
-	auto p_activeThread		= pattern("E8 ? ? ? ? 48 8B 88 10 01 00 00");
-	auto p_blipList			= pattern("4C 8D 05 ? ? ? ? 0F B7 C1");
-	auto p_fixVector3Result = pattern("83 79 18 00 48 8B D1 74 4A FF 4A 18");
-	auto p_gameState		= pattern("83 3D ? ? ? ? ? 8A D9 74 0A");
-	auto p_nativeTable		= pattern("76 32 48 8B 53 40 48 8D 0D");
-	auto p_worldPtr			= pattern("48 8B 05 ? ? ? ? 45 ? ? ? ? 48 8B 48 08 48 85 C9 74 07");
-	auto p_globalPtr		= pattern("4C 8D 05 ? ? ? ? 4D 8B 08 4D 85 C9 74 11");
-	auto p_eventHook		= pattern("48 83 EC 28 E8 ? ? ? ? 48 8B 0D ? ? ? ? 4C 8D 0D ? ? ? ? 4C 8D 05 ? ? ? ? BA 03");
+	auto p_activeThread							= pattern("E8 ? ? ? ? 48 8B 88 10 01 00 00");
+	auto p_blipList								= pattern("4C 8D 05 ? ? ? ? 0F B7 C1");
+	auto p_fixVector3Result						= pattern("83 79 18 00 48 8B D1 74 4A FF 4A 18");
+	auto p_gameState							= pattern("83 3D ? ? ? ? ? 8A D9 74 0A");
+	auto p_nativeTable							= pattern("76 32 48 8B 53 40 48 8D 0D");
+	auto p_worldPtr								= pattern("48 8B 05 ? ? ? ? 45 ? ? ? ? 48 8B 48 08 48 85 C9 74 07");
+	auto p_globalPtr							= pattern("4C 8D 05 ? ? ? ? 4D 8B 08 4D 85 C9 74 11");
+	auto p_eventHook							= pattern("48 83 EC 28 E8 ? ? ? ? 48 8B 0D ? ? ? ? 4C 8D 0D ? ? ? ? 4C 8D 05 ? ? ? ? BA 03");
 
 	GameHooking::GetLabelText					= static_cast<fpGetLabelText>(Memory::pattern("48 89 5C 24 ? 57 48 83 EC 20 48 8B DA 48 8B F9 48 85 D2 75 44 E8").count(1).get(0).get<void>(0));
 	GameHooking::GetScriptHandlerIfNetworked	= static_cast<fpGetScriptHandlerIfNetworked>(Memory::pattern("40 53 48 83 EC 20 E8 ? ? ? ? 48 8B D8 48 85 C0 74 12 48 8B 10 48 8B C8").count(1).get(0).get<void>(0));
 	GameHooking::GetScriptHandler				= static_cast<fpGetScriptHandler>(Memory::pattern("48 83 EC 28 E8 ? ? ? ? 33 C9 48 85 C0 74 0C E8 ? ? ? ? 48 8B 88 ? ? ? ?").count(1).get(0).get<void>(0));
-	
+
+
 	//Set Patterns
-	setPat<uint64_t>(xorstr_("frame count"), xorstr_("\x8B\x15\x00\x00\x00\x00\x41\xFF\xCF"), xorstr_("xx????xxx"), &GameHooking::m_frameCount, true, 2); 
+	setPat<uint64_t>(xorstr_("frame_count"), xorstr_("\x8B\x15\x00\x00\x00\x00\x41\xFF\xCF"), xorstr_("xx????xxx"), &GameHooking::m_frameCount, true, 2); 
 	setFn<fpIsDLCPresent>(xorstr_("is_DLC_present"), xorstr_("\x48\x89\x5C\x24\x00\x57\x48\x83\xEC\x20\x81\xF9\x00\x00\x00\x00"), xorstr_("xxxx?xxxxxxx????"), &GameHooking::is_DLC_present);
 	setFn<SessionWeather>(xorstr_("session_weather"), xorstr_("\x48\x89\x5C\x24\x00\x48\x89\x6C\x24\x00\x48\x89\x74\x24\x00\x57\x48\x83\xEC\x30\x40\x8A\xE9"), xorstr_("xxxx?xxxx?xxxx?xxxxxxxx"), &GameHooking::session_weather);
 	setFn<GetEventData>(xorstr_("get_event_data"), xorstr_("\x48\x89\x5C\x24\x00\x57\x48\x83\xEC\x20\x49\x8B\xF8\x4C\x8D\x05\x00\x00\x00\x00\x41\x8B\xD9\xE8\x00\x00\x00\x00\x48\x85\xC0\x74\x14\x4C\x8B\x10\x44\x8B\xC3\x48\x8B\xD7\x41\xC1\xE0\x03\x48\x8B\xC8\x41\xFF\x52\x30\x48\x8B\x5C\x24\x00"), xorstr_("xxxx?xxxxxxxxxxx????xxxx????xxxxxxxxxxxxxxxxxxxxxxxxxxxxx?"), &GameHooking::get_event_data);
 	setFn<fpSetSessionTime>(xorstr_("session_time_set"), xorstr_("\x48\x89\x5C\x24\x08\x57\x48\x83\xEC\x20\x8B\xF9\x48\x8B\x0D\x00\x00\x00\x00\x48\x8B\xDA\x33\xD2\xE9\x00\x00\x00\x00"), xorstr_("xxxxxxxxxxxxxxx????xxxxxx????"), &GameHooking::set_session_time_info);
+	setFn<fpGetPlayerAddress>("get_player_address", xorstr_("\x40\x53\x48\x83\xEC\x20\x33\xDB\x38\x1D\x00\x00\x00\x00\x74\x1C"), xorstr_("xxxxxxxxxx????xx"), &GameHooking::GetPlayerAddress);
 	
 	//Hook GameState
 	Cheat::LogFunctions::DebugMessage(xorstr_("Load 'GameState'"));
 	char* c_location = nullptr;
 	void* v_location = nullptr;
 	c_location = p_gameState.count(1).get(0).get<char>(2);
-	c_location == nullptr ? Cheat::LogFunctions::Error(xorstr_("Failed to hook GameState")) : m_gameState = reinterpret_cast<decltype(m_gameState)>(c_location + *(int32_t*)c_location + 5);
+	c_location == nullptr ? Cheat::LogFunctions::Error(xorstr_("Failed to hook GameState"), true) : m_gameState = reinterpret_cast<decltype(m_gameState)>(c_location + *(int32_t*)c_location + 5);
 	
 	//Hook Vector3 Bypass
 	Cheat::LogFunctions::DebugMessage(xorstr_("Load 'Vector3 Bypass'"));
@@ -393,28 +394,28 @@ void GameHooking::DoGameHooking()
 	//Hook Native Registration Table
 	Cheat::LogFunctions::DebugMessage(xorstr_("Load 'Native Registration Table'"));
 	c_location = p_nativeTable.count(1).get(0).get<char>(9);
-	c_location == nullptr ? Cheat::LogFunctions::Error(xorstr_("Failed to hook Native Registration Table")) : m_registrationTable = reinterpret_cast<decltype(m_registrationTable)>(c_location + *(int32_t*)c_location + 4);
+	c_location == nullptr ? Cheat::LogFunctions::Error(xorstr_("Failed to hook Native Registration Table"), true) : m_registrationTable = reinterpret_cast<decltype(m_registrationTable)>(c_location + *(int32_t*)c_location + 4);
 
 	//Hook Game World Pointer
 	Cheat::LogFunctions::DebugMessage(xorstr_("Load 'World Pointer'"));
 	c_location = p_worldPtr.count(1).get(0).get<char>(0);
-	c_location == nullptr ? Cheat::LogFunctions::Error(xorstr_("Failed to hook World Pointer")) : m_worldPtr = reinterpret_cast<uint64_t>(c_location) + *reinterpret_cast<int*>(reinterpret_cast<uint64_t>(c_location) + 3) + 7;
+	c_location == nullptr ? Cheat::LogFunctions::Error(xorstr_("Failed to hook World Pointer"), true) : m_worldPtr = reinterpret_cast<uint64_t>(c_location) + *reinterpret_cast<int*>(reinterpret_cast<uint64_t>(c_location) + 3) + 7;
 
 	//Hook Game Blip List
 	Cheat::LogFunctions::DebugMessage(xorstr_("Load 'Blip List'"));
 	c_location = p_blipList.count(1).get(0).get<char>(0);
-	c_location == nullptr ? Cheat::LogFunctions::Error(xorstr_("Failed to hook Blip List")) : m_blipList = (BlipList*)(c_location + *reinterpret_cast<int*>(c_location + 3) + 7);
+	c_location == nullptr ? Cheat::LogFunctions::Error(xorstr_("Failed to hook Blip List"), true) : m_blipList = (BlipList*)(c_location + *reinterpret_cast<int*>(c_location + 3) + 7);
 
 	//Hook Active Game Thread
 	Cheat::LogFunctions::DebugMessage(xorstr_("Load 'Active Game Thread'"));
 	c_location = p_activeThread.count(1).get(0).get<char>(1);
-	c_location == nullptr ? Cheat::LogFunctions::Error(xorstr_("Failed to hook Active Game Thread")) : GetActiveThread = reinterpret_cast<decltype(GetActiveThread)>(c_location + *(int32_t*)c_location + 4);
+	c_location == nullptr ? Cheat::LogFunctions::Error(xorstr_("Failed to hook Active Game Thread"), true) : GetActiveThread = reinterpret_cast<decltype(GetActiveThread)>(c_location + *(int32_t*)c_location + 4);
 
 	//Get Global Pointer
 	Cheat::LogFunctions::DebugMessage(xorstr_("Load 'Global Pointer'"));
 	c_location = p_globalPtr.count(1).get(0).get<char>(0);
 	__int64 patternAddr = NULL;
-	c_location == nullptr ? Cheat::LogFunctions::Error(xorstr_("Failed to hook Global Pointer")) : patternAddr = reinterpret_cast<decltype(patternAddr)>(c_location);
+	c_location == nullptr ? Cheat::LogFunctions::Error(xorstr_("Failed to hook Global Pointer"), true) : patternAddr = reinterpret_cast<decltype(patternAddr)>(c_location);
 	m_globalPtr = (__int64**)(patternAddr + *(int*)(patternAddr + 3) + 7);
 
 
@@ -450,7 +451,7 @@ void GameHooking::DoGameHooking()
 
 	//Initialize MinHook
 	Cheat::LogFunctions::DebugMessage(xorstr_("Initialize MinHook"));
-	if (MH_Initialize() != MH_OK) { Cheat::LogFunctions::Error(xorstr_("Failed to initialize MinHook")); std::exit(EXIT_SUCCESS); }
+	if (MH_Initialize() != MH_OK) { Cheat::LogFunctions::Error(xorstr_("Failed to initialize MinHook"), true); std::exit(EXIT_SUCCESS); }
 
 	bool WaitingGameLoadLogPrinted = false;
 	while (*m_gameState != GameStatePlaying)
@@ -468,16 +469,16 @@ void GameHooking::DoGameHooking()
 	//Hook Game Functions
 	Cheat::LogFunctions::DebugMessage(xorstr_("Hook 'IS_DLC_PRESENT'"));
 	auto status = MH_CreateHook(GameHooking::is_DLC_present, HK_IS_DLC_PRESENT, (void**)&OG_IS_DLC_PRESENT);
-	if ((status != MH_OK && status != MH_ERROR_ALREADY_CREATED) || MH_EnableHook(GameHooking::is_DLC_present) != MH_OK) { Cheat::LogFunctions::Error(xorstr_("Failed to hook IS_DLC_PRESENT"));  std::exit(EXIT_SUCCESS); }
+	if ((status != MH_OK && status != MH_ERROR_ALREADY_CREATED) || MH_EnableHook(GameHooking::is_DLC_present) != MH_OK) { Cheat::LogFunctions::Error(xorstr_("Failed to hook IS_DLC_PRESENT"), true);  std::exit(EXIT_SUCCESS); }
 	Cheat::LogFunctions::DebugMessage(xorstr_("Hook 'GET_EVENT_DATA'"));
 	status = MH_CreateHook(GameHooking::get_event_data, GetEventDataFunc, &m_OriginalGetEventData);
-	if ((status != MH_OK && status != MH_ERROR_ALREADY_CREATED) || MH_EnableHook(GameHooking::get_event_data) != MH_OK) { Cheat::LogFunctions::Error(xorstr_("Failed to hook GET_EVENT_DATA"));  std::exit(EXIT_SUCCESS); }
+	if ((status != MH_OK && status != MH_ERROR_ALREADY_CREATED) || MH_EnableHook(GameHooking::get_event_data) != MH_OK) { Cheat::LogFunctions::Error(xorstr_("Failed to hook GET_EVENT_DATA"), true);  std::exit(EXIT_SUCCESS); }
 	Cheat::LogFunctions::DebugMessage(xorstr_("Hook 'GET_SCRIPT_HANDLER_IF_NETWORKED'"));
 	status = MH_CreateHook(GameHooking::GetScriptHandlerIfNetworked, hkGetScriptHandlerIfNetworked, (void**)&ogGetScriptHandlerIfNetworked);
-	if (status != MH_OK || MH_EnableHook(GameHooking::GetScriptHandlerIfNetworked) != MH_OK) { Cheat::LogFunctions::Error(xorstr_("Failed to hook GET_SCRIPT_HANDLER_IF_NETWORKED"));  std::exit(EXIT_SUCCESS); }
+	if (status != MH_OK || MH_EnableHook(GameHooking::GetScriptHandlerIfNetworked) != MH_OK) { Cheat::LogFunctions::Error(xorstr_("Failed to hook GET_SCRIPT_HANDLER_IF_NETWORKED"), true);  std::exit(EXIT_SUCCESS); }
 	Cheat::LogFunctions::DebugMessage(xorstr_("Hook 'GET_LABEL_TEXT'"));
 	status = MH_CreateHook(GameHooking::GetLabelText, hkGetLabelText, (void**)&ogGetLabelText);
-	if (status != MH_OK || MH_EnableHook(GameHooking::GetLabelText) != MH_OK) { Cheat::LogFunctions::Error(xorstr_("Failed to hook GET_LABEL_TEXT"));  std::exit(EXIT_SUCCESS); }
+	if (status != MH_OK || MH_EnableHook(GameHooking::GetLabelText) != MH_OK) { Cheat::LogFunctions::Error(xorstr_("Failed to hook GET_LABEL_TEXT"), true);  std::exit(EXIT_SUCCESS); }
 }
 
 static GameHooking::NativeHandler _Handler(uint64_t origHash)

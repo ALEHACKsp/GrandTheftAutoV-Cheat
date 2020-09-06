@@ -989,7 +989,7 @@ void Cheat::AddPlayerInfoBoxTextEntry(std::string text, int Row1, int Row2, int 
 		}
 		else if (Row4 != NULL)
 		{
-			GUI::Drawing::Text(text, GUI::count, { Cheat::GUI::guiX + 0.385f, GUI::guiY + (Row4 * 0.020f) - 0.160f }, { 0.30f, 0.30f }, false);
+			GUI::Drawing::Text(text, GUI::count, { Cheat::GUI::guiX + 0.380f, GUI::guiY + (Row4 * 0.020f) - 0.160f }, { 0.30f, 0.30f }, false);
 		}
 	}
 	else

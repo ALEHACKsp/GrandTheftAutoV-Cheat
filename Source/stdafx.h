@@ -142,7 +142,7 @@ namespace Cheat
 		void LoadTheme(std::string ThemeFileName, bool StartUp);
 		void SaveTheme(std::string ThemeFileName);
 	}
-	namespace CheatFeatures 
+	namespace CheatFeatures
 	{
 		extern int BoolOptionVectorPosition;
 		extern int SpeedometerVectorPosition;
@@ -424,11 +424,14 @@ namespace Cheat
 		bool IsCursorAtXYPosition(VECTOR2 const& boxCentre, VECTOR2 const& boxSize);
 		void ChangePedModelLocalPlayer(Hash PedModel);
 		bool PlayerIsFreemodeScriptHost(Player Player);
+		void RGBFader(int& r, int& g, int& b, int FadeSpeed);
+		void CopySelectedPlayerOutfit(Player SelectedPlayer);
+		int ReturnPlayerRockstarID(Player PlayerHandle);
 	}
 	namespace LogFunctions 
 	{
 		void Message(char* Message);
-		void Error(char* Message);
+		void Error(char* Message, bool ShowMessageBox);
 		void DebugMessage(std::string Message);
 	}
 	namespace GameArrays 

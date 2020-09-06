@@ -729,7 +729,7 @@ const std::vector<std::string> Cheat::GameArrays::VanModels = {
 };
 const std::vector<std::string> Cheat::GameArrays::SSASSSModels = {
 	"caracara", "cheburek", "dominator3", "ellie", "entity2",
-	"fagaloa", "flashgt", "gb200", "hotring", "issi3"
+	"fagaloa", "flashgt", "gb200", "hotring", "issi3",
 	"michelli", "seasparrow", "tezeract", "taipan",
 	"tyrant"
 };

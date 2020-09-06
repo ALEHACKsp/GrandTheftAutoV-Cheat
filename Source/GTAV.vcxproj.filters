@@ -75,6 +75,9 @@
     <ClInclude Include="GameHooking.h">
       <Filter>Header Files\Game Hooking</Filter>
     </ClInclude>
+    <ClInclude Include="Offsets.h">
+      <Filter>Header Files\Game Hooking</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">

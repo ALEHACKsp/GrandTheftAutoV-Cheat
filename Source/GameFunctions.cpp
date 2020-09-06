@@ -1043,7 +1043,7 @@ void Cheat::GameFunctions::LoadPlayerInformation(char* playerName, Player p)
 		else
 		{
 			distance = round(distance * 1000) / 100;
-			Distance << distance << xorstr_(" Meters");
+			Distance << distance << xorstr_(" M");
 		}
 		Cheat::AddPlayerInfoBoxTextEntry(xorstr_("Distance"), NULL, NULL, 1);
 		Cheat::AddPlayerInfoBoxTextEntry(Distance.str(), NULL, NULL, NULL, 1);
@@ -1088,20 +1088,9 @@ void Cheat::GameFunctions::LoadPlayerInformation(char* playerName, Player p)
 		Cheat::AddPlayerInfoBoxTextEntry(std::to_string(Cheat::GameFunctions::ReturnPlayerRockstarID(p)), NULL, NULL, NULL, 5);
 
 		//IP Address
-		if (NETWORK::NETWORK_IS_SESSION_STARTED())
-		{
-			char ipBuf[32] = {};
-			auto IPAddressData = GameHooking::GetPlayerAddress(p);
-			int PlayerIPHandle = *(uintptr_t*)(IPAddressData + 0x10b8);
-			if (PlayerIPHandle)
-			{
-				auto ip = (BYTE*)(PlayerIPHandle + 0x44);
-				//std::string IPString = std::to_string(ip[3]), ip[2], ip[1], * ip;
-				std::printf(ipBuf, sizeof(ipBuf) - 1, "~r~IP: %u.%u.%u.%u", ip[3], ip[2], ip[1], *ip);
-				//Cheat::AddPlayerInfoBoxTextEntry(xorstr_("IP Address"), NULL, NULL, 6);
-				//Cheat::AddPlayerInfoBoxTextEntry(CheatFunctions::StringToChar(ipBuf), NULL, NULL, NULL, 6);
-			}
-		}
+		std::string PlayerIPString = Cheat::GameFunctions::ReturnPlayerIPAddressAsString(p);
+		Cheat::AddPlayerInfoBoxTextEntry(xorstr_("IP Address"), NULL, NULL, 6);
+		Cheat::AddPlayerInfoBoxTextEntry(PlayerIPString, NULL, NULL, NULL, 6);
 	}
 }
 
@@ -1607,4 +1596,21 @@ int Cheat::GameFunctions::ReturnPlayerRockstarID(Player PlayerHandle)
 		return std::stoi(RockstarIDBuffer);
 	}
 	catch (...) { return 0; }
+}
+
+std::string Cheat::GameFunctions::ReturnPlayerIPAddressAsString(Player PlayerHandle)
+{
+	char IPBuffer[256];
+	if (NETWORK::NETWORK_IS_SESSION_STARTED())
+	{		
+		auto InfoLong	 = *reinterpret_cast<std::uintptr_t*>(GameHooking::GetPlayerAddress(PlayerHandle) + OFFSET_PLAYER_INFO);
+		auto IPAddress   = reinterpret_cast<std::uint8_t*>(InfoLong + 0x44);
+		IPAddress ? sprintf_s(IPBuffer, xorstr_("%i.%i.%i.%i"), IPAddress[3], IPAddress[2], IPAddress[1], IPAddress[0]) : sprintf_s(IPBuffer, xorstr_("Unknown"));
+	}
+	else
+	{
+		sprintf_s(IPBuffer, xorstr_("Unavailable"));
+	}
+	std::string IPBufferString = { IPBuffer };
+	return IPBufferString;
 }

@@ -89,6 +89,7 @@
     <ClInclude Include="NativeCaller.h" />
     <ClInclude Include="NativeInvoker.h" />
     <ClInclude Include="Natives.h" />
+    <ClInclude Include="Offsets.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Types.h" />

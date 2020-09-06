@@ -981,15 +981,15 @@ void Cheat::AddPlayerInfoBoxTextEntry(std::string text, int Row1, int Row2, int 
 		}
 		else if (Row2 != NULL)
 		{
-			GUI::Drawing::Text(text, GUI::count, { Cheat::GUI::guiX + 0.210f, GUI::guiY + (Row2 * 0.020f) - 0.160f }, { 0.30f, 0.30f }, false);
+			GUI::Drawing::Text(text, GUI::count, { Cheat::GUI::guiX + 0.205f, GUI::guiY + (Row2 * 0.020f) - 0.160f }, { 0.30f, 0.30f }, false);
 		}
 		else if (Row3 != NULL)
 		{
-			GUI::Drawing::Text(text, GUI::count, { Cheat::GUI::guiX + 0.310f, GUI::guiY + (Row3 * 0.020f) - 0.160f }, { 0.30f, 0.30f }, false);
+			GUI::Drawing::Text(text, GUI::count, { Cheat::GUI::guiX + 0.295f, GUI::guiY + (Row3 * 0.020f) - 0.160f }, { 0.30f, 0.30f }, false);
 		}
 		else if (Row4 != NULL)
 		{
-			GUI::Drawing::Text(text, GUI::count, { Cheat::GUI::guiX + 0.380f, GUI::guiY + (Row4 * 0.020f) - 0.160f }, { 0.30f, 0.30f }, false);
+			GUI::Drawing::Text(text, GUI::count, { Cheat::GUI::guiX + 0.365f, GUI::guiY + (Row4 * 0.020f) - 0.160f }, { 0.30f, 0.30f }, false);
 		}
 	}
 	else
@@ -1008,7 +1008,7 @@ void Cheat::AddPlayerInfoBoxTextEntry(std::string text, int Row1, int Row2, int 
 		}
 		else if (Row4 != NULL)
 		{
-			GUI::Drawing::Text(text, GUI::count, { Cheat::GUI::guiX - 0.160f, GUI::guiY + (Row4 * 0.020f) - 0.160f }, { 0.30f, 0.30f }, false);
+			GUI::Drawing::Text(text, GUI::count, { Cheat::GUI::guiX - 0.165f, GUI::guiY + (Row4 * 0.020f) - 0.160f }, { 0.30f, 0.30f }, false);
 		}
 	}
 }

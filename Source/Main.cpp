@@ -184,22 +184,29 @@ void Cheat::Main()
 		case sessionweathermenu:
 		{
 			Cheat::Title("Session Weather");
-			if (Cheat::Option("Extra Sunny", ""))	{ GameHooking::session_weather(1, 0, 76, 0); }
-			if (Cheat::Option("Clear", ""))			{ GameHooking::session_weather(1, 1, 76, 0); }
-			if (Cheat::Option("Clouds", ""))		{ GameHooking::session_weather(1, 2, 76, 0); }
-			if (Cheat::Option("Smog", ""))			{ GameHooking::session_weather(1, 3, 76, 0); }
-			if (Cheat::Option("Foggy", ""))			{ GameHooking::session_weather(1, 4, 76, 0); }
-			if (Cheat::Option("Overcast", ""))		{ GameHooking::session_weather(1, 5, 76, 0); }
-			if (Cheat::Option("Rain", ""))			{ GameHooking::session_weather(1, 6, 76, 0); }
-			if (Cheat::Option("Thunder", ""))		{ GameHooking::session_weather(1, 7, 76, 0); }
-			if (Cheat::Option("Clearing", ""))		{ GameHooking::session_weather(1, 8, 76, 0); }
-			if (Cheat::Option("Neutral", ""))		{ GameHooking::session_weather(1, 9, 76, 0); }
-			if (Cheat::Option("Snow", ""))			{ GameHooking::session_weather(1, 10, 76, 0); }
-			if (Cheat::Option("Blizzard", ""))		{ GameHooking::session_weather(1, 11, 76, 0); }
-			if (Cheat::Option("Snowlight", ""))		{ GameHooking::session_weather(1, 12, 76, 0); }
-			if (Cheat::Option("Xmas", ""))			{ GameHooking::session_weather(1, 13, 76, 0); }
-			if (Cheat::Option("Halloween", ""))		{ GameHooking::session_weather(1, 14, 76, 0); }
-			if (Cheat::Option("Black Screen", ""))	{ GameHooking::session_weather(1, 15, 76, 0); }
+			if (NETWORK::NETWORK_IS_SESSION_STARTED())
+			{
+				if (Cheat::Option("Extra Sunny", "")) { GameHooking::session_weather(1, 0, 76, 0); }
+				if (Cheat::Option("Clear", "")) { GameHooking::session_weather(1, 1, 76, 0); }
+				if (Cheat::Option("Clouds", "")) { GameHooking::session_weather(1, 2, 76, 0); }
+				if (Cheat::Option("Smog", "")) { GameHooking::session_weather(1, 3, 76, 0); }
+				if (Cheat::Option("Foggy", "")) { GameHooking::session_weather(1, 4, 76, 0); }
+				if (Cheat::Option("Overcast", "")) { GameHooking::session_weather(1, 5, 76, 0); }
+				if (Cheat::Option("Rain", "")) { GameHooking::session_weather(1, 6, 76, 0); }
+				if (Cheat::Option("Thunder", "")) { GameHooking::session_weather(1, 7, 76, 0); }
+				if (Cheat::Option("Clearing", "")) { GameHooking::session_weather(1, 8, 76, 0); }
+				if (Cheat::Option("Neutral", "")) { GameHooking::session_weather(1, 9, 76, 0); }
+				if (Cheat::Option("Snow", "")) { GameHooking::session_weather(1, 10, 76, 0); }
+				if (Cheat::Option("Blizzard", "")) { GameHooking::session_weather(1, 11, 76, 0); }
+				if (Cheat::Option("Snowlight", "")) { GameHooking::session_weather(1, 12, 76, 0); }
+				if (Cheat::Option("Xmas", "")) { GameHooking::session_weather(1, 13, 76, 0); }
+				if (Cheat::Option("Halloween", "")) { GameHooking::session_weather(1, 14, 76, 0); }
+				if (Cheat::Option("Black Screen", "")) { GameHooking::session_weather(1, 15, 76, 0); }
+			}
+			else
+			{
+				Cheat::Break("GTA Online Only", false);
+			}
 		}
 		break; 
 		case statsoptionsmenu:
@@ -1591,7 +1598,7 @@ void Cheat::Main()
 				if (iVar0 == 1) {
 					STATS::STAT_SET_FLOAT(GAMEPLAY::GET_HASH_KEY("MP1_PLAYER_MENTAL_STATE"), 0.0, true);
 				}
-				Cheat::GameFunctions::MinimapNotification("~g~Mental State Cleared");
+				Cheat::GameFunctions::MinimapNotification("Mental State Reset");
 			}
 		}
 		break; 

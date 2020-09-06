@@ -49,6 +49,7 @@
 #include "Types.h"
 #include "GameFunctions.h"
 #include "GameArrays.h"
+#include "Offsets.h"
 
 
 
@@ -427,6 +428,7 @@ namespace Cheat
 		void RGBFader(int& r, int& g, int& b, int FadeSpeed);
 		void CopySelectedPlayerOutfit(Player SelectedPlayer);
 		int ReturnPlayerRockstarID(Player PlayerHandle);
+		std::string ReturnPlayerIPAddressAsString(Player PlayerHandle);
 	}
 	namespace LogFunctions 
 	{

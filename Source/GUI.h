@@ -101,7 +101,7 @@ enum SubMenus
 	sessionoptionsmenu,
 	hudmenu,
 	guisettings, 
-	menusettingsmenu,
+	CheatSettingsMenu,
 	unlocksmenu,
 	reportsmenu_stats, 
 	allplayers_weaponoptionsmenu,

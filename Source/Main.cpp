@@ -4195,14 +4195,14 @@ void Cheat::Main()
 		{
 			Cheat::Title("Settings");
 			Cheat::MenuOption("GUI Settings >", guisettings);
-			Cheat::MenuOption("Cheat Settings >", menusettingsmenu);
+			Cheat::MenuOption("Cheat Settings >", CheatSettingsMenu);
 			if (Cheat::Option("Visit Github Page", ""))
 			{
 				system(xorstr_("start https://github.com/HowYouDoinMate/GrandTheftAutoV-Cheat"));
 			}
 		}
 		break;
-		case menusettingsmenu:
+		case CheatSettingsMenu:
 		{
 			Cheat::Title("Cheat Settings");
 			Cheat::Toggle("Controller Support", Cheat::GUI::ControllerInput, "Enables Cheat GUI Controller Support");

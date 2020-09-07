@@ -1447,7 +1447,7 @@ char* Cheat::GameFunctions::ReturnOnlinePlayerPictureString(Player PlayerHandle)
 {
 	if (NETWORK::NETWORK_IS_SESSION_STARTED())
 	{
-		int Index = 1389078 + 2; //This index changes with each major patch
+		int Index = ONLINE_PLAYER_PICTURE_INDEX + 2; //This index changes with each major patch
 		for (int x = 0; x <= 150; x += 5)
 		{
 			int playerId = globalHandle(Index).At(x).As<int>();
@@ -1571,13 +1571,10 @@ void Cheat::GameFunctions::RGBFader(int& r, int& g, int& b, int FadeSpeed)
 void Cheat::GameFunctions::CopySelectedPlayerOutfit(Player SelectedPlayer)
 {
 	Ped SelectedPlayerPedHandle = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(SelectedPlayer);
-	if (SelectedPlayerPedHandle != PlayerID)
+	for (int i = 0; i < 12; i++)
 	{
-		for (int i = 0; i < 12; i++)
-		{
-			PED::SET_PED_COMPONENT_VARIATION(PlayerPedID, i, PED::GET_PED_DRAWABLE_VARIATION(SelectedPlayerPedHandle, i), PED::GET_PED_TEXTURE_VARIATION(SelectedPlayerPedHandle, i), PED::GET_PED_PALETTE_VARIATION(SelectedPlayerPedHandle, i));
-			WAIT(0, true);
-		}
+		PED::SET_PED_COMPONENT_VARIATION(PlayerPedID, i, PED::GET_PED_DRAWABLE_VARIATION(SelectedPlayerPedHandle, i), PED::GET_PED_TEXTURE_VARIATION(SelectedPlayerPedHandle, i), PED::GET_PED_PALETTE_VARIATION(SelectedPlayerPedHandle, i));
+		WAIT(0, true);
 	}
 }
 
@@ -1603,7 +1600,7 @@ std::string Cheat::GameFunctions::ReturnPlayerIPAddressAsString(Player PlayerHan
 	char IPBuffer[256];
 	if (NETWORK::NETWORK_IS_SESSION_STARTED())
 	{		
-		auto InfoLong	 = *reinterpret_cast<std::uintptr_t*>(GameHooking::GetPlayerAddress(PlayerHandle) + OFFSET_PLAYER_INFO);
+		auto InfoLong	 = *reinterpret_cast<std::uintptr_t*>(GameHooking::get_player_address(PlayerHandle) + OFFSET_PLAYER_INFO);
 		auto IPAddress   = reinterpret_cast<std::uint8_t*>(InfoLong + 0x44);
 		IPAddress ? sprintf_s(IPBuffer, xorstr_("%i.%i.%i.%i"), IPAddress[3], IPAddress[2], IPAddress[1], IPAddress[0]) : sprintf_s(IPBuffer, xorstr_("Unknown"));
 	}

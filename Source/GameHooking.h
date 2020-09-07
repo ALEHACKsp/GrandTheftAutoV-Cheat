@@ -1,29 +1,30 @@
 #pragma once
 
-typedef bool(*fpIsDLCPresent)							(std::uint32_t dlcHash);
-typedef int(__stdcall* SessionWeather)					(int unk0, int, int argCount, int bitFlags);
-typedef uint32_t*(*__stdcall fpFileRegister)		    (int*, const char*, bool, const char*, bool);
-typedef BOOL(__stdcall* GetEventData)					(int eventGroup, int eventIndex, uint64_t* argStruct, int argStructSize);
-typedef void (__stdcall* fpSetSessionTime)(int, int);
-using fpGetScriptHandlerIfNetworked = void* (*) ();
-using fpGetScriptHandler = void* (*) ();
-using fpGetLabelText = const char* (*) (void* this_, const char* label);
-typedef __int64(__cdecl* fpGetPlayerAddress)(Player);
-
+typedef bool(__cdecl* IsDLCPresent)							(std::uint32_t dlcHash);
+typedef char* (__cdecl* SetSessionWeather)					(bool visibleToEveryone, int weatherId, int arg3, int arg4);
+typedef uint32_t*(*__stdcall fpFileRegister)				(int*, const char*, bool, const char*, bool);
+typedef BOOL(__cdecl* GetEventData)							(int eventGroup, int eventIndex, uint64_t* argStruct, int argStructSize);
+typedef void (__cdecl* SetSessionTime)						(int, int);
+using GetScriptHandlerIfNetworked							= void* (*) ();
+using GetScriptHandler = void* (*) ();
+using GetLabelText = const char* (*)						(void* this_, const char* label);
+typedef __int64(__cdecl* GetPlayerAddress)					(Player);
+typedef __int64(__cdecl* GetChatData)						(__int64 a1, __int64 a2, __int64 a3, const char* origText, BOOL a5);
 
 class GameHooking
 {
 public:
 	static uint64_t*						m_frameCount;
-	static fpIsDLCPresent					is_DLC_present;
-	static SessionWeather					session_weather;
+	static IsDLCPresent					    is_DLC_present;
+	static SetSessionWeather				session_weather;
 	static fpFileRegister					m_fileregister;
 	static GetEventData						get_event_data;
-	static fpGetScriptHandlerIfNetworked	GetScriptHandlerIfNetworked;
-	static fpGetScriptHandler				GetScriptHandler;
-	static fpGetLabelText					GetLabelText;
-	static fpSetSessionTime					set_session_time_info;
-	static fpGetPlayerAddress				GetPlayerAddress;
+	static GetScriptHandlerIfNetworked		get_script_handler_if_networked;
+	static GetScriptHandler				    get_script_handler;
+	static GetLabelText						get_label_text;
+	static SetSessionTime					set_session_time_info;
+	static GetPlayerAddress					get_player_address;
+	static GetChatData					    get_chat_data;
 
 	static void DoGameHooking();
 	static uint64_t getWorldPtr();

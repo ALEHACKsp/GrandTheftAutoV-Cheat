@@ -157,6 +157,7 @@ namespace Cheat
 		extern bool ShowVehicleInfoAndPreview;
 		extern bool CursorGUINavigationEnabled;
 		extern bool ShowJoiningPlayersNotification;
+		extern bool LogChatMessages;
 
 		void NoneLooped();
 		void Looped();
@@ -433,6 +434,7 @@ namespace Cheat
 	namespace LogFunctions 
 	{
 		void Message(char* Message);
+		void MessageCustomCategory(std::string CategoryName, std::string Message);
 		void Error(char* Message, bool ShowMessageBox);
 		void DebugMessage(std::string Message);
 	}

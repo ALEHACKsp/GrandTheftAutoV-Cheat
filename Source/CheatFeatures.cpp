@@ -10,6 +10,7 @@ bool Cheat::CheatFeatures::ShowBlockedScriptEventNotifications = true;
 bool Cheat::CheatFeatures::ShowPlayerTagsPlayerList = true;
 bool Cheat::CheatFeatures::ShowVehicleInfoAndPreview = true;
 bool Cheat::CheatFeatures::ShowJoiningPlayersNotification = true;
+bool Cheat::CheatFeatures::LogChatMessages = true;
 
 int PostInitBannerNotificationScaleformHandle;
 void Cheat::CheatFeatures::NoneLooped()
@@ -1119,7 +1120,8 @@ void Cheat::CheatFeatures::DisablePhone()
 bool Cheat::CheatFeatures::NoIdleKickBool = false;
 void Cheat::CheatFeatures::NoIdleKick()
 {
-	//globalHandle(1382674).At(609).As<int>() = 609;
+	//globalHandle(1373500).At(1165).As<int>() = -1;
+	//globalHandle(1373500).At(1149).As<int>() = -1;
 }
 
 bool Cheat::CheatFeatures::BribeAuthoritiesBool = false;
@@ -1166,7 +1168,6 @@ void Cheat::CheatFeatures::MoneyGun()
 		}	
 	}
 }
-
 
 
 DWORD VehicleWeapons_LastTick = 0;

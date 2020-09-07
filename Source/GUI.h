@@ -86,6 +86,7 @@ enum SubMenus
 	player_remoteoptions,
 	sessionweathermenu,
 	sessiontimemenu,
+	SessionChatMenu,
 	vehicleweaponsmenu,
 	allplayers_trolloptionsmenu,
 	statsoptionsmenu, 

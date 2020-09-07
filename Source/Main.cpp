@@ -164,6 +164,13 @@ void Cheat::Main()
 			Cheat::Title("Session Options");
 			Cheat::MenuOption("Session Weather >", sessionweathermenu);
 			Cheat::MenuOption("Session Time >", sessiontimemenu);
+			Cheat::MenuOption("Chat >", SessionChatMenu);
+		}
+		break;
+		case SessionChatMenu:
+		{
+			Cheat::Title("Session Chat");
+			Cheat::Toggle("Log Chat Messages", Cheat::CheatFeatures::LogChatMessages, "Chat gets logged to console");
 		}
 		break;
 		case sessiontimemenu:
@@ -186,22 +193,22 @@ void Cheat::Main()
 			Cheat::Title("Session Weather");
 			if (NETWORK::NETWORK_IS_SESSION_STARTED())
 			{
-				if (Cheat::Option("Extra Sunny", "")) { GameHooking::session_weather(1, 0, 76, 0); }
-				if (Cheat::Option("Clear", "")) { GameHooking::session_weather(1, 1, 76, 0); }
-				if (Cheat::Option("Clouds", "")) { GameHooking::session_weather(1, 2, 76, 0); }
-				if (Cheat::Option("Smog", "")) { GameHooking::session_weather(1, 3, 76, 0); }
-				if (Cheat::Option("Foggy", "")) { GameHooking::session_weather(1, 4, 76, 0); }
-				if (Cheat::Option("Overcast", "")) { GameHooking::session_weather(1, 5, 76, 0); }
-				if (Cheat::Option("Rain", "")) { GameHooking::session_weather(1, 6, 76, 0); }
-				if (Cheat::Option("Thunder", "")) { GameHooking::session_weather(1, 7, 76, 0); }
-				if (Cheat::Option("Clearing", "")) { GameHooking::session_weather(1, 8, 76, 0); }
-				if (Cheat::Option("Neutral", "")) { GameHooking::session_weather(1, 9, 76, 0); }
-				if (Cheat::Option("Snow", "")) { GameHooking::session_weather(1, 10, 76, 0); }
-				if (Cheat::Option("Blizzard", "")) { GameHooking::session_weather(1, 11, 76, 0); }
-				if (Cheat::Option("Snowlight", "")) { GameHooking::session_weather(1, 12, 76, 0); }
-				if (Cheat::Option("Xmas", "")) { GameHooking::session_weather(1, 13, 76, 0); }
-				if (Cheat::Option("Halloween", "")) { GameHooking::session_weather(1, 14, 76, 0); }
-				if (Cheat::Option("Black Screen", "")) { GameHooking::session_weather(1, 15, 76, 0); }
+				if (Cheat::Option("Extra Sunny", "")) { GameHooking::session_weather(true, 0, 76, 0); }
+				if (Cheat::Option("Clear", "")) { GameHooking::session_weather(true, 1, 76, 0); }
+				if (Cheat::Option("Clouds", "")) { GameHooking::session_weather(true, 2, 76, 0); }
+				if (Cheat::Option("Smog", "")) { GameHooking::session_weather(true, 3, 76, 0); }
+				if (Cheat::Option("Foggy", "")) { GameHooking::session_weather(true, 4, 76, 0); }
+				if (Cheat::Option("Overcast", "")) { GameHooking::session_weather(true, 5, 76, 0); }
+				if (Cheat::Option("Rain", "")) { GameHooking::session_weather(true, 6, 76, 0); }
+				if (Cheat::Option("Thunder", "")) { GameHooking::session_weather(true, 7, 76, 0); }
+				if (Cheat::Option("Clearing", "")) { GameHooking::session_weather(true, 8, 76, 0); }
+				if (Cheat::Option("Neutral", "")) { GameHooking::session_weather(true, 9, 76, 0); }
+				if (Cheat::Option("Snow", "")) { GameHooking::session_weather(true, 10, 76, 0); }
+				if (Cheat::Option("Blizzard", "")) { GameHooking::session_weather(true, 11, 76, 0); }
+				if (Cheat::Option("Snowlight", "")) { GameHooking::session_weather(true, 12, 76, 0); }
+				if (Cheat::Option("Xmas", "")) { GameHooking::session_weather(true, 13, 76, 0); }
+				if (Cheat::Option("Halloween", "")) { GameHooking::session_weather(true, 14, 76, 0); }
+				if (Cheat::Option("Black Screen", "")) { GameHooking::session_weather(true, 15, 76, 0); }
 			}
 			else
 			{

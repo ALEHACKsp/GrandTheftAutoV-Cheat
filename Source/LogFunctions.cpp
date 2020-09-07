@@ -5,6 +5,12 @@ void Cheat::LogFunctions::Message(char* Message)
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
 	std::cout << CheatFunctions::ReturnDateTimeFormatAsString(xorstr_("[%d-%m-%Y - %H:%M:%S]")) << xorstr_(" [Info] ") << Message << std::endl;
 }
+void
+Cheat::LogFunctions::MessageCustomCategory(std::string CategoryName, std::string Message)
+{
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
+	std::cout << CheatFunctions::ReturnDateTimeFormatAsString(xorstr_("[%d-%m-%Y - %H:%M:%S]")) << xorstr_(" [") << CategoryName << xorstr_("] ") << Message << std::endl;
+}
 
 void Cheat::LogFunctions::DebugMessage(std::string Message)
 {

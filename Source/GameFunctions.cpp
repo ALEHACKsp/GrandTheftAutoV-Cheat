@@ -1599,7 +1599,11 @@ std::string Cheat::GameFunctions::ReturnPlayerIPAddressAsString(Player PlayerHan
 {
 	char IPBuffer[256];
 	if (NETWORK::NETWORK_IS_SESSION_STARTED())
-	{		
+	{
+		if (PlayerHandle == PlayerID && Cheat::CheatFeatures::HideOwnIPAddress)
+		{
+			return xorstr_("Hidden");
+		}
 		auto InfoLong	 = *reinterpret_cast<std::uintptr_t*>(GameHooking::get_player_address(PlayerHandle) + OFFSET_PLAYER_INFO);
 		auto IPAddress   = reinterpret_cast<std::uint8_t*>(InfoLong + 0x44);
 		IPAddress ? sprintf_s(IPBuffer, xorstr_("%i.%i.%i.%i"), IPAddress[3], IPAddress[2], IPAddress[1], IPAddress[0]) : sprintf_s(IPBuffer, xorstr_("Unknown"));

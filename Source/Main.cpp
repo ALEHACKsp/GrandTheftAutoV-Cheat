@@ -3988,7 +3988,7 @@ void Cheat::Main()
 				Cheat::CheatFeatures::ProtectionWorldEventsBool = true;
 				Cheat::CheatFeatures::ProtectionAlterWantedLevelBool = true;
 				Cheat::CheatFeatures::ProtectionVehicleBool = true;
-				Cheat::CheatFeatures::BlockScriptEvents = true;
+				Cheat::CheatFeatures::BlockMaliciousScriptEvents = true;
 			}
 			if (Cheat::Option("Disable All", "Disable all protection options")) {
 				Cheat::CheatFeatures::ProtectionVoteKickBool = false;
@@ -3999,9 +3999,10 @@ void Cheat::Main()
 				Cheat::CheatFeatures::ProtectionWorldEventsBool = false;
 				Cheat::CheatFeatures::ProtectionAlterWantedLevelBool = false;
 				Cheat::CheatFeatures::ProtectionVehicleBool = false;
-				Cheat::CheatFeatures::BlockScriptEvents = false;
+				Cheat::CheatFeatures::BlockMaliciousScriptEvents = false;
 			}
-			Cheat::Toggle("Remote Events", Cheat::CheatFeatures::BlockScriptEvents, "Some GTAO missions might not work");
+			Cheat::Toggle("Remote Events", Cheat::CheatFeatures::BlockMaliciousScriptEvents, "Some GTAO missions might not work");
+			Cheat::Toggle("Remote Events -> Block All", Cheat::CheatFeatures::BlockAllScriptEvents, "Join GTAO before enabling", false);
 			Cheat::Toggle("Vote Kick", Cheat::CheatFeatures::ProtectionVoteKickBool, "");
 			Cheat::Toggle("Freeze", Cheat::CheatFeatures::ProtectionFreezeBool, "");
 			Cheat::Toggle("Session Weather", Cheat::CheatFeatures::ProtectionSessionWeatherBool, "");
@@ -4208,6 +4209,7 @@ void Cheat::Main()
 			Cheat::Break("Player List", true);
 			Cheat::Toggle("Show Player Information", ShowPlayerInformationPlayerList, "Toggle Player Information Box");
 			Cheat::Toggle("Show Player Tags", Cheat::CheatFeatures::ShowPlayerTagsPlayerList, "Toggle Player Tags");
+			Cheat::Toggle("Hide Own IP Address", Cheat::CheatFeatures::HideOwnIPAddress, "Hiddes Local IP Address");
 			Cheat::Break("Speed", true);
 			Cheat::Toggle("Use KM/H", Cheat::CheatFeatures::UseKMH, "If disabled uses MP/H");
 			Cheat::Break("Protection", true);

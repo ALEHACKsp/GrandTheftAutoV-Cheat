@@ -19,12 +19,12 @@ static GameHooking::NativeRegistrationNew**							m_registrationTable;
 static std::unordered_map<uint64_t, GameHooking::NativeHandler>		m_handlerCache;
 static __int64**													m_globalPtr;
 ScriptThread* (*GetActiveThread)()									= nullptr;
-const int EventCountInteger					= 85;
-static char EventRestore[EventCountInteger] = {};
+const int EventCountInteger											= 85;
+static char EventRestore[EventCountInteger]							= {};
 static std::vector<void*> EventPtr;
-uint64_t CMetaData::m_begin					= 0;
-uint64_t CMetaData::m_end					= 0;
-DWORD CMetaData::m_size						= 0;
+uint64_t CMetaData::m_begin											= 0;
+uint64_t CMetaData::m_end											= 0;
+DWORD CMetaData::m_size												= 0;
 
 
 IsDLCPresent IsDLCPresentOriginal = nullptr;
@@ -66,26 +66,33 @@ void* GetEventDataOriginal = nullptr;
 bool GetEventDataHooked(int eventGroup, int eventIndex, int* argStruct, int argStructSize)
 {
 	auto result = static_cast<decltype(&GetEventDataHooked)>(GetEventDataOriginal)(eventGroup, eventIndex, argStruct, argStructSize);
-	bool IsBlackListedScript = std::find(std::begin(MiscScriptsArray), std::end(MiscScriptsArray), argStruct[0]) != std::end(MiscScriptsArray);
-	if (result && Cheat::CheatFeatures::BlockScriptEvents && IsBlackListedScript)
+	if (result)
 	{
+		bool IsBlackListedScript = std::find(std::begin(MiscScriptsArray), std::end(MiscScriptsArray), argStruct[0]) != std::end(MiscScriptsArray);
 		//char* SenderName = PLAYER::GET_PLAYER_NAME(*(std::int8_t*)(argStruct[1] + 0x2D)); //TODO: Invalid Player ID Offset?
-		if (Cheat::CheatFeatures::ShowBlockedScriptEventNotifications)
+		if (Cheat::CheatFeatures::BlockAllScriptEvents)
 		{
-			Cheat::LogFunctions::DebugMessage("Blocked Script Event " + argStruct[0]);
-			std::string MessageString = xorstr_("Blocked Script Event ") + std::to_string(argStruct[0]);
-			Cheat::GameFunctions::AdvancedMinimapNotification(MessageString.data(), xorstr_("Textures"), xorstr_("AdvancedNotificationImage"), false, 4, xorstr_("Remote Events Protection"), "", .5, "");
+			return false;
 		}
-		return false;
+		else if (Cheat::CheatFeatures::BlockMaliciousScriptEvents && IsBlackListedScript)
+		{
+			if (Cheat::CheatFeatures::ShowBlockedScriptEventNotifications)
+			{
+				Cheat::LogFunctions::DebugMessage("Blocked Script Event " + argStruct[0]);
+				std::string MessageString = xorstr_("Blocked Script Event ") + std::to_string(argStruct[0]);
+				Cheat::GameFunctions::AdvancedMinimapNotification(MessageString.data(), xorstr_("Textures"), xorstr_("AdvancedNotificationImage"), false, 4, xorstr_("Remote Events Protection"), "", .5, "");
+			}
+			return false;
+		}
 	}
 	return result;
 }
 
 GetChatData GetChatDataOriginal = nullptr;
-__int64 __cdecl GetChatDataHooked(__int64 a1, __int64 a2, __int64 a3, const char* origText, BOOL isTeam)
+__int64 GetChatDataHooked(__int64 a1, __int64 a2, __int64 a3, const char* origText, BOOL isTeam)
 {
-	__int8 ChatMessagePlayerID = *(std::int8_t*)((a3, a2, a3) + 0x2D); //TODO: Invalid Player ID Offset?
-	std::string ChatMessagePlayerName = PLAYER::GET_PLAYER_NAME(ChatMessagePlayerID);
+	//__int8 ChatMessagePlayerID = *(std::int8_t*)((a3, a2, a3) + 0x2D); //TODO: Invalid Player ID Offset?
+	//std::string ChatMessagePlayerName = PLAYER::GET_PLAYER_NAME(ChatMessagePlayerID);
 
 	if (Cheat::CheatFeatures::LogChatMessages)
 	{

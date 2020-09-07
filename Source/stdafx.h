@@ -151,9 +151,11 @@ namespace Cheat
 		extern int PlayerOpacityInt;
 		extern bool HotkeyToggleBool;
 		extern bool UseKMH;
-		extern bool BlockScriptEvents;
+		extern bool BlockMaliciousScriptEvents;
+		extern bool BlockAllScriptEvents;
 		extern bool ShowBlockedScriptEventNotifications;
 		extern bool ShowPlayerTagsPlayerList;
+		extern bool HideOwnIPAddress;
 		extern bool ShowVehicleInfoAndPreview;
 		extern bool CursorGUINavigationEnabled;
 		extern bool ShowJoiningPlayersNotification;

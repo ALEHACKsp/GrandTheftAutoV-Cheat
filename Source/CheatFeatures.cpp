@@ -1008,8 +1008,8 @@ void Cheat::CheatFeatures::OffRadar()
 bool Cheat::CheatFeatures::RevealPlayersBool = false;
 void Cheat::CheatFeatures::RevealPlayers()
 {
-	globalHandle(2424073).At(1 + (PlayerID * 421)).At(203).As<int>() = 1;
-	globalHandle(2437549).At(71).As<int>() = NETWORK::GET_NETWORK_TIME();
+	//globalHandle(2424073).At(1 + (PlayerID * 421)).At(203).As<int>() = 1;
+	//globalHandle(2437549).At(71).As<int>() = NETWORK::GET_NETWORK_TIME();
 }
 
 bool Cheat::CheatFeatures::ExplodeLoopSelectedPlayerBool = false;

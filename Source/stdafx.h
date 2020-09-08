@@ -336,7 +336,7 @@ namespace Cheat
 		bool DoesDirectoryExists(const std::string& dirName_in);
 		void CreateNewDirectory(std::string Path);
 		std::string GetLastErrorAsString();
-		void CheatThreadLoopFunctions();
+		void LoopedFunctions();
 		bool IsGameWindowFocussed();
 		bool StringIsInteger(const std::string& s);
 		bool IsIntegerInRange(unsigned low, unsigned high, unsigned x);

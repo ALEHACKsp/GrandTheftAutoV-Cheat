@@ -430,12 +430,8 @@ void GameHooking::DoGameHooking()
 	Cheat::LogFunctions::Message(xorstr_("Game Completed Loading"));
 
 	//Hook Game Functions
-	Cheat::LogFunctions::DebugMessage(xorstr_("Hook 'IS_DLC_PRESENT'"));
-	auto status = MH_CreateHook(GameHooking::is_DLC_present, IsDLCPresentHooked, (void**)&IsDLCPresentOriginal);
-	if ((status != MH_OK && status != MH_ERROR_ALREADY_CREATED) || MH_EnableHook(GameHooking::is_DLC_present) != MH_OK) { Cheat::LogFunctions::Error(xorstr_("Failed to hook IS_DLC_PRESENT"), true);  std::exit(EXIT_SUCCESS); }
-	
 	Cheat::LogFunctions::DebugMessage(xorstr_("Hook 'GET_EVENT_DATA'"));
-	status = MH_CreateHook(GameHooking::get_event_data, GetEventDataHooked, &GetEventDataOriginal);
+	auto status = MH_CreateHook(GameHooking::get_event_data, GetEventDataHooked, &GetEventDataOriginal);
 	if ((status != MH_OK && status != MH_ERROR_ALREADY_CREATED) || MH_EnableHook(GameHooking::get_event_data) != MH_OK) { Cheat::LogFunctions::Error(xorstr_("Failed to hook GET_EVENT_DATA"), true);  std::exit(EXIT_SUCCESS); }
 	
 	Cheat::LogFunctions::DebugMessage(xorstr_("Hook 'GET_SCRIPT_HANDLER_IF_NETWORKED'"));
@@ -449,6 +445,11 @@ void GameHooking::DoGameHooking()
 	Cheat::LogFunctions::DebugMessage(xorstr_("Hook 'GET_CHAT_DATA'"));
 	status = MH_CreateHook(GameHooking::get_chat_data, GetChatDataHooked, (void**)&GetChatDataOriginal);
 	if (status != MH_OK || MH_EnableHook(GameHooking::get_chat_data) != MH_OK) { Cheat::LogFunctions::Error(xorstr_("Failed to hook GET_CHAT_DATA"), true);  std::exit(EXIT_SUCCESS); }
+
+	Cheat::LogFunctions::DebugMessage(xorstr_("Hook 'IS_DLC_PRESENT'"));
+	status = MH_CreateHook(GameHooking::is_DLC_present, IsDLCPresentHooked, (void**)&IsDLCPresentOriginal);
+	if ((status != MH_OK && status != MH_ERROR_ALREADY_CREATED) || MH_EnableHook(GameHooking::is_DLC_present) != MH_OK) { Cheat::LogFunctions::Error(xorstr_("Failed to hook IS_DLC_PRESENT"), true);  std::exit(EXIT_SUCCESS); }
+
 }
 
 static GameHooking::NativeHandler _Handler(uint64_t origHash)

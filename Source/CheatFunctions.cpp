@@ -38,7 +38,7 @@ std::string Cheat::CheatFunctions::ReturnDateTimeFormatAsString(const char* Date
 
 std::string Cheat::CheatFunctions::ReturnCheatBuildAsString()
 {
-	return xorstr_("1.2.0.3");
+	return xorstr_("1.3.0.0");
 }
 
 std::string Cheat::CheatFunctions::ReturnCheatModuleDirectoryPath()
@@ -90,7 +90,7 @@ std::string Cheat::CheatFunctions::GetLastErrorAsString()
 
 Player PlayerID;
 Ped PlayerPedID;
-void Cheat::CheatFunctions::CheatThreadLoopFunctions()
+void Cheat::CheatFunctions::LoopedFunctions()
 {
 	//Load MP vehicles in SP bypass
 	globalHandle(4268340).As<BOOL>() = true;

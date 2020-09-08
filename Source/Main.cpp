@@ -46,7 +46,7 @@ void Cheat::Main()
 	Cheat::CheatFeatures::NoneLooped();
 	while (true) 
 	{
-		Cheat::CheatFunctions::CheatThreadLoopFunctions();
+		Cheat::CheatFunctions::LoopedFunctions();
 
 		switch (Cheat::GUI::currentMenu) {
 		case MainMenu:

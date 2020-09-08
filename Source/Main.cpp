@@ -153,7 +153,7 @@ void Cheat::Main()
 			Cheat::MenuOption("Stats Options >", statsoptionsmenu);
 			Cheat::MenuOption("Session Options >", sessionoptionsmenu);
 			Cheat::Toggle("Off Radar", Cheat::CheatFeatures::OffRadarBool, "Enables Lester Off Radar Feature");
-			Cheat::Toggle("Reveal Players", Cheat::CheatFeatures::RevealPlayersBool, "Enables Lester Reveal Players Feature");
+			//Cheat::Toggle("Reveal Players", Cheat::CheatFeatures::RevealPlayersBool, "Enables Lester Reveal Players Feature");
 			//Cheat::Toggle("No Idle Kick", Cheat::CheatFeatures::NoIdleKickBool, "Does not work when out of game focus");
 			//Cheat::Toggle("Bribe Authorities", Cheat::CheatFeatures::BribeAuthoritiesBool, "Enables Bribe Authorities");
 			if (Cheat::Option("Get Empty Session", "Get Empty (Public) Session")) { Sleep(10000); }
@@ -266,10 +266,10 @@ void Cheat::Main()
 		case unlocksmenu:
 		{
 			Cheat::Title("Unlocks");
-			if (Cheat::Option("Unlock All", "Unlocks most unlockable GTA Online items")) {
-				int iVar0;
-				STATS::STAT_GET_INT(GAMEPLAY::GET_HASH_KEY("mpply_last_mp_char"), &iVar0, -1);
-				if (iVar0 == 0) {
+			if (Cheat::Option("Unlock All", "Unlocks most unlockable GTA Online items")) 
+			{
+				if (Cheat::GameFunctions::IsCurrentGTAOCharacterChar0()) 
+				{
 					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP0_ADMIN_CLOTHES_GV_BS_1"), -1, TRUE);
 					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP0_ADMIN_CLOTHES_GV_BS_10"), -1, TRUE);
 					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP0_ADMIN_CLOTHES_GV_BS_11"), -1, TRUE);
@@ -722,7 +722,8 @@ void Cheat::Main()
 					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP0_SNIPERRFL_ENEMY_KILLS"), 500, TRUE);
 					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP0_HVYSNIPER_ENEMY_KILLS"), 500, TRUE);
 				}
-				if (iVar0 == 1) {
+				else 
+				{
 					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP1_ADMIN_CLOTHES_GV_BS_1"), -1, TRUE);
 					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP1_ADMIN_CLOTHES_GV_BS_10"), -1, TRUE);
 					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP1_ADMIN_CLOTHES_GV_BS_11"), -1, TRUE);
@@ -1177,10 +1178,10 @@ void Cheat::Main()
 				}
 				Cheat::GameFunctions::MinimapNotification("'Unlocked All' completed");
 			}
-			if (Cheat::Option("Max Skills", "Max out all skill levels")) {
-				int iVar0;
-				STATS::STAT_GET_INT(GAMEPLAY::GET_HASH_KEY("mpply_last_mp_char"), &iVar0, -1);
-				if (iVar0 == 0) {
+			if (Cheat::Option("Max Skills", "Max out all skill levels")) 
+			{
+				if (Cheat::GameFunctions::IsCurrentGTAOCharacterChar0()) 
+				{
 					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP0_SCRIPT_INCREASE_STAM"), 100, 0);
 					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP0_SCRIPT_INCREASE_STRN"), 100, 0);
 					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP0_SCRIPT_INCREASE_LUNG"), 100, 0);
@@ -1189,7 +1190,8 @@ void Cheat::Main()
 					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP0_SCRIPT_INCREASE_SHO"), 100, 0);
 					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP0_SCRIPT_INCREASE_STL"), 100, 0);
 				}
-				if (iVar0 == 1) {
+				else
+				{
 					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP1_SCRIPT_INCREASE_STAM"), 100, 0);
 					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP1_SCRIPT_INCREASE_STRN"), 100, 0);
 					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP1_SCRIPT_INCREASE_LUNG"), 100, 0);
@@ -1200,10 +1202,10 @@ void Cheat::Main()
 				}
 				Cheat::GameFunctions::MinimapNotification("Maxed out all skill values for your current character"); 	
 			}
-			if (Cheat::Option("Unlock Tattoo's", "Unlock most tattoo's")) {
-				int iVar0;
-				STATS::STAT_GET_INT(GAMEPLAY::GET_HASH_KEY("mpply_last_mp_char"), &iVar0, -1);
-				if (iVar0 == 0) {
+			if (Cheat::Option("Unlock Tattoo's", "Unlock most tattoo's")) 
+			{
+				if (Cheat::GameFunctions::IsCurrentGTAOCharacterChar0()) 
+				{
 					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP0_AWD_FM_DM_WINS"), 50, 1);
 					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP0_AWD_FM_TDM_MVP"), 50, 1);
 					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP0_AWD_FM_DM_TOTALKILLS"), 500, 1);
@@ -1225,7 +1227,8 @@ void Cheat::Main()
 					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP0_PLAYER_HEADSHOTS"), 500, 1);
 					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP0_DB_PLAYER_KILLS"), 1000, 1);
 				}
-				if (iVar0 == 1) {
+				else
+				{
 					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP1_AWD_FM_DM_WINS"), 50, 1);
 					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP1_AWD_FM_TDM_MVP"), 50, 1);
 					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP1_AWD_FM_DM_TOTALKILLS"), 500, 1);
@@ -1248,10 +1251,10 @@ void Cheat::Main()
 					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP1_DB_PLAYER_KILLS"), 1000, 1);
 				}
 			}
-			if (Cheat::Option("Unlock All Heist Vehicles", "Unlock Heist Vehicles")) {
-				int iVar0;
-				STATS::STAT_GET_INT(GAMEPLAY::GET_HASH_KEY("mpply_last_mp_char"), &iVar0, -1);
-				if (iVar0 == 0) {
+			if (Cheat::Option("Unlock All Heist Vehicles", "Unlock Heist Vehicles")) 
+			{
+				if (Cheat::GameFunctions::IsCurrentGTAOCharacterChar0()) 
+				{
 					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP0_CHAR_KIT_FM_PURCHAS E"), -1, 0);
 					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP0_CHAR_KIT_FM_PURCHAS E2"), -1, 0);
 					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP0_CHAR_KIT_FM_PURCHAS E3"), -1, 0);
@@ -1311,7 +1314,8 @@ void Cheat::Main()
 					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP0_CHAR_FM_HEALTH_2_UNLCK"), -1, 0);
 					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP0_HOLDUPS_BITSET"), -1, 0);
 				}
-				if (iVar0 == 1) {
+				else
+				{
 					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP1_CHAR_KIT_FM_PURCHAS E"), -1, 0);
 					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP1_CHAR_KIT_FM_PURCHAS E2"), -1, 0);
 					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP1_CHAR_KIT_FM_PURCHAS E3"), -1, 0);
@@ -1373,10 +1377,10 @@ void Cheat::Main()
 				}
 	
 			}
-			if (Cheat::Option("Unlock Awards & Trophies", "")) {
-				int iVar0;
-				STATS::STAT_GET_INT(GAMEPLAY::GET_HASH_KEY("mpply_last_mp_char"), &iVar0, -1);
-				if (iVar0 == 0) {
+			if (Cheat::Option("Unlock Awards & Trophies", "")) 
+			{
+				if (Cheat::GameFunctions::IsCurrentGTAOCharacterChar0()) 
+				{
 					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP0_PLAYER_HEADSHOTS"), 500, 1);
 					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP0_PISTOL_ENEMY_KILLS"), 500, 1);
 					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP0_SAWNOFF_ENEMY_KILLS"), 500, 1);
@@ -1465,7 +1469,8 @@ void Cheat::Main()
 					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP0_CHAR_WANTED_LEVEL_TIME5STAR"), 2147483647, 1);
 					STATS::STAT_SET_FLOAT(GAMEPLAY::GET_HASH_KEY("MP0_LONGEST_WHEELIE_DIST"), 1000, 1);
 				}
-				if (iVar0 == 1) {
+				else
+				{
 					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP1_PLAYER_HEADSHOTS"), 500, 1);
 					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP1_PISTOL_ENEMY_KILLS"), 500, 1);
 					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP1_SAWNOFF_ENEMY_KILLS"), 500, 1);
@@ -1563,46 +1568,44 @@ void Cheat::Main()
 			Cheat::Title("Misc Stats");
 			if (Cheat::Option("Set Max Nightclub Popularity", "Set NightClub Popularity to 100%"))
 			{
-				int iVar0;
-				STATS::STAT_GET_INT(GAMEPLAY::GET_HASH_KEY("mpply_last_mp_char"), &iVar0, -1);
-				if (iVar0 == 0) {
+				if (Cheat::GameFunctions::IsCurrentGTAOCharacterChar0()) 
+				{
 					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP0_CLUB_POPULARITY"), 9999, 0);
 				}
-				if (iVar0 == 1) {
+				else
+				{
 					STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP1_CLUB_POPULARITY"), 9999, 0);
 				}
-				Cheat::GameFunctions::MinimapNotification("~g~Popularity of your Nightclub has been set to the maximum");
+				Cheat::GameFunctions::MinimapNotification("Maxed out Nightclub Popularity");
 			}
-			if (Cheat::Option("Redesign Character Prompt", "")) {
-				int iVar0;
-				STATS::STAT_GET_INT(GAMEPLAY::GET_HASH_KEY("mpply_last_mp_char"), &iVar0, -1);
-
-				if (iVar0 == 0) {
+			if (Cheat::Option("Redesign Character Prompt", "")) 
+			{
+				if (Cheat::GameFunctions::IsCurrentGTAOCharacterChar0()) {
 					STATS::STAT_SET_BOOL(GAMEPLAY::GET_HASH_KEY("MP0_FM_CHANGECHAR_ASKED"), 0, 1);
 				}
-				if (iVar0 == 1) {
+				else
+				{
 					STATS::STAT_SET_BOOL(GAMEPLAY::GET_HASH_KEY("MP1_FM_CHANGECHAR_ASKED"), 0, 1);
 				}
-				Cheat::GameFunctions::MinimapNotification("~g~Leave GTA Online (go to Single Player) and join back to receive the notification.");
+				Cheat::GameFunctions::MinimapNotification("Leave GTAO and rejoin to receive the notification");
 			}
-			if (Cheat::Option("Clear Badsport", "Clears Badsport status")) {
+			if (Cheat::Option("Clear Badsport", "Clears Badsport status")) 
+			{
+				DWORD date[12];
 				STATS::STAT_SET_BOOL(GAMEPLAY::GET_HASH_KEY("MPPLY_CHAR_IS_BADSPORT "), 0, 1);
 				STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP0_BAD_SPORT_BITSET"), 0, 1);
 				STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP1_BAD_SPORT_BITSET"), 0, 1);
-				Any date[12];
-				memset(&date, 0, sizeof(date));
 				STATS::STAT_SET_DATE(GAMEPLAY::GET_HASH_KEY("MPPLY_BECAME_BADSPORT_DT"), &date[0], 7, 1);
-				Cheat::GameFunctions::MinimapNotification("~g~Badsport Cleared");
+				Cheat::GameFunctions::MinimapNotification("Cleared Badsport Status");
 			}
 			if (Cheat::Option("Clear Mental State", "Clear current mental state"))
 			{
-				int iVar0;
-				STATS::STAT_GET_INT(GAMEPLAY::GET_HASH_KEY("mpply_last_mp_char"), &iVar0, -1);
-
-				if (iVar0 == 0) {
+				if (Cheat::GameFunctions::IsCurrentGTAOCharacterChar0()) 
+				{
 					STATS::STAT_SET_FLOAT(GAMEPLAY::GET_HASH_KEY("MP0_PLAYER_MENTAL_STATE"), 0.0, true);
 				}
-				if (iVar0 == 1) {
+				else 
+				{
 					STATS::STAT_SET_FLOAT(GAMEPLAY::GET_HASH_KEY("MP1_PLAYER_MENTAL_STATE"), 0.0, true);
 				}
 				Cheat::GameFunctions::MinimapNotification("Mental State Reset");

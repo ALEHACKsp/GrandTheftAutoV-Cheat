@@ -186,13 +186,11 @@ void Cheat::GameFunctions::SetRankRockstarGift(int RPValue)
 {
 	if (RPValue < 0 || RPValue > 8000) { Cheat::GameFunctions::MinimapNotification(xorstr_("Invalid Rank Inputted")); return; }
 
-	int iVar0;
-	STATS::STAT_GET_INT(GAMEPLAY::GET_HASH_KEY(xorstr_("mpply_last_mp_char")), &iVar0, -1);
-	if (iVar0 == 0) 
+	if (Cheat::GameFunctions::IsCurrentGTAOCharacterChar0())
 	{ 
 		STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY(xorstr_("MP0_CHAR_SET_RP_GIFT_ADMIN")), Cheat::GameArrays::RankPointsArray[RPValue - 1], 0);
 	}
-	else if (iVar0 == 1) 
+	else
 	{
 		STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY(xorstr_("MP1_CHAR_SET_RP_GIFT_ADMIN")), Cheat::GameArrays::RankPointsArray[RPValue - 1], 0);
 	}
@@ -1614,4 +1612,18 @@ std::string Cheat::GameFunctions::ReturnPlayerIPAddressAsString(Player PlayerHan
 	}
 	std::string IPBufferString = { IPBuffer };
 	return IPBufferString;
+}
+
+bool Cheat::GameFunctions::IsCurrentGTAOCharacterChar0()
+{
+	int IntegerVar;
+	STATS::STAT_GET_INT(GAMEPLAY::GET_HASH_KEY(xorstr_("MPPLY_LAST_MP_CHAR")), &IntegerVar, -1);
+	if (IntegerVar == 0)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }

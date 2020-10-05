@@ -28,7 +28,7 @@ DWORD CMetaData::m_size												= 0;
 
 
 IsDLCPresent IsDLCPresentOriginal = nullptr;
-bool IsDLCPresentHooked(std::uint32_t dlcHash)
+bool IsDLCPresentHooked(std::uint32_t DLCHash)
 {
 	static uint64_t	Last = 0;
 	uint64_t cur = *GameHooking::m_frameCount;
@@ -37,7 +37,8 @@ bool IsDLCPresentHooked(std::uint32_t dlcHash)
 		Last = cur;
 		GameHooking::onTickInit();
 	}
-	return IsDLCPresentOriginal(dlcHash);
+	if (DLCHash == 2532323046 && Cheat::CheatFeatures::GTAODeveloperMode) { return true; }
+	return IsDLCPresentOriginal(DLCHash);
 }
 
 GetScriptHandlerIfNetworked GetScriptHandlerIfNetworkedOriginal = nullptr;

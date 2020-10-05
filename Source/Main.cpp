@@ -2982,6 +2982,7 @@ void Cheat::Main()
 			Cheat::Toggle("Free Cam", Cheat::CheatFeatures::FreeCamBool, "Use W and S to control. Shift to go faster");
 			Cheat::Toggle("Show Joining Players Notification", Cheat::CheatFeatures::ShowJoiningPlayersNotification, "");
 			Cheat::Toggle("No Orbital Cannon Cooldown", Cheat::CheatFeatures::OrbitalCannonCooldownBypassBool, "");
+			Cheat::Toggle("Developer Mode", Cheat::CheatFeatures::GTAODeveloperMode, "Toggles GTAO Spectator Options");
 			Cheat::Toggle("Auto Teleport To Waypoint", Cheat::CheatFeatures::AutoTeleportToWaypointBool, "");
 			Cheat::Toggle("Force Field", Cheat::CheatFeatures::PlayerForceFieldBool, "Gives your character a force field");
 			Cheat::Toggle("Show Session Information", Cheat::CheatFeatures::ShowSessionInformationBool, "Show session info (next to radar)");

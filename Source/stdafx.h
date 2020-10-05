@@ -160,6 +160,7 @@ namespace Cheat
 		extern bool CursorGUINavigationEnabled;
 		extern bool ShowJoiningPlayersNotification;
 		extern bool LogChatMessages;
+		extern bool GTAODeveloperMode;
 
 		void NoneLooped();
 		void Looped();

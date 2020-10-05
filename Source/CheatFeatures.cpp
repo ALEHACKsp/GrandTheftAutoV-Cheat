@@ -13,6 +13,7 @@ bool Cheat::CheatFeatures::HideOwnIPAddress = true;
 bool Cheat::CheatFeatures::ShowVehicleInfoAndPreview = true;
 bool Cheat::CheatFeatures::ShowJoiningPlayersNotification = true;
 bool Cheat::CheatFeatures::LogChatMessages = true;
+bool Cheat::CheatFeatures::GTAODeveloperMode = false;
 
 int PostInitBannerNotificationScaleformHandle;
 void Cheat::CheatFeatures::NoneLooped()

@@ -206,14 +206,13 @@ bool Cheat::Option(std::string option, std::string InformationText)
 	if (GUI::currentOption == GUI::optionCount)
 	{
 		GUI::CurrentOptionIsSavable = false;
-		if (InformationText == "") { OptionInformationText.clear(); } else { OptionInformationText = InformationText; }
 		GUI::previousOption = GUI::currentOption;
+		if (InformationText == "") { OptionInformationText.clear(); } else { OptionInformationText = InformationText; }
 		if (GUI::selectPressed)
 		{
 			return true;
 		}
 	}
-		
 	return false;
 }
 

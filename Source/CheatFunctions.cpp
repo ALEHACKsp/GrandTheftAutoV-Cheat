@@ -168,14 +168,7 @@ std::string Cheat::CheatFunctions::TextureFilePath()
 	return ReturnCheatModuleDirectoryPath() + (std::string)xorstr_("\\gtav\\Textures.ytd");
 }
 
-int AntiCrashCameraHotkey		= NULL;
-int BailToSinglePlayerHotkey	= NULL;
-int SuicideHotkey				= NULL;
-int TeleportForward2mHotkey		= NULL;
-int MaxUpgradeVehicleHotKey		= NULL;
-int GodModeToggleHotkey			= NULL;
-int RepairAndCleanVehicleHotkey = NULL;
-int TeleportToWaypointHotkey	= NULL;
+
 bool Cheat::CheatFunctions::ReturnPressedKey(int& PressedKey)
 {
 	if (GetAsyncKeyState(VK_LBUTTON) & 0x8000) { PressedKey = VK_LBUTTON; return true; }
@@ -344,16 +337,6 @@ void Cheat::CheatFunctions::LoadConfig()
 	//Load Active Theme Name
 	std::string ActiveThemeSetting = Cheat::CheatFunctions::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("SETTINGS"), xorstr_("active_theme"));
 	if (ActiveThemeSetting != xorstr_("NOT_FOUND")) { Cheat::GUI::LoadTheme(CheatFunctions::StringToChar(ActiveThemeSetting), true); }
-
-	//Hotkeys
-	std::string LoadHotkey_BailToSinglePlayer = Cheat::CheatFunctions::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("SETTINGS"), xorstr_("hotkey_bailtosingleplayer")); if (Cheat::CheatFunctions::StringIsInteger(LoadHotkey_BailToSinglePlayer)) { BailToSinglePlayerHotkey = std::stoi(LoadHotkey_BailToSinglePlayer.c_str()); }
-	std::string loadHotkey_teleporttowaypoint = Cheat::CheatFunctions::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("SETTINGS"), xorstr_("hotkey_teleporttowaypoint")); if (Cheat::CheatFunctions::StringIsInteger(loadHotkey_teleporttowaypoint)) { TeleportToWaypointHotkey = std::stoi(loadHotkey_teleporttowaypoint.c_str()); }
-	std::string LoadHotkey_Suicide = Cheat::CheatFunctions::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("SETTINGS"), xorstr_("hotkey_suicide")); if (Cheat::CheatFunctions::StringIsInteger(LoadHotkey_Suicide)) { SuicideHotkey = std::stoi(LoadHotkey_Suicide.c_str()); }
-	std::string loadHotkey_teleportforward2m = Cheat::CheatFunctions::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("SETTINGS"), xorstr_("hotkey_teleportforward2m")); if (Cheat::CheatFunctions::StringIsInteger(loadHotkey_teleportforward2m)) { TeleportForward2mHotkey = std::stoi(loadHotkey_teleportforward2m.c_str()); }
-	std::string loadHotkey_maxupgradevehicle = Cheat::CheatFunctions::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("SETTINGS"), xorstr_("hotkey_maxupgradevehicle")); if (Cheat::CheatFunctions::StringIsInteger(loadHotkey_maxupgradevehicle)) { MaxUpgradeVehicleHotKey = std::stoi(loadHotkey_maxupgradevehicle.c_str()); }
-	std::string loadHotkey_godmodetoggle = Cheat::CheatFunctions::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("SETTINGS"), xorstr_("hotkey_godmodetoggle")); if (Cheat::CheatFunctions::StringIsInteger(loadHotkey_godmodetoggle)) { GodModeToggleHotkey = std::stoi(loadHotkey_godmodetoggle.c_str()); }
-	std::string loadHotkey_repairandcleanvehicle = Cheat::CheatFunctions::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("SETTINGS"), xorstr_("hotkey_repairandcleanvehicle")); if (Cheat::CheatFunctions::StringIsInteger(loadHotkey_repairandcleanvehicle)) { RepairAndCleanVehicleHotkey = std::stoi(loadHotkey_repairandcleanvehicle.c_str()); }
-	std::string loadHotkey_anticrashcamera = Cheat::CheatFunctions::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("SETTINGS"), xorstr_("hotkey_anticrashcamera")); if (Cheat::CheatFunctions::StringIsInteger(loadHotkey_anticrashcamera)) { AntiCrashCameraHotkey = std::stoi(loadHotkey_anticrashcamera.c_str()); }
 }
 
 

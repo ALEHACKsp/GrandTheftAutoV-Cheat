@@ -32,7 +32,6 @@ enum SubMenus
 	iplteleports,
 	weathermenu,
 	VehicleSpawnSettings,
-	hotkeys,
 	AllPlayersMenu,
 	ModelChangerMenu,
 	vehiclespawnermenu,

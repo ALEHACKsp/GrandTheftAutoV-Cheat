@@ -2888,91 +2888,9 @@ void Cheat::Main()
 			if (Cheat::Option("Blizzard", "")) { GAMEPLAY::SET_OVERRIDE_WEATHER("BLIZZARD"); }
 		}
 		break;
-		case hotkeys:
-		{		
-			int PressedKey;
-			const char* PressAnyKeyMessageString = "~bold~Press any key to set hotkey, press Escape to cancel";
-			Cheat::Title("Hotkeys");
-			Cheat::Toggle("Toggle Hotkeys", Cheat::CheatFeatures::HotkeyToggleBool, "Toggle To Enable/Disable All Hotkeys");
-			Cheat::Break("Anti-Crash Camera", true);
-			if (Cheat::Option("Set Hotkey", ""))
-			{
-				PressedKey = 0;
-				while (!Cheat::CheatFunctions::ReturnPressedKey(PressedKey)) { Cheat::GUI::Drawing::Text(PressAnyKeyMessageString, { 255, 255, 255, 255 }, { 0.525f, 0.400f }, { 0.900f, 0.900f }, true); WAIT(0, false); }
-				if (PressedKey == 27) { Cheat::GameFunctions::MinimapNotification("Canceled Setting Hotkey"); break; }
-				if (PressedKey != 0) { CheatFunctions::SaveOption("Anti-Crash Camera Hotkey", std::to_string(PressedKey), true); AntiCrashCameraHotkey = PressedKey; Cheat::GameFunctions::MinimapNotification("Anti-Crash Camera hotkey has been set"); }
-			}
-			if (Cheat::Option("Clear Hotkey", "")) { Cheat::GameFunctions::MinimapNotification("Hotkey Cleared"); AntiCrashCameraHotkey = NULL; }
-			Cheat::Break("Teleport To Waypoint", true);
-			if (Cheat::Option("Set Hotkey", ""))
-			{
-				PressedKey = 0;
-				while (!Cheat::CheatFunctions::ReturnPressedKey(PressedKey)) { Cheat::GUI::Drawing::Text(PressAnyKeyMessageString, { 255, 255, 255, 255 }, { 0.525f, 0.400f }, { 0.900f, 0.900f }, true); WAIT(0, false); }
-				if (PressedKey == 27) { Cheat::GameFunctions::MinimapNotification("Canceled Setting Hotkey"); break; }
-				if (PressedKey != 0) { CheatFunctions::SaveOption("Teleport To Waypoint Hotkey", std::to_string(PressedKey), true); TeleportToWaypointHotkey = PressedKey; Cheat::GameFunctions::MinimapNotification("Teleport To Waypoint hotkey has been set"); }
-			}
-			if (Cheat::Option("Clear Hotkey", "")) { Cheat::GameFunctions::MinimapNotification("Hotkey Cleared"); TeleportToWaypointHotkey = NULL; }
-			Cheat::Break("Repair & Clean Vehicle", true);
-			if (Cheat::Option("Set Hotkey", ""))
-			{
-				PressedKey = 0;
-				while (!Cheat::CheatFunctions::ReturnPressedKey(PressedKey)) { Cheat::GUI::Drawing::Text(PressAnyKeyMessageString, { 255, 255, 255, 255 }, { 0.525f, 0.400f }, { 0.900f, 0.900f }, true); WAIT(0, false); }
-				if (PressedKey == 27) { Cheat::GameFunctions::MinimapNotification("Canceled Setting Hotkey"); break; }
-				if (PressedKey != 0) { CheatFunctions::SaveOption("Repair & Clean Vehicle Hotkey", std::to_string(PressedKey), true); RepairAndCleanVehicleHotkey = PressedKey; Cheat::GameFunctions::MinimapNotification("Repair & Clean hotkey has been set"); }
-			}
-			if (Cheat::Option("Clear Hotkey", "")) { Cheat::GameFunctions::MinimapNotification("Hotkey Cleared"); RepairAndCleanVehicleHotkey = NULL; }
-			Cheat::Break("Godmode", true);
-			if (Cheat::Option("Set Hotkey", ""))
-			{
-				PressedKey = 0;
-				while (!Cheat::CheatFunctions::ReturnPressedKey(PressedKey)) { Cheat::GUI::Drawing::Text(PressAnyKeyMessageString, { 255, 255, 255, 255 }, { 0.525f, 0.400f }, { 0.900f, 0.900f }, true); WAIT(0, false); }
-				if (PressedKey == 27) { Cheat::GameFunctions::MinimapNotification("Canceled Setting Hotkey"); break; }
-				if (PressedKey != 0) { CheatFunctions::SaveOption("Godmode Hotkey", std::to_string(PressedKey), true); GodModeToggleHotkey = PressedKey; Cheat::GameFunctions::MinimapNotification("Godmode hotkey has been set"); }
-			}
-			if (Cheat::Option("Clear Hotkey", "")) { Cheat::GameFunctions::MinimapNotification("Hotkey Cleared"); GodModeToggleHotkey = NULL; }
-			Cheat::Break("Max Upgrade Vehicle", true);
-			if (Cheat::Option("Set Hotkey", ""))
-			{
-				PressedKey = 0;
-				while (!Cheat::CheatFunctions::ReturnPressedKey(PressedKey)) { Cheat::GUI::Drawing::Text(PressAnyKeyMessageString, { 255, 255, 255, 255 }, { 0.525f, 0.400f }, { 0.900f, 0.900f }, true); WAIT(0, false); }
-				if (PressedKey == 27) { Cheat::GameFunctions::MinimapNotification("Canceled Setting Hotkey"); break; }
-				if (PressedKey != 0) { CheatFunctions::SaveOption("Max Upgrade Vehicle Hotkey", std::to_string(PressedKey), true); MaxUpgradeVehicleHotKey = PressedKey; Cheat::GameFunctions::MinimapNotification("Max Upgrade Vehicle hotkey has been set"); }
-			}
-			if (Cheat::Option("Clear Hotkey", "")) { Cheat::GameFunctions::MinimapNotification("Hotkey Cleared"); MaxUpgradeVehicleHotKey = NULL; }
-			Cheat::Break("Teleport Forward(2m)", true);
-			if (Cheat::Option("Set Hotkey", ""))
-			{
-				PressedKey = 0;
-				TeleportToWaypointHotkey = NULL;
-				while (!Cheat::CheatFunctions::ReturnPressedKey(PressedKey)) { Cheat::GUI::Drawing::Text(PressAnyKeyMessageString, { 255, 255, 255, 255 }, { 0.525f, 0.400f }, { 0.900f, 0.900f }, true); WAIT(0, false); }
-				if (PressedKey == 27) { Cheat::GameFunctions::MinimapNotification("Canceled Setting Hotkey"); break; }
-				if (PressedKey != 0) { CheatFunctions::SaveOption("Teleport Forward Hotkey", std::to_string(PressedKey), true); TeleportForward2mHotkey = PressedKey; Cheat::GameFunctions::MinimapNotification("Teleport Forward (2m) hotkey has been set"); }
-			}
-			if (Cheat::Option("Clear Hotkey", "")) { Cheat::GameFunctions::MinimapNotification("Hotkey Cleared"); TeleportForward2mHotkey = NULL; }
-			Cheat::Break("Suicide", true);
-			if (Cheat::Option("Set Hotkey", ""))
-			{
-				PressedKey = 0;
-				while (!Cheat::CheatFunctions::ReturnPressedKey(PressedKey)) { Cheat::GUI::Drawing::Text(PressAnyKeyMessageString, { 255, 255, 255, 255 }, { 0.525f, 0.400f }, { 0.900f, 0.900f }, true); WAIT(0, false); }
-				if (PressedKey == 27) { Cheat::GameFunctions::MinimapNotification("Canceled Setting Hotkey"); break; }
-				if (PressedKey != 0) { CheatFunctions::SaveOption("Suicide Hotkey", std::to_string(PressedKey), true); SuicideHotkey = PressedKey; Cheat::GameFunctions::MinimapNotification("Suicide hotkey has been set"); }
-			}
-			if (Cheat::Option("Clear Hotkey", "")) { Cheat::GameFunctions::MinimapNotification("Hotkey Cleared"); SuicideHotkey = NULL; }
-			Cheat::Break("Bail To Single Player", true);
-			if (Cheat::Option("Set Hotkey", ""))
-			{
-				PressedKey = 0;
-				while (!Cheat::CheatFunctions::ReturnPressedKey(PressedKey)) { Cheat::GUI::Drawing::Text(PressAnyKeyMessageString, { 255, 255, 255, 255 }, { 0.525f, 0.400f }, { 0.900f, 0.900f }, true); WAIT(0, false); }
-				if (PressedKey == 27) { Cheat::GameFunctions::MinimapNotification("Canceled Setting Hotkey"); break; }
-				if (PressedKey != 0) { CheatFunctions::SaveOption("Bail To Single Player Hotkey", std::to_string(PressedKey), true); BailToSinglePlayerHotkey = PressedKey; Cheat::GameFunctions::MinimapNotification("Bail To Single Player hotkey has been set"); }
-			}
-			if (Cheat::Option("Clear Hotkey", "")) { Cheat::GameFunctions::MinimapNotification("Hotkey Cleared"); BailToSinglePlayerHotkey = NULL; }
-		}
-		break; 
 		case miscmenu:
 		{
 			Cheat::Title("Misc Options");
-			Cheat::MenuOption("Hotkeys >", hotkeys);
 			Cheat::MenuOption("HUD >", hudmenu); 
 			Cheat::MenuOption("IPL Loader >", iplloader);
 			Cheat::Toggle("Disable Phone", Cheat::CheatFeatures::DisablePhoneBool, "Disable phone controls");

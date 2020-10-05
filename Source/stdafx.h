@@ -149,7 +149,6 @@ namespace Cheat
 		extern int SpeedometerVectorPosition;
 		extern int selectedPlayer;
 		extern int PlayerOpacityInt;
-		extern bool HotkeyToggleBool;
 		extern bool UseKMH;
 		extern bool BlockMaliciousScriptEvents;
 		extern bool BlockAllScriptEvents;

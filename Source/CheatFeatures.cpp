@@ -21,8 +21,8 @@ void Cheat::CheatFeatures::NoneLooped()
 	//Initialize Texture File
 	Cheat::GUI::Drawing::InitTextureFile();
 
-	//Load Settings
-	Cheat::CheatFunctions::LoadSettings();
+	//Load Config
+	Cheat::CheatFunctions::LoadConfig();
 
 	//Log Post Init Completion
 	Cheat::LogFunctions::Message(xorstr_("GTAV Cheat Initialization Completed"));

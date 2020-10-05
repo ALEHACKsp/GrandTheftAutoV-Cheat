@@ -332,7 +332,7 @@ void LoadSettingsThreadFunction()
 	Cheat::GUI::EnableGUIControlsDisabled();
 }
 
-void Cheat::CheatFunctions::LoadSettings()
+void Cheat::CheatFunctions::LoadConfig()
 {
 	Cheat::LogFunctions::Message(xorstr_("Loading Config"));
 	std::thread LoadSettingsThreadHandle(LoadSettingsThreadFunction);
@@ -355,18 +355,6 @@ void Cheat::CheatFunctions::LoadSettings()
 
 
 std::vector <std::string> LoadedOptionsVector;
-void Cheat::CheatFunctions::RegisterOptionAsLoaded(std::string OptionName)
-{
-	for (auto const& i : LoadedOptionsVector)
-	{
-		if (i == OptionName)
-		{
-			return;
-		}
-	}
-	LoadedOptionsVector.push_back(OptionName);
-	Cheat::LogFunctions::DebugMessage(xorstr_("Loaded savable option '") + OptionName + xorstr_("'"));
-}
 bool Cheat::CheatFunctions::IsOptionRegisteredAsLoaded(std::string OptionName)
 {
 	for (auto const& i : LoadedOptionsVector)
@@ -378,6 +366,23 @@ bool Cheat::CheatFunctions::IsOptionRegisteredAsLoaded(std::string OptionName)
 	}
 	return false;
 }
+
+void Cheat::CheatFunctions::LoadConfigOption(std::string DataType, std::string OptionName, bool& ReturnedBoolOptional, int& ReturnedIntOptional, float& ReturnedFloatOptional)
+{
+	if (!CheatFunctions::IsOptionRegisteredAsLoaded(OptionName))
+	{
+		std::string ConfigFileValue = GetOptionValueFromConfig(OptionName);
+		if (ConfigFileValue != xorstr_("NOT_FOUND"))
+		{
+			if (DataType == xorstr_("int"))			{ try { ReturnedIntOptional = std::stoi(CheatFunctions::GetOptionValueFromConfig(OptionName)); } catch (...) {} }
+			if (DataType == xorstr_("bool"))		{ try { ReturnedBoolOptional = CheatFunctions::StringToBool(CheatFunctions::GetOptionValueFromConfig(OptionName)); } catch (...) {} }
+			if (DataType == xorstr_("float"))		{ try { ReturnedFloatOptional = std::stof(CheatFunctions::GetOptionValueFromConfig(OptionName)); } catch (...) {} }
+		}
+		LoadedOptionsVector.push_back(OptionName);
+		Cheat::LogFunctions::DebugMessage(xorstr_("Loaded savable option '") + OptionName + xorstr_("'"));
+	}
+}
+
 
 char* Cheat::CheatFunctions::StringToChar(std::string string)
 {

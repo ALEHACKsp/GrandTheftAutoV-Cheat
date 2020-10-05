@@ -3,7 +3,7 @@
 float Cheat::GUI::guiX					= 0.11f;
 float Cheat::GUI::guiY					= 0.30f;
 float Cheat::GUI::guiWidth				= 0.21f; //TODO: Text Scaling not implemented yet
-bool Cheat::GUI::GUIControlsDisabled    = false; //Used during initialization (LoadSettings())
+bool Cheat::GUI::GUIControlsDisabled    = false; //Used during initialization (LoadConfig())
 bool Cheat::GUI::selectPressed			= false;
 bool Cheat::GUI::leftPressed			= false;
 bool Cheat::GUI::rightPressed			= false;
@@ -370,15 +370,7 @@ bool Cheat::MenuOptionPlayerList(std::string option, SubMenus newSub, Player Pla
 bool Cheat::Toggle(std::string option, bool & b00l, std::string InformationText, bool IsSavable)
 {
 	//Load Option From Config
-	if (!CheatFunctions::IsOptionRegisteredAsLoaded(option) && IsSavable)
-	{
-		std::string ConfigFileValue = CheatFunctions::GetOptionValueFromConfig(option);
-		if (ConfigFileValue != xorstr_("NOT_FOUND")) 
-		{ 
-			try { b00l = CheatFunctions::StringToBool(CheatFunctions::GetOptionValueFromConfig(option)); } catch (...) {}
-		}
-		CheatFunctions::RegisterOptionAsLoaded(option);
-	}
+	if (IsSavable) { CheatFunctions::LoadConfigOption(xorstr_("bool"), option, b00l, CheatFunctions::LoadConfigOptionDummyInt, CheatFunctions::LoadConfigOptionDummyFloat); }
 
 	Option(option, InformationText);
 	if (b00l)
@@ -468,16 +460,7 @@ bool Cheat::Toggle(std::string option, bool & b00l, std::string InformationText,
 bool Cheat::Int(std::string option, int & _int, int min, int max, int step, bool DisableControl, bool IsSavable, std::string InformationText)
 {
 	//Load Option From Config
-	if (!CheatFunctions::IsOptionRegisteredAsLoaded(option) && IsSavable)
-	{
-		std::string ConfigFileValue = CheatFunctions::GetOptionValueFromConfig(option);
-		if (ConfigFileValue != xorstr_("NOT_FOUND"))
-		{
-			try { _int = std::stoi(CheatFunctions::GetOptionValueFromConfig(option)); } catch (...) {}
-		}
-		CheatFunctions::RegisterOptionAsLoaded(option);
-	}
-
+	if (IsSavable) { CheatFunctions::LoadConfigOption(xorstr_("int"), option, CheatFunctions::LoadConfigOptionDummyBool, _int, CheatFunctions::LoadConfigOptionDummyFloat); }
 
 	Option(option, InformationText);
 
@@ -576,17 +559,10 @@ bool Cheat::Int(std::string option, int & _int, int min, int max, int step, bool
 bool Cheat::Float(std::string option, float & _float, float min, float max, float steps, bool ReturnTrueWithValueChange, bool IsSavable, std::string InformationText)
 {
 	//Load Option From Config
-	if (!CheatFunctions::IsOptionRegisteredAsLoaded(option) && IsSavable)
-	{
-		std::string ConfigFileValue = CheatFunctions::GetOptionValueFromConfig(option);
-		if (ConfigFileValue != xorstr_("NOT_FOUND"))
-		{
-			try { _float = std::stof(CheatFunctions::GetOptionValueFromConfig(option)); } catch (...) {}
-		}
-		CheatFunctions::RegisterOptionAsLoaded(option);
-	}
+	if (IsSavable) { CheatFunctions::LoadConfigOption(xorstr_("float"), option, CheatFunctions::LoadConfigOptionDummyBool, CheatFunctions::LoadConfigOptionDummyInt, _float); }
 
 	Option(option, InformationText);
+
 	if (GUI::optionCount == GUI::currentOption) 
 	{	
 		if (GUI::leftPressed) 
@@ -638,15 +614,7 @@ bool Cheat::Float(std::string option, float & _float, float min, float max, floa
 bool Cheat::IntVector(std::string option, std::vector<int> Vector, int& position, bool IsSavable)
 {
 	//Load Option From Config
-	if (!CheatFunctions::IsOptionRegisteredAsLoaded(option) && IsSavable)
-	{
-		std::string ConfigFileValue = CheatFunctions::GetOptionValueFromConfig(option);
-		if (ConfigFileValue != xorstr_("NOT_FOUND"))
-		{
-			try { position = std::stoi(CheatFunctions::GetOptionValueFromConfig(option)); } catch (...) {}
-		}
-		CheatFunctions::RegisterOptionAsLoaded(option);
-	}
+	if (IsSavable) { CheatFunctions::LoadConfigOption(xorstr_("int"), option, CheatFunctions::LoadConfigOptionDummyBool, position, CheatFunctions::LoadConfigOptionDummyFloat); }
 
 	Option(option, "");
 
@@ -654,10 +622,12 @@ bool Cheat::IntVector(std::string option, std::vector<int> Vector, int& position
 	{
 		int max = Vector.size() - 1;
 		int min = 0;
-		if (GUI::leftPressed) {
+		if (GUI::leftPressed) 
+		{
 			position >= 1 ? position-- : position = max;
 		}
-		if (GUI::rightPressed) {
+		if (GUI::rightPressed) 
+		{
 			position < max ? position++ : position = min;
 		}
 	}
@@ -693,18 +663,11 @@ bool Cheat::IntVector(std::string option, std::vector<int> Vector, int& position
 	else if (GUI::optionCount == GUI::currentOption && GUI::rightPressed) return true;
 	return false;
 }
-bool Cheat::FloatVector(std::string option, std::vector<float> Vector, int & position, bool IsSavable)
+bool Cheat::FloatVector(std::string option, std::vector<float> Vector, int& position, bool IsSavable)
 {
 	//Load Option From Config
-	if (!CheatFunctions::IsOptionRegisteredAsLoaded(option) && IsSavable)
-	{
-		std::string ConfigFileValue = CheatFunctions::GetOptionValueFromConfig(option);
-		if (ConfigFileValue != xorstr_("NOT_FOUND"))
-		{
-			try { position = std::stoi(CheatFunctions::GetOptionValueFromConfig(option)); } catch (...) {}
-		}
-		CheatFunctions::RegisterOptionAsLoaded(option);
-	}
+	if (IsSavable) { CheatFunctions::LoadConfigOption(xorstr_("int"), option, CheatFunctions::LoadConfigOptionDummyBool, position, CheatFunctions::LoadConfigOptionDummyFloat); }
+
 
 	Option(option, "");
 
@@ -752,15 +715,7 @@ bool Cheat::FloatVector(std::string option, std::vector<float> Vector, int & pos
 bool Cheat::StringVector(std::string option, std::vector<std::string> Vector, int & position, std::string InformationText, bool IsSavable)
 {
 	//Load Option From Config
-	if (!CheatFunctions::IsOptionRegisteredAsLoaded(option) && IsSavable)
-	{
-		std::string ConfigFileValue = CheatFunctions::GetOptionValueFromConfig(option);
-		if (ConfigFileValue != xorstr_("NOT_FOUND"))
-		{
-			try { position = std::stoi(CheatFunctions::GetOptionValueFromConfig(option)); } catch (...) {}
-		}
-		CheatFunctions::RegisterOptionAsLoaded(option);
-	}
+	if (IsSavable) { CheatFunctions::LoadConfigOption(xorstr_("int"), option, CheatFunctions::LoadConfigOptionDummyBool, position, CheatFunctions::LoadConfigOptionDummyFloat); }
 
 	Option(option, InformationText);
 

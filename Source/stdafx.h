@@ -53,7 +53,6 @@
 
 
 
-
 namespace Cheat 
 {
 	extern HMODULE CheatModuleHandle;
@@ -324,9 +323,12 @@ namespace Cheat
 	{
 		std::string ReturnCheatBuildAsString();
 		const std::string ReturnConfigFilePath();
-		void LoadSettings();
-		void RegisterOptionAsLoaded(std::string OptionName);
+		void LoadConfig();
 		bool IsOptionRegisteredAsLoaded(std::string OptionName);
+		static int	 LoadConfigOptionDummyInt;
+		static float LoadConfigOptionDummyFloat;
+		static bool  LoadConfigOptionDummyBool;
+		void LoadConfigOption(std::string DataType, std::string OptionName, bool& ReturnedBoolOptional, int& ReturnedIntOptional, float& ReturnedFloatOptional);
 		std::string ReturnCheatModuleDirectoryPath();
 		void SaveOptionToConfig(std::string OptionName, std::string OptionValue);
 		std::string GetOptionValueFromConfig(std::string OptionName);

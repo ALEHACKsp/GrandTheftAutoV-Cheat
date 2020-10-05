@@ -77,6 +77,7 @@ namespace Cheat
 		extern bool ShowHeaderGUI;
 		extern bool ShowHeaderGlare;
 		extern bool CheatGUIHasBeenOpened;
+		extern bool CurrentOptionIsSavable;
 		extern std::string CurrentTheme;
 		extern bool GUIControlsDisabled;
 		extern bool selectPressed;
@@ -330,10 +331,8 @@ namespace Cheat
 		static bool  LoadConfigOptionDummyBool;
 		void LoadConfigOption(std::string DataType, std::string OptionName, bool& ReturnedBoolOptional, int& ReturnedIntOptional, float& ReturnedFloatOptional);
 		std::string ReturnCheatModuleDirectoryPath();
-		void SaveOptionToConfig(std::string OptionName, std::string OptionValue);
+		void SaveOption(std::string OptionName, std::string OptionValue, bool IsSavable);
 		std::string GetOptionValueFromConfig(std::string OptionName);
-		void ShowItemSavingDisabledMessage(std::string OptionName);
-		bool IsSaveItemHotKeyPressed();
 		char* CombineTwoChars(char* string1, char* string2);
 		bool DoesFileExists(const std::string& fileName);
 		bool DoesDirectoryExists(const std::string& dirName_in);

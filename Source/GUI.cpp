@@ -2,8 +2,8 @@
 
 float Cheat::GUI::guiX					= 0.11f;
 float Cheat::GUI::guiY					= 0.30f;
-float Cheat::GUI::guiWidth				= 0.21f; //TODO: Text Scaling not implemented yet
-bool Cheat::GUI::GUIControlsDisabled    = false; //Used during initialization (LoadConfig())
+float Cheat::GUI::guiWidth				= 0.21f; //TODO: Text Scaling not implemented
+bool Cheat::GUI::GUIControlsDisabled    = false;
 bool Cheat::GUI::selectPressed			= false;
 bool Cheat::GUI::leftPressed			= false;
 bool Cheat::GUI::rightPressed			= false;
@@ -11,6 +11,7 @@ bool Cheat::GUI::ShowHeaderBackground	= true;
 bool Cheat::GUI::ShowHeaderGUI			= true;
 bool Cheat::GUI::ShowHeaderGlare		= true;
 bool Cheat::GUI::CheatGUIHasBeenOpened	= false;
+bool Cheat::GUI::CurrentOptionIsSavable	= false;
 std::string OptionInformationText;
 std::string Cheat::GUI::CurrentTheme;
 int Cheat::GUI::maxVisOptions			= 10;
@@ -27,7 +28,6 @@ int Cheat::GUI::PreviousMenuLevel;
 int Cheat::GUI::optionsArray			[1000];
 SubMenus Cheat::GUI::menusArray			[1000];
 std::vector <std::string> Cheat::GUI::ThemeFilesVector;
-
 RGBAF Cheat::GUI::count				{ 255, 255, 255, 255, FontChaletLondon };
 RGBAF Cheat::GUI::titleText			{ 255, 255, 255, 255, FontChaletLondon };
 RGBAF Cheat::GUI::optionText		{ 255, 255, 255, 255, FontChaletLondon };
@@ -142,7 +142,7 @@ void Cheat::Title(std::string title)
 	Cheat::GameFunctions::InstructionalKeysInit();
 	Cheat::GameFunctions::InstructionsAdd(CheatFunctions::StringToChar(CloseGUIString), 80);
 	Cheat::GameFunctions::InstructionsAdd(CheatFunctions::StringToChar(CursorNavigationString), 80);
-	Cheat::GameFunctions::InstructionsAdd(CheatFunctions::StringToChar(SaveOptionKeyString), 80);
+	if (GUI::CurrentOptionIsSavable) { Cheat::GameFunctions::InstructionsAdd(CheatFunctions::StringToChar(SaveOptionKeyString), 80); }
 	Cheat::GameFunctions::InstructionsAdd(xorstr_("Back"), 136);
 	Cheat::GameFunctions::InstructionsAdd(xorstr_("Up/Down"), 10);
 	Cheat::GameFunctions::InstructionsAdd(xorstr_("Change Value"), 46);
@@ -205,6 +205,7 @@ bool Cheat::Option(std::string option, std::string InformationText)
 	}
 	if (GUI::currentOption == GUI::optionCount)
 	{
+		GUI::CurrentOptionIsSavable = false;
 		if (InformationText == "") { OptionInformationText.clear(); } else { OptionInformationText = InformationText; }
 		GUI::previousOption = GUI::currentOption;
 		if (GUI::selectPressed)
@@ -243,7 +244,6 @@ bool Cheat::VehicleOption(std::string option, std::string ModelName)
 		VehiclePreviewDictName = "Textures";
 		VehiclePreviewName	   = "NoVehiclePreviewAvailable";
 
-
 		for (int i = 0; i < Cheat::GameArrays::VehicleModelPictures.size(); i++)
 		{
 			if (Cheat::GameArrays::VehicleModelPictures[i].PreviewName == ModelName)
@@ -252,37 +252,37 @@ bool Cheat::VehicleOption(std::string option, std::string ModelName)
 				VehiclePreviewName		= CheatFunctions::StringToChar(Cheat::GameArrays::VehicleModelPictures[i].PreviewName);
 			}
 		}
-			
-		 if (Cheat::CheatFeatures::ShowVehicleInfoAndPreview)
-		 {
-			 std::string ModelNameDrawingText = xorstr_("Model Name: ") + ModelName;
-			 std::ostringstream ModelMaxSpeed;
-			 if (Cheat::CheatFeatures::UseKMH)
-			 {
-				 ModelMaxSpeed << xorstr_("Max Speed: ") << Cheat::GameFunctions::MSToKMH(VEHICLE::GET_VEHICLE_MODEL_ESTIMATED_MAX_SPEED(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(ModelName)))) << xorstr_(" KM/H");
-			 }
-			 else
-			 {
-				 ModelMaxSpeed << xorstr_("Max Speed: ") << Cheat::GameFunctions::MSToMPH(VEHICLE::GET_VEHICLE_MODEL_ESTIMATED_MAX_SPEED(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(ModelName)))) << xorstr_(" MP/H");
-			 }
+		
+		if (Cheat::CheatFeatures::ShowVehicleInfoAndPreview)
+		{
+			std::string ModelNameDrawingText = xorstr_("Model Name: ") + ModelName;
+			std::ostringstream ModelMaxSpeed;
+			if (Cheat::CheatFeatures::UseKMH)
+			{
+				ModelMaxSpeed << xorstr_("Max Speed: ") << Cheat::GameFunctions::MSToKMH(VEHICLE::GET_VEHICLE_MODEL_ESTIMATED_MAX_SPEED(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(ModelName)))) << xorstr_(" KM/H");
+			}
+			else
+			{
+				ModelMaxSpeed << xorstr_("Max Speed: ") << Cheat::GameFunctions::MSToMPH(VEHICLE::GET_VEHICLE_MODEL_ESTIMATED_MAX_SPEED(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(ModelName)))) << xorstr_(" MP/H");
+			}
 
-			 if (Cheat::GUI::guiX < 0.71f) 
-			 {
-				 GUI::Drawing::Text(xorstr_("Vehicle Info & Preview"), GUI::count, { Cheat::GUI::guiX + 0.187f, GUI::guiY - 0.168f }, { 0.50f, 0.35f }, true);
-				 GUI::Drawing::Text(ModelNameDrawingText, GUI::count, { Cheat::GUI::guiX + 0.111f,  GUI::guiY + 0.008f }, { 0.45f, 0.30f }, false);
-				 GUI::Drawing::Text(ModelMaxSpeed.str(), GUI::count, { Cheat::GUI::guiX + 0.111f, GUI::guiY + 0.026f }, { 0.45f, 0.30f }, false);
-				 GUI::Drawing::Rect(GUI::MenuBackgroundRect, { Cheat::GUI::guiX + 0.187f, GUI::guiY - 0.056f }, { 0.16f, 0.22f });
-				 GUI::Drawing::Spriter(VehiclePreviewDictName, VehiclePreviewName, Cheat::GUI::guiX + 0.187f, GUI::guiY - 0.068f, 0.15f, 0.15f, 0.f, 255, 255, 255, 255);
-			 }
-			 else
-			 {
-				 GUI::Drawing::Text(xorstr_("Vehicle Info & Preview"), GUI::count, { Cheat::GUI::guiX - 0.187f,GUI::guiY - 0.168f }, { 0.50f, 0.35f }, true);
-				 GUI::Drawing::Text(ModelNameDrawingText, GUI::count, { Cheat::GUI::guiX - 0.262f, GUI::guiY + 0.008f }, { 0.45f, 0.30f }, false);
-				 GUI::Drawing::Text(ModelMaxSpeed.str(), GUI::count, { Cheat::GUI::guiX - 0.262f, GUI::guiY + 0.026f }, { 0.45f, 0.30f }, false);
-				 GUI::Drawing::Rect(GUI::MenuBackgroundRect, { Cheat::GUI::guiX - 0.187f, GUI::guiY - 0.056f }, { 0.16f, 0.22f });
-				 GUI::Drawing::Spriter(VehiclePreviewDictName, VehiclePreviewName, Cheat::GUI::guiX - 0.187f, GUI::guiY - 0.068f, 0.15f, 0.15f, 0.f, 255, 255, 255, 255);
-			 }
-		 }
+			if (Cheat::GUI::guiX < 0.71f)
+			{
+				GUI::Drawing::Text(xorstr_("Vehicle Info & Preview"), GUI::count, { Cheat::GUI::guiX + 0.187f, GUI::guiY - 0.168f }, { 0.50f, 0.35f }, true);
+				GUI::Drawing::Text(ModelNameDrawingText, GUI::count, { Cheat::GUI::guiX + 0.111f,  GUI::guiY + 0.008f }, { 0.45f, 0.30f }, false);
+				GUI::Drawing::Text(ModelMaxSpeed.str(), GUI::count, { Cheat::GUI::guiX + 0.111f, GUI::guiY + 0.026f }, { 0.45f, 0.30f }, false);
+				GUI::Drawing::Rect(GUI::MenuBackgroundRect, { Cheat::GUI::guiX + 0.187f, GUI::guiY - 0.056f }, { 0.16f, 0.22f });
+				GUI::Drawing::Spriter(VehiclePreviewDictName, VehiclePreviewName, Cheat::GUI::guiX + 0.187f, GUI::guiY - 0.068f, 0.15f, 0.15f, 0.f, 255, 255, 255, 255);
+			}
+			else
+			{
+				GUI::Drawing::Text(xorstr_("Vehicle Info & Preview"), GUI::count, { Cheat::GUI::guiX - 0.187f,GUI::guiY - 0.168f }, { 0.50f, 0.35f }, true);
+				GUI::Drawing::Text(ModelNameDrawingText, GUI::count, { Cheat::GUI::guiX - 0.262f, GUI::guiY + 0.008f }, { 0.45f, 0.30f }, false);
+				GUI::Drawing::Text(ModelMaxSpeed.str(), GUI::count, { Cheat::GUI::guiX - 0.262f, GUI::guiY + 0.026f }, { 0.45f, 0.30f }, false);
+				GUI::Drawing::Rect(GUI::MenuBackgroundRect, { Cheat::GUI::guiX - 0.187f, GUI::guiY - 0.056f }, { 0.16f, 0.22f });
+				GUI::Drawing::Spriter(VehiclePreviewDictName, VehiclePreviewName, Cheat::GUI::guiX - 0.187f, GUI::guiY - 0.068f, 0.15f, 0.15f, 0.f, 255, 255, 255, 255);
+			}
+		}
 		if (GUI::selectPressed)
 		{
 			return true;
@@ -309,6 +309,7 @@ bool Cheat::Break(std::string option, bool TextCentered)
 
 	if (GUI::optionCount == GUI::currentOption)
 	{
+		GUI::CurrentOptionIsSavable = false;
 		if (GUI::previousOption < GUI::currentOption && GUI::optionCount > 1)
 		{
 			GUI::currentOption++;
@@ -426,32 +427,8 @@ bool Cheat::Toggle(std::string option, bool & b00l, std::string InformationText,
 
 	if (GUI::optionCount == GUI::currentOption) 
 	{
-		//Option Saving
-		if (CheatFunctions::IsSaveItemHotKeyPressed())
-		{
-			if (IsSavable)
-			{
-				if (b00l)
-				{
-					CheatFunctions::SaveOptionToConfig(option, xorstr_("true"));
-				}
-				else
-				{
-					CheatFunctions::SaveOptionToConfig(option, xorstr_("false"));
-				}
-			}
-			else
-			{
-				CheatFunctions::ShowItemSavingDisabledMessage(option);
-			}
-		}
-
-
-		if (GUI::selectPressed)
-		{
-			b00l ^= 1;
-			return true;
-		}
+		CheatFunctions::SaveOption(option, b00l ? xorstr_("true") : xorstr_("false"), IsSavable);
+		if (GUI::selectPressed) { b00l ^= 1; return true; }
 	}
 	return false;
 }
@@ -531,19 +508,7 @@ bool Cheat::Int(std::string option, int & _int, int min, int max, int step, bool
 	}
 	if (GUI::optionCount == GUI::currentOption)
 	{
-		//Option Saving
-		if (CheatFunctions::IsSaveItemHotKeyPressed())
-		{
-			if (IsSavable)
-			{
-				CheatFunctions::SaveOptionToConfig(option, std::to_string(_int));
-			}
-			else
-			{
-				CheatFunctions::ShowItemSavingDisabledMessage(option);
-			}
-		}
-
+		CheatFunctions::SaveOption(option, std::to_string(_int), IsSavable);
 		if (GUI::selectPressed && !DisableControl)
 		{
 			int KeyBoardInput = Cheat::GameFunctions::DisplayKeyboardAndReturnInputInteger(CheatFunctions::ReturnNumberOfDigitsInValue(max));
@@ -592,19 +557,7 @@ bool Cheat::Float(std::string option, float & _float, float min, float max, floa
 
 	if (GUI::optionCount == GUI::currentOption)
 	{
-		//Option Saving
-		if (CheatFunctions::IsSaveItemHotKeyPressed())
-		{
-			if (IsSavable)
-			{
-				CheatFunctions::SaveOptionToConfig(option, std::to_string(_float));
-			}
-			else
-			{
-				CheatFunctions::ShowItemSavingDisabledMessage(option);
-			}
-		}
-
+		CheatFunctions::SaveOption(option, std::to_string(_float), IsSavable);
 		if (GUI::selectPressed) { return true; }
 	}
 	else if (GUI::optionCount == GUI::currentOption && GUI::leftPressed && ReturnTrueWithValueChange) return true;
@@ -620,7 +573,7 @@ bool Cheat::IntVector(std::string option, std::vector<int> Vector, int& position
 
 	if (GUI::optionCount == GUI::currentOption) 
 	{
-		int max = Vector.size() - 1;
+		int max = static_cast<int>(Vector.size()) - 1;
 		int min = 0;
 		if (GUI::leftPressed) 
 		{
@@ -643,20 +596,7 @@ bool Cheat::IntVector(std::string option, std::vector<int> Vector, int& position
 
 	if (GUI::optionCount == GUI::currentOption)
 	{
-		//Option Saving
-		if (CheatFunctions::IsSaveItemHotKeyPressed())
-		{
-			if (IsSavable)
-			{
-				CheatFunctions::SaveOptionToConfig(option, std::to_string(position));
-			}
-			else
-			{
-				CheatFunctions::ShowItemSavingDisabledMessage(option);
-			}
-		}
-
-
+		CheatFunctions::SaveOption(option, std::to_string(position), IsSavable);
 		if (GUI::selectPressed) { return true; }
 	}
 	else if (GUI::optionCount == GUI::currentOption && GUI::leftPressed) return true;
@@ -668,16 +608,18 @@ bool Cheat::FloatVector(std::string option, std::vector<float> Vector, int& posi
 	//Load Option From Config
 	if (IsSavable) { CheatFunctions::LoadConfigOption(xorstr_("int"), option, CheatFunctions::LoadConfigOptionDummyBool, position, CheatFunctions::LoadConfigOptionDummyFloat); }
 
-
 	Option(option, "");
 
-	if (GUI::optionCount == GUI::currentOption) {
-		size_t max = Vector.size() - 1;
+	if (GUI::optionCount == GUI::currentOption) 
+	{
+		size_t max = static_cast<int>(Vector.size()) - 1;
 		int min = 0;
-		if (GUI::leftPressed) {
+		if (GUI::leftPressed) 
+		{
 			position >= 1 ? position-- : position = max;
 		}
-		if (GUI::rightPressed) {
+		if (GUI::rightPressed) 
+		{
 			position < max ? position++ : position = min;
 		}
 	}
@@ -693,19 +635,7 @@ bool Cheat::FloatVector(std::string option, std::vector<float> Vector, int& posi
 
 	if (GUI::optionCount == GUI::currentOption)
 	{
-		//Option Saving
-		if (CheatFunctions::IsSaveItemHotKeyPressed())
-		{
-			if (IsSavable)
-			{
-				CheatFunctions::SaveOptionToConfig(option, std::to_string(position));
-			}
-			else
-			{
-				CheatFunctions::ShowItemSavingDisabledMessage(option);
-			}
-		}
-
+		CheatFunctions::SaveOption(option, std::to_string(position), IsSavable);	
 		if (GUI::selectPressed) { return true; }
 	}
 	else if (GUI::optionCount == GUI::currentOption && GUI::leftPressed) return true;
@@ -719,13 +649,16 @@ bool Cheat::StringVector(std::string option, std::vector<std::string> Vector, in
 
 	Option(option, InformationText);
 
-	if (GUI::optionCount == GUI::currentOption) {
-		size_t max = Vector.size() - 1;
+	if (GUI::optionCount == GUI::currentOption) 
+	{
+		size_t max = static_cast<int>(Vector.size()) - 1;
 		int min = 0;
-		if (GUI::leftPressed) {
+		if (GUI::leftPressed) 
+		{
 			position >= 1 ? position-- : position = max;
 		}
-		if (GUI::rightPressed) {
+		if (GUI::rightPressed) 
+		{
 			position < max ? position++ : position = min;
 		}
 	}
@@ -740,19 +673,7 @@ bool Cheat::StringVector(std::string option, std::vector<std::string> Vector, in
 	}
 	if (GUI::optionCount == GUI::currentOption)
 	{
-		//Option Saving
-		if (CheatFunctions::IsSaveItemHotKeyPressed())
-		{
-			if (IsSavable)
-			{
-				CheatFunctions::SaveOptionToConfig(option, std::to_string(position));
-			}
-			else
-			{
-				CheatFunctions::ShowItemSavingDisabledMessage(option);
-			}
-		}
-
+		CheatFunctions::SaveOption(option, std::to_string(position), IsSavable);
 		if (GUI::selectPressed) { return true; }
 	}
 	else if (GUI::optionCount == GUI::currentOption && GUI::leftPressed) return true;

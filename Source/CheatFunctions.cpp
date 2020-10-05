@@ -287,34 +287,37 @@ bool Cheat::CheatFunctions::ReturnPressedKey(int& PressedKey)
 }
 
 
-void Cheat::CheatFunctions::SaveOptionToConfig(std::string OptionName, std::string OptionValue)
+void Cheat::CheatFunctions::SaveOption(std::string OptionName, std::string OptionValue, bool IsSavable)
 {
-	std::string LogMessage = xorstr_("'") + OptionName + xorstr_("' saved");
-	Cheat::GameFunctions::AdvancedMinimapNotification(CheatFunctions::StringToChar(LogMessage), xorstr_("Textures"), xorstr_("AdvancedNotificationImage"), false, 4, xorstr_("Config"), "", 0.5f, "");
-	WriteStringToIni(OptionValue, ReturnConfigFilePath(), xorstr_("SETTINGS"), OptionName);
+	if (IsSavable) 
+	{
+		GUI::CurrentOptionIsSavable = true;
+	}
+	else 
+	{
+		GUI::CurrentOptionIsSavable = false;
+	}
+
+	if (GetAsyncKeyState(GUI::SaveItemKey) & 0x8000 && Cheat::CheatFunctions::IsGameWindowFocussed() && !GUI::GUIControlsDisabled)
+	{
+		if (IsSavable)
+		{
+			std::string LogMessage = xorstr_("'") + OptionName + xorstr_("' saved");
+			Cheat::GameFunctions::AdvancedMinimapNotification(CheatFunctions::StringToChar(LogMessage), xorstr_("Textures"), xorstr_("AdvancedNotificationImage"), false, 4, xorstr_("Config"), "", 0.5f, "");
+			WriteStringToIni(OptionValue, ReturnConfigFilePath(), xorstr_("SETTINGS"), OptionName);
+		}
+		else
+		{
+			std::string DisableMessage = xorstr_("'") + OptionName + xorstr_("' cannot be saved");
+			Cheat::GameFunctions::AdvancedMinimapNotification(CheatFunctions::StringToChar(DisableMessage), xorstr_("Textures"), xorstr_("AdvancedNotificationImage"), false, 4, xorstr_("Config"), "", 0.5f, "");
+		}
+	}
 }
+
 
 std::string Cheat::CheatFunctions::GetOptionValueFromConfig(std::string OptionName)
 {
 	return ReadStringFromIni(ReturnConfigFilePath(), xorstr_("SETTINGS"), OptionName);
-}
-
-void Cheat::CheatFunctions::ShowItemSavingDisabledMessage(std::string OptionName)
-{
-	std::string DisableMessage = xorstr_("'") + OptionName + xorstr_("' cannot be saved");
-	Cheat::GameFunctions::AdvancedMinimapNotification(CheatFunctions::StringToChar(DisableMessage), xorstr_("Textures"), xorstr_("AdvancedNotificationImage"), false, 4, xorstr_("Config"), "", 0.5f, "");
-}
-
-bool Cheat::CheatFunctions::IsSaveItemHotKeyPressed()
-{
-	if (GetAsyncKeyState(GUI::SaveItemKey) & 0x8000 && Cheat::CheatFunctions::IsGameWindowFocussed() && !GUI::GUIControlsDisabled)
-	{
-		return true;
-	}
-	else
-	{
-		return false;
-	}
 }
 
 void LoadSettingsThreadFunction()
@@ -382,7 +385,6 @@ void Cheat::CheatFunctions::LoadConfigOption(std::string DataType, std::string O
 		Cheat::LogFunctions::DebugMessage(xorstr_("Loaded savable option '") + OptionName + xorstr_("'"));
 	}
 }
-
 
 char* Cheat::CheatFunctions::StringToChar(std::string string)
 {

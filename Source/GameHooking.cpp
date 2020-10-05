@@ -410,11 +410,11 @@ void GameHooking::DoGameHooking()
 	}
 
 	//Initialize Natives
-	Cheat::LogFunctions::DebugMessage(xorstr_("Initialize Game Natives"));
+	Cheat::LogFunctions::DebugMessage(xorstr_("Initialized Game Natives"));
 	CrossMapping::initNativeMap();
 
 	//Initialize MinHook
-	Cheat::LogFunctions::DebugMessage(xorstr_("Initialize MinHook"));
+	Cheat::LogFunctions::DebugMessage(xorstr_("Initialized MinHook"));
 	if (MH_Initialize() != MH_OK) { Cheat::LogFunctions::Error(xorstr_("Failed to initialize MinHook"), true); std::exit(EXIT_SUCCESS); }
 
 	bool WaitingGameLoadLogPrinted = false;

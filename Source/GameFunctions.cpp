@@ -18,11 +18,11 @@ void Cheat::GameFunctions::RepairAndCleanVehicle()
 		VEHICLE::SET_VEHICLE_DIRT_LEVEL(PED::GET_VEHICLE_PED_IS_USING(PlayerPedID), 0);
 		VEHICLE::SET_VEHICLE_ENGINE_HEALTH(PED::GET_VEHICLE_PED_IS_USING(PlayerPedID), 1000);
 		VEHICLE::SET_VEHICLE_ENGINE_ON(PED::GET_VEHICLE_PED_IS_USING(PlayerPedID), true, true, true);
-		Cheat::GameFunctions::AdvancedMinimapNotification(xorstr_("Vehicle Fixed & Cleaned"), xorstr_("Textures"), xorstr_("AdvancedNotificationImage"), false, 4, xorstr_("Vehicle Customizer"), "", 1.0, "");
+		Cheat::GameFunctions::AdvancedMinimapNotification("Vehicle Fixed & Cleaned", "Textures", "AdvancedNotificationImage", false, 4, "Vehicle Customizer", "", 1.0, "");
 	}
 	else 
 	{
-		Cheat::GameFunctions::MinimapNotification(xorstr_("~r~Player isn't in a vehicle"));
+		Cheat::GameFunctions::MinimapNotification("~r~Player isn't in a vehicle");
 	}
 }
 
@@ -89,7 +89,7 @@ void Cheat::GameFunctions::TeleportToObjective()
 			blipFound = true;
 		}
 	}
-	blipFound ? Cheat::GameFunctions::TeleportToCoords(e, wayp, false) : Cheat::GameFunctions::MinimapNotification(xorstr_("~r~Objective not found"));
+	blipFound ? Cheat::GameFunctions::TeleportToCoords(e, wayp, false) : Cheat::GameFunctions::MinimapNotification("~r~Objective not found");
 }
 
 
@@ -115,7 +115,7 @@ void Cheat::GameFunctions::SetOffAlarmPlayerVehicle(Ped selectedPed)
 		RequestControl(PED::GET_VEHICLE_PED_IS_USING(selectedPed));
 		VEHICLE::SET_VEHICLE_ALARM(selectedVehicle, true);
 		VEHICLE::START_VEHICLE_ALARM(selectedVehicle);
-		Cheat::GameFunctions::MinimapNotification(xorstr_("~g~Set off alarm of vehicle!"));
+		Cheat::GameFunctions::MinimapNotification("~g~Set off alarm of vehicle!");
 	}
 }
 
@@ -184,15 +184,15 @@ Vector3 Cheat::GameFunctions::RotationToDirection(Vector3 rot) {
 
 void Cheat::GameFunctions::SetRankRockstarGift(int RPValue)
 {
-	if (RPValue < 0 || RPValue > 8000) { Cheat::GameFunctions::MinimapNotification(xorstr_("Invalid Rank Inputted")); return; }
+	if (RPValue < 0 || RPValue > 8000) { Cheat::GameFunctions::MinimapNotification("Invalid Rank Inputted"); return; }
 
 	if (Cheat::GameFunctions::IsCurrentGTAOCharacterChar0())
 	{ 
-		STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY(xorstr_("MP0_CHAR_SET_RP_GIFT_ADMIN")), Cheat::GameArrays::RankPointsArray[RPValue - 1], 0);
+		STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP0_CHAR_SET_RP_GIFT_ADMIN"), Cheat::GameArrays::RankPointsArray[RPValue - 1], 0);
 	}
 	else
 	{
-		STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY(xorstr_("MP1_CHAR_SET_RP_GIFT_ADMIN")), Cheat::GameArrays::RankPointsArray[RPValue - 1], 0);
+		STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP1_CHAR_SET_RP_GIFT_ADMIN"), Cheat::GameArrays::RankPointsArray[RPValue - 1], 0);
 	}
 	Cheat::GameFunctions::MinimapNotification("Join a new GTAO session for the new ranked to be applied");
 }
@@ -619,22 +619,22 @@ void Cheat::GameFunctions::LoadPlayerInformation(char* playerName, Player p)
 		if (Cheat::GUI::guiX < 0.54f)
 		{
 			GUI::Drawing::Rect(GUI::scroller, { Cheat::GUI::guiX + 0.266f, GUI::guiY + 0.01f }, { 0.32f, 0.31f }); //Main Background Rect
-			GUI::Drawing::Text(xorstr_("Player Information"), { GUI::titleText }, { Cheat::GUI::guiX + 0.260f, GUI::guiY - 0.170f }, { 0.50f, 0.35f }, true);
+			GUI::Drawing::Text("Player Information", { GUI::titleText }, { Cheat::GUI::guiX + 0.260f, GUI::guiY - 0.170f }, { 0.50f, 0.35f }, true);
 			GUI::Drawing::Rect(GUI::MainTitleRect, { Cheat::GUI::guiX + 0.266f, GUI::guiY - 0.154f }, { 0.32f, 0.023f });
 		}
 		else
 		{
 			GUI::Drawing::Rect(GUI::scroller, { Cheat::GUI::guiX - 0.266f, GUI::guiY + 0.01f }, { 0.32f, 0.31f }); //Main Background Rect
-			GUI::Drawing::Text(xorstr_("Player Information"), { GUI::titleText }, { Cheat::GUI::guiX - 0.260f, GUI::guiY - 0.170f }, { 0.50f, 0.35f }, true);
+			GUI::Drawing::Text("Player Information", { GUI::titleText }, { Cheat::GUI::guiX - 0.260f, GUI::guiY - 0.170f }, { 0.50f, 0.35f }, true);
 			GUI::Drawing::Rect(GUI::MainTitleRect, { Cheat::GUI::guiX - 0.266f, GUI::guiY - 0.154f }, { 0.32f, 0.023f });
 		}
 
 		//Text Entry's
-		Cheat::AddPlayerInfoBoxTextEntry(xorstr_("Name"), 1);
+		Cheat::AddPlayerInfoBoxTextEntry("Name", 1);
 		Cheat::AddPlayerInfoBoxTextEntry(PLAYER::GET_PLAYER_NAME(p), NULL, 1);
 
-		Cheat::AddPlayerInfoBoxTextEntry(xorstr_("Rank"), 2);
-		Cheat::AddPlayerInfoBoxTextEntry(xorstr_("Money"), 3);
+		Cheat::AddPlayerInfoBoxTextEntry("Rank", 2);
+		Cheat::AddPlayerInfoBoxTextEntry("Money", 3);
 		if (NETWORK::NETWORK_IS_SESSION_STARTED()) 
 		{
 			std::ostringstream PlayerRank;
@@ -642,13 +642,13 @@ void Cheat::GameFunctions::LoadPlayerInformation(char* playerName, Player p)
 			Cheat::AddPlayerInfoBoxTextEntry(PlayerRank.str(), NULL, 2);
 
 			std::ostringstream PlayerMoney;
-			PlayerMoney << xorstr_("$") << globalHandle(1590535).At(p, 876).At(211).At(56).As<__int64>();
+			PlayerMoney << "$" << globalHandle(1590535).At(p, 876).At(211).At(56).As<__int64>();
 			Cheat::AddPlayerInfoBoxTextEntry(PlayerMoney.str(), NULL, 3);
 		}
 		else
 		{
-			Cheat::AddPlayerInfoBoxTextEntry(xorstr_("Not Available"), NULL, 2);
-			Cheat::AddPlayerInfoBoxTextEntry(xorstr_("Not Available"), NULL, 3);
+			Cheat::AddPlayerInfoBoxTextEntry("Not Available", NULL, 2);
+			Cheat::AddPlayerInfoBoxTextEntry("Not Available", NULL, 3);
 		}
 
 
@@ -656,14 +656,14 @@ void Cheat::GameFunctions::LoadPlayerInformation(char* playerName, Player p)
 		std::ostringstream Health;
 		float health = ENTITY::GET_ENTITY_HEALTH(SelectedPlayerPed);
 		float HealthValue = health * 100 / ENTITY::GET_ENTITY_MAX_HEALTH(SelectedPlayerPed);
-		Cheat::AddPlayerInfoBoxTextEntry(xorstr_("Health"), 4);
+		Cheat::AddPlayerInfoBoxTextEntry("Health", 4);
 		if (HealthValue == 100) 
 		{ 
-			Cheat::AddPlayerInfoBoxTextEntry(xorstr_("Full"), NULL, 4);
+			Cheat::AddPlayerInfoBoxTextEntry("Full", NULL, 4);
 		}
 		else 
 		{ 
-			Health << HealthValue << xorstr_("%");
+			Health << HealthValue << "%";
 			Cheat::AddPlayerInfoBoxTextEntry(Health.str(), NULL, 4);
 		}
 		
@@ -671,10 +671,10 @@ void Cheat::GameFunctions::LoadPlayerInformation(char* playerName, Player p)
 		//Armor
 		std::ostringstream Armor;
 		int ArmorValue = PED::GET_PED_ARMOUR(SelectedPlayerPed) * 100 / PLAYER::GET_PLAYER_MAX_ARMOUR(p);
-		Cheat::AddPlayerInfoBoxTextEntry(xorstr_("Armor"), 5);
+		Cheat::AddPlayerInfoBoxTextEntry("Armor", 5);
 		if (ArmorValue == 99 || ArmorValue == 100) 
 		{ 		
-			Cheat::AddPlayerInfoBoxTextEntry(xorstr_("Full"), NULL, 5);
+			Cheat::AddPlayerInfoBoxTextEntry("Full", NULL, 5);
 		}
 		else 
 		{ 
@@ -684,30 +684,30 @@ void Cheat::GameFunctions::LoadPlayerInformation(char* playerName, Player p)
 
 		//Status
 		std::ostringstream Status;
-		Cheat::AddPlayerInfoBoxTextEntry(xorstr_("Status"), 6);
-		if (AI::IS_PED_STILL(SelectedPlayerPed)) { Status << xorstr_("Player is still"); }
-		else if (AI::IS_PED_WALKING(SelectedPlayerPed)) { Status << xorstr_("Player is walking"); }
-		else if (AI::IS_PED_RUNNING(SelectedPlayerPed)) { Status << xorstr_("Player is running"); }
-		else if (AI::IS_PED_SPRINTING(SelectedPlayerPed)) { Status << xorstr_("Player is sprinting"); }
-		else if (PED::IS_PED_CLIMBING(SelectedPlayerPed)) { Status << xorstr_("Player is climbing"); }
-		else if (PED::IS_PED_DIVING(SelectedPlayerPed)) { Status << xorstr_("Player is diving"); }
-		else if (PED::IS_PED_FALLING(SelectedPlayerPed)) { Status << xorstr_("Player is falling"); }
-		else if (PED::IS_PED_DEAD_OR_DYING(SelectedPlayerPed, true)) { Status << xorstr_("Player is dead"); }
-		else { Status << xorstr_("~c~Unknown"); }
+		Cheat::AddPlayerInfoBoxTextEntry("Status", 6);
+		if (AI::IS_PED_STILL(SelectedPlayerPed)) { Status << "Player is still"; }
+		else if (AI::IS_PED_WALKING(SelectedPlayerPed)) { Status << "Player is walking"; }
+		else if (AI::IS_PED_RUNNING(SelectedPlayerPed)) { Status << "Player is running"; }
+		else if (AI::IS_PED_SPRINTING(SelectedPlayerPed)) { Status << "Player is sprinting"; }
+		else if (PED::IS_PED_CLIMBING(SelectedPlayerPed)) { Status << "Player is climbing"; }
+		else if (PED::IS_PED_DIVING(SelectedPlayerPed)) { Status << "Player is diving"; }
+		else if (PED::IS_PED_FALLING(SelectedPlayerPed)) { Status << "Player is falling"; }
+		else if (PED::IS_PED_DEAD_OR_DYING(SelectedPlayerPed, true)) { Status << "Player is dead"; }
+		else { Status << "~c~Unknown"; }
 		Cheat::AddPlayerInfoBoxTextEntry(Status.str(), NULL, 6);
 
 
 		//Vehicle
 		bool InAnyVehicle = PED::IS_PED_IN_ANY_VEHICLE(SelectedPlayerPed, 0);
 		std::ostringstream Vehicle;
-		Cheat::AddPlayerInfoBoxTextEntry(xorstr_("Vehicle"), 7);
+		Cheat::AddPlayerInfoBoxTextEntry("Vehicle", 7);
 		if (InAnyVehicle)
 		{
 			Vehicle << UI::_GET_LABEL_TEXT(VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(ENTITY::GET_ENTITY_MODEL(PED::GET_VEHICLE_PED_IS_IN(SelectedPlayerPed, 0))));
 		}
 		else
 		{
-			Vehicle << xorstr_("~c~Not in a vehicle");
+			Vehicle << "~c~Not in a vehicle";
 		}
 		Cheat::AddPlayerInfoBoxTextEntry(Vehicle.str(), NULL, 7);
 
@@ -716,22 +716,22 @@ void Cheat::GameFunctions::LoadPlayerInformation(char* playerName, Player p)
 		std::ostringstream Speed;
 		if (InAnyVehicle)
 		{
-			Cheat::AddPlayerInfoBoxTextEntry(xorstr_("Vehicle Speed"), 8);
+			Cheat::AddPlayerInfoBoxTextEntry("Vehicle Speed", 8);
 			float VehicleSpeed = round(ENTITY::GET_ENTITY_SPEED(PED::GET_VEHICLE_PED_IS_IN(SelectedPlayerPed, false)) * 100) / 100;
 			if (CheatFeatures::UseKMH)
 			{
-				Speed << MSToKMH(VehicleSpeed) << xorstr_(" KM/H");
+				Speed << MSToKMH(VehicleSpeed) << " KM/H";
 			}
 			else
 			{
-				Speed << MSToMPH(VehicleSpeed) << xorstr_(" MP/H");
+				Speed << MSToMPH(VehicleSpeed) << " MP/H";
 			}
 			Cheat::AddPlayerInfoBoxTextEntry(Speed.str(), NULL, 8);
 		}
 		else
 		{
-			Cheat::AddPlayerInfoBoxTextEntry(xorstr_("Movement Speed"), 8);
-			Speed << round(ENTITY::GET_ENTITY_SPEED(SelectedPlayerPed) * 100) / 100 << xorstr_(" M/S");
+			Cheat::AddPlayerInfoBoxTextEntry("Movement Speed", 8);
+			Speed << round(ENTITY::GET_ENTITY_SPEED(SelectedPlayerPed) * 100) / 100 << " M/S";
 			Cheat::AddPlayerInfoBoxTextEntry(Speed.str(), NULL, 8);
 		}
 
@@ -739,262 +739,262 @@ void Cheat::GameFunctions::LoadPlayerInformation(char* playerName, Player p)
 		//Wanted Level
 		std::ostringstream WantedLevel;
 		int PlayerWantedLevel = PLAYER::GET_PLAYER_WANTED_LEVEL(p);
-		Cheat::AddPlayerInfoBoxTextEntry(xorstr_("Wanted Level"), 9);
-		WantedLevel << PlayerWantedLevel << xorstr_("/5");
+		Cheat::AddPlayerInfoBoxTextEntry("Wanted Level", 9);
+		WantedLevel << PlayerWantedLevel << "/5";
 		Cheat::AddPlayerInfoBoxTextEntry(WantedLevel.str(), NULL, 9);
 
 
 		std::ostringstream Weapon;
 		Hash weaponHash;
-		Cheat::AddPlayerInfoBoxTextEntry(xorstr_("Weapon"), 10);
+		Cheat::AddPlayerInfoBoxTextEntry("Weapon", 10);
 		if (WEAPON::GET_CURRENT_PED_WEAPON(SelectedPlayerPed, &weaponHash, 1))
 		{
 			char* weaponName;
 			if (weaponHash == 2578778090) {
-				weaponName = xorstr_("Knife");
+				weaponName = "Knife";
 			}
 			else if (weaponHash == 0x678B81B1) {
-				weaponName = xorstr_("Nightstick");
+				weaponName = "Nightstick";
 			}
 			else if (weaponHash == 0x4E875F73) {
-				weaponName = xorstr_("Hammer");
+				weaponName = "Hammer";
 			}
 			else if (weaponHash == 0x958A4A8F) {
-				weaponName = xorstr_("Bat");
+				weaponName = "Bat";
 			}
 			else if (weaponHash == 0x440E4788) {
-				weaponName = xorstr_("GolfClub");
+				weaponName = "GolfClub";
 			}
 			else if (weaponHash == 0x84BD7BFD) {
-				weaponName = xorstr_("Crowbar");
+				weaponName = "Crowbar";
 			}
 			else if (weaponHash == 0x1B06D571) {
-				weaponName = xorstr_("Pistol");
+				weaponName = "Pistol";
 			}
 			else if (weaponHash == 0x5EF9FEC4) {
-				weaponName = xorstr_("Combat Pistol");
+				weaponName = "Combat Pistol";
 			}
 			else if (weaponHash == 0x22D8FE39) {
-				weaponName = xorstr_("AP Pistol");
+				weaponName = "AP Pistol";
 			}
 			else if (weaponHash == 0x99AEEB3B) {
-				weaponName = xorstr_("Pistol 50");
+				weaponName = "Pistol 50";
 			}
 			else if (weaponHash == 0x13532244) {
-				weaponName = xorstr_("Micro SMG");
+				weaponName = "Micro SMG";
 			}
 			else if (weaponHash == 0x2BE6766B) {
-				weaponName = xorstr_("SMG");
+				weaponName = "SMG";
 			}
 			else if (weaponHash == 0xEFE7E2DF) {
-				weaponName = xorstr_("Assault SMG");
+				weaponName = "Assault SMG";
 			}
 			else if (weaponHash == 0xBFEFFF6D) {
-				weaponName = xorstr_("Assault Riffle");
+				weaponName = "Assault Riffle";
 			}
 			else if (weaponHash == 0x83BF0278) {
-				weaponName = xorstr_("Carbine Riffle");
+				weaponName = "Carbine Riffle";
 			}
 			else if (weaponHash == 0xAF113F99) {
-				weaponName = xorstr_("Advanced Riffle");
+				weaponName = "Advanced Riffle";
 			}
 			else if (weaponHash == 0x9D07F764) {
-				weaponName = xorstr_("MG");
+				weaponName = "MG";
 			}
 			else if (weaponHash == 0x7FD62962) {
-				weaponName = xorstr_("Combat MG");
+				weaponName = "Combat MG";
 			}
 			else if (weaponHash == 0x1D073A89) {
-				weaponName = xorstr_("Pump Shotgun");
+				weaponName = "Pump Shotgun";
 			}
 			else if (weaponHash == 0x7846A318) {
-				weaponName = xorstr_("Sawed-Off Shotgun");
+				weaponName = "Sawed-Off Shotgun";
 			}
 			else if (weaponHash == 0xE284C527) {
-				weaponName = xorstr_("Assault Shotgun");
+				weaponName = "Assault Shotgun";
 			}
 			else if (weaponHash == 0x9D61E50F) {
-				weaponName = xorstr_("Bullpup Shotgun");
+				weaponName = "Bullpup Shotgun";
 			}
 			else if (weaponHash == 0x3656C8C1) {
-				weaponName = xorstr_("Stun Gun");
+				weaponName = "Stun Gun";
 			}
 			else if (weaponHash == 0x05FC3C11) {
-				weaponName = xorstr_("Sniper Rifle");
+				weaponName = "Sniper Rifle";
 			}
 			else if (weaponHash == 0x0C472FE2) {
-				weaponName = xorstr_("Heavy Sniper");
+				weaponName = "Heavy Sniper";
 			}
 			else if (weaponHash == 0xA284510B) {
-				weaponName = xorstr_("Grenade Launcher");
+				weaponName = "Grenade Launcher";
 			}
 			else if (weaponHash == 0x4DD2DC56) {
-				weaponName = xorstr_("Smoke Grenade Launcher");
+				weaponName = "Smoke Grenade Launcher";
 			}
 			else if (weaponHash == 0xB1CA77B1) {
-				weaponName = xorstr_("RPG");
+				weaponName = "RPG";
 			}
 			else if (weaponHash == 0x42BF8A85) {
-				weaponName = xorstr_("Minigun");
+				weaponName = "Minigun";
 			}
 			else if (weaponHash == 0x93E220BD) {
-				weaponName = xorstr_("Grenade");
+				weaponName = "Grenade";
 			}
 			else if (weaponHash == 0x2C3731D9) {
-				weaponName = xorstr_("Sticky Bomb");
+				weaponName = "Sticky Bomb";
 			}
 			else if (weaponHash == 0xFDBC8A50) {
-				weaponName = xorstr_("Smoke Grenade");
+				weaponName = "Smoke Grenade";
 			}
 			else if (weaponHash == 0xA0973D5E) {
-				weaponName = xorstr_("BZGas");
+				weaponName = "BZGas";
 			}
 			else if (weaponHash == 0x24B17070) {
-				weaponName = xorstr_("Molotov");
+				weaponName = "Molotov";
 			}
 			else if (weaponHash == 0x060EC506) {
-				weaponName = xorstr_("Fire Extinguisher");
+				weaponName = "Fire Extinguisher";
 			}
 			else if (weaponHash == 0x34A67B97) {
-				weaponName = xorstr_("Petrol Can");
+				weaponName = "Petrol Can";
 			}
 			else if (weaponHash == 0xFDBADCED) {
-				weaponName = xorstr_("Digital scanner");
+				weaponName = "Digital scanner";
 			}
 			else if (weaponHash == 0x88C78EB7) {
-				weaponName = xorstr_("Briefcase");
+				weaponName = "Briefcase";
 			}
 			else if (weaponHash == 0x23C9F95C) {
-				weaponName = xorstr_("Ball");
+				weaponName = "Ball";
 			}
 			else if (weaponHash == 0x497FACC3) {
-				weaponName = xorstr_("Flare");
+				weaponName = "Flare";
 			}
 			else if (weaponHash == 0xF9E6AA4B) {
-				weaponName = xorstr_("Bottle");
+				weaponName = "Bottle";
 			}
 			else if (weaponHash == 0x61012683) {
-				weaponName = xorstr_("Gusenberg");
+				weaponName = "Gusenberg";
 			}
 			else if (weaponHash == 0xC0A3098D) {
-				weaponName = xorstr_("Special Carabine");
+				weaponName = "Special Carabine";
 			}
 			else if (weaponHash == 0xD205520E) {
-				weaponName = xorstr_("Heavy Pistol");
+				weaponName = "Heavy Pistol";
 			}
 			else if (weaponHash == 0xBFD21232) {
-				weaponName = xorstr_("SNS Pistol");
+			weaponName = "SNS Pistol";
 			}
 			else if (weaponHash == 0x7F229F94) {
-				weaponName = xorstr_("Bullpup Rifle");
+				weaponName = "Bullpup Rifle";
 			}
 			else if (weaponHash == 0x92A27487) {
-				weaponName = xorstr_("Dagger");
+				weaponName = "Dagger";
 			}
 			else if (weaponHash == 0x083839C4) {
-				weaponName = xorstr_("Vintage Pistol");
+				weaponName = "Vintage Pistol";
 			}
 			else if (weaponHash == 0x7F7497E5) {
-				weaponName = xorstr_("Firework Launcher");
+				weaponName = "Firework Launcher";
 			}
 			else if (weaponHash == 0xA89CB99E) {
-				weaponName = xorstr_("Musket");
+				weaponName = "Musket";
 			}
 			else if (weaponHash == 0x3AABBBAA) {
-				weaponName = xorstr_("Heavy Shotgun");
+				weaponName = "Heavy Shotgun";
 			}
 			else if (weaponHash == 0xC734385A) {
-				weaponName = xorstr_("Marksman Rifle");
+				weaponName = "Marksman Rifle";
 			}
 			else if (weaponHash == 0x63AB0442) {
-				weaponName = xorstr_("Homing Launcher");
+				weaponName = "Homing Launcher";
 			}
 			else if (weaponHash == 0xAB564B93) {
-				weaponName = xorstr_("Proximity Mine");
+				weaponName = "Proximity Mine";
 			}
 			else if (weaponHash == 0x787F0BB) {
-				weaponName = xorstr_("Snowball");
+				weaponName = "Snowball";
 			}
 			else if (weaponHash == 0x47757124) {
-				weaponName = xorstr_("Flare Gun");
+				weaponName = "Flare Gun";
 			}
 			else if (weaponHash == 0xE232C28C) {
-				weaponName = xorstr_("Garbage Bag");
+				weaponName = "Garbage Bag";
 			}
 			else if (weaponHash == 0xD04C944D) {
-				weaponName = xorstr_("Handcuffs");
+				weaponName = "Handcuffs";
 			}
 			else if (weaponHash == 0x0A3D4D34) {
-				weaponName = xorstr_("Combat PDW");
+				weaponName = "Combat PDW";
 			}
 			else if (weaponHash == 0xDC4DB296) {
-				weaponName = xorstr_("Marksman Pistol");
+				weaponName = "Marksman Pistol";
 			}
 			else if (weaponHash == 0xD8DF3C3C) {
-				weaponName = xorstr_("Brass Knuckles");
+				weaponName = "Brass Knuckles";
 			}
 			else if (weaponHash == 0x6D544C99) {
-				weaponName = xorstr_("Railgun");
+				weaponName = "Railgun";
 			}
 			else if (weaponHash == 0xBFE256D4) {
-				weaponName = xorstr_("Pistol Mk II");
+				weaponName = "Pistol Mk II";
 			}
 			else if (weaponHash == 0x2BE6766B) {
-				weaponName = xorstr_("SMG Mk II");
+				weaponName = "SMG Mk II";
 			}
 			else if (weaponHash == 0x394F415C) {
-				weaponName = xorstr_("Assault Rifle Mk II");
+				weaponName = "Assault Rifle Mk II";
 			}
 			else if (weaponHash == 0xFAD1F1C9) {
-				weaponName = xorstr_("Carbine Rifle Mk II");
+				weaponName = "Carbine Rifle Mk II";
 			}
 			else if (weaponHash == 0x969C3D67) {
-				weaponName = xorstr_("Special Carbine Mk II");
+				weaponName = "Special Carbine Mk II";
 			}
 			else if (weaponHash == 0x84D6FAFD) {
-				weaponName = xorstr_("Bullpup Rifle Mk II");
+				weaponName = "Bullpup Rifle Mk II";
 			}
 			else if (weaponHash == 0xDBBD7280) {
-				weaponName = xorstr_("Combat MG Mk II");
+				weaponName = "Combat MG Mk II";
 			}
 			else if (weaponHash == 0x6A6C02E0) {
-				weaponName = xorstr_("Marksman Rifle Mk II");
+				weaponName = "Marksman Rifle Mk II";
 			}
 			else if (weaponHash == 0xA914799) {
-				weaponName = xorstr_("Heavy Sniper Mk II");
+				weaponName = "Heavy Sniper Mk II";
 			}
 			else if (weaponHash == 0x476BF155) {
-				weaponName = xorstr_("Unholy Hellbringer");
+				weaponName = "Unholy Hellbringer";
 			}
 			else if (weaponHash == 0xAF3696A1) {
-				weaponName = xorstr_("Up-n-Atomizer");
+				weaponName = "Up-n-Atomizer";
 			}
 			else if (weaponHash == 0xB62D1F67) {
-				weaponName = xorstr_("Widowmaker");
+				weaponName = "Widowmaker";
 			}
 			else if (weaponHash == 0xBD248B55) {
-				weaponName = xorstr_("Mini SMG");
+				weaponName = "Mini SMG";
 			}
 			else if (weaponHash == 0xCB96392F) {
-				weaponName = xorstr_("Heavy Revolver Mk II");
+				weaponName = "Heavy Revolver Mk II";
 			}
 			else if (weaponHash == 0xC1B3C3D1) {
-				weaponName = xorstr_("Heavy Revolver");
+				weaponName = "Heavy Revolver";
 			}
 			else if (weaponHash == 0x97EA20B8) {
-				weaponName = xorstr_("Double Action Revolver");
+				weaponName = "Double Action Revolver";
 			}
 			else if (weaponHash == 0x2BE6766B) {
-				weaponName = xorstr_("SMG Mk II");
+				weaponName = "SMG Mk II";
 			}
 			else {
-				weaponName = xorstr_("~c~Unarmed");
+				weaponName = "~c~Unarmed";
 			}
 			Weapon << weaponName;
 		}
 		else
 		{
-			Weapon << xorstr_("~c~Unarmed");
+			Weapon << "~c~Unarmed";
 		}
 		Cheat::AddPlayerInfoBoxTextEntry(Weapon.str(), NULL, 10);
 
@@ -1009,23 +1009,23 @@ void Cheat::GameFunctions::LoadPlayerInformation(char* playerName, Player p)
 		CoordY << SelectedPlayerPedCoords.y;
 		CoordZ << SelectedPlayerPedCoords.z;
 
-		Cheat::AddPlayerInfoBoxTextEntry(xorstr_("X"), 11);
-		Cheat::AddPlayerInfoBoxTextEntry(xorstr_("Y"), 12);
-		Cheat::AddPlayerInfoBoxTextEntry(xorstr_("Z"), 13);
+		Cheat::AddPlayerInfoBoxTextEntry("X", 11);
+		Cheat::AddPlayerInfoBoxTextEntry("Y", 12);
+		Cheat::AddPlayerInfoBoxTextEntry("Z", 13);
 		Cheat::AddPlayerInfoBoxTextEntry(CoordX.str(), NULL, 11);
 		Cheat::AddPlayerInfoBoxTextEntry(CoordY.str(), NULL, 12);
 		Cheat::AddPlayerInfoBoxTextEntry(CoordZ.str(), NULL, 13);
 
 
 		std::ostringstream Zone; 
-		Cheat::AddPlayerInfoBoxTextEntry(xorstr_("Zone"), 14);
+		Cheat::AddPlayerInfoBoxTextEntry("Zone", 14);
 		Zone << UI::_GET_LABEL_TEXT(ZONE::GET_NAME_OF_ZONE(SelectedPlayerPedCoords.x, SelectedPlayerPedCoords.y, SelectedPlayerPedCoords.z));
 		Cheat::AddPlayerInfoBoxTextEntry(Zone.str(), NULL, 14);
 
 
 		Hash streetName, crossingRoad;
 		PATHFIND::GET_STREET_NAME_AT_COORD(SelectedPlayerPedCoords.x, SelectedPlayerPedCoords.y, SelectedPlayerPedCoords.z, &streetName, &crossingRoad);
-		Cheat::AddPlayerInfoBoxTextEntry(xorstr_("Street"), 15);
+		Cheat::AddPlayerInfoBoxTextEntry("Street", 15);
 		std::ostringstream Street; 
 		Street << UI::GET_STREET_NAME_FROM_HASH_KEY(streetName);
 		Cheat::AddPlayerInfoBoxTextEntry(Street.str(), NULL, 15);
@@ -1036,58 +1036,58 @@ void Cheat::GameFunctions::LoadPlayerInformation(char* playerName, Player p)
 		if (distance > 1000)
 		{
 			distance = round((distance / 1000) * 100) / 100;
-			Distance << distance << xorstr_(" KM");
+			Distance << distance << " KM";
 		}
 		else
 		{
 			distance = round(distance * 1000) / 100;
-			Distance << distance << xorstr_(" M");
+			Distance << distance << " M";
 		}
-		Cheat::AddPlayerInfoBoxTextEntry(xorstr_("Distance"), NULL, NULL, 1);
+		Cheat::AddPlayerInfoBoxTextEntry("Distance", NULL, NULL, 1);
 		Cheat::AddPlayerInfoBoxTextEntry(Distance.str(), NULL, NULL, NULL, 1);
 
 
 		//Modded Model
 		Hash SelectedPlayerPedModel = ENTITY::GET_ENTITY_MODEL(SelectedPlayerPed);
-		Cheat::AddPlayerInfoBoxTextEntry(xorstr_("Modded Model"), NULL, NULL, 2);
-		if (NETWORK::NETWORK_IS_SESSION_STARTED() && SelectedPlayerPedModel != GAMEPLAY::GET_HASH_KEY(xorstr_("mp_m_freemode_01")) && SelectedPlayerPedModel != GAMEPLAY::GET_HASH_KEY(xorstr_("mp_f_freemode_01")))
+		Cheat::AddPlayerInfoBoxTextEntry("Modded Model", NULL, NULL, 2);
+		if (NETWORK::NETWORK_IS_SESSION_STARTED() && SelectedPlayerPedModel != GAMEPLAY::GET_HASH_KEY("mp_m_freemode_01") && SelectedPlayerPedModel != GAMEPLAY::GET_HASH_KEY("mp_f_freemode_01"))
 		{
-			Cheat::AddPlayerInfoBoxTextEntry(xorstr_("Yes"), NULL, NULL, NULL, 2);
+			Cheat::AddPlayerInfoBoxTextEntry("Yes", NULL, NULL, NULL, 2);
 		}
 		else
 		{
-			Cheat::AddPlayerInfoBoxTextEntry(xorstr_("No"), NULL, NULL, NULL, 2);
+			Cheat::AddPlayerInfoBoxTextEntry("No", NULL, NULL, NULL, 2);
 		}
 
 		//Is in interior
-		Cheat::AddPlayerInfoBoxTextEntry(xorstr_("In Interior"), NULL, NULL, 3);
+		Cheat::AddPlayerInfoBoxTextEntry("In Interior", NULL, NULL, 3);
 		if (Cheat::GameFunctions::IsEntityInInterior(PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(p)))
 		{
-			Cheat::AddPlayerInfoBoxTextEntry(xorstr_("Yes"), NULL, NULL, NULL, 3);
+			Cheat::AddPlayerInfoBoxTextEntry("Yes", NULL, NULL, NULL, 3);
 		}
 		else
 		{
-			Cheat::AddPlayerInfoBoxTextEntry(xorstr_("No"), NULL, NULL, NULL, 3);
+			Cheat::AddPlayerInfoBoxTextEntry("No", NULL, NULL, NULL, 3);
 		}
 
 		//Cutscene
-		Cheat::AddPlayerInfoBoxTextEntry(xorstr_("Cutscene"), NULL, NULL, 4);
+		Cheat::AddPlayerInfoBoxTextEntry("Cutscene", NULL, NULL, 4);
 		if (NETWORK::IS_PLAYER_IN_CUTSCENE(p))
 		{
-			Cheat::AddPlayerInfoBoxTextEntry(xorstr_("Yes"), NULL, NULL, NULL, 4);
+			Cheat::AddPlayerInfoBoxTextEntry("Yes", NULL, NULL, NULL, 4);
 		}
 		else
 		{
-			Cheat::AddPlayerInfoBoxTextEntry(xorstr_("No"), NULL, NULL, NULL, 4);
+			Cheat::AddPlayerInfoBoxTextEntry("No", NULL, NULL, NULL, 4);
 		}
 
 		//Rockstar ID
-		Cheat::AddPlayerInfoBoxTextEntry(xorstr_("Rockstar ID"), NULL, NULL, 5);
+		Cheat::AddPlayerInfoBoxTextEntry("Rockstar ID", NULL, NULL, 5);
 		Cheat::AddPlayerInfoBoxTextEntry(std::to_string(Cheat::GameFunctions::ReturnPlayerRockstarID(p)), NULL, NULL, NULL, 5);
 
 		//IP Address
 		std::string PlayerIPString = Cheat::GameFunctions::ReturnPlayerIPAddressAsString(p);
-		Cheat::AddPlayerInfoBoxTextEntry(xorstr_("IP Address"), NULL, NULL, 6);
+		Cheat::AddPlayerInfoBoxTextEntry("IP Address", NULL, NULL, 6);
 		Cheat::AddPlayerInfoBoxTextEntry(PlayerIPString, NULL, NULL, NULL, 6);
 	}
 }
@@ -1196,14 +1196,14 @@ void Cheat::GameFunctions::NearbyPedsCommitSuicide()
 				{
 					WEAPON::GIVE_DELAYED_WEAPON_TO_PED(ped[offsettedID], 0x1B06D571, 99999, true);
 					WEAPON::SET_CURRENT_PED_WEAPON(ped[offsettedID], 0x1B06D571, true);
-					char* dict = xorstr_("MP_SUICIDE");
-					char* anim = xorstr_("pistol");
+					char* dict = "MP_SUICIDE";
+					char* anim = "pistol";
 					STREAMING::REQUEST_ANIM_DICT(dict);
 					STREAMING::REQUEST_ANIM_SET(anim);
 					AI::TASK_PLAY_ANIM(ped[offsettedID], dict, anim, 8, -8, -1, 2105344, 0, false, 0, false);
 					setUpAnim = false;
 				}
-				if (ENTITY::HAS_ANIM_EVENT_FIRED(ped[offsettedID], GAMEPLAY::GET_HASH_KEY(xorstr_("Fire"))))
+				if (ENTITY::HAS_ANIM_EVENT_FIRED(ped[offsettedID], GAMEPLAY::GET_HASH_KEY("Fire")))
 				{
 					PED::SET_PED_SHOOTS_AT_COORD(ped[offsettedID], 0, 0, 0, TRUE);
 				}
@@ -1227,7 +1227,7 @@ bool spawnmaxupgraded = false;
 void Cheat::GameFunctions::SpawnVehicle(char* ModelHash)
 {
 	Hash model = GAMEPLAY::GET_HASH_KEY(ModelHash);
-	if (!STREAMING::IS_MODEL_IN_CDIMAGE(model) || !STREAMING::IS_MODEL_A_VEHICLE(model)) { Cheat::GameFunctions::MinimapNotification(xorstr_("~r~That is not a valid vehicle model")); return; }
+	if (!STREAMING::IS_MODEL_IN_CDIMAGE(model) || !STREAMING::IS_MODEL_A_VEHICLE(model)) { Cheat::GameFunctions::MinimapNotification("~r~That is not a valid vehicle model"); return; }
 	if (VehicleSpawnerDeleteOldVehicle) { Cheat::GameFunctions::DeleteVehicle(PED::GET_VEHICLE_PED_IS_USING(PlayerPedID)); }
 	STREAMING::REQUEST_MODEL(GAMEPLAY::GET_HASH_KEY(ModelHash));
 	while (!STREAMING::HAS_MODEL_LOADED(GAMEPLAY::GET_HASH_KEY(ModelHash))) { WAIT(0); }
@@ -1247,15 +1247,15 @@ void Cheat::GameFunctions::SpawnVehicle(char* ModelHash)
 		VEHICLE::SET_VEHICLE_IS_WANTED(veh, false); 
 		ENTITY::SET_ENTITY_AS_MISSION_ENTITY(veh, 1, 1);
 		NETWORK::SET_NETWORK_ID_EXISTS_ON_ALL_MACHINES(NETWORK::NET_TO_VEH(veh), 1);
-		DECORATOR::DECOR_SET_INT(veh, xorstr_("MPBitset"), 0);
+		DECORATOR::DECOR_SET_INT(veh, "MPBitset", 0);
 		ENTITY::_SET_ENTITY_SOMETHING(veh, true);
-		Cheat::GameFunctions::MinimapNotification(xorstr_("Vehicle Spawned"));
+		Cheat::GameFunctions::MinimapNotification("Vehicle Spawned");
 	}
 }
 
 void Cheat::GameFunctions::TeleportToWaypoint()
 {
-	if (!UI::IS_WAYPOINT_ACTIVE()) { Cheat::GameFunctions::MinimapNotification(xorstr_("~r~Please set waypoint")); return; }
+	if (!UI::IS_WAYPOINT_ACTIVE()) { Cheat::GameFunctions::MinimapNotification("~r~Please set waypoint"); return; }
 	Vector3 coords = Cheat::GameFunctions::GetBlipMarker();
 	Entity e = PlayerPedID;
 	if (PED::IS_PED_IN_ANY_VEHICLE(e, 0)) { e = PED::GET_VEHICLE_PED_IS_USING(e); }
@@ -1274,7 +1274,7 @@ void Cheat::GameFunctions::EnableDisableAntiCrashCamera()
 	}
 	else
 	{
-		antiCrashCam = CAM::CREATE_CAM_WITH_PARAMS(xorstr_("DEFAULT_SCRIPTED_CAMERA"), 9999.0f, 9999.0f, 9999.0f, 9999.0f, 9999.0f, 9999.0f, 9999.0f, true, 1);
+		antiCrashCam = CAM::CREATE_CAM_WITH_PARAMS("DEFAULT_SCRIPTED_CAMERA", 9999.0f, 9999.0f, 9999.0f, 9999.0f, 9999.0f, 9999.0f, 9999.0f, true, 1);
 		CAM::RENDER_SCRIPT_CAMS(1, 1, 1, 0, 0);
 		CAM::SET_CAM_ACTIVE(antiCrashCam, true);
 		PLAYER::SET_PLAYER_CONTROL(PlayerID, false, 0);
@@ -1313,7 +1313,7 @@ void Cheat::GameFunctions::CheckNewSessionMembersLoop()
 			{
 				if (!std::count(CurrentPlayerNamesSession.begin(), CurrentPlayerNamesSession.end(), var))
 				{
-					std::string NewPlayerString = xorstr_("<C>") + var + xorstr_("</C> joined the session.");
+					std::string NewPlayerString = "<C>" + var + "</C> joined the session.";
 					Cheat::GameFunctions::MinimapNotification(CheatFunctions::StringToChar(NewPlayerString));
 				}
 			}
@@ -1600,15 +1600,15 @@ std::string Cheat::GameFunctions::ReturnPlayerIPAddressAsString(Player PlayerHan
 	{
 		if (PlayerHandle == PlayerID && Cheat::CheatFeatures::HideOwnIPAddress)
 		{
-			return xorstr_("Hidden");
+			return "Hidden";
 		}
 		auto InfoLong	 = *reinterpret_cast<std::uintptr_t*>(GameHooking::get_player_address(PlayerHandle) + OFFSET_PLAYER_INFO);
 		auto IPAddress   = reinterpret_cast<std::uint8_t*>(InfoLong + 0x44);
-		IPAddress ? sprintf_s(IPBuffer, xorstr_("%i.%i.%i.%i"), IPAddress[3], IPAddress[2], IPAddress[1], IPAddress[0]) : sprintf_s(IPBuffer, xorstr_("Unknown"));
+		IPAddress ? sprintf_s(IPBuffer, "%i.%i.%i.%i", IPAddress[3], IPAddress[2], IPAddress[1], IPAddress[0]) : sprintf_s(IPBuffer, "Unknown");
 	}
 	else
 	{
-		sprintf_s(IPBuffer, xorstr_("Unavailable"));
+		sprintf_s(IPBuffer, "Unavailable");
 	}
 	std::string IPBufferString = { IPBuffer };
 	return IPBufferString;
@@ -1617,7 +1617,7 @@ std::string Cheat::GameFunctions::ReturnPlayerIPAddressAsString(Player PlayerHan
 bool Cheat::GameFunctions::IsCurrentGTAOCharacterChar0()
 {
 	int IntegerVar;
-	STATS::STAT_GET_INT(GAMEPLAY::GET_HASH_KEY(xorstr_("MPPLY_LAST_MP_CHAR")), &IntegerVar, -1);
+	STATS::STAT_GET_INT(GAMEPLAY::GET_HASH_KEY("MPPLY_LAST_MP_CHAR"), &IntegerVar, -1);
 	if (IntegerVar == 0)
 	{
 		return true;

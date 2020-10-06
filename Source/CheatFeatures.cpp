@@ -24,14 +24,14 @@ void Cheat::CheatFeatures::NoneLooped()
 	Cheat::CheatFunctions::LoadConfig();
 
 	//Log Post Init Completion
-	Cheat::LogFunctions::Message(xorstr_("GTAV Cheat Initialization Completed"));
+	Cheat::LogFunctions::Message("GTAV Cheat Initialization Completed");
 
 	//Init Scaleform Banner Notification
-	std::string OpenGUIString = xorstr_("Cheat has been successfully initialized. Have fun!\nPress ") + Cheat::CheatFunctions::VirtualKeyCodeToString(Cheat::GUI::openKey) + xorstr_(" to open GUI");
-	PostInitBannerNotificationScaleformHandle = GRAPHICS::REQUEST_SCALEFORM_MOVIE(xorstr_("mp_big_message_freemode"));
+	std::string OpenGUIString = "Cheat has been successfully initialized. Have fun!\nPress " + Cheat::CheatFunctions::VirtualKeyCodeToString(Cheat::GUI::openKey) + " to open GUI";
+	PostInitBannerNotificationScaleformHandle = GRAPHICS::REQUEST_SCALEFORM_MOVIE("mp_big_message_freemode");
 	while (!GRAPHICS::HAS_SCALEFORM_MOVIE_LOADED(PostInitBannerNotificationScaleformHandle)) { WAIT(0, false); }
-	GRAPHICS::BEGIN_SCALEFORM_MOVIE_METHOD(PostInitBannerNotificationScaleformHandle, xorstr_("SHOW_SHARD_WASTED_MP_MESSAGE"));
-	GRAPHICS::_ADD_SCALEFORM_MOVIE_METHOD_PARAMETER_STRING(xorstr_("<FONT FACE='$Font2'>GTAV Cheat"));
+	GRAPHICS::BEGIN_SCALEFORM_MOVIE_METHOD(PostInitBannerNotificationScaleformHandle, "SHOW_SHARD_WASTED_MP_MESSAGE");
+	GRAPHICS::_ADD_SCALEFORM_MOVIE_METHOD_PARAMETER_STRING("<FONT FACE='$Font2'>GTAV Cheat");
 	GRAPHICS::_ADD_SCALEFORM_MOVIE_METHOD_PARAMETER_STRING(CheatFunctions::StringToChar(OpenGUIString));
 	GRAPHICS::_ADD_SCALEFORM_MOVIE_METHOD_PARAMETER_INT(5);
 	GRAPHICS::END_SCALEFORM_MOVIE_METHOD();
@@ -57,11 +57,11 @@ void Cheat::CheatFeatures::Looped()
 		std::ostringstream Speed;
 		if (UseKMH)
 		{
-			Speed << Cheat::GameFunctions::MSToKMH(ENTITY::GET_ENTITY_SPEED(PED::GET_VEHICLE_PED_IS_IN(PlayerPedID, 0))) << xorstr_(" KM/H");
+			Speed << Cheat::GameFunctions::MSToKMH(ENTITY::GET_ENTITY_SPEED(PED::GET_VEHICLE_PED_IS_IN(PlayerPedID, 0))) << " KM/H";
 		}
 		else
 		{
-			Speed << Cheat::GameFunctions::MSToMPH(ENTITY::GET_ENTITY_SPEED(PED::GET_VEHICLE_PED_IS_IN(PlayerPedID, 0))) << xorstr_(" MP/H");
+			Speed << Cheat::GameFunctions::MSToMPH(ENTITY::GET_ENTITY_SPEED(PED::GET_VEHICLE_PED_IS_IN(PlayerPedID, 0))) << " MP/H";
 		}
 		if (SpeedometerVectorPosition == 1 || SpeedometerVectorPosition == 3) { Cheat::Speedometer(Speed.str()); }
 		if (SpeedometerVectorPosition == 2 || SpeedometerVectorPosition == 3) { VEHICLE::SET_VEHICLE_NUMBER_PLATE_TEXT(PED::GET_VEHICLE_PED_IS_IN(PlayerPedID, 0), CheatFunctions::StringToChar(Speed.str())); }
@@ -333,7 +333,7 @@ void Cheat::CheatFeatures::ExplosiveMelee()
 bool Cheat::CheatFeatures::OrbitalCannonCooldownBypassBool = false;
 void Cheat::CheatFeatures::OrbitalCannonCooldownBypass()
 {
-	if (NETWORK::NETWORK_IS_SESSION_STARTED()) { STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY(xorstr_("MP0_ORBITAL_CANNON_COOLDOWN")), 0, 0); STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY(xorstr_("MP1_ORBITAL_CANNON_COOLDOWN")), 0, 0); }
+	if (NETWORK::NETWORK_IS_SESSION_STARTED()) { STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP0_ORBITAL_CANNON_COOLDOWN"), 0, 0); STATS::STAT_SET_INT(GAMEPLAY::GET_HASH_KEY("MP1_ORBITAL_CANNON_COOLDOWN"), 0, 0); }
 }
 
 
@@ -417,7 +417,7 @@ void Cheat::CheatFeatures::SuperJump()
 bool Cheat::CheatFeatures::PlayerForceFieldBool = false;
 void Cheat::CheatFeatures::PlayerForceField()
 {
-	if(!NoRagdollAndSeatbeltBool) { NoRagdollAndSeatbeltBool = true; Cheat::GameFunctions::MinimapNotification(xorstr_("~o~Enabled No Ragdoll & Seatbelt feature to prevent your character from flying around")); }
+	if(!NoRagdollAndSeatbeltBool) { NoRagdollAndSeatbeltBool = true; Cheat::GameFunctions::MinimapNotification("~o~Enabled No Ragdoll & Seatbelt feature to prevent your character from flying around"); }
 	FIRE::ADD_EXPLOSION(ENTITY::GET_ENTITY_COORDS(PlayerPedID, 0).x, ENTITY::GET_ENTITY_COORDS(PlayerPedID, 0).y, ENTITY::GET_ENTITY_COORDS(PlayerPedID, 0).z, 7, 100.0f, false, true, 0.0f);
 }
 
@@ -452,7 +452,7 @@ void Cheat::CheatFeatures::ShowFPS()
 
 	std::string str = std::to_string(iFps);
 	while (str.size() > str.find(".")) { str.pop_back(); }
-	std::string MessageString = xorstr_("FPS: ") + str;
+	std::string MessageString = "FPS: " + str;
 	GUI::Drawing::Text(MessageString, { 255, 255, 255, 255 }, { 0.50f, 0.002f }, { 0.30f, 0.30f }, false);
 }
 
@@ -494,7 +494,7 @@ void Cheat::CheatFeatures::FreeCam(bool toggle)
 	{
 		FreeCamFeaturedUsed = true;
 		if (!CAM::DOES_CAM_EXIST(cam)) {
-			cam = CAM::CREATE_CAM(xorstr_("DEFAULT_SCRIPTED_CAMERA"), 1);
+			cam = CAM::CREATE_CAM("DEFAULT_SCRIPTED_CAMERA", 1);
 			CAM::SET_CAM_ROT(cam, rot.x, rot.y, rot.z, 0);
 			CAM::SET_CAM_COORD(cam, coord.x, coord.y, coord.z);
 		}
@@ -723,17 +723,17 @@ void Cheat::CheatFeatures::EntityInformationGun()
 	if (PLAYER::GET_ENTITY_PLAYER_IS_FREE_AIMING_AT(PlayerID, &AimedEntityHandle))
 	{
 		Vector3 AimedEntityCoords = ENTITY::GET_ENTITY_COORDS(AimedEntityHandle, false);
-		std::string AimedEntityHealth = xorstr_("Entity Health: ") + std::to_string(ENTITY::GET_ENTITY_HEALTH(AimedEntityHandle));
-		std::string AimedEntityHash = xorstr_("Entity Hash: ") + std::to_string(ENTITY::GET_ENTITY_MODEL(AimedEntityHandle));
-		Cheat::GUI::Drawing::Text(xorstr_("~bold~Aimed Entity Information"), { 255, 255, 255, 255, 0 }, { 0.500f, 0.380f }, { 0.35f, 0.35f }, false);
+		std::string AimedEntityHealth = "Entity Health: " + std::to_string(ENTITY::GET_ENTITY_HEALTH(AimedEntityHandle));
+		std::string AimedEntityHash = "Entity Hash: " + std::to_string(ENTITY::GET_ENTITY_MODEL(AimedEntityHandle));
+		Cheat::GUI::Drawing::Text("~bold~Aimed Entity Information", { 255, 255, 255, 255, 0 }, { 0.500f, 0.380f }, { 0.35f, 0.35f }, false);
 		Cheat::GUI::Drawing::Text(AimedEntityHash, { 255, 255, 255, 255, 0 }, { 0.500f, 0.400f }, { 0.35f, 0.35f }, false);
 		Cheat::GUI::Drawing::Text(AimedEntityHealth, { 255, 255, 255, 255, 0 }, { 0.500f, 0.420f }, { 0.35f, 0.35f }, false);
 
 		std::string EntityTypeMessageString;
-		if (ENTITY::IS_ENTITY_A_PED(AimedEntityHandle)) { EntityTypeMessageString = xorstr_("Entity Type: Ped"); }
-		else if (ENTITY::IS_ENTITY_A_VEHICLE(AimedEntityHandle)) { EntityTypeMessageString = xorstr_("Entity Type: Vehicle"); }
-		else if (ENTITY::IS_ENTITY_AN_OBJECT(AimedEntityHandle)) { EntityTypeMessageString = xorstr_("Entity Type: Object"); }
-		else { EntityTypeMessageString = xorstr_("Entity Type: Generic"); }
+		if (ENTITY::IS_ENTITY_A_PED(AimedEntityHandle)) { EntityTypeMessageString = "Entity Type: Ped"; }
+		else if (ENTITY::IS_ENTITY_A_VEHICLE(AimedEntityHandle)) { EntityTypeMessageString = "Entity Type: Vehicle"; }
+		else if (ENTITY::IS_ENTITY_AN_OBJECT(AimedEntityHandle)) { EntityTypeMessageString = "Entity Type: Object"; }
+		else { EntityTypeMessageString = "Entity Type: Generic"; }
 		Cheat::GUI::Drawing::Text(EntityTypeMessageString, { 255, 255, 255, 255, 0 }, { 0.500f, 0.440f }, { 0.35f, 0.35f }, false);
 	}
 }
@@ -786,7 +786,7 @@ void Cheat::CheatFeatures::SpectatePlayer(bool toggle)
 	if (toggle)
 	{
 		NETWORK::NETWORK_SET_IN_SPECTATOR_MODE(PlayerPedID, PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(selectedPlayer));
-		std::string String = xorstr_("Spectating '") + (std::string)PLAYER::GET_PLAYER_NAME(selectedPlayer) + xorstr_("'");
+		std::string String = "Spectating '" + (std::string)PLAYER::GET_PLAYER_NAME(selectedPlayer) + "'";
 		Cheat::GameFunctions::SubtitleNotification(CheatFunctions::StringToChar(String), 1);
 	}
 	else
@@ -1022,7 +1022,7 @@ void Cheat::CheatFeatures::DriveOnWater()
 			}
 		}
 		else {
-			Hash model = GAMEPLAY::GET_HASH_KEY(xorstr_("prop_container_ld2"));
+			Hash model = GAMEPLAY::GET_HASH_KEY("prop_container_ld2");
 			STREAMING::REQUEST_MODEL(model);
 			while (!STREAMING::HAS_MODEL_LOADED(model)) WAIT(0);
 			container = OBJECT::CREATE_OBJECT(model, pos.x, pos.y, pos.z, 1, 1, 0);
@@ -1049,8 +1049,8 @@ void Cheat::CheatFeatures::DriveOnWater()
 bool Cheat::CheatFeatures::SuperManBool = false;
 void Cheat::CheatFeatures::SuperMan()
 {
-	if(!Cheat::CheatFeatures::NoRagdollAndSeatbeltBool) { Cheat::CheatFeatures::NoRagdollAndSeatbeltBool = true; Cheat::GameFunctions::MinimapNotification(xorstr_("No Ragdoll & Seatbelt feature enabled for this feature")); }
-	WEAPON::GIVE_DELAYED_WEAPON_TO_PED(PlayerPedID, GAMEPLAY::GET_HASH_KEY(xorstr_("GADGET_PARACHUTE")), 1, 1);
+	if(!Cheat::CheatFeatures::NoRagdollAndSeatbeltBool) { Cheat::CheatFeatures::NoRagdollAndSeatbeltBool = true; Cheat::GameFunctions::MinimapNotification("No Ragdoll & Seatbelt feature enabled for this feature"); }
+	WEAPON::GIVE_DELAYED_WEAPON_TO_PED(PlayerPedID, GAMEPLAY::GET_HASH_KEY("GADGET_PARACHUTE"), 1, 1);
 	ENTITY::SET_ENTITY_INVINCIBLE(PlayerPedID, true);
 	PED::SET_PED_TO_RAGDOLL_WITH_FALL(PlayerPedID, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0);
 
@@ -1112,7 +1112,7 @@ void Cheat::CheatFeatures::MoneyDrop()
 {
 	if (GetTickCount64() - MoneyDropDelayPreviousTick > MoneyDropDelay)
 	{
-		Hash PolyBag = GAMEPLAY::GET_HASH_KEY(xorstr_("p_poly_bag_01_s"));
+		Hash PolyBag = GAMEPLAY::GET_HASH_KEY("p_poly_bag_01_s");
 		Vector3 pp = ENTITY::GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(Cheat::CheatFeatures::selectedPlayer), 0.0, 0.0, 1.0);
 		STREAMING::REQUEST_MODEL(PolyBag);
 		while (!STREAMING::HAS_MODEL_LOADED(PolyBag)) { WAIT(0); }
@@ -1134,7 +1134,7 @@ void Cheat::CheatFeatures::MoneyGun()
 		Vector3 coords;
 		if (WEAPON::GET_PED_LAST_WEAPON_IMPACT_COORD(PlayerPedID, &coords))
 		{
-			Hash PolyBag = GAMEPLAY::GET_HASH_KEY(xorstr_("p_poly_bag_01_s"));
+			Hash PolyBag = GAMEPLAY::GET_HASH_KEY("p_poly_bag_01_s");
 			STREAMING::REQUEST_MODEL(PolyBag);
 			while (!STREAMING::HAS_MODEL_LOADED(PolyBag)) { WAIT(0, false); }
 			if (STREAMING::HAS_MODEL_LOADED(PolyBag)) { OBJECT::CREATE_AMBIENT_PICKUP(0xCE6FDD6B, coords.x, coords.y, coords.z + 1.f, 0, 2500, PolyBag, false, true); STREAMING::SET_MODEL_AS_NO_LONGER_NEEDED(PolyBag); }
@@ -1188,7 +1188,7 @@ void Cheat::CheatFeatures::AirstrikeGun()
 		Vector3 coords;
 		WEAPON::GET_PED_LAST_WEAPON_IMPACT_COORD(PlayerPedID, &coords);
 		if (coords.x != 0 || coords.y != 0 || coords.z != 0) {
-			GAMEPLAY::SHOOT_SINGLE_BULLET_BETWEEN_COORDS(coords.x, coords.y, coords.z + 30, coords.x, coords.y, coords.z, 250, 0, GAMEPLAY::GET_HASH_KEY(xorstr_("VEHICLE_WEAPON_SPACE_ROCKET")), 0, 1, 1, 500);
+			GAMEPLAY::SHOOT_SINGLE_BULLET_BETWEEN_COORDS(coords.x, coords.y, coords.z + 30, coords.x, coords.y, coords.z, 250, 0, GAMEPLAY::GET_HASH_KEY("VEHICLE_WEAPON_SPACE_ROCKET"), 0, 1, 1, 500);
 		}
 	}
 }
@@ -1228,10 +1228,10 @@ void Cheat::CheatFeatures::CustomWeaponBullets()
 
 	if (PED::IS_PED_ON_FOOT(PlayerPedID) && PED::IS_PED_SHOOTING(PlayerPedID))
 	{
-		Hash weaponAssetRocket1 = GAMEPLAY::GET_HASH_KEY(xorstr_("VEHICLE_WEAPON_NOSE_TURRET_VALKYRIE"));
-		Hash weaponAssetRocket2 = GAMEPLAY::GET_HASH_KEY(xorstr_("VEHICLE_WEAPON_TANK"));
-		Hash weaponAssetRocket3 = GAMEPLAY::GET_HASH_KEY(xorstr_("WEAPON_VEHICLE_ROCKET"));
-		Hash weaponAssetRocket4 = GAMEPLAY::GET_HASH_KEY(xorstr_("WEAPON_FIREWORK"));
+		Hash weaponAssetRocket1 = GAMEPLAY::GET_HASH_KEY("VEHICLE_WEAPON_NOSE_TURRET_VALKYRIE");
+		Hash weaponAssetRocket2 = GAMEPLAY::GET_HASH_KEY("VEHICLE_WEAPON_TANK");
+		Hash weaponAssetRocket3 = GAMEPLAY::GET_HASH_KEY("WEAPON_VEHICLE_ROCKET");
+		Hash weaponAssetRocket4 = GAMEPLAY::GET_HASH_KEY("WEAPON_FIREWORK");
 
 		if (!WEAPON::HAS_WEAPON_ASSET_LOADED(weaponAssetRocket1) || !WEAPON::HAS_WEAPON_ASSET_LOADED(weaponAssetRocket2) || !WEAPON::HAS_WEAPON_ASSET_LOADED(weaponAssetRocket3) || !WEAPON::HAS_WEAPON_ASSET_LOADED(weaponAssetRocket4))
 		{
@@ -1257,12 +1257,12 @@ void Cheat::CheatFeatures::ShowSessionInformation()
 {
 	Vector3 playerCoord = ENTITY::GET_ENTITY_COORDS(PlayerPedID, 0);
 	std::string NumbConnectedPlayers;
-	NumbConnectedPlayers = xorstr_("Connected Players: ") + std::to_string(NETWORK::NETWORK_GET_NUM_CONNECTED_PLAYERS());
-	std::string xMsg = xorstr_(" X ") + std::to_string(playerCoord.x);
-	std::string yMsg = xorstr_(" Y ") + std::to_string(playerCoord.y);
-	std::string zMsg = xorstr_(" Z ") + std::to_string(playerCoord.z);
+	NumbConnectedPlayers = "Connected Players: " + std::to_string(NETWORK::NETWORK_GET_NUM_CONNECTED_PLAYERS());
+	std::string xMsg = " X " + std::to_string(playerCoord.x);
+	std::string yMsg = " Y " + std::to_string(playerCoord.y);
+	std::string zMsg = " Z " + std::to_string(playerCoord.z);
 
-	Cheat::GUI::Drawing::Text(xorstr_("Local Player Coords"), Cheat::GUI::optionText, { 0.162f, 0.8100f }, { 0.25f, 0.25f }, false);
+	Cheat::GUI::Drawing::Text("Local Player Coords", Cheat::GUI::optionText, { 0.162f, 0.8100f }, { 0.25f, 0.25f }, false);
 	Cheat::GUI::Drawing::Text(xMsg, Cheat::GUI::optionText, { 0.16f, 0.8225f }, { 0.25f, 0.25f }, false);
 	Cheat::GUI::Drawing::Text(yMsg, Cheat::GUI::optionText, { 0.16f, 0.8350f }, { 0.25f, 0.25f }, false);
 	Cheat::GUI::Drawing::Text(zMsg, Cheat::GUI::optionText, { 0.16f, 0.8475f }, { 0.25f, 0.25f }, false);

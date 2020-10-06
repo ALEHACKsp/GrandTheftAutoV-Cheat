@@ -28,7 +28,7 @@ uint64_t * nativeCall()
 		}
 		__except (exceptionAddress = (GetExceptionInformation())->ExceptionRecord->ExceptionAddress, EXCEPTION_EXECUTE_HANDLER)
 		{
-			std::cout << xorstr_("Failed to execute Game Function ") << exceptionAddress << std::endl;
+			std::cout << "Failed to execute Game Function " << exceptionAddress << std::endl;
 		}
 	}
 	return reinterpret_cast<uint64_t*>(g_context.GetResultPointer());

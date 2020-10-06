@@ -28,8 +28,6 @@
 #include <thread>
 #pragma comment(lib, "Winmm.lib")
 
-//XORSTR
-#include "ThirdParty/XORSTR/xorstr.hpp"
 
 //MinHook
 #pragma comment(lib,"ThirdParty/MinHook/libMinHook-x64-v141-md.lib")
@@ -505,7 +503,7 @@ namespace Cheat
 	bool MenuOption(std::string option, SubMenus newSub);
 	bool MenuOptionPlayerList(std::string option, SubMenus newSub, Player PlayerHandle);
 	bool Toggle(std::string option, bool& b00l, std::string InformationText, bool IsSavable = true);
-	bool Int(std::string option, int& _int, int min, int max, int step, bool DisableControl = false, bool IsSavable = true, std::string InformationText = xorstr_("Select to change"));
+	bool Int(std::string option, int& _int, int min, int max, int step, bool DisableControl = false, bool IsSavable = true, std::string InformationText = "Select to change");
 	bool Float(std::string option, float& _float, float min, float max, float steps, bool ReturnTrueWithValueChange, bool IsSavable = true, std::string InformationText = "");
 	bool IntVector(std::string option, std::vector<int> Vector, int& position, bool IsSavable = true);
 	bool FloatVector(std::string option, std::vector<float> Vector, int& position, bool IsSavable = true);

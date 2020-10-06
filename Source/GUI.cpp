@@ -57,16 +57,16 @@ bool Cheat::GUI::RestorePreviousSubmenu		= true;
 static fpFileRegister RegisterTextureFile = (fpFileRegister)(Memory::pattern("48 89 5C 24 ? 48 89 6C 24 ? 48 89 7C 24 ? 41 54 41 56 41 57 48 83 EC 50 48 8B EA 4C 8B FA 48 8B D9 4D 85 C9").count(1).get(0).get<decltype(RegisterTextureFile)>());
 void Cheat::GUI::Drawing::InitTextureFile()
 {
-	Cheat::LogFunctions::Message(xorstr_("Loading Texture File"));
+	Cheat::LogFunctions::Message("Loading Texture File");
 	int textureID;
 	if (Cheat::CheatFunctions::DoesFileExists(Cheat::CheatFunctions::TextureFilePath())) 
 	{
-		RegisterTextureFile(&textureID, Cheat::CheatFunctions::TextureFilePath().c_str(), true, xorstr_("Textures.ytd"), false);
+		RegisterTextureFile(&textureID, Cheat::CheatFunctions::TextureFilePath().c_str(), true, "Textures.ytd", false);
 	}
 	else 
 	{ 
-		Cheat::GameFunctions::MinimapNotification(xorstr_("~r~Failed to load Texture")); 
-		Cheat::LogFunctions::DebugMessage(xorstr_("Failed to load Textures.ytd"));
+		Cheat::GameFunctions::MinimapNotification("~r~Failed to load Texture"); 
+		Cheat::LogFunctions::DebugMessage("Failed to load Textures.ytd");
 	}
 }
 
@@ -101,7 +101,7 @@ void Cheat::GUI::Drawing::Rect(RGBA rgba, VECTOR2 position, VECTOR2_2 size)
 
 void Cheat::GUI::Drawing::DrawScaleform(const float x, const float y, const float sx, const float sy, const int r, const int g, const int b)
 {
-	int ScaleFormHandle = GRAPHICS::REQUEST_SCALEFORM_MOVIE(xorstr_("MP_MENU_GLARE"));
+	int ScaleFormHandle = GRAPHICS::REQUEST_SCALEFORM_MOVIE("MP_MENU_GLARE");
 	GRAPHICS::DRAW_SCALEFORM_MOVIE(ScaleFormHandle, x, y, sx, sy, r, g, b, 255, 0);
 }
 
@@ -111,7 +111,7 @@ void Cheat::Title(std::string title)
 	GUI::Drawing::Text(title, { GUI::titleText }, { GUI::guiX, GUI::guiY - 0.17f }, { 0.50f, 0.35f }, true);
 	if (Cheat::GUI::ShowHeaderBackground) { GUI::Drawing::Rect(GUI::headerRect, { Cheat::GUI::guiX, GUI::guiY - 0.208f }, { Cheat::GUI::guiWidth, 0.084f }); }
 	if (GUI::ShowHeaderGlare) { GUI::Drawing::DrawScaleform(Cheat::GUI::guiX + .330f, GUI::guiY + 0.162f, 1.0f, 0.912f, 255, 255, 255); }
-	if (Cheat::GUI::ShowHeaderGUI) { Cheat::GUI::Drawing::Spriter(xorstr_("Textures"), xorstr_("HeaderDefaultTransparent"), Cheat::GUI::guiX, GUI::guiY - 0.208f, Cheat::GUI::guiWidth, 0.084f, 0, 255, 255, 255, 255); }
+	if (Cheat::GUI::ShowHeaderGUI) { Cheat::GUI::Drawing::Spriter("Textures", "HeaderDefaultTransparent", Cheat::GUI::guiX, GUI::guiY - 0.208f, Cheat::GUI::guiWidth, 0.084f, 0, 255, 255, 255, 255); }
 	GUI::Drawing::Rect(GUI::MainTitleRect, { Cheat::GUI::guiX, GUI::guiY - 0.154f }, { Cheat::GUI::guiWidth, 0.023f });
 	GUI::Drawing::Rect(GUI::TopAndBottomLine, { Cheat::GUI::guiX, GUI::guiY - 0.142f }, { Cheat::GUI::guiWidth, 0.002f });
 
@@ -134,19 +134,19 @@ void Cheat::Title(std::string title)
 	CONTROLS::DISABLE_CONTROL_ACTION(2, INPUT_VEH_HEADLIGHT, true);
 
 	//Control Buttons
-	std::string SaveOptionKeyString = xorstr_("Press ") + Cheat::CheatFunctions::VirtualKeyCodeToString(Cheat::GUI::SaveItemKey) + xorstr_(" to save selected option");
-	std::string CloseGUIString = xorstr_("Press ") + Cheat::CheatFunctions::VirtualKeyCodeToString(Cheat::GUI::openKey) + xorstr_(" to close GUI");
+	std::string SaveOptionKeyString = "Press " + Cheat::CheatFunctions::VirtualKeyCodeToString(Cheat::GUI::SaveItemKey) + " to save selected option";
+	std::string CloseGUIString = "Press " + Cheat::CheatFunctions::VirtualKeyCodeToString(Cheat::GUI::openKey) + " to close GUI";
 	std::string CursorNavigationString;
-	if (Cheat::CheatFeatures::CursorGUINavigationEnabled) { CursorNavigationString = xorstr_("Press ") + Cheat::CheatFunctions::VirtualKeyCodeToString(Cheat::GUI::GUINavigationKey) + xorstr_(" to disable cursor"); }
-	else { CursorNavigationString = xorstr_("Press ") + Cheat::CheatFunctions::VirtualKeyCodeToString(Cheat::GUI::GUINavigationKey) + xorstr_(" to enable cursor"); }
+	if (Cheat::CheatFeatures::CursorGUINavigationEnabled) { CursorNavigationString = "Press " + Cheat::CheatFunctions::VirtualKeyCodeToString(Cheat::GUI::GUINavigationKey) + " to disable cursor"; }
+	else { CursorNavigationString = "Press " + Cheat::CheatFunctions::VirtualKeyCodeToString(Cheat::GUI::GUINavigationKey) + " to enable cursor"; }
 	Cheat::GameFunctions::InstructionalKeysInit();
 	Cheat::GameFunctions::InstructionsAdd(CheatFunctions::StringToChar(CloseGUIString), 80);
 	Cheat::GameFunctions::InstructionsAdd(CheatFunctions::StringToChar(CursorNavigationString), 80);
 	if (GUI::CurrentOptionIsSavable) { Cheat::GameFunctions::InstructionsAdd(CheatFunctions::StringToChar(SaveOptionKeyString), 80); }
-	Cheat::GameFunctions::InstructionsAdd(xorstr_("Back"), 136);
-	Cheat::GameFunctions::InstructionsAdd(xorstr_("Up/Down"), 10);
-	Cheat::GameFunctions::InstructionsAdd(xorstr_("Change Value"), 46);
-	Cheat::GameFunctions::InstructionsAdd(xorstr_("Select"), 141);
+	Cheat::GameFunctions::InstructionsAdd("Back", 136);
+	Cheat::GameFunctions::InstructionsAdd("Up/Down", 10);
+	Cheat::GameFunctions::InstructionsAdd("Change Value", 46);
+	Cheat::GameFunctions::InstructionsAdd("Select", 141);
 	Cheat::GameFunctions::InstructionsEnd();
 }
 
@@ -254,20 +254,20 @@ bool Cheat::VehicleOption(std::string option, std::string ModelName)
 		
 		if (Cheat::CheatFeatures::ShowVehicleInfoAndPreview)
 		{
-			std::string ModelNameDrawingText = xorstr_("Model Name: ") + ModelName;
+			std::string ModelNameDrawingText = "Model Name: " + ModelName;
 			std::ostringstream ModelMaxSpeed;
 			if (Cheat::CheatFeatures::UseKMH)
 			{
-				ModelMaxSpeed << xorstr_("Max Speed: ") << Cheat::GameFunctions::MSToKMH(VEHICLE::GET_VEHICLE_MODEL_ESTIMATED_MAX_SPEED(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(ModelName)))) << xorstr_(" KM/H");
+				ModelMaxSpeed << "Max Speed: " << Cheat::GameFunctions::MSToKMH(VEHICLE::GET_VEHICLE_MODEL_ESTIMATED_MAX_SPEED(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(ModelName)))) << " KM/H";
 			}
 			else
 			{
-				ModelMaxSpeed << xorstr_("Max Speed: ") << Cheat::GameFunctions::MSToMPH(VEHICLE::GET_VEHICLE_MODEL_ESTIMATED_MAX_SPEED(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(ModelName)))) << xorstr_(" MP/H");
+				ModelMaxSpeed << "Max Speed: " << Cheat::GameFunctions::MSToMPH(VEHICLE::GET_VEHICLE_MODEL_ESTIMATED_MAX_SPEED(GAMEPLAY::GET_HASH_KEY(CheatFunctions::StringToChar(ModelName)))) << " MP/H";
 			}
 
 			if (Cheat::GUI::guiX < 0.71f)
 			{
-				GUI::Drawing::Text(xorstr_("Vehicle Info & Preview"), GUI::count, { Cheat::GUI::guiX + 0.187f, GUI::guiY - 0.168f }, { 0.50f, 0.35f }, true);
+				GUI::Drawing::Text("Vehicle Info & Preview", GUI::count, { Cheat::GUI::guiX + 0.187f, GUI::guiY - 0.168f }, { 0.50f, 0.35f }, true);
 				GUI::Drawing::Text(ModelNameDrawingText, GUI::count, { Cheat::GUI::guiX + 0.111f,  GUI::guiY + 0.008f }, { 0.45f, 0.30f }, false);
 				GUI::Drawing::Text(ModelMaxSpeed.str(), GUI::count, { Cheat::GUI::guiX + 0.111f, GUI::guiY + 0.026f }, { 0.45f, 0.30f }, false);
 				GUI::Drawing::Rect(GUI::MenuBackgroundRect, { Cheat::GUI::guiX + 0.187f, GUI::guiY - 0.056f }, { 0.16f, 0.22f });
@@ -275,7 +275,7 @@ bool Cheat::VehicleOption(std::string option, std::string ModelName)
 			}
 			else
 			{
-				GUI::Drawing::Text(xorstr_("Vehicle Info & Preview"), GUI::count, { Cheat::GUI::guiX - 0.187f,GUI::guiY - 0.168f }, { 0.50f, 0.35f }, true);
+				GUI::Drawing::Text("Vehicle Info & Preview", GUI::count, { Cheat::GUI::guiX - 0.187f,GUI::guiY - 0.168f }, { 0.50f, 0.35f }, true);
 				GUI::Drawing::Text(ModelNameDrawingText, GUI::count, { Cheat::GUI::guiX - 0.262f, GUI::guiY + 0.008f }, { 0.45f, 0.30f }, false);
 				GUI::Drawing::Text(ModelMaxSpeed.str(), GUI::count, { Cheat::GUI::guiX - 0.262f, GUI::guiY + 0.026f }, { 0.45f, 0.30f }, false);
 				GUI::Drawing::Rect(GUI::MenuBackgroundRect, { Cheat::GUI::guiX - 0.187f, GUI::guiY - 0.056f }, { 0.16f, 0.22f });
@@ -370,7 +370,7 @@ bool Cheat::MenuOptionPlayerList(std::string option, SubMenus newSub, Player Pla
 bool Cheat::Toggle(std::string option, bool & b00l, std::string InformationText, bool IsSavable)
 {
 	//Load Option From Config
-	if (IsSavable) { CheatFunctions::LoadConfigOption(xorstr_("bool"), option, b00l, CheatFunctions::LoadConfigOptionDummyInt, CheatFunctions::LoadConfigOptionDummyFloat); }
+	if (IsSavable) { CheatFunctions::LoadConfigOption("bool", option, b00l, CheatFunctions::LoadConfigOptionDummyInt, CheatFunctions::LoadConfigOptionDummyFloat); }
 
 	Option(option, InformationText);
 	if (b00l)
@@ -426,7 +426,7 @@ bool Cheat::Toggle(std::string option, bool & b00l, std::string InformationText,
 
 	if (GUI::optionCount == GUI::currentOption) 
 	{
-		CheatFunctions::SaveOption(option, b00l ? xorstr_("true") : xorstr_("false"), IsSavable);
+		CheatFunctions::SaveOption(option, b00l ? "true" : "false", IsSavable);
 		if (GUI::selectPressed) { b00l ^= 1; return true; }
 	}
 	return false;
@@ -436,7 +436,7 @@ bool Cheat::Toggle(std::string option, bool & b00l, std::string InformationText,
 bool Cheat::Int(std::string option, int & _int, int min, int max, int step, bool DisableControl, bool IsSavable, std::string InformationText)
 {
 	//Load Option From Config
-	if (IsSavable) { CheatFunctions::LoadConfigOption(xorstr_("int"), option, CheatFunctions::LoadConfigOptionDummyBool, _int, CheatFunctions::LoadConfigOptionDummyFloat); }
+	if (IsSavable) { CheatFunctions::LoadConfigOption("int", option, CheatFunctions::LoadConfigOptionDummyBool, _int, CheatFunctions::LoadConfigOptionDummyFloat); }
 
 	Option(option, InformationText);
 
@@ -523,7 +523,7 @@ bool Cheat::Int(std::string option, int & _int, int min, int max, int step, bool
 bool Cheat::Float(std::string option, float & _float, float min, float max, float steps, bool ReturnTrueWithValueChange, bool IsSavable, std::string InformationText)
 {
 	//Load Option From Config
-	if (IsSavable) { CheatFunctions::LoadConfigOption(xorstr_("float"), option, CheatFunctions::LoadConfigOptionDummyBool, CheatFunctions::LoadConfigOptionDummyInt, _float); }
+	if (IsSavable) { CheatFunctions::LoadConfigOption("float", option, CheatFunctions::LoadConfigOptionDummyBool, CheatFunctions::LoadConfigOptionDummyInt, _float); }
 
 	Option(option, InformationText);
 
@@ -566,7 +566,7 @@ bool Cheat::Float(std::string option, float & _float, float min, float max, floa
 bool Cheat::IntVector(std::string option, std::vector<int> Vector, int& position, bool IsSavable)
 {
 	//Load Option From Config
-	if (IsSavable) { CheatFunctions::LoadConfigOption(xorstr_("int"), option, CheatFunctions::LoadConfigOptionDummyBool, position, CheatFunctions::LoadConfigOptionDummyFloat); }
+	if (IsSavable) { CheatFunctions::LoadConfigOption("int", option, CheatFunctions::LoadConfigOptionDummyBool, position, CheatFunctions::LoadConfigOptionDummyFloat); }
 
 	Option(option, "");
 
@@ -605,7 +605,7 @@ bool Cheat::IntVector(std::string option, std::vector<int> Vector, int& position
 bool Cheat::FloatVector(std::string option, std::vector<float> Vector, int& position, bool IsSavable)
 {
 	//Load Option From Config
-	if (IsSavable) { CheatFunctions::LoadConfigOption(xorstr_("int"), option, CheatFunctions::LoadConfigOptionDummyBool, position, CheatFunctions::LoadConfigOptionDummyFloat); }
+	if (IsSavable) { CheatFunctions::LoadConfigOption("int", option, CheatFunctions::LoadConfigOptionDummyBool, position, CheatFunctions::LoadConfigOptionDummyFloat); }
 
 	Option(option, "");
 
@@ -644,7 +644,7 @@ bool Cheat::FloatVector(std::string option, std::vector<float> Vector, int& posi
 bool Cheat::StringVector(std::string option, std::vector<std::string> Vector, int & position, std::string InformationText, bool IsSavable)
 {
 	//Load Option From Config
-	if (IsSavable) { CheatFunctions::LoadConfigOption(xorstr_("int"), option, CheatFunctions::LoadConfigOptionDummyBool, position, CheatFunctions::LoadConfigOptionDummyFloat); }
+	if (IsSavable) { CheatFunctions::LoadConfigOption("int", option, CheatFunctions::LoadConfigOptionDummyBool, position, CheatFunctions::LoadConfigOptionDummyFloat); }
 
 	Option(option, InformationText);
 
@@ -718,7 +718,7 @@ void Cheat::GUI::End()
 
 void PlaySoundFrontend_default(char* sound_name)
 {
-	AUDIO::PLAY_SOUND_FRONTEND(-1, sound_name, xorstr_("HUD_FRONTEND_DEFAULT_SOUNDSET"), 0);
+	AUDIO::PLAY_SOUND_FRONTEND(-1, sound_name, "HUD_FRONTEND_DEFAULT_SOUNDSET", 0);
 }
 
 
@@ -896,7 +896,7 @@ void Cheat::GUI::LoadThemeFilesLooped()
 
 	for (const auto & file : std::filesystem::directory_iterator(ThemeFolderPath.c_str())) 
 	{
-		if (file.path().extension() == xorstr_(".ini"))
+		if (file.path().extension() == ".ini")
 		{
 			Cheat::GUI::ThemeFilesVector.push_back(file.path().stem().string());
 		}
@@ -905,8 +905,8 @@ void Cheat::GUI::LoadThemeFilesLooped()
 
 void Cheat::GUI::LoadTheme(std::string ThemeFileName, bool StartUp)
 {
-	std::string ThemeFolderPath = Cheat::CheatFunctions::ReturnCheatModuleDirectoryPath() + (std::string)xorstr_("\\gtav\\Themes");
-	std::string ThemeFilePath = ThemeFolderPath + xorstr_("\\") + ThemeFileName + xorstr_(".ini");
+	std::string ThemeFolderPath = Cheat::CheatFunctions::ReturnCheatModuleDirectoryPath() + (std::string)"\\gtav\\Themes";
+	std::string ThemeFilePath = ThemeFolderPath + "\\" + ThemeFileName + ".ini";
 	if (!Cheat::CheatFunctions::DoesFileExists(ThemeFilePath)) { Cheat::GameFunctions::MinimapNotification("~r~Requested Theme File does not exist"); return;  }
 
 	Cheat::GUI::CurrentTheme = ThemeFileName;
@@ -999,7 +999,7 @@ void Cheat::GUI::LoadTheme(std::string ThemeFileName, bool StartUp)
 
 		Cheat::GUI::keyPressDelay2 = std::stoi(Cheat::CheatFunctions::ReadStringFromIni(ThemeFilePath, "THEME", "scroll_delay"));
 		Cheat::GUI::keyPressDelay3 = std::stoi(Cheat::CheatFunctions::ReadStringFromIni(ThemeFilePath, "THEME", "int_delay"));
-		Cheat::CheatFeatures::BoolOptionVectorPosition = std::stoi(Cheat::CheatFunctions::ReadStringFromIni(ThemeFilePath, xorstr_("THEME"), xorstr_("boolean_toggle")));
+		Cheat::CheatFeatures::BoolOptionVectorPosition = std::stoi(Cheat::CheatFunctions::ReadStringFromIni(ThemeFilePath, "THEME", "boolean_toggle"));
 
 		if (Cheat::CheatFunctions::IsIntegerInRange(0.110000, 0.86000, X))
 		{
@@ -1029,7 +1029,7 @@ void Cheat::GUI::LoadTheme(std::string ThemeFileName, bool StartUp)
 	catch (...) {}
 
 	//Check Theme File Version
-	if (Cheat::CheatFunctions::ReadStringFromIni(ThemeFilePath, "THEME", "theme_file_version") != xorstr_("1.5"))
+	if (Cheat::CheatFunctions::ReadStringFromIni(ThemeFilePath, "THEME", "theme_file_version") != "1.5")
 	{
 		remove(ThemeFilePath.c_str());
 		SaveTheme(ThemeFileName);
@@ -1039,7 +1039,7 @@ void Cheat::GUI::LoadTheme(std::string ThemeFileName, bool StartUp)
 	//Save New Active Theme Name To Config File
 	if (!StartUp) 
 	{
-		Cheat::CheatFunctions::WriteStringToIni(Cheat::GUI::CurrentTheme, Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("SETTINGS"), xorstr_("active_theme"));
+		Cheat::CheatFunctions::WriteStringToIni(Cheat::GUI::CurrentTheme, Cheat::CheatFunctions::ReturnConfigFilePath(), "SETTINGS", "active_theme");
 		Cheat::GameFunctions::MinimapNotification("Theme Loaded"); 
 	}
 }
@@ -1047,14 +1047,14 @@ void Cheat::GUI::LoadTheme(std::string ThemeFileName, bool StartUp)
 
 void Cheat::GUI::DeleteCurrentTheme()
 {
-	std::string ThemeFileNamePath = Cheat::CheatFunctions::ReturnCheatModuleDirectoryPath() + (std::string)xorstr_("\\gtav\\Themes\\") + Cheat::GUI::CurrentTheme + xorstr_(".ini");
+	std::string ThemeFileNamePath = Cheat::CheatFunctions::ReturnCheatModuleDirectoryPath() + (std::string)"\\gtav\\Themes\\" + Cheat::GUI::CurrentTheme + ".ini";
 	if (remove(ThemeFileNamePath.c_str()) != 0) 
 	{ 
 		Cheat::GameFunctions::MinimapNotification("~r~Failed To Delete Theme File"); 
 	}
 	else 
 	{ 
-		Cheat::CheatFunctions::WriteStringToIni(xorstr_(""), Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("SETTINGS"), xorstr_("active_theme"));
+		Cheat::CheatFunctions::WriteStringToIni("", Cheat::CheatFunctions::ReturnConfigFilePath(), "SETTINGS", "active_theme");
 		Cheat::GUI::CurrentTheme.clear(); 
 		GUI::currentOption = 1;
 		Cheat::GameFunctions::MinimapNotification("Theme File Removed"); 
@@ -1065,26 +1065,26 @@ void Cheat::GUI::EnableGUIControlsDisabled()
 {
 	if (GUIControlsDisabled)
 	{
-		Cheat::LogFunctions::DebugMessage(xorstr_("Enabled GUI Controls"));
+		Cheat::LogFunctions::DebugMessage("Enabled GUI Controls");
 		GUIControlsDisabled = false;
 	}
 	else
 	{
-		Cheat::LogFunctions::DebugMessage(xorstr_("Disabled GUI Controls"));
+		Cheat::LogFunctions::DebugMessage("Disabled GUI Controls");
 		GUIControlsDisabled = true;
 	}
 }
 
 void Cheat::GUI::SaveTheme(std::string ThemeFileName)
 {
-	std::string ThemeFolderPath = Cheat::CheatFunctions::ReturnCheatModuleDirectoryPath() + (std::string)xorstr_("\\gtav\\Themes");
-	std::string ThemeFilePath = ThemeFolderPath + xorstr_("\\") + ThemeFileName + xorstr_(".ini");
+	std::string ThemeFolderPath = Cheat::CheatFunctions::ReturnCheatModuleDirectoryPath() + (std::string)"\\gtav\\Themes";
+	std::string ThemeFilePath = ThemeFolderPath + "\\" + ThemeFileName + ".ini";
 	if (!Cheat::CheatFunctions::DoesDirectoryExists(Cheat::CheatFunctions::ReturnCheatModuleDirectoryPath() + (std::string)"\\gtav\\Themes")) 
 	{ 
 		Cheat::CheatFunctions::CreateNewDirectory(ThemeFolderPath); 
 	}
 
-	Cheat::CheatFunctions::WriteStringToIni(xorstr_("1.5"), ThemeFilePath, "THEME", "theme_file_version");
+	Cheat::CheatFunctions::WriteStringToIni("1.5", ThemeFilePath, "THEME", "theme_file_version");
 	Cheat::CheatFunctions::WriteBoolToIni(Cheat::GUI::ShowHeaderBackground, ThemeFilePath, "THEME", "show_header_background");
 	Cheat::CheatFunctions::WriteBoolToIni(Cheat::GUI::ShowHeaderGUI, ThemeFilePath, "THEME", "show_header_gui");
 	Cheat::CheatFunctions::WriteBoolToIni(Cheat::GUI::RestorePreviousSubmenu, ThemeFilePath, "THEME", "restore_previous_submenu");
@@ -1098,7 +1098,7 @@ void Cheat::GUI::SaveTheme(std::string ThemeFileName)
 	Cheat::CheatFunctions::WriteStringToIni(std::to_string(Cheat::GUI::openKey), ThemeFilePath, "THEME", "open_key");
 	Cheat::CheatFunctions::WriteStringToIni(std::to_string(Cheat::GUI::GUINavigationKey), ThemeFilePath, "THEME", "cursor_navigation_toggle_key");
 
-	Cheat::CheatFunctions::WriteStringToIni(std::to_string(Cheat::CheatFeatures::BoolOptionVectorPosition), ThemeFilePath, xorstr_("THEME"), xorstr_("boolean_toggle"));
+	Cheat::CheatFunctions::WriteStringToIni(std::to_string(Cheat::CheatFeatures::BoolOptionVectorPosition), ThemeFilePath, "THEME", "boolean_toggle");
 
 	Cheat::CheatFunctions::WriteStringToIni(std::to_string(Cheat::GUI::MainTitleRect.r), ThemeFilePath, "THEME", "title_background_red");
 	Cheat::CheatFunctions::WriteStringToIni(std::to_string(Cheat::GUI::MainTitleRect.g), ThemeFilePath, "THEME", "title_background_green");
@@ -1140,5 +1140,5 @@ void Cheat::GUI::SaveTheme(std::string ThemeFileName)
 	Cheat::CheatFunctions::WriteStringToIni(std::to_string(Cheat::GUI::MenuBottomRect.b), ThemeFilePath, "THEME", "menu_bottom_background_blue");
 	Cheat::CheatFunctions::WriteStringToIni(std::to_string(Cheat::GUI::MenuBottomRect.a), ThemeFilePath, "THEME", "menu_bottom_background_opacity");
 
-	Cheat::GameFunctions::MinimapNotification(xorstr_("Theme Saved"));
+	Cheat::GameFunctions::MinimapNotification("Theme Saved");
 }

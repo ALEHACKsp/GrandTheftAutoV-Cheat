@@ -86,7 +86,7 @@ void Cheat::Main()
 				{
 					if (PlayerID != i) 
 					{
-						Cheat::GameFunctions::SubtitleNotification(xorstr_("Giving all weapons to all players in session, one moment"), 2000);
+						Cheat::GameFunctions::SubtitleNotification("Giving all weapons to all players in session, one moment", 2000);
 						Cheat::GameFunctions::GiveAllWeaponsToPlayer(PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(i));
 					}
 				}
@@ -116,8 +116,8 @@ void Cheat::Main()
 					if (PlayerID != i) {
 						Vector3 Coords = ENTITY::GET_ENTITY_COORDS(PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(i), 1);
 						Coords.z += 15;
-						GAMEPLAY::SHOOT_SINGLE_BULLET_BETWEEN_COORDS(Coords.x, Coords.y, Coords.z + 35, Coords.x, Coords.y, Coords.z, 250, 1, GAMEPLAY::GET_HASH_KEY(xorstr_("VEHICLE_WEAPON_SPACE_ROCKET")), PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(i), 1, 1, 500);
-						GAMEPLAY::SHOOT_SINGLE_BULLET_BETWEEN_COORDS(Coords.x, Coords.y, Coords.z + 30, Coords.x, Coords.y, Coords.z, 250, 0, GAMEPLAY::GET_HASH_KEY(xorstr_("VEHICLE_WEAPON_SPACE_ROCKET")), 0, 1, 1, 500);
+						GAMEPLAY::SHOOT_SINGLE_BULLET_BETWEEN_COORDS(Coords.x, Coords.y, Coords.z + 35, Coords.x, Coords.y, Coords.z, 250, 1, GAMEPLAY::GET_HASH_KEY("VEHICLE_WEAPON_SPACE_ROCKET"), PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(i), 1, 1, 500);
+						GAMEPLAY::SHOOT_SINGLE_BULLET_BETWEEN_COORDS(Coords.x, Coords.y, Coords.z + 30, Coords.x, Coords.y, Coords.z, 250, 0, GAMEPLAY::GET_HASH_KEY("VEHICLE_WEAPON_SPACE_ROCKET"), 0, 1, 1, 500);
 						GAMEPLAY::SHOOT_SINGLE_BULLET_BETWEEN_COORDS(Coords.x, Coords.y, Coords.z + 55, Coords.x, Coords.y, Coords.z, 100, false, 0xF8A3939F, PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(i), true, true, 600);
 					}
 				}
@@ -128,7 +128,7 @@ void Cheat::Main()
 					if (PlayerID != i) 
 					{
 						Vector3 remotePos = ENTITY::GET_ENTITY_COORDS(PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(i), 0);
-						OBJECT::CREATE_OBJECT(GAMEPLAY::GET_HASH_KEY(xorstr_("prop_gold_cont_01")), remotePos.x, remotePos.y, remotePos.z - 1.f, true, false, false);
+						OBJECT::CREATE_OBJECT(GAMEPLAY::GET_HASH_KEY("prop_gold_cont_01"), remotePos.x, remotePos.y, remotePos.z - 1.f, true, false, false);
 					}
 				}
 			}
@@ -138,7 +138,7 @@ void Cheat::Main()
 				{
 					if (PlayerID != i) 
 					{
-						Cheat::GameFunctions::AttachObjectToPed(i, xorstr_("prop_beach_fire"));
+						Cheat::GameFunctions::AttachObjectToPed(i, "prop_beach_fire");
 					}
 				}
 			}
@@ -2214,7 +2214,7 @@ void Cheat::Main()
 			{
 				if (PED::IS_PED_IN_ANY_VEHICLE(PlayerPedID, 0)) {
 					Cheat::GameFunctions::MaxUpgradeVehicle(PED::GET_VEHICLE_PED_IS_USING(PlayerPedID));
-					Cheat::GameFunctions::AdvancedMinimapNotification(xorstr_("Vehicle Max Upgraded"), xorstr_("Textures"), xorstr_("AdvancedNotificationImage"), false, 4, xorstr_("Vehicle Customizer"), "", 1.0, "");
+					Cheat::GameFunctions::AdvancedMinimapNotification("Vehicle Max Upgraded", "Textures", "AdvancedNotificationImage", false, 4, "Vehicle Customizer", "", 1.0, "");
 				}
 				else 
 				{
@@ -2225,7 +2225,7 @@ void Cheat::Main()
 			{
 				if (PED::IS_PED_IN_ANY_VEHICLE(PlayerPedID, 0)) {
 					Cheat::GameFunctions::MaxDowngradeVehicle(PED::GET_VEHICLE_PED_IS_USING(PlayerPedID));
-					Cheat::GameFunctions::AdvancedMinimapNotification(xorstr_("Vehicle Max Downgraded"), xorstr_("Textures"), xorstr_("AdvancedNotificationImage"), false, 4, xorstr_("Vehicle Customizer"), "", 1.0, "");
+					Cheat::GameFunctions::AdvancedMinimapNotification("Vehicle Max Downgraded", "Textures", "AdvancedNotificationImage", false, 4, "Vehicle Customizer", "", 1.0, "");
 				}
 				else 
 				{
@@ -2249,7 +2249,7 @@ void Cheat::Main()
 					char* KeyboardInput = Cheat::GameFunctions::DisplayKeyboardAndReturnInput(8);
 					if (KeyboardInput == "0") { break; }
 					VEHICLE::SET_VEHICLE_NUMBER_PLATE_TEXT(VehicleHandle, KeyboardInput);
-					Cheat::GameFunctions::AdvancedMinimapNotification(xorstr_("License Plate Text Updated"), xorstr_("Textures"), xorstr_("AdvancedNotificationImage"), false, 4, xorstr_("Vehicle Customizer"), "", 1.0, "");
+					Cheat::GameFunctions::AdvancedMinimapNotification("License Plate Text Updated", "Textures", "AdvancedNotificationImage", false, 4, "Vehicle Customizer", "", 1.0, "");
 				}
 				else 
 				{
@@ -2866,7 +2866,7 @@ void Cheat::Main()
 			Cheat::Break("Current Time", true);
 			std::string CurrentGameTimeString = "Game Time: ~c~" + std::to_string(TIME::GET_CLOCK_HOURS()) + ":" + std::to_string(TIME::GET_CLOCK_MINUTES()) + ":" + std::to_string(TIME::GET_CLOCK_SECONDS());
 			Cheat::Break(CurrentGameTimeString.c_str(), false);
-			std::string CurrentSystemTimeString = "System Time: ~c~" + CheatFunctions::ReturnDateTimeFormatAsString(xorstr_("%H:%M:%S"));
+			std::string CurrentSystemTimeString = "System Time: ~c~" + CheatFunctions::ReturnDateTimeFormatAsString("%H:%M:%S");
 			Cheat::Break(CurrentSystemTimeString.c_str(), false);
 			Cheat::Break("Misc", true);
 			Cheat::Toggle("Slow Motion", Cheat::CheatFeatures::SlowMotionBool, "Slows Down Game Time");
@@ -2912,21 +2912,21 @@ void Cheat::Main()
 				if (UI::DOES_BLIP_EXIST(WaypointHandle))
 				{
 					Vector3 waypoint1 = UI::GET_BLIP_COORDS(UI::GET_FIRST_BLIP_INFO_ID(8));
-					STREAMING::REQUEST_MODEL(GAMEPLAY::GET_HASH_KEY(xorstr_("marshall")));
-					while (!STREAMING::HAS_MODEL_LOADED(GAMEPLAY::GET_HASH_KEY(xorstr_("marshall")))) WAIT(0);
+					STREAMING::REQUEST_MODEL(GAMEPLAY::GET_HASH_KEY("marshall"));
+					while (!STREAMING::HAS_MODEL_LOADED(GAMEPLAY::GET_HASH_KEY("marshall"))) WAIT(0);
 					Vector3 pos = ENTITY::GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(PlayerPedID, 0.0, 5.0, 0);
-					Vehicle veh = VEHICLE::CREATE_VEHICLE(GAMEPLAY::GET_HASH_KEY(xorstr_("marshall")), pos.x, pos.y, pos.z, ENTITY::GET_ENTITY_HEADING(PlayerPedID), 1, 1);
+					Vehicle veh = VEHICLE::CREATE_VEHICLE(GAMEPLAY::GET_HASH_KEY("marshall"), pos.x, pos.y, pos.z, ENTITY::GET_ENTITY_HEADING(PlayerPedID), 1, 1);
 					if (veh != 0)
 					{
 						Ped Driver = PED::CREATE_RANDOM_PED_AS_DRIVER(veh, false);
 						PED::SET_PED_INTO_VEHICLE(Driver, veh, -1);
 						PED::SET_PED_INTO_VEHICLE(PlayerPedID, veh, 0);
 						AI::TASK_VEHICLE_DRIVE_TO_COORD(Driver, veh, waypoint1.x, waypoint1.y, waypoint1.z, 40, 1, ENTITY::GET_ENTITY_MODEL(veh), 7, 6, -1);
-						VEHICLE::SET_VEHICLE_NUMBER_PLATE_TEXT(veh, xorstr_("CRUSADER"));
-						Cheat::GameFunctions::MinimapNotification(xorstr_("NPC Driver Spawned"));
+						VEHICLE::SET_VEHICLE_NUMBER_PLATE_TEXT(veh, "CRUSADER");
+						Cheat::GameFunctions::MinimapNotification("NPC Driver Spawned");
 					}
 				}
-				else { Cheat::GameFunctions::MinimapNotification(xorstr_("Please set a waypoint first to use this feature")); }
+				else { Cheat::GameFunctions::MinimapNotification("Please set a waypoint first to use this feature"); }
 			}		
 		}
 		break;
@@ -3594,7 +3594,7 @@ void Cheat::Main()
 			}
 			if (Cheat::Option("Ram With Vehicle", "Ram selected player with vehicle"))
 			{
-				Hash model = GAMEPLAY::GET_HASH_KEY(xorstr_("trophytruck2"));
+				Hash model = GAMEPLAY::GET_HASH_KEY("trophytruck2");
 				if (STREAMING::IS_MODEL_VALID(model))
 				{
 					for (int i = 0; i < 3; i++)
@@ -3616,7 +3616,7 @@ void Cheat::Main()
 			if (Cheat::Option("Trap Player", "Trap selected player"))
 			{
 				Vector3 remotePos = ENTITY::GET_ENTITY_COORDS(PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(Cheat::CheatFeatures::selectedPlayer), 0);
-				Object obj = OBJECT::CREATE_OBJECT(GAMEPLAY::GET_HASH_KEY(xorstr_("prop_gold_cont_01")), remotePos.x, remotePos.y, remotePos.z - 1.f, true, false, false);
+				Object obj = OBJECT::CREATE_OBJECT(GAMEPLAY::GET_HASH_KEY("prop_gold_cont_01"), remotePos.x, remotePos.y, remotePos.z - 1.f, true, false, false);
 			}
 			if (Cheat::Option("Clone Player", "Clone selected player"))
 			{
@@ -3884,9 +3884,9 @@ void Cheat::Main()
 			if (Cheat::Option("Detach All Objects", "Only detaches above attached objects")) 
 			{
 				const std::vector<std::string> ObjectsToRemoveArray = { 
-					xorstr_("p_oil_slick_01"),  xorstr_("hei_prop_heist_emp"),  xorstr_("prop_beach_fire"),  xorstr_("prop_juicestand"),
-					xorstr_("prop_weed_01"),  xorstr_("p_v_43_safe_s"),  xorstr_("p_spinning_anus_s"),  xorstr_("prop_ld_toilet_01"),
-					xorstr_("prop_xmas_tree_int"),  xorstr_("prop_windmill_01"),  xorstr_("prop_air_bigradar") 
+					"p_oil_slick_01",  "hei_prop_heist_emp", "prop_beach_fire",  "prop_juicestand",
+					"prop_weed_01",  "p_v_43_safe_s",  "p_spinning_anus_s",  "prop_ld_toilet_01",
+					"prop_xmas_tree_int",  "prop_windmill_01",  "prop_air_bigradar"
 				};
 				for (auto const& i : ObjectsToRemoveArray) 
 				{ 
@@ -4120,7 +4120,7 @@ void Cheat::Main()
 			Cheat::MenuOption("Cheat Settings >", CheatSettingsMenu);
 			if (Cheat::Option("Visit Github Page", ""))
 			{
-				system(xorstr_("start https://github.com/HowYouDoinMate/GrandTheftAutoV-Cheat"));
+				system("start https://github.com/HowYouDoinMate/GrandTheftAutoV-Cheat");
 			}
 		}
 		break;
@@ -4310,7 +4310,7 @@ void Cheat::Main()
 				{
 					if (Cheat::Option(i, ""))
 					{
-						std::string ThemeFilePathMenuList = Cheat::CheatFunctions::ReturnCheatModuleDirectoryPath() + (std::string)xorstr_("\\gtav\\Themes\\") + i + xorstr_(".ini");
+						std::string ThemeFilePathMenuList = Cheat::CheatFunctions::ReturnCheatModuleDirectoryPath() + (std::string)"\\gtav\\Themes\\" + i + ".ini";
 						if (!Cheat::CheatFunctions::DoesFileExists(ThemeFilePathMenuList)) { Cheat::GameFunctions::MinimapNotification("~r~Unable to locate theme file"); break; }
 						Cheat::GUI::LoadTheme(CheatFunctions::StringToChar(i), false);
 					}
@@ -4379,7 +4379,7 @@ void Cheat::Main()
 DWORD WINAPI InitThread(LPVOID lpParam)
 {
 	Cheat::CheatFunctions::CreateConsole();
-	std::cout << Cheat::CheatFunctions::ReturnDateTimeFormatAsString(xorstr_("[%d-%m-%Y - %H:%M:%S]")) << xorstr_(" [Init] ") << xorstr_("Initializing GTAV Cheat") << xorstr_(" | Github Repository: https://github.com/HowYouDoinMate/GrandTheftAutoV-Cheat") << std::endl;
+	std::cout << Cheat::CheatFunctions::ReturnDateTimeFormatAsString("[%d-%m-%Y - %H:%M:%S]") << " [Init] " << "Initializing GTAV Cheat" << " | Github Repository: https://github.com/HowYouDoinMate/GrandTheftAutoV-Cheat" << std::endl;
 	GameHooking::DoGameHooking();
 	//Hooks created - this thread is no longer needed
 	return 0;
@@ -4394,7 +4394,7 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD  ul_reason_for_call, LPVOID lpReser
 		DisableThreadLibraryCalls(hModule);
 		Cheat::CheatModuleHandle = hModule;
 		//Create 'gtav' directory
-		if (!Cheat::CheatFunctions::DoesDirectoryExists(Cheat::CheatFunctions::ReturnCheatModuleDirectoryPath() + (std::string)xorstr_("\\gtav"))) { Cheat::CheatFunctions::CreateNewDirectory(Cheat::CheatFunctions::ReturnCheatModuleDirectoryPath() + (std::string)xorstr_("\\gtav")); }
+		if (!Cheat::CheatFunctions::DoesDirectoryExists(Cheat::CheatFunctions::ReturnCheatModuleDirectoryPath() + (std::string)"\\gtav")) { Cheat::CheatFunctions::CreateNewDirectory(Cheat::CheatFunctions::ReturnCheatModuleDirectoryPath() + (std::string)"gtav"); }
 		//Extract YTD texture file from module
 		remove(Cheat::CheatFunctions::TextureFilePath().c_str());
 		Cheat::CheatFunctions::ExtractResource(hModule, 140, (LPCSTR)Cheat::CheatFunctions::TextureFilePath().c_str());

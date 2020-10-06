@@ -819,7 +819,7 @@ const std::vector<std::string> Cheat::GameArrays::SummerSpecialModels = {
 
 //TODO: Very tedious, WIP
 const std::vector<VehicleModelPicturesStruct> Cheat::GameArrays::VehicleModelPictures = {
-	{ xorstr_("lgm_dlc_specialraces"), xorstr_("ruston") }
+	{ "lgm_dlc_specialraces", "ruston" }
 };
 
 

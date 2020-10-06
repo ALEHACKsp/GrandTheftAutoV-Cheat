@@ -5,12 +5,12 @@ void Cheat::CheatFunctions::CreateNewDirectory(std::string Path)
 {
 	if (!std::filesystem::create_directory(Path))
 	{
-		std::string String = xorstr_("Failed to create directory '") + Path + xorstr_("' Error: ") + Cheat::CheatFunctions::GetLastErrorAsString();
+		std::string String = "Failed to create directory '" + Path + "' Error: " + Cheat::CheatFunctions::GetLastErrorAsString();
 		Cheat::LogFunctions::DebugMessage(CheatFunctions::StringToChar(String));
 	}
 	else
 	{
-		std::string String = xorstr_("Created directory '") + Path + xorstr_("'");
+		std::string String = "Created directory '" + Path + "'";
 		Cheat::LogFunctions::DebugMessage((CheatFunctions::StringToChar(String)));
 	}
 }
@@ -38,7 +38,7 @@ std::string Cheat::CheatFunctions::ReturnDateTimeFormatAsString(const char* Date
 
 std::string Cheat::CheatFunctions::ReturnCheatBuildAsString()
 {
-	return xorstr_("1.3.0.0");
+	return "1.3.0.0";
 }
 
 std::string Cheat::CheatFunctions::ReturnCheatModuleDirectoryPath()
@@ -51,7 +51,7 @@ std::string Cheat::CheatFunctions::ReturnCheatModuleDirectoryPath()
 
 const std::string Cheat::CheatFunctions::ReturnConfigFilePath()
 {
-	return ReturnCheatModuleDirectoryPath() + (std::string)xorstr_("\\gtav\\Config.ini");
+	return ReturnCheatModuleDirectoryPath() + (std::string)"\\gtav\\Config.ini";
 }
 
 
@@ -60,7 +60,7 @@ char str2[128];
 char* Cheat::CheatFunctions::CombineTwoChars(char* string1, char* string2)
 {
 	strcpy_s(str2, "");
-	sprintf_s(str2, xorstr_("%s %s"), string1, string2);
+	sprintf_s(str2, "%s %s", string1, string2);
 	return str2;
 }
 
@@ -109,7 +109,7 @@ void Cheat::CheatFunctions::LoopedFunctions()
 
 bool Cheat::CheatFunctions::IsGameWindowFocussed()
 {
-	HWND GameWindowHandle = FindWindowA(0, xorstr_("Grand Theft Auto V"));
+	HWND GameWindowHandle = FindWindowA(0, "Grand Theft Auto V");
 	HWND HandleProcessWithKeyboardFocus = GetForegroundWindow();
 	if (GameWindowHandle == HandleProcessWithKeyboardFocus) { return true; } else { return false; }
 }
@@ -130,7 +130,7 @@ bool Cheat::CheatFunctions::ExtractResource(const HINSTANCE hInstance, WORD reso
 	try
 	{
 		//Find and load the resource
-		HRSRC hResource = FindResource(hInstance, MAKEINTRESOURCE(resourceID), xorstr_(L"CHEAT_DATA"));
+		HRSRC hResource = FindResource(hInstance, MAKEINTRESOURCE(resourceID), L"CHEAT_DATA");
 		if (!hResource) { throw; }
 		HGLOBAL hFileResource = LoadResource(hInstance, hResource);
 		if (!hFileResource) { throw; }
@@ -158,14 +158,14 @@ bool Cheat::CheatFunctions::ExtractResource(const HINSTANCE hInstance, WORD reso
 	}
 	catch (...)
 	{
-		MessageBoxA(NULL, xorstr_("Failed to extract Texture File"), xorstr_("Error"), MB_OK | MB_ICONWARNING | MB_TOPMOST);
+		MessageBoxA(NULL, "Failed to extract Texture File", "Error", MB_OK | MB_ICONWARNING | MB_TOPMOST);
 	}
 	return false;
 }
 
 std::string Cheat::CheatFunctions::TextureFilePath()
 {
-	return ReturnCheatModuleDirectoryPath() + (std::string)xorstr_("\\gtav\\Textures.ytd");
+	return ReturnCheatModuleDirectoryPath() + (std::string)"\\gtav\\Textures.ytd";
 }
 
 
@@ -295,14 +295,14 @@ void Cheat::CheatFunctions::SaveOption(std::string OptionName, std::string Optio
 	{
 		if (IsSavable)
 		{
-			std::string LogMessage = xorstr_("'") + OptionName + xorstr_("' saved");
-			Cheat::GameFunctions::AdvancedMinimapNotification(CheatFunctions::StringToChar(LogMessage), xorstr_("Textures"), xorstr_("AdvancedNotificationImage"), false, 4, xorstr_("Config"), "", 0.5f, "");
-			WriteStringToIni(OptionValue, ReturnConfigFilePath(), xorstr_("SETTINGS"), OptionName);
+			std::string LogMessage = "'" + OptionName + "' saved";
+			Cheat::GameFunctions::AdvancedMinimapNotification(CheatFunctions::StringToChar(LogMessage), "Textures", "AdvancedNotificationImage", false, 4, "Config", "", 0.5f, "");
+			WriteStringToIni(OptionValue, ReturnConfigFilePath(), "SETTINGS", OptionName);
 		}
 		else
 		{
-			std::string DisableMessage = xorstr_("'") + OptionName + xorstr_("' cannot be saved");
-			Cheat::GameFunctions::AdvancedMinimapNotification(CheatFunctions::StringToChar(DisableMessage), xorstr_("Textures"), xorstr_("AdvancedNotificationImage"), false, 4, xorstr_("Config"), "", 0.5f, "");
+			std::string DisableMessage = "'" + OptionName + "' cannot be saved";
+			Cheat::GameFunctions::AdvancedMinimapNotification(CheatFunctions::StringToChar(DisableMessage), "Textures", "AdvancedNotificationImage", false, 4, "Config", "", 0.5f, "");
 		}
 	}
 }
@@ -310,7 +310,7 @@ void Cheat::CheatFunctions::SaveOption(std::string OptionName, std::string Optio
 
 std::string Cheat::CheatFunctions::GetOptionValueFromConfig(std::string OptionName)
 {
-	return ReadStringFromIni(ReturnConfigFilePath(), xorstr_("SETTINGS"), OptionName);
+	return ReadStringFromIni(ReturnConfigFilePath(), "SETTINGS", OptionName);
 }
 
 void LoadSettingsThreadFunction()
@@ -330,13 +330,13 @@ void LoadSettingsThreadFunction()
 
 void Cheat::CheatFunctions::LoadConfig()
 {
-	Cheat::LogFunctions::Message(xorstr_("Loading Config"));
+	Cheat::LogFunctions::Message("Loading Config");
 	std::thread LoadSettingsThreadHandle(LoadSettingsThreadFunction);
 	LoadSettingsThreadHandle.detach();
 
 	//Load Active Theme Name
-	std::string ActiveThemeSetting = Cheat::CheatFunctions::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), xorstr_("SETTINGS"), xorstr_("active_theme"));
-	if (ActiveThemeSetting != xorstr_("NOT_FOUND")) { Cheat::GUI::LoadTheme(CheatFunctions::StringToChar(ActiveThemeSetting), true); }
+	std::string ActiveThemeSetting = Cheat::CheatFunctions::ReadStringFromIni(Cheat::CheatFunctions::ReturnConfigFilePath(), "SETTINGS", "active_theme");
+	if (ActiveThemeSetting != "NOT_FOUND") { Cheat::GUI::LoadTheme(CheatFunctions::StringToChar(ActiveThemeSetting), true); }
 }
 
 
@@ -358,14 +358,14 @@ void Cheat::CheatFunctions::LoadConfigOption(std::string DataType, std::string O
 	if (!CheatFunctions::IsOptionRegisteredAsLoaded(OptionName))
 	{
 		std::string ConfigFileValue = GetOptionValueFromConfig(OptionName);
-		if (ConfigFileValue != xorstr_("NOT_FOUND"))
+		if (ConfigFileValue != "NOT_FOUND")
 		{
-			if (DataType == xorstr_("int"))			{ try { ReturnedIntOptional = std::stoi(CheatFunctions::GetOptionValueFromConfig(OptionName)); } catch (...) {} }
-			if (DataType == xorstr_("bool"))		{ try { ReturnedBoolOptional = CheatFunctions::StringToBool(CheatFunctions::GetOptionValueFromConfig(OptionName)); } catch (...) {} }
-			if (DataType == xorstr_("float"))		{ try { ReturnedFloatOptional = std::stof(CheatFunctions::GetOptionValueFromConfig(OptionName)); } catch (...) {} }
+			if (DataType == "int")		{ try { ReturnedIntOptional = std::stoi(CheatFunctions::GetOptionValueFromConfig(OptionName)); } catch (...) {} }
+			if (DataType == "bool")		{ try { ReturnedBoolOptional = CheatFunctions::StringToBool(CheatFunctions::GetOptionValueFromConfig(OptionName)); } catch (...) {} }
+			if (DataType == "float")	{ try { ReturnedFloatOptional = std::stof(CheatFunctions::GetOptionValueFromConfig(OptionName)); } catch (...) {} }
 		}
 		LoadedOptionsVector.push_back(OptionName);
-		Cheat::LogFunctions::DebugMessage(xorstr_("Loaded savable option '") + OptionName + xorstr_("'"));
+		Cheat::LogFunctions::DebugMessage("Loaded savable option '" + OptionName + "'");
 	}
 }
 
@@ -395,15 +395,15 @@ std::string Cheat::CheatFunctions::VirtualKeyCodeToString(UCHAR virtualKey)
 	default:
 		result = GetKeyNameTextA(scanCode << 16, szName, 128);
 	}
-	if (result == 0) { return xorstr_("Unknown"); }
+	if (result == 0) { return "Unknown"; }
 	return szName;
 }
 
 void Cheat::CheatFunctions::CreateConsole()
 {
-	Cheat::LogFunctions::Message(xorstr_("Allocating Console"));
+	Cheat::LogFunctions::Message("Allocating Console");
 	AllocConsole();
-	SetConsoleTitleA(xorstr_("GTAV Cheat Console"));
+	SetConsoleTitleA("GTAV Cheat Console");
 
 	// Set Console Dimensions so all text is properly visible
 	HWND ConsoleWindowHandle = GetConsoleWindow();
@@ -436,17 +436,17 @@ void Cheat::CheatFunctions::CreateConsole()
 	//Redirect Std Outputs to Console
 	HANDLE ConsoleOutput = GetStdHandle(STD_OUTPUT_HANDLE);
 	int SystemOutput = _open_osfhandle(intptr_t(ConsoleOutput), _O_TEXT);
-	FILE* COutputHandle = _fdopen(SystemOutput, xorstr_("w"));
+	FILE* COutputHandle = _fdopen(SystemOutput, "w");
 	HANDLE ConsoleError = GetStdHandle(STD_ERROR_HANDLE);
 	int SystemError = _open_osfhandle(intptr_t(ConsoleError), _O_TEXT);
-	FILE* CErrorHandle = _fdopen(SystemError, xorstr_("w"));
+	FILE* CErrorHandle = _fdopen(SystemError, "w");
 	HANDLE ConsoleInput = GetStdHandle(STD_INPUT_HANDLE);
 	int SystemInput = _open_osfhandle(intptr_t(ConsoleInput), _O_TEXT);
-	FILE* CInputHandle = _fdopen(SystemInput, xorstr_("r"));
+	FILE* CInputHandle = _fdopen(SystemInput, "r");
 	std::ios::sync_with_stdio(true);
-	freopen_s(&CInputHandle, xorstr_("CONIN$"), xorstr_("r"), stdin);
-	freopen_s(&COutputHandle, xorstr_("CONOUT$"), xorstr_("w"), stdout);
-	freopen_s(&CErrorHandle, xorstr_("CONOUT$"), xorstr_("w"), stderr);
+	freopen_s(&CInputHandle, "CONIN$", "r", stdin);
+	freopen_s(&COutputHandle, "CONOUT$", "w", stdout);
+	freopen_s(&CErrorHandle, "CONOUT$", "w", stderr);
 	std::wcout.clear();
 	std::cout.clear();
 	std::wcerr.clear();
@@ -456,7 +456,7 @@ void Cheat::CheatFunctions::CreateConsole()
 
 
 	//Print current build
-	std::cout << xorstr_("Build: ") << Cheat::CheatFunctions::ReturnCheatBuildAsString() << std::endl;
+	std::cout << "Build: " << Cheat::CheatFunctions::ReturnCheatBuildAsString() << std::endl;
 }
 
 
@@ -482,7 +482,7 @@ void Cheat::CheatFunctions::WriteStringToIni(std::string string, std::string fil
 std::string Cheat::CheatFunctions::ReadStringFromIni(std::string file, std::string app, std::string key)
 {
 	char buf[100];
-	GetPrivateProfileStringA(app.c_str(), key.c_str(), xorstr_("NOT_FOUND"), buf, 100, file.c_str());
+	GetPrivateProfileStringA(app.c_str(), key.c_str(), "NOT_FOUND", buf, 100, file.c_str());
 	return (std::string)buf;
 }
 
@@ -494,19 +494,19 @@ void Cheat::CheatFunctions::WriteBoolToIni(bool b00l, std::string file, std::str
 bool Cheat::CheatFunctions::StringToBool(std::string String)
 {
 	std::transform(String.begin(), String.end(), String.begin(), ::tolower);
-	if (String == xorstr_("true"))
+	if (String == "true")
 	{
 		return true;
 	}
-	else if (String == xorstr_("false"))
+	else if (String == "false")
 	{
 		return false;
 	}
-	else if (String == xorstr_("1"))
+	else if (String == "1")
 	{
 		return true;
 	}
-	else if (String == xorstr_("0"))
+	else if (String == "0")
 	{
 		return false;
 	}
